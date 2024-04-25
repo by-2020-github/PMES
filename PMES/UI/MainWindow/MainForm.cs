@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -15,10 +16,12 @@ using MySqlX.XDevAPI;
 using System.Net.Http.Headers;
 using DevExpress.Map.Native;
 using DevExpress.Mvvm.POCO;
+using DevExpress.XtraReports.UI;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.Cmp;
 using Org.BouncyCastle.Asn1.Crmf;
 using PMES.Core.Managers;
+using PMES.UI.Report;
 using RestSharp;
 using Serilog;
 
@@ -83,7 +86,7 @@ namespace PMES.UI.MainWindow
         private double _netWeight => _totalWeight - _skinWeight - _tareWeight;
         private double _totalWeight = 52.03;
         private double _skinWeight = 2.01;
-        private double _tareWeight =0;
+        private double _tareWeight = 0;
 
         private void UpdateProductInfo(ProductInfo product)
         {
@@ -118,8 +121,33 @@ namespace PMES.UI.MainWindow
             lb_fix_prod_code.Text = lb_fix_prod_code.Tag + txtScanCode.Text;
             if (!double.TryParse(lbNetWeight.Text, out double res)) return;
             if (txtScanCode.Text.Length < 10) return;
+            var weight = (_netWeight / 1000).ToString("F5").Split(".")[1];
+
             lbBoxCode.Text =
-                $"{product.material_number.Substring(3).Replace(".", "")}-{product.package_info.code}-{product.jsbz_number}-B{DateTime.Now:MMdd}{txtScanCode.Text.Substring(txtScanCode.Text.Length - 4, 4)}-{_netWeight * 100:#####}";
+                $"{product.material_number.Substring(3).Replace(".", "")}-{product.package_info.code}-{product.jsbz_number}-B{DateTime.Now:MMdd}{txtScanCode.Text.Substring(txtScanCode.Text.Length - 4, 4)}-{weight}";
+
+            var report = new ReportCertificateXD();
+            report.DataSource = new List<Certificate>()
+            {
+                new Certificate()
+            };
+            //report.ShowPreview();
+            report.ExportToImage("certificate.Png",ImageFormat.Png);
+            Bitmap bitmap = new Bitmap("certificate.Png");
+            picCertificate.Image?.Dispose();
+            picCertificate.Image = bitmap;
+
+            var report2 = new ReportPackingList();
+            report2.DataSource = new List<PackingList>()
+            {
+                new PackingList()
+            };
+            //report2.ShowPreview();
+            report2.ExportToImage("boxList.Png", ImageFormat.Png);
+            Bitmap bitmap2 = new Bitmap("boxList.Png");
+            picBoxList.Image?.Dispose();
+            picBoxList.Image = bitmap2;
+
         }
 
 
@@ -159,6 +187,21 @@ namespace PMES.UI.MainWindow
         /// <param name="e"></param>
         private void PrinterSettings(object sender, EventArgs e)
         {
+            //var report = new ReportCertificateXD();
+            //report.DataSource = new List<Certificate>()
+            //{
+            //    new Certificate()
+            //};
+            //report.ShowPreview();
+
+            var report = new ReportPackingList();
+            report.DataSource = new List<PackingList>()
+            {
+                new PackingList()
+            };
+            report.ShowPreview();
+            report.ExportToImage("boxList.jpg");
+
         }
 
         private void Exit(object sender, EventArgs e)

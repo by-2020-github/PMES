@@ -63,6 +63,8 @@
             labelControl23 = new DevExpress.XtraEditors.LabelControl();
             labelControl24 = new DevExpress.XtraEditors.LabelControl();
             labelControl43 = new DevExpress.XtraEditors.LabelControl();
+            picCertificate = new DevExpress.XtraEditors.PictureEdit();
+            picBoxList = new DevExpress.XtraEditors.PictureEdit();
             panel3 = new Panel();
             tableLayoutPanel8 = new TableLayoutPanel();
             tableLayoutPanel9 = new TableLayoutPanel();
@@ -128,6 +130,8 @@
             tableLayoutPanel2.SuspendLayout();
             panel1.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picCertificate.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picBoxList.Properties).BeginInit();
             panel3.SuspendLayout();
             tableLayoutPanel8.SuspendLayout();
             tableLayoutPanel9.SuspendLayout();
@@ -574,6 +578,8 @@
             tableLayoutPanel3.Controls.Add(labelControl23, 0, 0);
             tableLayoutPanel3.Controls.Add(labelControl24, 0, 1);
             tableLayoutPanel3.Controls.Add(labelControl43, 0, 3);
+            tableLayoutPanel3.Controls.Add(picCertificate, 0, 2);
+            tableLayoutPanel3.Controls.Add(picBoxList, 0, 4);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(0, 0);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -633,6 +639,26 @@
             labelControl43.Size = new Size(290, 24);
             labelControl43.TabIndex = 2;
             labelControl43.Text = "装箱单预览：";
+            // 
+            // picCertificate
+            // 
+            picCertificate.Dock = DockStyle.Fill;
+            picCertificate.Location = new Point(3, 73);
+            picCertificate.Name = "picCertificate";
+            picCertificate.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            picCertificate.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
+            picCertificate.Size = new Size(297, 218);
+            picCertificate.TabIndex = 3;
+            // 
+            // picBoxList
+            // 
+            picBoxList.Dock = DockStyle.Fill;
+            picBoxList.Location = new Point(3, 327);
+            picBoxList.Name = "picBoxList";
+            picBoxList.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            picBoxList.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
+            picBoxList.Size = new Size(297, 332);
+            picBoxList.TabIndex = 3;
             // 
             // panel3
             // 
@@ -1453,6 +1479,8 @@
             panel1.ResumeLayout(false);
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picCertificate.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picBoxList.Properties).EndInit();
             panel3.ResumeLayout(false);
             tableLayoutPanel8.ResumeLayout(false);
             tableLayoutPanel9.ResumeLayout(false);
@@ -1566,5 +1594,7 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton4;
         private DevExpress.XtraEditors.SimpleButton simpleButton5;
         private DevExpress.XtraEditors.SimpleButton simpleButton3;
+        private DevExpress.XtraEditors.PictureEdit picCertificate;
+        private DevExpress.XtraEditors.PictureEdit picBoxList;
     }
 }
