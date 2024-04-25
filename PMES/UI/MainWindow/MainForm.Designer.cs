@@ -31,53 +31,33 @@
             tableLayoutPanelMain = new TableLayoutPanel();
             tableLayoutPanelHeader = new TableLayoutPanel();
             txtScanCode = new DevExpress.XtraEditors.TextEdit();
-            simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            btnExit = new DevExpress.XtraEditors.SimpleButton();
             labelControl1 = new DevExpress.XtraEditors.LabelControl();
             lbErroInfo = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             panelControl1 = new DevExpress.XtraEditors.PanelControl();
             tableLayoutPanel2 = new TableLayoutPanel();
-            labelControl21 = new DevExpress.XtraEditors.LabelControl();
-            labelControl20 = new DevExpress.XtraEditors.LabelControl();
-            labelControl19 = new DevExpress.XtraEditors.LabelControl();
-            labelControl18 = new DevExpress.XtraEditors.LabelControl();
-            labelControl17 = new DevExpress.XtraEditors.LabelControl();
-            labelControl16 = new DevExpress.XtraEditors.LabelControl();
-            labelControl15 = new DevExpress.XtraEditors.LabelControl();
-            labelControl14 = new DevExpress.XtraEditors.LabelControl();
-            labelControl13 = new DevExpress.XtraEditors.LabelControl();
-            labelControl12 = new DevExpress.XtraEditors.LabelControl();
-            labelControl11 = new DevExpress.XtraEditors.LabelControl();
-            labelControl10 = new DevExpress.XtraEditors.LabelControl();
-            labelControl9 = new DevExpress.XtraEditors.LabelControl();
-            labelControl8 = new DevExpress.XtraEditors.LabelControl();
-            labelControl7 = new DevExpress.XtraEditors.LabelControl();
-            labelControl6 = new DevExpress.XtraEditors.LabelControl();
-            labelControl5 = new DevExpress.XtraEditors.LabelControl();
-            labelControl4 = new DevExpress.XtraEditors.LabelControl();
-            labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            labelControl22 = new DevExpress.XtraEditors.LabelControl();
             lb_product_order_no = new DevExpress.XtraEditors.LabelControl();
-            lb_material_number = new DevExpress.XtraEditors.LabelControl();
-            labelControl25 = new DevExpress.XtraEditors.LabelControl();
-            labelControl26 = new DevExpress.XtraEditors.LabelControl();
-            labelControl27 = new DevExpress.XtraEditors.LabelControl();
-            labelControl28 = new DevExpress.XtraEditors.LabelControl();
-            labelControl29 = new DevExpress.XtraEditors.LabelControl();
-            labelControl30 = new DevExpress.XtraEditors.LabelControl();
-            labelControl31 = new DevExpress.XtraEditors.LabelControl();
-            labelControl32 = new DevExpress.XtraEditors.LabelControl();
-            labelControl33 = new DevExpress.XtraEditors.LabelControl();
-            labelControl34 = new DevExpress.XtraEditors.LabelControl();
-            labelControl35 = new DevExpress.XtraEditors.LabelControl();
-            labelControl36 = new DevExpress.XtraEditors.LabelControl();
-            labelControl37 = new DevExpress.XtraEditors.LabelControl();
+            lb_customer_number = new DevExpress.XtraEditors.LabelControl();
+            lb_customer_name = new DevExpress.XtraEditors.LabelControl();
+            lb_material_ns_model = new DevExpress.XtraEditors.LabelControl();
+            lb_customer_material_spec = new DevExpress.XtraEditors.LabelControl();
+            lb_jsbz_number = new DevExpress.XtraEditors.LabelControl();
+            lb_jsbz_name = new DevExpress.XtraEditors.LabelControl();
+            lb_xpzl_number = new DevExpress.XtraEditors.LabelControl();
+            lb_xpzl_name = new DevExpress.XtraEditors.LabelControl();
+            lb_xpzl_weight = new DevExpress.XtraEditors.LabelControl();
+            lb_package_info_code = new DevExpress.XtraEditors.LabelControl();
+            lb_package_info_name = new DevExpress.XtraEditors.LabelControl();
+            lb_material_execution_standard = new DevExpress.XtraEditors.LabelControl();
+            lb_product_date = new DevExpress.XtraEditors.LabelControl();
+            lb_machine_number = new DevExpress.XtraEditors.LabelControl();
             labelControl38 = new DevExpress.XtraEditors.LabelControl();
-            labelControl39 = new DevExpress.XtraEditors.LabelControl();
+            lb_operator_code = new DevExpress.XtraEditors.LabelControl();
             labelControl40 = new DevExpress.XtraEditors.LabelControl();
-            labelControl41 = new DevExpress.XtraEditors.LabelControl();
-            labelControl42 = new DevExpress.XtraEditors.LabelControl();
+            lb_operator_name = new DevExpress.XtraEditors.LabelControl();
+            lb_fix_prod_code = new DevExpress.XtraEditors.LabelControl();
+            labelControl2 = new DevExpress.XtraEditors.LabelControl();
             panel1 = new Panel();
             tableLayoutPanel3 = new TableLayoutPanel();
             labelControl23 = new DevExpress.XtraEditors.LabelControl();
@@ -106,18 +86,18 @@
             tableLayoutPanel11 = new TableLayoutPanel();
             labelControl55 = new DevExpress.XtraEditors.LabelControl();
             labelControl56 = new DevExpress.XtraEditors.LabelControl();
-            labelControl57 = new DevExpress.XtraEditors.LabelControl();
+            lbBoxCode = new DevExpress.XtraEditors.LabelControl();
             labelControl58 = new DevExpress.XtraEditors.LabelControl();
             labelControl59 = new DevExpress.XtraEditors.LabelControl();
             labelControl60 = new DevExpress.XtraEditors.LabelControl();
             labelControl61 = new DevExpress.XtraEditors.LabelControl();
             labelControl62 = new DevExpress.XtraEditors.LabelControl();
             labelControl63 = new DevExpress.XtraEditors.LabelControl();
-            labelControl64 = new DevExpress.XtraEditors.LabelControl();
-            labelControl65 = new DevExpress.XtraEditors.LabelControl();
-            labelControl66 = new DevExpress.XtraEditors.LabelControl();
-            labelControl67 = new DevExpress.XtraEditors.LabelControl();
-            labelControl68 = new DevExpress.XtraEditors.LabelControl();
+            lbGrossWeight = new DevExpress.XtraEditors.LabelControl();
+            lbSkinWeight = new DevExpress.XtraEditors.LabelControl();
+            lbNetWeight = new DevExpress.XtraEditors.LabelControl();
+            lbTotalWeight = new DevExpress.XtraEditors.LabelControl();
+            lbTareWeight = new DevExpress.XtraEditors.LabelControl();
             simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
@@ -188,7 +168,7 @@
             tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 240F));
             tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 135F));
             tableLayoutPanelHeader.Controls.Add(txtScanCode, 2, 0);
-            tableLayoutPanelHeader.Controls.Add(simpleButton1, 3, 0);
+            tableLayoutPanelHeader.Controls.Add(btnExit, 3, 0);
             tableLayoutPanelHeader.Controls.Add(labelControl1, 0, 0);
             tableLayoutPanelHeader.Controls.Add(lbErroInfo, 1, 0);
             tableLayoutPanelHeader.Dock = DockStyle.Fill;
@@ -216,19 +196,21 @@
             txtScanCode.Properties.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
             txtScanCode.Size = new Size(222, 32);
             txtScanCode.TabIndex = 1;
+            txtScanCode.TextChanged += ScanCodeChanged;
             // 
-            // simpleButton1
+            // btnExit
             // 
-            simpleButton1.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            simpleButton1.Appearance.Options.UseFont = true;
-            simpleButton1.Dock = DockStyle.Fill;
-            simpleButton1.Location = new Point(1226, 5);
-            simpleButton1.Margin = new Padding(5);
-            simpleButton1.MinimumSize = new Size(126, 36);
-            simpleButton1.Name = "simpleButton1";
-            simpleButton1.Size = new Size(126, 37);
-            simpleButton1.TabIndex = 2;
-            simpleButton1.Text = "退出系统";
+            btnExit.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            btnExit.Appearance.Options.UseFont = true;
+            btnExit.Dock = DockStyle.Fill;
+            btnExit.Location = new Point(1226, 5);
+            btnExit.Margin = new Padding(5);
+            btnExit.MinimumSize = new Size(126, 36);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(126, 37);
+            btnExit.TabIndex = 2;
+            btnExit.Text = "退出系统";
+            btnExit.Click += Exit;
             // 
             // labelControl1
             // 
@@ -285,50 +267,29 @@
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150F));
+            tableLayoutPanel2.ColumnCount = 1;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Controls.Add(labelControl21, 0, 19);
-            tableLayoutPanel2.Controls.Add(labelControl20, 0, 18);
-            tableLayoutPanel2.Controls.Add(labelControl19, 0, 17);
-            tableLayoutPanel2.Controls.Add(labelControl18, 0, 16);
-            tableLayoutPanel2.Controls.Add(labelControl17, 0, 15);
-            tableLayoutPanel2.Controls.Add(labelControl16, 0, 14);
-            tableLayoutPanel2.Controls.Add(labelControl15, 0, 13);
-            tableLayoutPanel2.Controls.Add(labelControl14, 0, 12);
-            tableLayoutPanel2.Controls.Add(labelControl13, 0, 11);
-            tableLayoutPanel2.Controls.Add(labelControl12, 0, 10);
-            tableLayoutPanel2.Controls.Add(labelControl11, 0, 9);
-            tableLayoutPanel2.Controls.Add(labelControl10, 0, 8);
-            tableLayoutPanel2.Controls.Add(labelControl9, 0, 7);
-            tableLayoutPanel2.Controls.Add(labelControl8, 0, 6);
-            tableLayoutPanel2.Controls.Add(labelControl7, 0, 5);
-            tableLayoutPanel2.Controls.Add(labelControl6, 0, 4);
-            tableLayoutPanel2.Controls.Add(labelControl5, 0, 3);
-            tableLayoutPanel2.Controls.Add(labelControl4, 0, 2);
-            tableLayoutPanel2.Controls.Add(labelControl3, 0, 1);
+            tableLayoutPanel2.Controls.Add(lb_product_order_no, 0, 1);
+            tableLayoutPanel2.Controls.Add(lb_customer_number, 0, 2);
+            tableLayoutPanel2.Controls.Add(lb_customer_name, 0, 3);
+            tableLayoutPanel2.Controls.Add(lb_material_ns_model, 0, 4);
+            tableLayoutPanel2.Controls.Add(lb_customer_material_spec, 0, 5);
+            tableLayoutPanel2.Controls.Add(lb_jsbz_number, 0, 6);
+            tableLayoutPanel2.Controls.Add(lb_jsbz_name, 0, 7);
+            tableLayoutPanel2.Controls.Add(lb_xpzl_number, 0, 8);
+            tableLayoutPanel2.Controls.Add(lb_xpzl_name, 0, 9);
+            tableLayoutPanel2.Controls.Add(lb_xpzl_weight, 0, 10);
+            tableLayoutPanel2.Controls.Add(lb_package_info_code, 0, 11);
+            tableLayoutPanel2.Controls.Add(lb_package_info_name, 0, 12);
+            tableLayoutPanel2.Controls.Add(lb_material_execution_standard, 0, 13);
+            tableLayoutPanel2.Controls.Add(lb_product_date, 0, 14);
+            tableLayoutPanel2.Controls.Add(lb_machine_number, 0, 15);
+            tableLayoutPanel2.Controls.Add(labelControl38, 0, 16);
+            tableLayoutPanel2.Controls.Add(lb_operator_code, 0, 17);
+            tableLayoutPanel2.Controls.Add(labelControl40, 0, 18);
+            tableLayoutPanel2.Controls.Add(lb_operator_name, 0, 19);
+            tableLayoutPanel2.Controls.Add(lb_fix_prod_code, 0, 20);
             tableLayoutPanel2.Controls.Add(labelControl2, 0, 0);
-            tableLayoutPanel2.Controls.Add(labelControl22, 0, 20);
-            tableLayoutPanel2.Controls.Add(lb_product_order_no, 1, 1);
-            tableLayoutPanel2.Controls.Add(lb_material_number, 1, 2);
-            tableLayoutPanel2.Controls.Add(labelControl25, 1, 3);
-            tableLayoutPanel2.Controls.Add(labelControl26, 1, 4);
-            tableLayoutPanel2.Controls.Add(labelControl27, 1, 5);
-            tableLayoutPanel2.Controls.Add(labelControl28, 1, 6);
-            tableLayoutPanel2.Controls.Add(labelControl29, 1, 7);
-            tableLayoutPanel2.Controls.Add(labelControl30, 1, 8);
-            tableLayoutPanel2.Controls.Add(labelControl31, 1, 9);
-            tableLayoutPanel2.Controls.Add(labelControl32, 1, 10);
-            tableLayoutPanel2.Controls.Add(labelControl33, 1, 11);
-            tableLayoutPanel2.Controls.Add(labelControl34, 1, 12);
-            tableLayoutPanel2.Controls.Add(labelControl35, 1, 13);
-            tableLayoutPanel2.Controls.Add(labelControl36, 1, 14);
-            tableLayoutPanel2.Controls.Add(labelControl37, 1, 15);
-            tableLayoutPanel2.Controls.Add(labelControl38, 1, 16);
-            tableLayoutPanel2.Controls.Add(labelControl39, 1, 17);
-            tableLayoutPanel2.Controls.Add(labelControl40, 1, 18);
-            tableLayoutPanel2.Controls.Add(labelControl41, 1, 19);
-            tableLayoutPanel2.Controls.Add(labelControl42, 1, 20);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
             tableLayoutPanel2.Location = new Point(2, 2);
@@ -356,312 +317,229 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel2.Size = new Size(311, 660);
             tableLayoutPanel2.TabIndex = 0;
             // 
-            // labelControl21
+            // lb_product_order_no
             // 
-            labelControl21.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl21.Appearance.Options.UseFont = true;
-            labelControl21.Appearance.Options.UseTextOptions = true;
-            labelControl21.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl21.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl21.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl21.Dock = DockStyle.Left;
-            labelControl21.Location = new Point(10, 583);
-            labelControl21.Margin = new Padding(10, 3, 3, 3);
-            labelControl21.Name = "labelControl21";
-            labelControl21.Size = new Size(123, 24);
-            labelControl21.TabIndex = 19;
-            labelControl21.Text = "包装组名称：";
+            lb_product_order_no.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_product_order_no.Appearance.Options.UseFont = true;
+            lb_product_order_no.Dock = DockStyle.Fill;
+            lb_product_order_no.Location = new Point(3, 43);
+            lb_product_order_no.Name = "lb_product_order_no";
+            lb_product_order_no.Size = new Size(305, 24);
+            lb_product_order_no.TabIndex = 21;
+            lb_product_order_no.Tag = "生产工单：";
             // 
-            // labelControl20
+            // lb_customer_number
             // 
-            labelControl20.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl20.Appearance.Options.UseFont = true;
-            labelControl20.Appearance.Options.UseTextOptions = true;
-            labelControl20.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl20.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl20.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl20.Dock = DockStyle.Left;
-            labelControl20.Location = new Point(10, 553);
-            labelControl20.Margin = new Padding(10, 3, 3, 3);
-            labelControl20.Name = "labelControl20";
-            labelControl20.Size = new Size(123, 24);
-            labelControl20.TabIndex = 18;
-            labelControl20.Text = "包装组编号：";
+            lb_customer_number.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_customer_number.Appearance.Options.UseFont = true;
+            lb_customer_number.Dock = DockStyle.Fill;
+            lb_customer_number.Location = new Point(3, 73);
+            lb_customer_number.Name = "lb_customer_number";
+            lb_customer_number.Size = new Size(305, 24);
+            lb_customer_number.TabIndex = 21;
+            lb_customer_number.Tag = "产品代码：";
             // 
-            // labelControl19
+            // lb_customer_name
             // 
-            labelControl19.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl19.Appearance.Options.UseFont = true;
-            labelControl19.Appearance.Options.UseTextOptions = true;
-            labelControl19.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl19.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl19.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl19.Dock = DockStyle.Fill;
-            labelControl19.Location = new Point(10, 523);
-            labelControl19.Margin = new Padding(10, 3, 3, 3);
-            labelControl19.Name = "labelControl19";
-            labelControl19.Size = new Size(137, 24);
-            labelControl19.TabIndex = 17;
-            labelControl19.Text = "生产工号：";
+            lb_customer_name.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_customer_name.Appearance.Options.UseFont = true;
+            lb_customer_name.Dock = DockStyle.Fill;
+            lb_customer_name.Location = new Point(3, 103);
+            lb_customer_name.Name = "lb_customer_name";
+            lb_customer_name.Size = new Size(305, 24);
+            lb_customer_name.TabIndex = 21;
+            lb_customer_name.Tag = "产品型号：";
             // 
-            // labelControl18
+            // lb_material_ns_model
             // 
-            labelControl18.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl18.Appearance.Options.UseFont = true;
-            labelControl18.Appearance.Options.UseTextOptions = true;
-            labelControl18.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl18.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl18.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl18.Dock = DockStyle.Fill;
-            labelControl18.Location = new Point(10, 493);
-            labelControl18.Margin = new Padding(10, 3, 3, 3);
-            labelControl18.Name = "labelControl18";
-            labelControl18.Size = new Size(137, 24);
-            labelControl18.TabIndex = 16;
-            labelControl18.Text = "生产批号：";
+            lb_material_ns_model.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_material_ns_model.Appearance.Options.UseFont = true;
+            lb_material_ns_model.Dock = DockStyle.Fill;
+            lb_material_ns_model.Location = new Point(3, 133);
+            lb_material_ns_model.Name = "lb_material_ns_model";
+            lb_material_ns_model.Size = new Size(305, 24);
+            lb_material_ns_model.TabIndex = 21;
+            lb_material_ns_model.Tag = "国标型号：";
             // 
-            // labelControl17
+            // lb_customer_material_spec
             // 
-            labelControl17.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl17.Appearance.Options.UseFont = true;
-            labelControl17.Appearance.Options.UseTextOptions = true;
-            labelControl17.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl17.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl17.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl17.Dock = DockStyle.Fill;
-            labelControl17.Location = new Point(10, 463);
-            labelControl17.Margin = new Padding(10, 3, 3, 3);
-            labelControl17.Name = "labelControl17";
-            labelControl17.Size = new Size(137, 24);
-            labelControl17.TabIndex = 15;
-            labelControl17.Text = "生产机台：";
+            lb_customer_material_spec.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_customer_material_spec.Appearance.Options.UseFont = true;
+            lb_customer_material_spec.Dock = DockStyle.Fill;
+            lb_customer_material_spec.Location = new Point(3, 163);
+            lb_customer_material_spec.Name = "lb_customer_material_spec";
+            lb_customer_material_spec.Size = new Size(305, 24);
+            lb_customer_material_spec.TabIndex = 21;
+            lb_customer_material_spec.Tag = "产品规格：";
             // 
-            // labelControl16
+            // lb_jsbz_number
             // 
-            labelControl16.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl16.Appearance.Options.UseFont = true;
-            labelControl16.Appearance.Options.UseTextOptions = true;
-            labelControl16.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl16.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl16.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl16.Dock = DockStyle.Fill;
-            labelControl16.Location = new Point(10, 433);
-            labelControl16.Margin = new Padding(10, 3, 3, 3);
-            labelControl16.Name = "labelControl16";
-            labelControl16.Size = new Size(137, 24);
-            labelControl16.TabIndex = 14;
-            labelControl16.Text = "生产日期：";
+            lb_jsbz_number.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_jsbz_number.Appearance.Options.UseFont = true;
+            lb_jsbz_number.Dock = DockStyle.Fill;
+            lb_jsbz_number.Location = new Point(3, 193);
+            lb_jsbz_number.Name = "lb_jsbz_number";
+            lb_jsbz_number.Size = new Size(305, 24);
+            lb_jsbz_number.TabIndex = 21;
+            lb_jsbz_number.Tag = "用户标准代码：";
             // 
-            // labelControl15
+            // lb_jsbz_name
             // 
-            labelControl15.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl15.Appearance.Options.UseFont = true;
-            labelControl15.Appearance.Options.UseTextOptions = true;
-            labelControl15.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl15.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl15.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl15.Dock = DockStyle.Fill;
-            labelControl15.Location = new Point(10, 403);
-            labelControl15.Margin = new Padding(10, 3, 3, 3);
-            labelControl15.Name = "labelControl15";
-            labelControl15.Size = new Size(137, 24);
-            labelControl15.TabIndex = 13;
-            labelControl15.Text = "执行标准：";
+            lb_jsbz_name.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_jsbz_name.Appearance.Options.UseFont = true;
+            lb_jsbz_name.Dock = DockStyle.Fill;
+            lb_jsbz_name.Location = new Point(3, 223);
+            lb_jsbz_name.Name = "lb_jsbz_name";
+            lb_jsbz_name.Size = new Size(305, 24);
+            lb_jsbz_name.TabIndex = 21;
+            lb_jsbz_name.Tag = "用户标准名称：";
             // 
-            // labelControl14
+            // lb_xpzl_number
             // 
-            labelControl14.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl14.Appearance.Options.UseFont = true;
-            labelControl14.Appearance.Options.UseTextOptions = true;
-            labelControl14.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl14.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl14.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl14.Dock = DockStyle.Fill;
-            labelControl14.Location = new Point(10, 373);
-            labelControl14.Margin = new Padding(10, 3, 3, 3);
-            labelControl14.Name = "labelControl14";
-            labelControl14.Size = new Size(137, 24);
-            labelControl14.TabIndex = 12;
-            labelControl14.Text = "包装名称：";
+            lb_xpzl_number.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_xpzl_number.Appearance.Options.UseFont = true;
+            lb_xpzl_number.Dock = DockStyle.Fill;
+            lb_xpzl_number.Location = new Point(3, 253);
+            lb_xpzl_number.Name = "lb_xpzl_number";
+            lb_xpzl_number.Size = new Size(305, 24);
+            lb_xpzl_number.TabIndex = 21;
+            lb_xpzl_number.Tag = "线盘代码：";
             // 
-            // labelControl13
+            // lb_xpzl_name
             // 
-            labelControl13.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl13.Appearance.Options.UseFont = true;
-            labelControl13.Appearance.Options.UseTextOptions = true;
-            labelControl13.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl13.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl13.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl13.Dock = DockStyle.Fill;
-            labelControl13.Location = new Point(10, 343);
-            labelControl13.Margin = new Padding(10, 3, 3, 3);
-            labelControl13.Name = "labelControl13";
-            labelControl13.Size = new Size(137, 24);
-            labelControl13.TabIndex = 11;
-            labelControl13.Text = "包装代码：";
+            lb_xpzl_name.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_xpzl_name.Appearance.Options.UseFont = true;
+            lb_xpzl_name.Dock = DockStyle.Fill;
+            lb_xpzl_name.Location = new Point(3, 283);
+            lb_xpzl_name.Name = "lb_xpzl_name";
+            lb_xpzl_name.Size = new Size(305, 24);
+            lb_xpzl_name.TabIndex = 21;
+            lb_xpzl_name.Tag = "线盘名称：";
             // 
-            // labelControl12
+            // lb_xpzl_weight
             // 
-            labelControl12.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl12.Appearance.Options.UseFont = true;
-            labelControl12.Appearance.Options.UseTextOptions = true;
-            labelControl12.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl12.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl12.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl12.Dock = DockStyle.Fill;
-            labelControl12.Location = new Point(10, 313);
-            labelControl12.Margin = new Padding(10, 3, 3, 3);
-            labelControl12.Name = "labelControl12";
-            labelControl12.Size = new Size(137, 24);
-            labelControl12.TabIndex = 10;
-            labelControl12.Text = "线盘重量：";
+            lb_xpzl_weight.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_xpzl_weight.Appearance.Options.UseFont = true;
+            lb_xpzl_weight.Dock = DockStyle.Fill;
+            lb_xpzl_weight.Location = new Point(3, 313);
+            lb_xpzl_weight.Name = "lb_xpzl_weight";
+            lb_xpzl_weight.Size = new Size(305, 24);
+            lb_xpzl_weight.TabIndex = 21;
+            lb_xpzl_weight.Tag = "线盘重量：";
             // 
-            // labelControl11
+            // lb_package_info_code
             // 
-            labelControl11.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl11.Appearance.Options.UseFont = true;
-            labelControl11.Appearance.Options.UseTextOptions = true;
-            labelControl11.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl11.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl11.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl11.Dock = DockStyle.Fill;
-            labelControl11.Location = new Point(10, 283);
-            labelControl11.Margin = new Padding(10, 3, 3, 3);
-            labelControl11.Name = "labelControl11";
-            labelControl11.Size = new Size(137, 24);
-            labelControl11.TabIndex = 9;
-            labelControl11.Text = "线盘名称：";
+            lb_package_info_code.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_package_info_code.Appearance.Options.UseFont = true;
+            lb_package_info_code.Dock = DockStyle.Fill;
+            lb_package_info_code.Location = new Point(3, 343);
+            lb_package_info_code.Name = "lb_package_info_code";
+            lb_package_info_code.Size = new Size(305, 24);
+            lb_package_info_code.TabIndex = 21;
+            lb_package_info_code.Tag = "包装代码：";
             // 
-            // labelControl10
+            // lb_package_info_name
             // 
-            labelControl10.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl10.Appearance.Options.UseFont = true;
-            labelControl10.Appearance.Options.UseTextOptions = true;
-            labelControl10.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl10.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl10.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl10.Dock = DockStyle.Fill;
-            labelControl10.Location = new Point(10, 253);
-            labelControl10.Margin = new Padding(10, 3, 3, 3);
-            labelControl10.Name = "labelControl10";
-            labelControl10.Size = new Size(137, 24);
-            labelControl10.TabIndex = 8;
-            labelControl10.Text = "线盘代码：";
+            lb_package_info_name.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_package_info_name.Appearance.Options.UseFont = true;
+            lb_package_info_name.Dock = DockStyle.Fill;
+            lb_package_info_name.Location = new Point(3, 373);
+            lb_package_info_name.Name = "lb_package_info_name";
+            lb_package_info_name.Size = new Size(305, 24);
+            lb_package_info_name.TabIndex = 21;
+            lb_package_info_name.Tag = "包装名称：";
             // 
-            // labelControl9
+            // lb_material_execution_standard
             // 
-            labelControl9.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl9.Appearance.Options.UseFont = true;
-            labelControl9.Appearance.Options.UseTextOptions = true;
-            labelControl9.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl9.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl9.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl9.Dock = DockStyle.Left;
-            labelControl9.Location = new Point(10, 223);
-            labelControl9.Margin = new Padding(10, 3, 3, 3);
-            labelControl9.Name = "labelControl9";
-            labelControl9.Size = new Size(123, 24);
-            labelControl9.TabIndex = 7;
-            labelControl9.Text = "用户标准名称：";
+            lb_material_execution_standard.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_material_execution_standard.Appearance.Options.UseFont = true;
+            lb_material_execution_standard.Dock = DockStyle.Fill;
+            lb_material_execution_standard.Location = new Point(3, 403);
+            lb_material_execution_standard.Name = "lb_material_execution_standard";
+            lb_material_execution_standard.Size = new Size(305, 24);
+            lb_material_execution_standard.TabIndex = 21;
+            lb_material_execution_standard.Tag = "执行标准：";
             // 
-            // labelControl8
+            // lb_product_date
             // 
-            labelControl8.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl8.Appearance.Options.UseFont = true;
-            labelControl8.Appearance.Options.UseTextOptions = true;
-            labelControl8.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl8.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl8.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl8.Dock = DockStyle.Left;
-            labelControl8.Location = new Point(10, 193);
-            labelControl8.Margin = new Padding(10, 3, 3, 3);
-            labelControl8.Name = "labelControl8";
-            labelControl8.Size = new Size(123, 24);
-            labelControl8.TabIndex = 6;
-            labelControl8.Text = "用户标准代码：";
+            lb_product_date.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_product_date.Appearance.Options.UseFont = true;
+            lb_product_date.Dock = DockStyle.Fill;
+            lb_product_date.Location = new Point(3, 433);
+            lb_product_date.Name = "lb_product_date";
+            lb_product_date.Size = new Size(305, 24);
+            lb_product_date.TabIndex = 21;
+            lb_product_date.Tag = "生产日期：";
             // 
-            // labelControl7
+            // lb_machine_number
             // 
-            labelControl7.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl7.Appearance.Options.UseFont = true;
-            labelControl7.Appearance.Options.UseTextOptions = true;
-            labelControl7.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl7.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl7.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl7.Dock = DockStyle.Fill;
-            labelControl7.Location = new Point(10, 163);
-            labelControl7.Margin = new Padding(10, 3, 3, 3);
-            labelControl7.Name = "labelControl7";
-            labelControl7.Size = new Size(137, 24);
-            labelControl7.TabIndex = 5;
-            labelControl7.Text = "产品规格：";
+            lb_machine_number.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_machine_number.Appearance.Options.UseFont = true;
+            lb_machine_number.Dock = DockStyle.Fill;
+            lb_machine_number.Location = new Point(3, 463);
+            lb_machine_number.Name = "lb_machine_number";
+            lb_machine_number.Size = new Size(305, 24);
+            lb_machine_number.TabIndex = 21;
+            lb_machine_number.Tag = "生产机台：";
             // 
-            // labelControl6
+            // labelControl38
             // 
-            labelControl6.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl6.Appearance.Options.UseFont = true;
-            labelControl6.Appearance.Options.UseTextOptions = true;
-            labelControl6.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl6.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl6.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl6.Dock = DockStyle.Fill;
-            labelControl6.Location = new Point(10, 133);
-            labelControl6.Margin = new Padding(10, 3, 3, 3);
-            labelControl6.Name = "labelControl6";
-            labelControl6.Size = new Size(137, 24);
-            labelControl6.TabIndex = 4;
-            labelControl6.Text = "国标型号：";
+            labelControl38.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            labelControl38.Appearance.Options.UseFont = true;
+            labelControl38.Dock = DockStyle.Fill;
+            labelControl38.Location = new Point(3, 493);
+            labelControl38.Name = "labelControl38";
+            labelControl38.Size = new Size(305, 24);
+            labelControl38.TabIndex = 21;
+            labelControl38.Tag = "生产批号：";
             // 
-            // labelControl5
+            // lb_operator_code
             // 
-            labelControl5.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl5.Appearance.Options.UseFont = true;
-            labelControl5.Appearance.Options.UseTextOptions = true;
-            labelControl5.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl5.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl5.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl5.Dock = DockStyle.Fill;
-            labelControl5.Location = new Point(10, 103);
-            labelControl5.Margin = new Padding(10, 3, 3, 3);
-            labelControl5.Name = "labelControl5";
-            labelControl5.Size = new Size(137, 24);
-            labelControl5.TabIndex = 3;
-            labelControl5.Text = "产品信号：";
+            lb_operator_code.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_operator_code.Appearance.Options.UseFont = true;
+            lb_operator_code.Dock = DockStyle.Fill;
+            lb_operator_code.Location = new Point(3, 523);
+            lb_operator_code.Name = "lb_operator_code";
+            lb_operator_code.Size = new Size(305, 24);
+            lb_operator_code.TabIndex = 21;
+            lb_operator_code.Tag = "生产工号：";
             // 
-            // labelControl4
+            // labelControl40
             // 
-            labelControl4.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl4.Appearance.Options.UseFont = true;
-            labelControl4.Appearance.Options.UseTextOptions = true;
-            labelControl4.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl4.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl4.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl4.Dock = DockStyle.Fill;
-            labelControl4.Location = new Point(10, 73);
-            labelControl4.Margin = new Padding(10, 3, 3, 3);
-            labelControl4.Name = "labelControl4";
-            labelControl4.Size = new Size(137, 24);
-            labelControl4.TabIndex = 2;
-            labelControl4.Text = "产品代码：";
+            labelControl40.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            labelControl40.Appearance.Options.UseFont = true;
+            labelControl40.Dock = DockStyle.Fill;
+            labelControl40.Location = new Point(3, 553);
+            labelControl40.Name = "labelControl40";
+            labelControl40.Size = new Size(305, 24);
+            labelControl40.TabIndex = 21;
+            labelControl40.Tag = "包装组编号：";
             // 
-            // labelControl3
+            // lb_operator_name
             // 
-            labelControl3.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl3.Appearance.Options.UseFont = true;
-            labelControl3.Appearance.Options.UseTextOptions = true;
-            labelControl3.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl3.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl3.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl3.Dock = DockStyle.Fill;
-            labelControl3.Location = new Point(10, 43);
-            labelControl3.Margin = new Padding(10, 3, 3, 3);
-            labelControl3.Name = "labelControl3";
-            labelControl3.Size = new Size(137, 24);
-            labelControl3.TabIndex = 1;
-            labelControl3.Text = "生产工单：";
+            lb_operator_name.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_operator_name.Appearance.Options.UseFont = true;
+            lb_operator_name.Dock = DockStyle.Fill;
+            lb_operator_name.Location = new Point(3, 583);
+            lb_operator_name.Name = "lb_operator_name";
+            lb_operator_name.Size = new Size(305, 24);
+            lb_operator_name.TabIndex = 21;
+            lb_operator_name.Tag = "包装组名称：";
+            // 
+            // lb_fix_prod_code
+            // 
+            lb_fix_prod_code.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_fix_prod_code.Appearance.Options.UseFont = true;
+            lb_fix_prod_code.Dock = DockStyle.Fill;
+            lb_fix_prod_code.Location = new Point(3, 613);
+            lb_fix_prod_code.Name = "lb_fix_prod_code";
+            lb_fix_prod_code.Size = new Size(305, 24);
+            lb_fix_prod_code.TabIndex = 21;
+            lb_fix_prod_code.Tag = "产品码：";
             // 
             // labelControl2
             // 
@@ -671,229 +549,12 @@
             labelControl2.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             labelControl2.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             labelControl2.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl2.Dock = DockStyle.Left;
             labelControl2.Location = new Point(10, 3);
             labelControl2.Margin = new Padding(10, 3, 3, 3);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(123, 34);
             labelControl2.TabIndex = 0;
             labelControl2.Text = "产品信息：";
-            // 
-            // labelControl22
-            // 
-            labelControl22.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl22.Appearance.Options.UseFont = true;
-            labelControl22.Appearance.Options.UseTextOptions = true;
-            labelControl22.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            labelControl22.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl22.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            labelControl22.Dock = DockStyle.Fill;
-            labelControl22.Location = new Point(10, 613);
-            labelControl22.Margin = new Padding(10, 3, 3, 3);
-            labelControl22.Name = "labelControl22";
-            labelControl22.Size = new Size(137, 24);
-            labelControl22.TabIndex = 20;
-            labelControl22.Text = "产品码：";
-            // 
-            // lb_product_order_no
-            // 
-            lb_product_order_no.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_product_order_no.Appearance.Options.UseFont = true;
-            lb_product_order_no.Dock = DockStyle.Fill;
-            lb_product_order_no.Location = new Point(153, 43);
-            lb_product_order_no.Name = "lb_product_order_no";
-            lb_product_order_no.Size = new Size(155, 24);
-            lb_product_order_no.TabIndex = 21;
-            // 
-            // lb_material_number
-            // 
-            lb_material_number.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            lb_material_number.Appearance.Options.UseFont = true;
-            lb_material_number.Dock = DockStyle.Fill;
-            lb_material_number.Location = new Point(153, 73);
-            lb_material_number.Name = "lb_material_number";
-            lb_material_number.Size = new Size(155, 24);
-            lb_material_number.TabIndex = 21;
-            // 
-            // labelControl25
-            // 
-            labelControl25.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl25.Appearance.Options.UseFont = true;
-            labelControl25.Dock = DockStyle.Fill;
-            labelControl25.Location = new Point(153, 103);
-            labelControl25.Name = "labelControl25";
-            labelControl25.Size = new Size(155, 24);
-            labelControl25.TabIndex = 21;
-            // 
-            // labelControl26
-            // 
-            labelControl26.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl26.Appearance.Options.UseFont = true;
-            labelControl26.Dock = DockStyle.Fill;
-            labelControl26.Location = new Point(153, 133);
-            labelControl26.Name = "labelControl26";
-            labelControl26.Size = new Size(155, 24);
-            labelControl26.TabIndex = 21;
-            // 
-            // labelControl27
-            // 
-            labelControl27.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl27.Appearance.Options.UseFont = true;
-            labelControl27.Dock = DockStyle.Fill;
-            labelControl27.Location = new Point(153, 163);
-            labelControl27.Name = "labelControl27";
-            labelControl27.Size = new Size(155, 24);
-            labelControl27.TabIndex = 21;
-            // 
-            // labelControl28
-            // 
-            labelControl28.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl28.Appearance.Options.UseFont = true;
-            labelControl28.Dock = DockStyle.Fill;
-            labelControl28.Location = new Point(153, 193);
-            labelControl28.Name = "labelControl28";
-            labelControl28.Size = new Size(155, 24);
-            labelControl28.TabIndex = 21;
-            // 
-            // labelControl29
-            // 
-            labelControl29.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl29.Appearance.Options.UseFont = true;
-            labelControl29.Dock = DockStyle.Fill;
-            labelControl29.Location = new Point(153, 223);
-            labelControl29.Name = "labelControl29";
-            labelControl29.Size = new Size(155, 24);
-            labelControl29.TabIndex = 21;
-            // 
-            // labelControl30
-            // 
-            labelControl30.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl30.Appearance.Options.UseFont = true;
-            labelControl30.Dock = DockStyle.Fill;
-            labelControl30.Location = new Point(153, 253);
-            labelControl30.Name = "labelControl30";
-            labelControl30.Size = new Size(155, 24);
-            labelControl30.TabIndex = 21;
-            // 
-            // labelControl31
-            // 
-            labelControl31.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl31.Appearance.Options.UseFont = true;
-            labelControl31.Dock = DockStyle.Fill;
-            labelControl31.Location = new Point(153, 283);
-            labelControl31.Name = "labelControl31";
-            labelControl31.Size = new Size(155, 24);
-            labelControl31.TabIndex = 21;
-            // 
-            // labelControl32
-            // 
-            labelControl32.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl32.Appearance.Options.UseFont = true;
-            labelControl32.Dock = DockStyle.Fill;
-            labelControl32.Location = new Point(153, 313);
-            labelControl32.Name = "labelControl32";
-            labelControl32.Size = new Size(155, 24);
-            labelControl32.TabIndex = 21;
-            // 
-            // labelControl33
-            // 
-            labelControl33.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl33.Appearance.Options.UseFont = true;
-            labelControl33.Dock = DockStyle.Fill;
-            labelControl33.Location = new Point(153, 343);
-            labelControl33.Name = "labelControl33";
-            labelControl33.Size = new Size(155, 24);
-            labelControl33.TabIndex = 21;
-            // 
-            // labelControl34
-            // 
-            labelControl34.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl34.Appearance.Options.UseFont = true;
-            labelControl34.Dock = DockStyle.Fill;
-            labelControl34.Location = new Point(153, 373);
-            labelControl34.Name = "labelControl34";
-            labelControl34.Size = new Size(155, 24);
-            labelControl34.TabIndex = 21;
-            // 
-            // labelControl35
-            // 
-            labelControl35.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl35.Appearance.Options.UseFont = true;
-            labelControl35.Dock = DockStyle.Fill;
-            labelControl35.Location = new Point(153, 403);
-            labelControl35.Name = "labelControl35";
-            labelControl35.Size = new Size(155, 24);
-            labelControl35.TabIndex = 21;
-            // 
-            // labelControl36
-            // 
-            labelControl36.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl36.Appearance.Options.UseFont = true;
-            labelControl36.Dock = DockStyle.Fill;
-            labelControl36.Location = new Point(153, 433);
-            labelControl36.Name = "labelControl36";
-            labelControl36.Size = new Size(155, 24);
-            labelControl36.TabIndex = 21;
-            // 
-            // labelControl37
-            // 
-            labelControl37.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl37.Appearance.Options.UseFont = true;
-            labelControl37.Dock = DockStyle.Fill;
-            labelControl37.Location = new Point(153, 463);
-            labelControl37.Name = "labelControl37";
-            labelControl37.Size = new Size(155, 24);
-            labelControl37.TabIndex = 21;
-            // 
-            // labelControl38
-            // 
-            labelControl38.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl38.Appearance.Options.UseFont = true;
-            labelControl38.Dock = DockStyle.Fill;
-            labelControl38.Location = new Point(153, 493);
-            labelControl38.Name = "labelControl38";
-            labelControl38.Size = new Size(155, 24);
-            labelControl38.TabIndex = 21;
-            // 
-            // labelControl39
-            // 
-            labelControl39.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl39.Appearance.Options.UseFont = true;
-            labelControl39.Dock = DockStyle.Fill;
-            labelControl39.Location = new Point(153, 523);
-            labelControl39.Name = "labelControl39";
-            labelControl39.Size = new Size(155, 24);
-            labelControl39.TabIndex = 21;
-            // 
-            // labelControl40
-            // 
-            labelControl40.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl40.Appearance.Options.UseFont = true;
-            labelControl40.Dock = DockStyle.Fill;
-            labelControl40.Location = new Point(153, 553);
-            labelControl40.Name = "labelControl40";
-            labelControl40.Size = new Size(155, 24);
-            labelControl40.TabIndex = 21;
-            // 
-            // labelControl41
-            // 
-            labelControl41.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl41.Appearance.Options.UseFont = true;
-            labelControl41.Dock = DockStyle.Fill;
-            labelControl41.Location = new Point(153, 583);
-            labelControl41.Name = "labelControl41";
-            labelControl41.Size = new Size(155, 24);
-            labelControl41.TabIndex = 21;
-            // 
-            // labelControl42
-            // 
-            labelControl42.Appearance.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl42.Appearance.Options.UseFont = true;
-            labelControl42.Dock = DockStyle.Fill;
-            labelControl42.Location = new Point(153, 613);
-            labelControl42.Name = "labelControl42";
-            labelControl42.Size = new Size(155, 24);
-            labelControl42.TabIndex = 21;
             // 
             // panel1
             // 
@@ -1227,18 +888,18 @@
             tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.1111107F));
             tableLayoutPanel11.Controls.Add(labelControl55, 0, 3);
             tableLayoutPanel11.Controls.Add(labelControl56, 0, 2);
-            tableLayoutPanel11.Controls.Add(labelControl57, 1, 3);
+            tableLayoutPanel11.Controls.Add(lbBoxCode, 1, 3);
             tableLayoutPanel11.Controls.Add(labelControl58, 3, 2);
             tableLayoutPanel11.Controls.Add(labelControl59, 6, 2);
             tableLayoutPanel11.Controls.Add(labelControl60, 0, 0);
             tableLayoutPanel11.Controls.Add(labelControl61, 2, 2);
             tableLayoutPanel11.Controls.Add(labelControl62, 5, 2);
             tableLayoutPanel11.Controls.Add(labelControl63, 8, 2);
-            tableLayoutPanel11.Controls.Add(labelControl64, 1, 2);
-            tableLayoutPanel11.Controls.Add(labelControl65, 4, 2);
-            tableLayoutPanel11.Controls.Add(labelControl66, 7, 2);
-            tableLayoutPanel11.Controls.Add(labelControl67, 2, 0);
-            tableLayoutPanel11.Controls.Add(labelControl68, 0, 1);
+            tableLayoutPanel11.Controls.Add(lbGrossWeight, 1, 2);
+            tableLayoutPanel11.Controls.Add(lbSkinWeight, 4, 2);
+            tableLayoutPanel11.Controls.Add(lbNetWeight, 7, 2);
+            tableLayoutPanel11.Controls.Add(lbTotalWeight, 2, 0);
+            tableLayoutPanel11.Controls.Add(lbTareWeight, 0, 1);
             tableLayoutPanel11.Controls.Add(simpleButton2, 5, 0);
             tableLayoutPanel11.Controls.Add(simpleButton4, 7, 0);
             tableLayoutPanel11.Controls.Add(simpleButton5, 7, 1);
@@ -1276,22 +937,24 @@
             labelControl56.TabIndex = 0;
             labelControl56.Text = "毛重";
             // 
-            // labelControl57
+            // lbBoxCode
             // 
-            labelControl57.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl57.Appearance.ForeColor = Color.Red;
-            labelControl57.Appearance.Options.UseFont = true;
-            labelControl57.Appearance.Options.UseForeColor = true;
-            labelControl57.Appearance.Options.UseTextOptions = true;
-            labelControl57.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            labelControl57.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            tableLayoutPanel11.SetColumnSpan(labelControl57, 8);
-            labelControl57.Dock = DockStyle.Fill;
-            labelControl57.Location = new Point(61, 111);
-            labelControl57.Name = "labelControl57";
-            labelControl57.Size = new Size(463, 33);
-            labelControl57.TabIndex = 1;
-            labelControl57.Text = "TY4121050-A206-BZ001-B12310001-04903";
+            lbBoxCode.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lbBoxCode.Appearance.ForeColor = Color.Red;
+            lbBoxCode.Appearance.Options.UseFont = true;
+            lbBoxCode.Appearance.Options.UseForeColor = true;
+            lbBoxCode.Appearance.Options.UseTextOptions = true;
+            lbBoxCode.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbBoxCode.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbBoxCode.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            tableLayoutPanel11.SetColumnSpan(lbBoxCode, 8);
+            lbBoxCode.Dock = DockStyle.Fill;
+            lbBoxCode.Location = new Point(61, 111);
+            lbBoxCode.Name = "lbBoxCode";
+            lbBoxCode.Size = new Size(463, 33);
+            lbBoxCode.TabIndex = 1;
+            lbBoxCode.Tag = "产品码：";
+            lbBoxCode.Text = "TY4121050-A206-BZ001-B12310001-04903";
             // 
             // labelControl58
             // 
@@ -1378,89 +1041,91 @@
             labelControl63.TabIndex = 1;
             labelControl63.Text = "KG";
             // 
-            // labelControl64
+            // lbGrossWeight
             // 
-            labelControl64.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl64.Appearance.ForeColor = Color.Red;
-            labelControl64.Appearance.Options.UseFont = true;
-            labelControl64.Appearance.Options.UseForeColor = true;
-            labelControl64.Appearance.Options.UseTextOptions = true;
-            labelControl64.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            labelControl64.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl64.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
-            labelControl64.Dock = DockStyle.Fill;
-            labelControl64.Location = new Point(61, 75);
-            labelControl64.Name = "labelControl64";
-            labelControl64.Size = new Size(52, 30);
-            labelControl64.TabIndex = 1;
-            labelControl64.Text = "123";
+            lbGrossWeight.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lbGrossWeight.Appearance.ForeColor = Color.Red;
+            lbGrossWeight.Appearance.Options.UseFont = true;
+            lbGrossWeight.Appearance.Options.UseForeColor = true;
+            lbGrossWeight.Appearance.Options.UseTextOptions = true;
+            lbGrossWeight.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbGrossWeight.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbGrossWeight.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            lbGrossWeight.Dock = DockStyle.Fill;
+            lbGrossWeight.Location = new Point(61, 75);
+            lbGrossWeight.Name = "lbGrossWeight";
+            lbGrossWeight.Size = new Size(52, 30);
+            lbGrossWeight.TabIndex = 1;
+            lbGrossWeight.Text = "123";
             // 
-            // labelControl65
+            // lbSkinWeight
             // 
-            labelControl65.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl65.Appearance.ForeColor = Color.Red;
-            labelControl65.Appearance.Options.UseFont = true;
-            labelControl65.Appearance.Options.UseForeColor = true;
-            labelControl65.Appearance.Options.UseTextOptions = true;
-            labelControl65.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            labelControl65.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl65.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
-            labelControl65.Dock = DockStyle.Fill;
-            labelControl65.Location = new Point(235, 75);
-            labelControl65.Name = "labelControl65";
-            labelControl65.Size = new Size(52, 30);
-            labelControl65.TabIndex = 1;
-            labelControl65.Text = "123";
+            lbSkinWeight.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lbSkinWeight.Appearance.ForeColor = Color.Red;
+            lbSkinWeight.Appearance.Options.UseFont = true;
+            lbSkinWeight.Appearance.Options.UseForeColor = true;
+            lbSkinWeight.Appearance.Options.UseTextOptions = true;
+            lbSkinWeight.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbSkinWeight.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbSkinWeight.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            lbSkinWeight.Dock = DockStyle.Fill;
+            lbSkinWeight.Location = new Point(235, 75);
+            lbSkinWeight.Name = "lbSkinWeight";
+            lbSkinWeight.Size = new Size(52, 30);
+            lbSkinWeight.TabIndex = 1;
+            lbSkinWeight.Text = "123";
             // 
-            // labelControl66
+            // lbNetWeight
             // 
-            labelControl66.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl66.Appearance.ForeColor = Color.Red;
-            labelControl66.Appearance.Options.UseFont = true;
-            labelControl66.Appearance.Options.UseForeColor = true;
-            labelControl66.Appearance.Options.UseTextOptions = true;
-            labelControl66.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            labelControl66.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            labelControl66.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
-            labelControl66.Dock = DockStyle.Fill;
-            labelControl66.Location = new Point(409, 75);
-            labelControl66.Name = "labelControl66";
-            labelControl66.Size = new Size(52, 30);
-            labelControl66.TabIndex = 1;
-            labelControl66.Text = "123";
+            lbNetWeight.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lbNetWeight.Appearance.ForeColor = Color.Red;
+            lbNetWeight.Appearance.Options.UseFont = true;
+            lbNetWeight.Appearance.Options.UseForeColor = true;
+            lbNetWeight.Appearance.Options.UseTextOptions = true;
+            lbNetWeight.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbNetWeight.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbNetWeight.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            lbNetWeight.Dock = DockStyle.Fill;
+            lbNetWeight.Location = new Point(409, 75);
+            lbNetWeight.Name = "lbNetWeight";
+            lbNetWeight.Size = new Size(52, 30);
+            lbNetWeight.TabIndex = 1;
+            lbNetWeight.Text = "123";
             // 
-            // labelControl67
+            // lbTotalWeight
             // 
-            labelControl67.Appearance.Font = new Font("微软雅黑", 22F, FontStyle.Bold, GraphicsUnit.Point);
-            labelControl67.Appearance.ForeColor = Color.Red;
-            labelControl67.Appearance.Options.UseFont = true;
-            labelControl67.Appearance.Options.UseForeColor = true;
-            labelControl67.Appearance.Options.UseTextOptions = true;
-            labelControl67.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            labelControl67.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            tableLayoutPanel11.SetColumnSpan(labelControl67, 2);
-            labelControl67.Dock = DockStyle.Fill;
-            labelControl67.Location = new Point(119, 3);
-            labelControl67.Name = "labelControl67";
-            tableLayoutPanel11.SetRowSpan(labelControl67, 2);
-            labelControl67.Size = new Size(110, 66);
-            labelControl67.TabIndex = 1;
-            labelControl67.Text = "123.05";
+            lbTotalWeight.Appearance.Font = new Font("微软雅黑", 22F, FontStyle.Bold, GraphicsUnit.Point);
+            lbTotalWeight.Appearance.ForeColor = Color.Red;
+            lbTotalWeight.Appearance.Options.UseFont = true;
+            lbTotalWeight.Appearance.Options.UseForeColor = true;
+            lbTotalWeight.Appearance.Options.UseTextOptions = true;
+            lbTotalWeight.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbTotalWeight.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbTotalWeight.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            tableLayoutPanel11.SetColumnSpan(lbTotalWeight, 2);
+            lbTotalWeight.Dock = DockStyle.Fill;
+            lbTotalWeight.Location = new Point(119, 3);
+            lbTotalWeight.Name = "lbTotalWeight";
+            tableLayoutPanel11.SetRowSpan(lbTotalWeight, 2);
+            lbTotalWeight.Size = new Size(110, 66);
+            lbTotalWeight.TabIndex = 1;
+            lbTotalWeight.Text = "123.05";
             // 
-            // labelControl68
+            // lbTareWeight
             // 
-            labelControl68.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelControl68.Appearance.Options.UseFont = true;
-            labelControl68.Appearance.Options.UseTextOptions = true;
-            labelControl68.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            labelControl68.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            tableLayoutPanel11.SetColumnSpan(labelControl68, 2);
-            labelControl68.Dock = DockStyle.Fill;
-            labelControl68.Location = new Point(3, 39);
-            labelControl68.Name = "labelControl68";
-            labelControl68.Size = new Size(110, 30);
-            labelControl68.TabIndex = 2;
-            labelControl68.Text = "0.02";
+            lbTareWeight.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lbTareWeight.Appearance.Options.UseFont = true;
+            lbTareWeight.Appearance.Options.UseTextOptions = true;
+            lbTareWeight.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbTareWeight.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbTareWeight.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            tableLayoutPanel11.SetColumnSpan(lbTareWeight, 2);
+            lbTareWeight.Dock = DockStyle.Fill;
+            lbTareWeight.Location = new Point(3, 39);
+            lbTareWeight.Name = "lbTareWeight";
+            lbTareWeight.Size = new Size(110, 30);
+            lbTareWeight.TabIndex = 2;
+            lbTareWeight.Text = "0.02";
             // 
             // simpleButton2
             // 
@@ -1474,6 +1139,7 @@
             simpleButton2.Size = new Size(108, 28);
             simpleButton2.TabIndex = 3;
             simpleButton2.Text = "保存";
+            simpleButton2.Click += Save;
             // 
             // simpleButton4
             // 
@@ -1487,6 +1153,7 @@
             simpleButton4.Size = new Size(113, 28);
             simpleButton4.TabIndex = 3;
             simpleButton4.Text = "打印";
+            simpleButton4.Click += Print;
             // 
             // simpleButton5
             // 
@@ -1500,6 +1167,7 @@
             simpleButton5.Size = new Size(113, 28);
             simpleButton5.TabIndex = 3;
             simpleButton5.Text = "历史查询";
+            simpleButton5.Click += HistorySearch;
             // 
             // simpleButton3
             // 
@@ -1513,6 +1181,7 @@
             simpleButton3.Size = new Size(108, 28);
             simpleButton3.TabIndex = 3;
             simpleButton3.Text = "删除";
+            simpleButton3.Click += Delete;
             // 
             // tableLayoutPanel4
             // 
@@ -1810,52 +1479,32 @@
         private TableLayoutPanel tableLayoutPanelHeader;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.TextEdit txtScanCode;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btnExit;
         private Label lbErroInfo;
         private TableLayoutPanel tableLayoutPanel1;
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private TableLayoutPanel tableLayoutPanel2;
-        private DevExpress.XtraEditors.LabelControl labelControl21;
-        private DevExpress.XtraEditors.LabelControl labelControl20;
-        private DevExpress.XtraEditors.LabelControl labelControl19;
-        private DevExpress.XtraEditors.LabelControl labelControl18;
-        private DevExpress.XtraEditors.LabelControl labelControl17;
-        private DevExpress.XtraEditors.LabelControl labelControl16;
-        private DevExpress.XtraEditors.LabelControl labelControl15;
-        private DevExpress.XtraEditors.LabelControl labelControl14;
-        private DevExpress.XtraEditors.LabelControl labelControl13;
-        private DevExpress.XtraEditors.LabelControl labelControl12;
-        private DevExpress.XtraEditors.LabelControl labelControl11;
-        private DevExpress.XtraEditors.LabelControl labelControl10;
-        private DevExpress.XtraEditors.LabelControl labelControl9;
-        private DevExpress.XtraEditors.LabelControl labelControl8;
-        private DevExpress.XtraEditors.LabelControl labelControl7;
-        private DevExpress.XtraEditors.LabelControl labelControl6;
-        private DevExpress.XtraEditors.LabelControl labelControl5;
-        private DevExpress.XtraEditors.LabelControl labelControl4;
-        private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.LabelControl labelControl22;
         private DevExpress.XtraEditors.LabelControl lb_product_order_no;
-        private DevExpress.XtraEditors.LabelControl lb_material_number;
-        private DevExpress.XtraEditors.LabelControl labelControl25;
-        private DevExpress.XtraEditors.LabelControl labelControl26;
-        private DevExpress.XtraEditors.LabelControl labelControl27;
-        private DevExpress.XtraEditors.LabelControl labelControl28;
-        private DevExpress.XtraEditors.LabelControl labelControl29;
-        private DevExpress.XtraEditors.LabelControl labelControl30;
-        private DevExpress.XtraEditors.LabelControl labelControl31;
-        private DevExpress.XtraEditors.LabelControl labelControl32;
-        private DevExpress.XtraEditors.LabelControl labelControl33;
-        private DevExpress.XtraEditors.LabelControl labelControl34;
-        private DevExpress.XtraEditors.LabelControl labelControl35;
-        private DevExpress.XtraEditors.LabelControl labelControl36;
-        private DevExpress.XtraEditors.LabelControl labelControl37;
+        private DevExpress.XtraEditors.LabelControl lb_customer_number;
+        private DevExpress.XtraEditors.LabelControl lb_customer_name;
+        private DevExpress.XtraEditors.LabelControl lb_material_ns_model;
+        private DevExpress.XtraEditors.LabelControl lb_customer_material_spec;
+        private DevExpress.XtraEditors.LabelControl lb_jsbz_number;
+        private DevExpress.XtraEditors.LabelControl lb_jsbz_name;
+        private DevExpress.XtraEditors.LabelControl lb_xpzl_number;
+        private DevExpress.XtraEditors.LabelControl lb_xpzl_name;
+        private DevExpress.XtraEditors.LabelControl lb_xpzl_weight;
+        private DevExpress.XtraEditors.LabelControl lb_package_info_code;
+        private DevExpress.XtraEditors.LabelControl lb_package_info_name;
+        private DevExpress.XtraEditors.LabelControl lb_material_execution_standard;
+        private DevExpress.XtraEditors.LabelControl lb_product_date;
+        private DevExpress.XtraEditors.LabelControl lb_machine_number;
         private DevExpress.XtraEditors.LabelControl labelControl38;
-        private DevExpress.XtraEditors.LabelControl labelControl39;
+        private DevExpress.XtraEditors.LabelControl lb_operator_code;
         private DevExpress.XtraEditors.LabelControl labelControl40;
-        private DevExpress.XtraEditors.LabelControl labelControl41;
-        private DevExpress.XtraEditors.LabelControl labelControl42;
+        private DevExpress.XtraEditors.LabelControl lb_operator_name;
+        private DevExpress.XtraEditors.LabelControl lb_fix_prod_code;
         private TableLayoutPanel tableLayoutPanel3;
         private Panel panel1;
         private DevExpress.XtraEditors.LabelControl labelControl23;
@@ -1901,18 +1550,18 @@
         private TableLayoutPanel tableLayoutPanel11;
         private DevExpress.XtraEditors.LabelControl labelControl55;
         private DevExpress.XtraEditors.LabelControl labelControl56;
-        private DevExpress.XtraEditors.LabelControl labelControl57;
+        private DevExpress.XtraEditors.LabelControl lbBoxCode;
         private DevExpress.XtraEditors.LabelControl labelControl58;
         private DevExpress.XtraEditors.LabelControl labelControl59;
         private DevExpress.XtraEditors.LabelControl labelControl60;
         private DevExpress.XtraEditors.LabelControl labelControl61;
         private DevExpress.XtraEditors.LabelControl labelControl62;
         private DevExpress.XtraEditors.LabelControl labelControl63;
-        private DevExpress.XtraEditors.LabelControl labelControl64;
-        private DevExpress.XtraEditors.LabelControl labelControl65;
-        private DevExpress.XtraEditors.LabelControl labelControl66;
-        private DevExpress.XtraEditors.LabelControl labelControl67;
-        private DevExpress.XtraEditors.LabelControl labelControl68;
+        private DevExpress.XtraEditors.LabelControl lbGrossWeight;
+        private DevExpress.XtraEditors.LabelControl lbSkinWeight;
+        private DevExpress.XtraEditors.LabelControl lbNetWeight;
+        private DevExpress.XtraEditors.LabelControl lbTotalWeight;
+        private DevExpress.XtraEditors.LabelControl lbTareWeight;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraEditors.SimpleButton simpleButton4;
         private DevExpress.XtraEditors.SimpleButton simpleButton5;
