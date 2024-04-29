@@ -1,15 +1,74 @@
-﻿<UserControl 
+﻿<UserControl
     x:Class="PMES_WPF.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
     xmlns:ViewModels="clr-namespace:PMES_WPF.ViewModels"
-    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+    mc:Ignorable="d" d:DesignHeight="1080" d:DesignWidth="1920">
     <UserControl.DataContext>
-        <ViewModels:MainViewModel/>
+        <ViewModels:MainViewModel />
     </UserControl.DataContext>
-    <Grid>
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"></Setter>
+            <Setter Property="FontStyle" Value="Normal"></Setter>
+            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
+        </Style>
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontSize" Value="30"></Setter>
+            <Setter Property="FontStyle" Value="Normal"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+            <Setter Property="Padding" Value="15,0,0,0"></Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="24"></Setter>
+            <Setter Property="FontStyle" Value="Normal"></Setter>
+            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Width" Value="140"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="Background" Value="#F4F4F4"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#81D3F8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="530"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="230"></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="PMES - 欢迎使用成品智能包装系统" Grid.Column="0" Style="{StaticResource TitleLabel}"></Label>
+            <TextBlock Text="ErrorInfo" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Grid.Column="1" FontSize="24" Background="#81D3F8">
+            </TextBlock>
+            <TextBox Grid.Column="2" Margin="5" FontSize="20"></TextBox>
+            <Button Grid.Column="3" Content="退出系统" Click="ButtonBase_OnClick"></Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="0.8*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderThickness="1" BorderBrush="DarkGray" Margin="3,3,3,3">
+
+            </Border>
+
+        </Grid>
+
+
     </Grid>
 </UserControl>

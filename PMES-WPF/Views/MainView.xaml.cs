@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DevExpress.Data.XtraReports.ReportGeneration;
+using DevExpress.Xpf.Printing;
 
 namespace PMES_WPF.Views
 {
@@ -22,6 +24,18 @@ namespace PMES_WPF.Views
         public MainView()
         {
             InitializeComponent();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var report = new XtraReport1();
+            report.DataSource = new List<object>()
+            {
+              
+            };
+            PrintHelper.ShowPrintPreview(this,report);
+
+
         }
     }
 }

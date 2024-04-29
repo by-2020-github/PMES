@@ -1,30 +1,29 @@
 ﻿using Serilog;
 
-namespace PMES.Core.Managers
+namespace PMES.Core.Managers;
+
+public class FreeSqlManager
 {
-    public class FreeSqlManager
+    private static readonly Lazy<FSqlHelper>
+        Holder = new(() => new FSqlHelper(DbLogger, ConnStr));
+
+    //private static string _connStr = @"Data Source=127.0.0.1;Port=3308;User ID=root;Password=Qq123.456; Initial Catalog=avant_sicd_automatic.1;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true";
+
+    public static string ConnStr { get; } =
+        @"Data Source=139.196.120.197;Port=3306;User ID=root;Password=Qq123.456; Initial Catalog=my_test;Charset=utf8; SslMode=none;Min pool size=1";
+
+    public static ILogger DbLogger { get; set; }
+
+    public static FSqlHelper FSqlHelper => Holder.Value;
+
+    public static IFreeSql FSql => Holder.Value.FSql;
+
+    public static void SyncDbStructure()
     {
-        private static readonly Lazy<FSqlHelper>
-            Holder = new Lazy<FSqlHelper>(() => new FSqlHelper(DbLogger, ConnStr));
+        //FSql.CodeFirst.SyncStructure<ModuleParam>();
+    }
 
-        //private static string _connStr = @"Data Source=127.0.0.1;Port=3308;User ID=root;Password=Qq123.456; Initial Catalog=avant_sicd_automatic.1;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true";
-
-        public static string ConnStr { get; } =
-            @"Data Source=139.196.120.197;Port=3306;User ID=root;Password=Qq123.456; Initial Catalog=my_test;Charset=utf8; SslMode=none;Min pool size=1";
-
-        public static ILogger DbLogger { get; set; }
-
-        public static FSqlHelper FSqlHelper => Holder.Value;
-
-        public static IFreeSql FSql => Holder.Value.FSql;
-
-        public static void SyncDbStructure()
-        {
-            //FSql.CodeFirst.SyncStructure<ModuleParam>();
-        }
-
-        public static void ConfigNavigate()
-        {
-        }
+    public static void ConfigNavigate()
+    {
     }
 }

@@ -1,58 +1,174 @@
-﻿using DevExpress.XtraBars.Docking;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.IO;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO.Ports;
 using Serilog;
-namespace PMES.Core
+
+namespace PMES.Core;
+
+public class WeighingMachine
 {
-    public class WeighingMachine
+    private readonly ILogger _logger;
+
+    private int _port;
+
+    private string _portName;
+    private SerialPort _serialPort;
+
+    public Action<double> OnGetWeight { get; set; }
+    private List<double> _buffer = new List<double>();
+
+    public WeighingMachine(ILogger logger)
     {
-        private SerialPort _serialPort;
+        _logger = logger;
+        _logger?.Verbose("WeighingMachine 对象已加载...");
+    }
 
-        private int _port;
-
-        private string _portName;
-
-        private ILogger _logger;
-
-        public WeighingMachine(ILogger logger)
+    public void Open(
+        string portName,
+        int baudRate = 9600,
+        Parity parity = Parity.None,
+        int dataBits = 8,
+        StopBits stopBits = StopBits.One)
+    {
+        _serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits);
+        _serialPort.NewLine = "\r\n";
+        _serialPort.ReadTimeout = 3000;
+        _serialPort.WriteTimeout = 3000;
+        try
         {
-            _logger = logger;
+            if (!_serialPort.IsOpen)
+            {
+                _serialPort.Open();
+            }
+        }
+        catch (Exception e)
+        {
+            _logger?.Error($"电子秤串口打开失败！{e}");
+        }
+    }
+
+
+    public void Close()
+    {
+        if (_serialPort.IsOpen)
+        {
+            _serialPort.Open();
+        }
+    }
+
+    public void AddEvent()
+    {
+        _serialPort.DataReceived += SerialPortOnDataReceived;
+    }
+
+    public void RemoveEvent()
+    {
+        _serialPort.DataReceived -= SerialPortOnDataReceived;
+    }
+
+    public async Task<double> GetWeight()
+    {
+        return await ReadWeight();
+
+        var start = DateTime.Now;
+        var buffer = new List<double>();
+        while ((DateTime.Now - start).TotalSeconds < 5)
+        {
+            await Task.Delay(200);
+            var ret = await ReadWeight();
+            _logger?.Verbose($"读取到重量:{ret}");
+            if (ret <= 0)
+            {
+                continue;
+            }
+
+            if (_buffer.Count < 3)
+            {
+                buffer.Add(ret);
+                continue;
+            }
+
+            if (buffer.Max() - buffer.Min() < 0.5)
+            {
+                return buffer.Average();
+            }
+
+            buffer.RemoveAt(0);
+            buffer.Add(ret);
         }
 
-        public void Open(
-            string portName,
-            int baudRate = 9600,
-            Parity parity = Parity.None,
-            int dataBits = 8,
-            StopBits stopBits = StopBits.One)
+        return -1;
+    }
+
+    private async Task<double> ReadWeight()
+    {
+        return await Task.Run(async () =>
         {
-            _serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits);
-            _serialPort.NewLine = "\r\n";
-            _serialPort.ReadTimeout = 3000;
-            _serialPort.WriteTimeout = 3000;
+            //查询稳态重量 如果超过三秒没有稳定则放弃
+            try
+            {
+                _serialPort.WriteLine("S ");
+                var readLine = _serialPort.ReadLine();
+                if (string.IsNullOrEmpty(readLine))
+                {
+                    return 0;
+                }
+
+                _logger?.Verbose($"收到消息:{readLine}");
+                var trim = readLine.Replace(" ", "");
+                if (trim.StartsWith("SS")) //稳定正常返回
+                {
+                    var replace = trim.Replace("SS", "");
+                    var unit = replace.Substring(replace.Length - 2, 2);
+                    var substring = replace.Substring(0, replace.Length - 2);
+                    if (double.TryParse(substring, out double w))
+                    {
+                        return w;
+                    }
+                }
+                else if (trim.StartsWith("SI")) //收到了命令 但是由于不稳定不能执行
+                {
+                    return 0;
+                }
+                else if (trim.StartsWith("S+")) //设备过载
+                {
+                    return 0;
+                }
+                else if (trim.StartsWith("S-")) //设备欠载
+                {
+                    return 0;
+                }
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return 0.00;
+            }
+        });
+    }
+
+    private void SerialPortOnDataReceived(object sender, SerialDataReceivedEventArgs e)
+    {
+        var s = sender as SerialPort;
+        var msg = s?.ReadLine();
+        if (msg != null)
+        {
+            if (_buffer.Count < 3)
+            {
+                _buffer.Add(new Random().NextDouble() * 100);
+                return;
+            }
+
+            if (_buffer.Max() - _buffer.Min() < 0.5)
+            {
+                OnGetWeight?.Invoke(_buffer.Average());
+                _buffer.Clear();
+            }
+            else
+            {
+                _buffer.RemoveAt(0);
+            }
         }
 
-        public void Close()
-        {
-            _serialPort?.Close();
-        }
-
-        public void Start()
-        {
-            _serialPort.DataReceived += SerialPortOnDataReceived;
-        }
-
-        private void SerialPortOnDataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            var s = sender as SerialPort;
-            var msg = s?.ReadLine();
-            _logger?.Verbose($"收到数据：{msg}");  
-        }
+        _logger?.Verbose($"收到数据：{msg}");
     }
 }

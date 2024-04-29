@@ -1,10 +1,13 @@
 ﻿using PMES.Core.Managers;
+using PMES.Model.users;
 
-namespace SICD_Automatic.Core
+namespace SICD_Automatic.Core;
+
+public class GlobalVar
 {
-    public class GlobalVar
-    {
-        private static IFreeSql FreeSql => FreeSqlManager.FSql;
-        public static string User { get; set; } = "admin";
-    }
+    private static IFreeSql FreeSql => FreeSqlManager.FSql;
+ 
+
+    public static UserInfo CurrentUserInfo { get; set; } = new UserInfo();
 }
+
