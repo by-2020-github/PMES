@@ -70,6 +70,12 @@ namespace PMES.Model.tbs {
 		public string PackingBarCode { get; set; }
 
 		/// <summary>
+		/// 装箱总毛重
+		/// </summary>
+		[JsonProperty, Column(Name = "packingGrossWeight")]
+		public double? PackingGrossWeight { get; set; }
+
+		/// <summary>
 		/// 装箱件数
 		/// </summary>
 		[JsonProperty, Column(Name = "packingQty", StringLength = 50)]
@@ -78,8 +84,8 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// 装箱净重
 		/// </summary>
-		[JsonProperty, Column(Name = "packingWeight", DbType = "decimal(18,2)")]
-		public decimal? PackingWeight { get; set; }
+		[JsonProperty, Column(Name = "packingWeight")]
+		public double? PackingWeight { get; set; }
 
 		/// <summary>
 		/// 母托盘条码

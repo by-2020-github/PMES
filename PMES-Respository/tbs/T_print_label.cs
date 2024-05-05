@@ -84,7 +84,7 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// 标签文件
 		/// </summary>
-		[JsonIgnore, Column(Name = "templateFile", DbType = "blob")]
+		[JsonProperty, Column(Name = "templateFile", DbType = "blob")]
 		public byte[] TemplateFile { get; set; }
 
 		/// <summary>

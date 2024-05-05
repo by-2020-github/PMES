@@ -24,8 +24,8 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// 箱码表-主键id
 		/// </summary>
-		[JsonProperty, Column(Name = "boxCodeId", StringLength = 100)]
-		public string BoxCodeId { get; set; }
+		[JsonProperty, Column(Name = "boxCodeId", DbType = "int")]
+		public int BoxCodeId { get; set; }
 
 		/// <summary>
 		/// 记录建立时间
@@ -43,7 +43,7 @@ namespace PMES.Model.tbs {
 		/// 盘码表-主键id
 		/// </summary>
 		[JsonProperty, Column(Name = "preheaterCodeId", DbType = "int")]
-		public int? PreheaterCodeId { get; set; }
+		public int PreheaterCodeId { get; set; }
 
 		/// <summary>
 		/// 记录更新时间

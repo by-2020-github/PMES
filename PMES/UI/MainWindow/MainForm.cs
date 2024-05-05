@@ -4,17 +4,18 @@ using System.Globalization;
 using System.Linq;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
+using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.Wizards.Templates;
 using DevExpress.XtraRichEdit.Import.Html;
+using FreeSql;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PMES.Core;
 using PMES.Core.Managers;
 using PMES.Model;
-using PMES.Model.ApiResponse;
-using PMES.Model.Packages;
 using PMES.Model.report;
+using PMES.Model.tbs;
 using PMES.UI.MainWindow.ChildPages;
 using PMES.UI.Report;
 using PMES.UI.Settings;
@@ -25,37 +26,48 @@ namespace PMES.UI.MainWindow;
 
 public partial class MainForm : XtraForm
 {
-    private int _totalNum = 1;
     private readonly ILogger _logger;
     private readonly IFreeSql _freeSql = FreeSqlManager.FSql;
     private ProductInfo _productInfo = new();
     private readonly double _skinWeight = 2.01;
     private readonly double _tareWeight = 0;
     private readonly double _totalWeight = 52.03;
-    private int _num = 0;
+
+    /// <summary>
+    ///     线盘数量
+    /// </summary>
+    private int _preheaterNum = 0;
+
+    /// <summary>
+    ///     箱子数量
+    /// </summary>
+    private int _totalBoxNum = 1;
+
     private GridControl _currentControl;
 
     #region 线盘 | 箱子(子托) | 母托信息
 
-    /// <summary>
-    ///     自动入库的临时列表
-    /// </summary>
-    private List<XPanInfo> _panInfos = new List<XPanInfo>();
+    private List<int> _boxIdList = new List<int>();
 
     /// <summary>
     ///     自动入库的临时列表
     /// </summary>
-    private List<BoxTemplateInfo> _boxInfos = new List<BoxTemplateInfo>();
+    private List<T_preheater_code> _tPreheaterCodes = new List<T_preheater_code>();
+
+    /// <summary>
+    ///     自动入库的临时列表
+    /// </summary>
+    private List<T_box> _tBoxes = new List<T_box>();
 
     /// <summary>
     ///     手动入库的话使用这个列表
     /// </summary>
-    private List<XPanInfo> _xPanInfosManualPost = new List<XPanInfo>();
+    private List<T_preheater_code> _tPreheaterCodesManual = new List<T_preheater_code>();
 
     /// <summary>
     ///     手动入库的话使用这个列表
     /// </summary>
-    private List<BoxTemplateInfo> _boxInfosManualPost = new List<BoxTemplateInfo>();
+    private List<T_box> _tBoxesManual = new List<T_box>();
 
     #endregion
 
@@ -68,13 +80,16 @@ public partial class MainForm : XtraForm
     /// <summary>
     ///     当前母托盘信息
     /// </summary>
-    public string CurrentTrayCode { get; set; }
+    public string CurrentTrayCode { get; set; } = "TP12345678";
 
     /// <summary>
     ///     包装纸皮重
     /// </summary>
-    public static string PackingPaperTareWeight { get; set; }
+    public static string PackingPaperTareWeight { get; set; } = "0.02";
 
+    /// <summary>
+    ///     线盘皮重
+    /// </summary>
     public double PackingPaperWeight => string.IsNullOrEmpty(PackingPaperTareWeight) ? 0.02 : 1.01;
 
     /// <summary>
@@ -148,6 +163,13 @@ public partial class MainForm : XtraForm
                 var product = await WebService.Instance.Get<ProductInfo>(
                     $"{ApiUrls.QueryOrder}{txtScanCode.Text}");
                 if (product.Equals(null)) return;
+                if (product.package_info.packing_quantity == 0)
+                {
+                    product.package_info.packing_quantity = 1;
+                    product.package_info.stacking_layers = 2;
+                    product.package_info.stacking_per_layer = 4;
+                }
+
                 await UpdateProductInfo(product);
             }
             catch (Exception exception)
@@ -229,193 +251,194 @@ public partial class MainForm : XtraForm
         lbNetWeight.Text = @$"<color=red>{_currentNetWeight:F2}</color>";
         lb_xpzl_weight.Text = @$"线盘重量：<color=red>{_currentNetWeight:F2} kg</color>";
 
-        //4 箱码 最后五位是重量
+        //4 箱码 最后五位是重量 放到插入数据那里更新
         // 52.00 -> [0.05200] ->  05200  #####
         //包装条码；产品助记码 + 线盘分组代码 + 用户标准代码 + 包装组编号 + 年月 + 4位流水号 + 装箱净重，
-        //如TY4121050 - 14 - BZ001 - B12310001 - 04903
-
         //eg1:{product.material_number.Substring(3).Replace(".", "")}-{product.package_info.code}-{product.jsbz_number}-B{DateTime.Now:MMdd}{txtScanCode.Text.Substring(txtScanCode.Text.Length - 4, 4)}-{weight}"
-        var weight = (_currentNetWeight / 1000).ToString("F5").Split(".")[1];
-        lbBoxCode.Text =
-            @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalNum:D4}-{weight}";
 
         #endregion
 
         #region 创建盘码 | 箱码 | 判断是否装够
 
-        var xPanInfo = new XPanInfo
+        var tPreheaterCode = new T_preheater_code
         {
-            batchNo = lb_BatchCode.Text,
-            customerCode = $"{GlobalVar.CurrentUserInfo.code}{DateTime.Now:MMdd}{_num:D4}",
-            customerId = product.customer_id.ToString(),
-            customerName = product.customer_name,
-            custormerMaterialCode = product.customer_material_number,
-            custormerMaterialName = product.customer_material_name,
-            custormerMaterialSpec = product.customer_material_name,
-            grossWeight = _currentTotalWeight.ToString("F2"),
-            icmobillNO = "", //todo:接口无说明,订单号，现在先不用管 2024年5月2日 22:47:34
-            machineCode = product.machine_number,
-            machineId = product.machine_id.ToString(),
-            machineName = product.machine_name,
-            netWeight = _currentNetWeight.ToString("F2"),
-            operatorCode = product.operator_code,
-            operatorName = product.operator_name,
-            packageInfo = new PackageInfoPanCode
-            {
-                deliverySubTrayName = product.package_info.delivery_sub_tray_name,
-                fullCoilWeight = product.package_info.cu_full_coil_weight,
-                maxWeight = product.package_info.cu_max_weight,
-                minWeight = product.package_info.cu_min_weight,
-                packagingReqCode = product.package_info.code,
-                packagingReqName = product.package_info.name,
-                packingQuantity = product.package_info.packing_quantity,
-                preheaterInsidePackageName = product.package_info.wire_reel_inside_package_name ?? "",
-                preheaterOutsidePackageName = product.package_info.wire_reel_external_package_name ?? "",
-                productionCode = product.package_info.code,
-                stackingLayers = product.package_info.stacking_layers.ToString(),
-                stackingPerLayer = product.package_info.stacking_per_layer.ToString(),
-                tareWeight = _currentNetWeight.ToString("F2")
-            },
-            preheaterCode = product.xpzl_number,
-            preheaterId = product.xpzl_id.ToString(),
-            preheaterName = product.xpzl_name,
-            preheaterSpec = product.xpzl_spec,
-            preheaterWeight = product.xpzl_weight,
-            productCode = product.material_number,
-            productDate = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-            productGBName = product.material_ns_model,
-            productId = product.material_id.ToString(),
-            productMnemonicCode = product.material_mnemonic_code,
-            productName = product.material_name,
-            productSpec = product.customer_material_spec, //这里与接口不一样，已更新 2024年5月2日 22:47:46
-            productStandardName = product.material_execution_standard,
-            productionBarCode = txtScanCode.Text,
-            productionOrgNO = product.product_org_number,
-            psn = "",
-            status = 0,
-            stockCode = product.stock_number.ToString(),
-            stockId = product.stock_id.ToString(),
-            stockName = product.stock_name.ToString(),
-            userId = GlobalVar.CurrentUserInfo.userId,
-            userStandardCode = product.jsbz_number, //技术标准 2024年5月2日 22:54:33
-            userStandardId = product.jsbz_id.ToString(), //
-            userStandardName = product.jsbz_name,
-            weightUserID = GlobalVar.CurrentUserInfo.userId.ToString()
+            BatchNO = @$"{txtScanCode.Text}-{DateTime.Now: MMdd}A",
+            CreateTime = DateTime.Now,
+            CustomerCode = product.customer_number,
+            CustomerId = product.customer_id,
+            CustomerMaterialCode = product.customer_material_number,
+            CustomerMaterialName = product.customer_material_name,
+            CustomerMaterialSpec = product.customer_material_spec,
+            CustomerName = product.customer_name,
+            GrossWeight = _currentTotalWeight,
+            ICMOBillNO = product.product_order_no, //生产工单 之前是null，todo:确认是否需要
+            IsDel = 0,
+            IsQualified = 0, //是否合格
+            MachineCode = product.machine_number,
+            MachineId = product.machine_id,
+            MachineName = product.machine_name,
+            NetWeight = _currentNetWeight,
+            NoQualifiedReason = "",
+            OperatorCode = product.operator_code,
+            OperatorName = product.operator_name,
+            PreheaterCode = product.xpzl_number,
+            PreheaterId = product.xpzl_id,
+            PreheaterName = product.xpzl_name,
+            PreheaterSpec = product.xpzl_spec,
+            PreheaterWeight = double.Parse(product.xpzl_weight),
+            ProductCode = product.material_number,
+            ProductDate = DateTime.Parse(product.product_date), // product.product_date
+            ProductGBName = product.material_ns_model,
+            ProductId = product.material_id,
+            ProductionBarcode = txtScanCode.Text,
+            ProductionOrgNO = product.product_org_number,
+            ProductMnemonicCode = product.material_mnemonic_code,
+            ProductName = product.material_name,
+            ProductSpec = product.customer_material_spec,
+            ProductStandardName = product.material_execution_standard,
+            PSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:MMdd}{0001}",
+            Status = 1, //装箱状态
+            StockCode = product.stock_number,
+            StockId = product.stock_id,
+            StockName = product.stock_name,
+            UpdateTime = DateTime.Now,
+            UserStandardCode = product.jsbz_number,
+            UserStandardId = product.jsbz_id,
+            UserStandardName = product.jsbz_name,
+            Weight1 = null,
+            WeightUserId = GlobalVar.CurrentUserInfo.userId
         };
-        _num++;
-        _panInfos.Add(xPanInfo);
-        if (!cbxAutoMode.Checked)
-        {
-            _xPanInfosManualPost.Add(xPanInfo);
-        }
 
-        Trace.WriteLine($"{JsonConvert.SerializeObject(xPanInfo)}");
-        //todo:这里Post之后需要返回盘码的Id,并判断返回结果
-        var post = await WebService.Instance.Post<XPanInfo>(xPanInfo, ApiUrls.BarcodeGeneratePreheaterCode);
-        BoxTemplateInfo boxInfo;
-        //1 首先判断是否是一个装的，如果是直接post 不post 箱码
-        if (xPanInfo.packageInfo.packingQuantity <= 1)
+        //这里判断是否合格
         {
-            boxInfo = new BoxTemplateInfo
+            var max = double.Parse(product.package_info.cu_max_weight);
+            var min = double.Parse(product.package_info.cu_min_weight);
+            if (_currentNetWeight < min)
             {
-                boxCode = lbBoxCode.Text,
-                grossWeightTotal = xPanInfo.grossWeight,
-                netWeightTotal = xPanInfo.netWeight,
-                num = product.package_info.packing_quantity.ToString(),
-                preheaterModelList = new List<PreheaterTemplateInfo>(),
-                userId = GlobalVar.CurrentUserInfo.userId
-            };
-            boxInfo.preheaterModelList.Add(new PreheaterTemplateInfo
+                tPreheaterCode.NoQualifiedReason = $"小于最小值:{min}";
+                tPreheaterCode.IsQualified = 0;
+            }
+
+            if (_currentNetWeight > max)
             {
-                crossWeight = xPanInfo.grossWeight,
-                netWeight = xPanInfo.netWeight,
-                preheaterCode = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:MMdd}0001",
-                productionCode = xPanInfo.productionBarCode,
-            });
-            _boxInfos.Add(boxInfo);
-            _totalNum++;
-            _panInfos.Clear(); //直接清空盘码信息
+                tPreheaterCode.NoQualifiedReason = $"大于最大值:{max}";
+                tPreheaterCode.IsQualified = 0;
+            }
         }
-        else
+        _preheaterNum++; //增加了一个线盘
+
+        _tPreheaterCodes.Add(tPreheaterCode);
+        _tPreheaterCodesManual.Add(tPreheaterCode);
+
+        if (product.package_info.packing_quantity == 1) //如果是一箱只有一个
         {
-            for (var i = 1; i < _panInfos.Count; i++)
+            var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
+            var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
+            var w = (int)(totalNet * 100);
+            lbBoxCode.Text =
+                @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
+
+            var tBox = new T_box
             {
-                if (_panInfos[0].Equals(_panInfos[i])) continue;
-                XtraMessageBox.Show("同一箱中盘码不同！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _panInfos.Clear(); //直接清空盘码信息
+                CreateTime = DateTime.Now,
+                IsDel = 0,
+                LabelId = 1, //标签Id
+                LabelName = "",
+                PackagingCode = GlobalVar.CurrentUserInfo.packageGroupCode,
+                PackagingSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{_totalBoxNum:D4}",
+                PackagingWorker = GlobalVar.CurrentUserInfo.username,
+                PackingBarCode = lbBoxCode.Text,
+                PackingQty = product.package_info.packing_quantity.ToString(),
+                PackingWeight = _currentNetWeight,
+                PackingGrossWeight = _currentTotalWeight,
+                TrayBarcode = txtScanCode.Text,
+                UpdateTime = DateTime.Now
+            };
+            var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
+            _boxIdList.Add((int)boxId);
+            tBox.Id = (uint)boxId;
+            _tBoxes.Add(tBox);
+            _tBoxesManual.Add(tBox);
+            var preId = await _freeSql.Insert<T_preheater_code>(tPreheaterCode).ExecuteIdentityAsync();
+            var rel = new T_box_releated_preheater
+            {
+                BoxCodeId = (int)boxId,
+                CreateTime = DateTime.Now,
+                IsDel = 0,
+                PreheaterCodeId = (int)preId,
+                UpdateTime = DateTime.Now
+            };
+            if (await _freeSql.Insert<T_box_releated_preheater>(rel).ExecuteAffrowsAsync() <= 0)
+            {
+                ShowErrorMsg("插入关系表失败！");
                 return;
             }
 
-            if (xPanInfo.packageInfo.packingQuantity == _panInfos.Count)
+            ClearData();
+        }
+        else //一箱多个
+        {
+            for (var i = 1; i < _tPreheaterCodes.Count; i++)
             {
-                boxInfo = new BoxTemplateInfo
-                {
-                    grossWeightTotal = _panInfos.Select(s => double.Parse(s.grossWeight)).Sum().ToString("F2"),
-                    netWeightTotal = _panInfos.Select(s => double.Parse(s.netWeight)).Sum().ToString("F2"),
-                    num = _panInfos[0].packageInfo.packingQuantity.ToString("D"),
-                    userId = GlobalVar.CurrentUserInfo.userId
-                };
-                var index = 1;
-                _panInfos.ForEach(xp =>
-                {
-                    boxInfo.preheaterModelList.Add(new PreheaterTemplateInfo
-                    {
-                        crossWeight = xp.grossWeight,
-                        netWeight = xp.netWeight,
-                        preheaterCode = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:MMdd}{index:D4}",
-                        productionCode = xp.productionBarCode,
-                    });
-                    index++;
-                });
-
-                var w = ((int)double.Parse(boxInfo.netWeightTotal) * 100).ToString("D5");
-                lbBoxCode.Text =
-                    @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalNum:D4}-{w}";
-
-                boxInfo.boxCode = lbBoxCode.Text;
-                _boxInfos.Add(boxInfo);
-                if (!cbxAutoMode.Checked)
-                {
-                    _boxInfosManualPost.Add(boxInfo);
-                }
-                _totalNum++;
-
-                //todo:这里post箱码
-                var boxPost = new BoxInfoPost
-                {
-                    boxCode = boxInfo.boxCode,
-                    grossWeightTotal = boxInfo.grossWeightTotal,
-                    netWeightTotal = boxInfo.netWeightTotal,
-                    lableId = 0,
-                    numOfPackedItems = boxInfo.preheaterModelList.Count,
-                    preheaterIds = string.Join(",", boxInfo.preheaterModelList.Select(s => s.Id.ToString())),
-                    weightUserId = boxInfo.userId
-                };
-                var res =await WebService.Instance.Post<BoxInfoPost>(boxPost, ApiUrls.BarcodeGenerateBoxCode);
-                if (res == null)
-                {
-                    XtraMessageBox.Show("提交箱码失败！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    _panInfos.Clear(); //直接清空盘码信息,并移除此箱码信息
-                    _boxInfos.RemoveAt(_boxInfos.Count - 1);
-                    _boxInfosManualPost.RemoveAt(_boxInfos.Count - 1);
-                    return;
-                }
+                if (_tPreheaterCodes[0].Equals(_tPreheaterCodes[i])) continue;
+                ShowErrorMsg("同一箱中盘码不同");
+                return;
             }
 
+            var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
+            var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
+            var w = (int)(totalNet * 100);
+            lbBoxCode.Text =
+                @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
 
-            _panInfos.Clear(); //直接清空盘码信息
+            if (_tPreheaterCodes.Count == product.package_info.packing_quantity)
+            {
+                _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
+                var tBox = new T_box
+                {
+                    CreateTime = DateTime.Now,
+                    IsDel = 0,
+                    LabelId = 1, //标签Id
+                    LabelName = "",
+                    PackagingCode = GlobalVar.CurrentUserInfo.packageGroupCode,
+                    PackagingSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{_totalBoxNum:D4}",
+                    PackagingWorker = GlobalVar.CurrentUserInfo.username,
+                    PackingBarCode = lbBoxCode.Text,
+                    PackingQty = product.package_info.packing_quantity.ToString(),
+                    PackingWeight = totalNet,
+                    PackingGrossWeight = totalGross,
+                    TrayBarcode = txtScanCode.Text,
+                    UpdateTime = DateTime.Now
+                };
+                var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
+                _boxIdList.Add((int)boxId);
+                tBox.Id = (uint)boxId;
+                _tBoxes.Add(tBox);
+                _tBoxesManual.Add(tBox);
+                var relList = _tPreheaterCodes.Select(s => new T_box_releated_preheater
+                {
+                    BoxCodeId = (int)boxId,
+                    CreateTime = DateTime.Now,
+                    IsDel = 0,
+                    PreheaterCodeId = (int)s.Id,
+                    UpdateTime = DateTime.Now
+                }).ToList();
+                if (await _freeSql.Insert<T_box_releated_preheater>(relList).ExecuteAffrowsAsync() <= 0)
+                {
+                    ShowErrorMsg("插入关系表失败！");
+                    return;
+                }
+
+                ClearData();
+                _totalBoxNum++;
+            }
         }
 
         #endregion
 
         #region 更新表格
 
-        this.gridControlBoxChild.DataSource = null;
-        this.gridControlBoxChild.DataSource = _boxInfos.Last().preheaterModelList;
-        gridControlBox.DataSource = null;
-        gridControlBox.DataSource = _boxInfos;
-        gridViewBox.Columns.ForEach(s => s.BestFit());
-        gridViewXp.Columns.ForEach(s => s.BestFit());
+        UpdateGridControl();
 
         #endregion
 
@@ -429,22 +452,60 @@ public partial class MainForm : XtraForm
         layers = layers <= 0 ? 1 : layers;
         var perNum = product.package_info.stacking_per_layer;
         perNum = perNum <= 0 ? 2 : perNum;
-        lb_currentInfo.Text = @$"已码{Math.Ceiling(_num * 1f / perNum):F0}层,共{_num}个";
-        lb_leftNum.Text = @$"剩余个数：{layers * perNum - _num}";
+        lb_currentInfo.Text = @$"已码{Math.Ceiling(_preheaterNum * 1f / perNum):F0}层,共{_preheaterNum}个";
+        lb_leftNum.Text = @$"剩余个数：{layers * perNum - _preheaterNum}";
 
-        if (_num == layers * perNum)
+        if (_preheaterNum == layers * perNum)
         {
             XtraMessageBox.Show("托盘已满，请移走.", "Info:", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //清空内容
-            _num = 0;
-            _boxInfos.Clear();
-            _panInfos.Clear();
+            _preheaterNum = 0;
+            ClearData();
         }
 
         #endregion
     }
 
+    private void UpdateGridControl()
+    {
+        if (_boxIdList.Count == 0)
+        {
+            return;
+        }
+        gridViewXp.FocusedRowChanged -= gridViewXp_FocusedRowChanged;
+        gridViewBox.FocusedRowChanged -= gridViewBox_FocusedRowChanged;
+
+        //1 更新箱码
+        var tBoxes = _freeSql.Select<T_box>().Where(s => _boxIdList.Contains((int)s.Id)).ToList();
+        gridControlBox.DataSource = null;
+        gridControlBox.DataSource = tBoxes;
+        gridViewBox.FocusedRowHandle = _boxIdList.Count - 1;
+
+        //2 更新盘码
+        var boxId = _boxIdList[^1];
+        var rel = _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxId).ToList();
+        var preIdList = rel.Select(s => s.PreheaterCodeId).ToList();
+        var tPreList = _freeSql.Select<T_preheater_code>().Where(s => preIdList.Contains((int)s.Id)).ToList();
+        gridControlBoxChild.DataSource = null;
+        gridControlBoxChild.DataSource = tPreList;
+
+        gridViewBox.Columns.ForEach(s => s.BestFit());
+        gridViewXp.Columns.ForEach(s => s.BestFit());
+
+        gridViewXp.FocusedRowChanged += gridViewXp_FocusedRowChanged;
+        gridViewBox.FocusedRowChanged += gridViewBox_FocusedRowChanged;
+    }
+
+    private void ClearData()
+    {
+        _tBoxes.Clear();
+        _tPreheaterCodes.Clear();
+    }
+
     #region 按钮事件
+
+ 
+
 
     /// <summary>
     ///     选择不同的打印标签模板
@@ -510,7 +571,7 @@ public partial class MainForm : XtraForm
         {
             var rowXp = gridViewXp.FocusedRowHandle;
             if (rowXp < 0) return;
-            var templateInfo = gridViewXp.GetRow(rowXp) as PreheaterTemplateInfo;
+            var templateInfo = gridViewXp.GetRow(rowXp) as T_preheater_code;
             if (templateInfo == null) return;
 
             var result = XtraMessageBox.Show("是否确认删除？", "", MessageBoxButtons.OKCancel);
@@ -518,23 +579,8 @@ public partial class MainForm : XtraForm
             {
                 //todo:执行真实的删除操作
                 gridViewXp.DeleteSelectedRows();
-                var content = new Dictionary<string, string> { { "preheaterCodeId", $"{templateInfo.Id}" } };
-                var res = await WebService.Instance.Post<ResponseBase<object>>(content,
-                    ApiUrls.BarcodeDeletePreheaterCode);
-                XtraMessageBox.Show("删除成功！", "", MessageBoxButtons.OK);
-                //级联删除箱码，如果盘码已经删除完了 就把箱码也删了
-                if (gridControlBoxChild.DataSource == null)
-                {
-                    var rowBox = gridViewBox.FocusedRowHandle;
-                    if (rowBox < 0) return;
-                    var boxTemplateInfo = gridViewBox.GetRow(rowBox) as BoxTemplateInfo;
-                    if (boxTemplateInfo == null) return;
-                    var c = new Dictionary<string, string> { { "boxCodeId", $"{boxTemplateInfo.Id}" } };
-                    var r = await WebService.Instance.Post<ResponseBase<object>>(content,
-                        ApiUrls.BarcodeDeleteBoxCode);
-                    XtraMessageBox.Show("箱码级联删除成功！", "", MessageBoxButtons.OK);
-                }
 
+                XtraMessageBox.Show("删除成功！", "", MessageBoxButtons.OK);
             }
             else if (result == DialogResult.Cancel)
             {
@@ -545,7 +591,7 @@ public partial class MainForm : XtraForm
         {
             var rowBox = gridViewBox.FocusedRowHandle;
             if (rowBox < 0) return;
-            var boxTemplateInfo = gridViewBox.GetRow(rowBox) as BoxTemplateInfo;
+            var boxTemplateInfo = gridViewBox.GetRow(rowBox) as T_box;
             if (boxTemplateInfo == null) return;
 
             var result = XtraMessageBox.Show("是否确认删除？", "", MessageBoxButtons.OKCancel);
@@ -553,25 +599,15 @@ public partial class MainForm : XtraForm
             {
                 //todo:执行真实的删除操作
                 gridViewBox.DeleteSelectedRows();
-                var content = new Dictionary<string, string> { { "boxCodeId", $"{boxTemplateInfo.Id}" } };
-                var res = await WebService.Instance.Post<ResponseBase<object>>(content,
-                    ApiUrls.BarcodeDeleteBoxCode);
+
                 XtraMessageBox.Show("删除成功！", "", MessageBoxButtons.OK);
                 //级联删除盘码
-                foreach (var t in boxTemplateInfo.preheaterModelList)
-                {
-                    var c = new Dictionary<string, string> { { "preheaterCodeId", $"{t.Id}" } };
-                    var r = await WebService.Instance.Post<ResponseBase<object>>(content,
-                        ApiUrls.BarcodeDeletePreheaterCode);
-                    XtraMessageBox.Show("盘码级联删除成功！", "", MessageBoxButtons.OK);
-                }
             }
             else if (result == DialogResult.Cancel)
             {
                 XtraMessageBox.Show("取消删除！", "", MessageBoxButtons.OK);
             }
         }
-
     }
 
     private void Print(object sender, EventArgs e)
@@ -594,75 +630,57 @@ public partial class MainForm : XtraForm
         var result = form.ShowDialog();
         if (result == DialogResult.OK)
         {
-            var response =
-                await WebService.Instance.PostJsonT<ResponseReport>(GlobalVar.ReportFilters, ApiUrls.BarcodeSearchHis);
-
-            #region 合法性校验
-
-            if (response == null)
+            var tPCodes = _freeSql.Select<T_preheater_code>().Where(s => s.ProductDate > DateTime.Today);
+            var filter = GlobalVar.ReportFilters;
+            if (!string.IsNullOrEmpty(filter.PreheaterCode))
             {
-                var msg = $"查询异常，查询条件:{JsonConvert.SerializeObject(GlobalVar.ReportFilters)}";
-                _logger?.Error(msg);
-                XtraMessageBox.Show(msg, "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.PreheaterCode));
             }
 
-            if (response.data == null)
+            if (!string.IsNullOrEmpty(filter.PreheaterSpec))
             {
-                var msg = $"后台接口返回异常，查询条件:{JsonConvert.SerializeObject(GlobalVar.ReportFilters)}";
-                _logger?.Error(msg);
-                XtraMessageBox.Show(msg, "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.PreheaterSpec));
             }
 
-            if (response.data.total == 0)
+            if (!string.IsNullOrEmpty(filter.ProductCode))
             {
-                var msg = $"没有符合要求的数据，查询条件:{JsonConvert.SerializeObject(GlobalVar.ReportFilters)}";
-                _logger?.Error(msg);
-                XtraMessageBox.Show(msg, "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductCode));
             }
 
-            #endregion
-
-            #region 显示结果
-
-            var boxInfos = new List<BoxTemplateInfo>();
-            response.data!.data!.ForEach(s =>
+            if (!string.IsNullOrEmpty(filter.ProductSpec))
             {
-                var boxInfo = new BoxTemplateInfo
-                {
-                    boxCode = s.box.packagingCode,
-                    preheaterModelList = s.preheaterCodeList.Select(p => new PreheaterTemplateInfo
-                    {
-                        crossWeight = p.grossWeight,
-                        netWeight = p.netWeight,
-                        preheaterCode = p.preheaterCode,
-                        productionCode = p.productCode
-                    }).ToList(),
-                    grossWeightTotal = s.preheaterCodeList.Select(x => double.Parse(x.grossWeight)).ToList().Sum()
-                        .ToString("F2"),
-                    netWeightTotal = s.preheaterCodeList.Select(x => double.Parse(x.netWeight)).ToList().Sum()
-                        .ToString("F2")
-                };
-                boxInfos.Add(boxInfo);
-            });
-            gridControlBox.DataSource = null;
-            gridControlBox.DataSource = boxInfos;
-            if (boxInfos.Count > 0)
-            {
-                gridViewBox.FocusedRowHandle = 0;
-                if (boxInfos[0].preheaterModelList.Count > 0)
-                {
-                    gridControlBoxChild.DataSource = null;
-                    gridControlBoxChild.DataSource = boxInfos[0].preheaterModelList;
-                }
+                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductSpec));
             }
 
+            if (!string.IsNullOrEmpty(filter.ProductionBarCode))
+            {
+                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductionBarCode));
+            }
+
+            if (!string.IsNullOrEmpty(filter.ProductionBatchNo))
+            {
+                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductionBatchNo));
+            }
+
+            if (!string.IsNullOrEmpty(filter.UserStandardCode))
+            {
+                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.UserStandardCode));
+            }
+
+            if (filter.NetWeightMin > 0)
+            {
+                tPCodes = tPCodes.Where(s => s.NetWeight > filter.NetWeightMin);
+            }
+
+            if (filter.NetWeightMax > 0)
+            {
+                tPCodes = tPCodes.Where(s => s.NetWeight < filter.NetWeightMax);
+            }
+
+            var tPCodesData = await tPCodes.ToListAsync();
             gridViewBox.Columns.ForEach(s => s.BestFit());
             gridViewXp.Columns.ForEach(s => s.BestFit());
-
-            #endregion
+ 
         }
         else
         {
@@ -672,7 +690,7 @@ public partial class MainForm : XtraForm
         form.Dispose();
     }
 
-    private void gridViewXp_FocusedRowChanged(object sender,
+    private async void gridViewXp_FocusedRowChanged(object sender,
         DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
     {
         gridViewXp.FocusedRowChanged -= gridViewXp_FocusedRowChanged;
@@ -680,13 +698,16 @@ public partial class MainForm : XtraForm
 
         if (gridControlBoxChild.DataSource == null) return;
         if (e.FocusedRowHandle < 0) return;
-        var preheaterModes = gridControlBoxChild.DataSource as List<PreheaterTemplateInfo>;
+        var preheaterModes = gridControlBoxChild.DataSource as List<T_preheater_code>;
         if (preheaterModes == null) return;
         var preheaterMode = preheaterModes[e.FocusedRowHandle];
 
-        var boxInfos = gridControlBox.DataSource as List<BoxTemplateInfo>;
+        var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
-        var boxRow = boxInfos.FindIndex(s => s.preheaterModelList.Contains(preheaterMode));
+        var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == preheaterMode.Id)
+            .FirstAsync();
+        var boxId = rel.BoxCodeId;
+        var boxRow = boxInfos.FindIndex(s => s.Id == boxId);
         if (boxRow == -1) return;
         gridViewBox.FocusedRowHandle = boxRow;
 
@@ -694,7 +715,7 @@ public partial class MainForm : XtraForm
         gridViewBox.FocusedRowChanged += gridViewBox_FocusedRowChanged;
     }
 
-    private void gridViewBox_FocusedRowChanged(object sender,
+    private async void gridViewBox_FocusedRowChanged(object sender,
         DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
     {
         gridViewXp.FocusedRowChanged -= gridViewXp_FocusedRowChanged;
@@ -702,10 +723,16 @@ public partial class MainForm : XtraForm
 
         if (gridControlBox.DataSource == null) return;
         if (e.FocusedRowHandle < 0) return;
-        var boxInfos = gridControlBox.DataSource as List<BoxTemplateInfo>;
+        var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
+        var boxInfo = boxInfos[e.FocusedRowHandle];
+        var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == boxInfo.Id)
+            .ToListAsync();
+        var tPIds = rel.Select(s => s.PreheaterCodeId).ToList();
+
+        var pCodes = await _freeSql.Select<T_preheater_code>().Where(s => tPIds.Contains((int)s.Id)).ToListAsync();
         gridControlBoxChild.DataSource = null;
-        gridControlBoxChild.DataSource = boxInfos?[e.FocusedRowHandle].preheaterModelList;
+        gridControlBoxChild.DataSource = pCodes;
 
         gridViewXp.FocusedRowChanged += gridViewXp_FocusedRowChanged;
         gridViewBox.FocusedRowChanged += gridViewBox_FocusedRowChanged;
@@ -735,5 +762,36 @@ public partial class MainForm : XtraForm
 
     private void MainForm_Load(object sender, EventArgs e)
     {
+    }
+
+
+    private void ShowErrorMsg(string msg)
+    {
+        _logger?.Error(msg);
+        XtraMessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    private void ShowInfoMsg(string msg)
+    {
+        XtraMessageBox.Show(msg, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    private void lbErroInfo_DoubleClick(object sender, EventArgs e)
+    {
+        var list = new List<string>()
+        {
+            "G24040656G190008",
+            "G24040540G950046",
+            "G24031931G840292",
+            "G24040684G190047",
+            "G24040421G780038",
+            "G24040721G170005",
+            "G24040443G690002",
+            "G24040725G690020",
+            "G24040600G910008",
+            "G24040733G910011"
+        };
+        var next = new Random().Next(0, 20);
+        txtScanCode.Text = list[next % 10];
     }
 }

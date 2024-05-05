@@ -78,8 +78,8 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// [填写]产品盘毛重: 1. 人工线：由电子称设备获取，人工3次称重的平均值；2.自动线，二成称重后【erp称重校验】获得。
 		/// </summary>
-		[JsonProperty, Column(Name = "grossWeight", StringLength = 20)]
-		public string GrossWeight { get; set; }
+		[JsonProperty, Column(Name = "grossWeight")]
+		public double? GrossWeight { get; set; }
 
 		/// <summary>
 		/// 生产工单号
@@ -120,8 +120,8 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// [填写]产品盘净重: 计算所得（grossWeight产品盘毛重） - preheaterWeight(线盘重量) - tareWeight（皮重）
 		/// </summary>
-		[JsonProperty, Column(Name = "netWeight", StringLength = 20)]
-		public string NetWeight { get; set; }
+		[JsonProperty, Column(Name = "netWeight")]
+		public double? NetWeight { get; set; }
 
 		/// <summary>
 		/// 不合格原因
@@ -168,8 +168,8 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// 线盘皮重
 		/// </summary>
-		[JsonProperty, Column(Name = "preheaterWeight", DbType = "decimal(18,2)")]
-		public decimal? PreheaterWeight { get; set; }
+		[JsonProperty, Column(Name = "preheaterWeight", DbType = "double(18,2)")]
+		public double? PreheaterWeight { get; set; }
 
 		/// <summary>
 		/// 产品代码
@@ -180,8 +180,8 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// 生产日期
 		/// </summary>
-		[JsonProperty, Column(Name = "productDate", StringLength = 30)]
-		public string ProductDate { get; set; }
+		[JsonProperty, Column(Name = "productDate", DbType = "datetime")]
+		public DateTime? ProductDate { get; set; }
 
 		/// <summary>
 		/// 国际标准
@@ -232,7 +232,7 @@ namespace PMES.Model.tbs {
 		public string ProductStandardName { get; set; }
 
 		/// <summary>
-		/// 系统填写==》盘码，其规则如下：产品助记码+线盘分组代码+用户标准代码+包装组编号+年月+4位流水号+装箱净重，如TY4121050-14-BZ001-B123100001-04903
+		/// 手动|自动线线的箱内盘码 【包装组编号 + MMdd + 四位流水号 】
 		/// </summary>
 		[JsonProperty, Column(StringLength = 50)]
 		public string PSN { get; set; }

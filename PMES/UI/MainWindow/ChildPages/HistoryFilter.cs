@@ -32,16 +32,16 @@ namespace PMES.UI.MainWindow.ChildPages
         {
             GlobalVar.ReportFilters = new ReportFilters
             {
-                netWeight = cbx_minNetWeight.Text ?? "",
-                packingNumber = cbx_packingNumber.Text ?? "",
-                preheaterCode = cbx_preheaterCode.Text ?? "",
-                preheaterSpec = cbx_preheaterSpec.Text ?? "",
-                productCode = cbx_productCode.Text ?? "",
-                productSpec = cbx_productSpec.Text ?? "",
-                productionBarCode = cbx_productCode.Text ?? "",
-                productionBatchNo = cbx_productionBatchNo.Text ?? "",
-                productionDate = DateTime.Now.ToString("yyyy-MM-dd"),
-                userStandardCode = cbx_userStandardCode.Text ?? ""
+                NetWeightMax = (double)spMaxNetWeight.Value,
+                NetWeightMin = (double)spMinNetWeight.Value,
+                PackingNumber = cbx_packingCode.Text ?? "0",
+                PreheaterCode = cbx_preheaterCode.Text ?? "",
+                PreheaterSpec = cbx_preheaterSpec.Text ?? "",
+                ProductCode = cbx_productCode.Text ?? "",
+                ProductSpec = cbx_productSpec.Text ?? "",
+                ProductionBarCode = cbx_productCode.Text ?? "",
+                ProductionBatchNo = cbx_productionBatchNo.Text ?? "",
+                UserStandardCode = cbx_userStandardCode.Text ?? ""
             };
         }
     }

@@ -33,10 +33,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\ApiResponse\Document\" />
-    <Folder Include="Model\ApiResponse\Templates\" />
-    <Folder Include="Model\ApiResponse\User\" />
     <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PMES-Common\PMES-Common.csproj" />
+    <ProjectReference Include="..\PMES-Respository\PMES-Respository.csproj" />
   </ItemGroup>
 
 </Project>

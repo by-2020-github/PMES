@@ -56,11 +56,11 @@
             cbx_productCode = new DevExpress.XtraEditors.ComboBoxEdit();
             cbx_preheaterSpec = new DevExpress.XtraEditors.ComboBoxEdit();
             cbx_preheaterCode = new DevExpress.XtraEditors.ComboBoxEdit();
-            cbx_packingNumber = new DevExpress.XtraEditors.ComboBoxEdit();
-            cbx_minNetWeight = new DevExpress.XtraEditors.ComboBoxEdit();
-            cbx_maxNetWeight = new DevExpress.XtraEditors.ComboBoxEdit();
+            cbx_packingCode = new DevExpress.XtraEditors.ComboBoxEdit();
             btnQuery = new DevExpress.XtraEditors.SimpleButton();
             btnCancel = new DevExpress.XtraEditors.SimpleButton();
+            spMinNetWeight = new DevExpress.XtraEditors.SpinEdit();
+            spMaxNetWeight = new DevExpress.XtraEditors.SpinEdit();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cbx_userStandardCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cbx_productionBatchNo.Properties).BeginInit();
@@ -68,9 +68,9 @@
             ((System.ComponentModel.ISupportInitialize)cbx_productCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cbx_preheaterSpec.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cbx_preheaterCode.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_packingNumber.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_minNetWeight.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_maxNetWeight.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)cbx_packingCode.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)spMinNetWeight.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)spMaxNetWeight.Properties).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -107,11 +107,11 @@
             tableLayoutPanel1.Controls.Add(cbx_productCode, 2, 4);
             tableLayoutPanel1.Controls.Add(cbx_preheaterSpec, 2, 5);
             tableLayoutPanel1.Controls.Add(cbx_preheaterCode, 2, 6);
-            tableLayoutPanel1.Controls.Add(cbx_packingNumber, 2, 7);
-            tableLayoutPanel1.Controls.Add(cbx_minNetWeight, 2, 8);
-            tableLayoutPanel1.Controls.Add(cbx_maxNetWeight, 2, 9);
+            tableLayoutPanel1.Controls.Add(cbx_packingCode, 2, 7);
             tableLayoutPanel1.Controls.Add(btnQuery, 2, 10);
             tableLayoutPanel1.Controls.Add(btnCancel, 1, 10);
+            tableLayoutPanel1.Controls.Add(spMinNetWeight, 2, 8);
+            tableLayoutPanel1.Controls.Add(spMaxNetWeight, 2, 9);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
@@ -510,38 +510,16 @@
             cbx_preheaterCode.Size = new Size(193, 26);
             cbx_preheaterCode.TabIndex = 2;
             // 
-            // cbx_packingNumber
+            // cbx_packingCode
             // 
-            cbx_packingNumber.Anchor = AnchorStyles.None;
-            cbx_packingNumber.Location = new Point(401, 271);
-            cbx_packingNumber.Name = "cbx_packingNumber";
-            cbx_packingNumber.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            cbx_packingNumber.Properties.Appearance.Options.UseFont = true;
-            cbx_packingNumber.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_packingNumber.Size = new Size(193, 26);
-            cbx_packingNumber.TabIndex = 2;
-            // 
-            // cbx_minNetWeight
-            // 
-            cbx_minNetWeight.Anchor = AnchorStyles.None;
-            cbx_minNetWeight.Location = new Point(401, 308);
-            cbx_minNetWeight.Name = "cbx_minNetWeight";
-            cbx_minNetWeight.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            cbx_minNetWeight.Properties.Appearance.Options.UseFont = true;
-            cbx_minNetWeight.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_minNetWeight.Size = new Size(193, 26);
-            cbx_minNetWeight.TabIndex = 2;
-            // 
-            // cbx_maxNetWeight
-            // 
-            cbx_maxNetWeight.Anchor = AnchorStyles.None;
-            cbx_maxNetWeight.Location = new Point(401, 345);
-            cbx_maxNetWeight.Name = "cbx_maxNetWeight";
-            cbx_maxNetWeight.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            cbx_maxNetWeight.Properties.Appearance.Options.UseFont = true;
-            cbx_maxNetWeight.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_maxNetWeight.Size = new Size(193, 26);
-            cbx_maxNetWeight.TabIndex = 2;
+            cbx_packingCode.Anchor = AnchorStyles.None;
+            cbx_packingCode.Location = new Point(401, 271);
+            cbx_packingCode.Name = "cbx_packingCode";
+            cbx_packingCode.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            cbx_packingCode.Properties.Appearance.Options.UseFont = true;
+            cbx_packingCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            cbx_packingCode.Size = new Size(193, 26);
+            cbx_packingCode.TabIndex = 2;
             // 
             // btnQuery
             // 
@@ -562,6 +540,32 @@
             btnCancel.TabIndex = 3;
             btnCancel.Text = "取消";
             btnCancel.Click += Cancel;
+            // 
+            // spMinNetWeight
+            // 
+            spMinNetWeight.Anchor = AnchorStyles.None;
+            spMinNetWeight.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
+            spMinNetWeight.Location = new Point(401, 308);
+            spMinNetWeight.Name = "spMinNetWeight";
+            spMinNetWeight.Properties.Appearance.Options.UseTextOptions = true;
+            spMinNetWeight.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            spMinNetWeight.Properties.AutoHeight = false;
+            spMinNetWeight.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            spMinNetWeight.Size = new Size(193, 25);
+            spMinNetWeight.TabIndex = 4;
+            // 
+            // spMaxNetWeight
+            // 
+            spMaxNetWeight.Anchor = AnchorStyles.None;
+            spMaxNetWeight.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
+            spMaxNetWeight.Location = new Point(401, 345);
+            spMaxNetWeight.Name = "spMaxNetWeight";
+            spMaxNetWeight.Properties.Appearance.Options.UseTextOptions = true;
+            spMaxNetWeight.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            spMaxNetWeight.Properties.AutoHeight = false;
+            spMaxNetWeight.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            spMaxNetWeight.Size = new Size(193, 25);
+            spMaxNetWeight.TabIndex = 4;
             // 
             // HistoryFilter
             // 
@@ -584,9 +588,9 @@
             ((System.ComponentModel.ISupportInitialize)cbx_productCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)cbx_preheaterSpec.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)cbx_preheaterCode.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_packingNumber.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_minNetWeight.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_maxNetWeight.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cbx_packingCode.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)spMinNetWeight.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)spMaxNetWeight.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -620,10 +624,10 @@
         private DevExpress.XtraEditors.ComboBoxEdit cbx_productCode;
         private DevExpress.XtraEditors.ComboBoxEdit cbx_preheaterSpec;
         private DevExpress.XtraEditors.ComboBoxEdit cbx_preheaterCode;
-        private DevExpress.XtraEditors.ComboBoxEdit cbx_packingNumber;
-        private DevExpress.XtraEditors.ComboBoxEdit cbx_minNetWeight;
-        private DevExpress.XtraEditors.ComboBoxEdit cbx_maxNetWeight;
+        private DevExpress.XtraEditors.ComboBoxEdit cbx_packingCode;
         private DevExpress.XtraEditors.SimpleButton btnQuery;
         private DevExpress.XtraEditors.SimpleButton btnCancel;
+        private DevExpress.XtraEditors.SpinEdit spMinNetWeight;
+        private DevExpress.XtraEditors.SpinEdit spMaxNetWeight;
     }
 }

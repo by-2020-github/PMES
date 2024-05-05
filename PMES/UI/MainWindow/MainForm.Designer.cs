@@ -246,6 +246,7 @@
             lbErroInfo.TabIndex = 3;
             lbErroInfo.Text = "ErroInfo";
             lbErroInfo.TextAlign = ContentAlignment.MiddleCenter;
+            lbErroInfo.DoubleClick += lbErroInfo_DoubleClick;
             // 
             // tableLayoutPanelContent
             // 
@@ -826,7 +827,7 @@
             gridColumn2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn2.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn2.Caption = "箱码";
-            gridColumn2.FieldName = "boxCode";
+            gridColumn2.FieldName = "PackingBarCode";
             gridColumn2.Name = "gridColumn2";
             gridColumn2.Visible = true;
             gridColumn2.VisibleIndex = 0;
@@ -844,7 +845,9 @@
             gridColumn3.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn3.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn3.Caption = "毛重";
-            gridColumn3.FieldName = "grossWeightTotal";
+            gridColumn3.DisplayFormat.FormatString = "F2";
+            gridColumn3.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            gridColumn3.FieldName = "PackingGrossWeight";
             gridColumn3.Name = "gridColumn3";
             gridColumn3.Visible = true;
             gridColumn3.VisibleIndex = 1;
@@ -862,7 +865,9 @@
             gridColumn4.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn4.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn4.Caption = "净重";
-            gridColumn4.FieldName = "netWeightTotal";
+            gridColumn4.DisplayFormat.FormatString = "F2";
+            gridColumn4.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            gridColumn4.FieldName = "PackingWeight";
             gridColumn4.Name = "gridColumn4";
             gridColumn4.Visible = true;
             gridColumn4.VisibleIndex = 2;
@@ -915,7 +920,7 @@
             gridColumn5.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn5.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn5.Caption = "箱内盘编号（盘码）";
-            gridColumn5.FieldName = "preheaterCode";
+            gridColumn5.FieldName = "PSN";
             gridColumn5.Name = "gridColumn5";
             gridColumn5.Visible = true;
             gridColumn5.VisibleIndex = 0;
@@ -933,7 +938,7 @@
             gridColumn6.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn6.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn6.Caption = "生产码";
-            gridColumn6.FieldName = "productionCode";
+            gridColumn6.FieldName = "ProductCode";
             gridColumn6.Name = "gridColumn6";
             gridColumn6.Visible = true;
             gridColumn6.VisibleIndex = 1;
@@ -951,7 +956,9 @@
             gridColumn7.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn7.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn7.Caption = "毛重";
-            gridColumn7.FieldName = "crossWeight";
+            gridColumn7.DisplayFormat.FormatString = "F2";
+            gridColumn7.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            gridColumn7.FieldName = "GrossWeight";
             gridColumn7.Name = "gridColumn7";
             gridColumn7.Visible = true;
             gridColumn7.VisibleIndex = 2;
@@ -969,7 +976,9 @@
             gridColumn8.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn8.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn8.Caption = "净重";
-            gridColumn8.FieldName = "netWeight";
+            gridColumn8.DisplayFormat.FormatString = "F2";
+            gridColumn8.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            gridColumn8.FieldName = "NetWeight";
             gridColumn8.Name = "gridColumn8";
             gridColumn8.Visible = true;
             gridColumn8.VisibleIndex = 3;
@@ -1628,7 +1637,6 @@
             ClientSize = new Size(1598, 768);
             Controls.Add(tableLayoutPanelMain);
             Font = new Font("微软雅黑", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(6, 7, 6, 7);
             MinimumSize = new Size(1598, 768);
             Name = "MainForm";

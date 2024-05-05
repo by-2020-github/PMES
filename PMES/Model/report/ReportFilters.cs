@@ -8,15 +8,20 @@ namespace PMES.Model.report
 {
     public class ReportFilters
     {
-        public string netWeight { get; set; } = "52";
-        public string packingNumber { get; set; } = "";
-        public string preheaterCode { get; set; } = "";
-        public string preheaterSpec { get; set; } = "";
-        public string productCode { get; set; } = "";
-        public string productSpec { get; set; } = "";
-        public string productionBarCode { get; set; } = "";
-        public string productionBatchNo { get; set; } = "";
-        public string productionDate { get; set; } = "";
-        public string userStandardCode { get; set; } = "";
+        public double NetWeightMin { get; set; } = 30;
+        public double NetWeightMax { get; set; } = 52;
+
+        /// <summary>
+        ///     装箱编号
+        /// </summary>
+        public string PackingNumber { get; set; } = "";
+
+        public string PreheaterCode { get; set; } = "";
+        public string PreheaterSpec { get; set; } = "";
+        public string ProductCode { get; set; } = "";
+        public string ProductSpec { get; set; } = "";
+        public string ProductionBarCode { get; set; } = "";
+        public string ProductionBatchNo { get; set; } = "";
+        public string UserStandardCode { get; set; } = "";
     }
 }
