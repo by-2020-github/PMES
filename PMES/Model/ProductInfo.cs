@@ -1,6 +1,4 @@
-﻿
-
-// ReSharper disable InconsistentNaming
+﻿// ReSharper disable InconsistentNaming
 
 namespace PMES.Model;
 
@@ -59,6 +57,25 @@ public class ProductInfo
     public string customer_material_number { get; set; } = null;
     public string customer_material_name { get; set; } = null;
     public string customer_material_spec { get; set; } = null;
+
+    protected bool Equals(ProductInfo other)
+    {
+        return material_number == other.material_number && jsbz_number == other.jsbz_number &&
+               customer_material_number == other.customer_material_number && package_info.code.Equals(other.package_info.code);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((ProductInfo)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(material_number, jsbz_number, customer_material_number, package_info.code);
+    }
 }
 
 /// <summary>
@@ -126,4 +143,3 @@ public class PackageInfo
     /// </summary>
     public int stacking_layers { get; set; } = 0;
 }
-

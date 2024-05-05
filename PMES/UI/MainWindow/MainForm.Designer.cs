@@ -73,13 +73,13 @@
             lb_paperBox = new DevExpress.XtraEditors.LabelControl();
             lb_PackageNums = new DevExpress.XtraEditors.LabelControl();
             gridControlBox = new DevExpress.XtraGrid.GridControl();
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridViewBox = new DevExpress.XtraGrid.Views.Grid.GridView();
             gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             tableLayoutPanel10 = new TableLayoutPanel();
             gridControlBoxChild = new DevExpress.XtraGrid.GridControl();
-            gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridViewXp = new DevExpress.XtraGrid.Views.Grid.GridView();
             gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -105,7 +105,7 @@
             simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             tableLayoutPanel4 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
-            btnPrinter = new DevExpress.XtraEditors.SimpleButton();
+            btnTemplateDesign = new DevExpress.XtraEditors.SimpleButton();
             btnComm = new DevExpress.XtraEditors.SimpleButton();
             btnLabelSetting = new DevExpress.XtraEditors.SimpleButton();
             tableLayoutPanel6 = new TableLayoutPanel();
@@ -117,9 +117,15 @@
             lb_currentInfo = new DevExpress.XtraEditors.LabelControl();
             lb_leftNum = new DevExpress.XtraEditors.LabelControl();
             tableLayoutPanel7 = new TableLayoutPanel();
-            checkBox1 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox3 = new CheckBox();
+            cbxAutoMode = new CheckBox();
+            cbxMigration = new CheckBox();
+            cbxBoxPrint = new CheckBox();
+            tableLayoutPanelFoot = new TableLayoutPanel();
+            labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            lb_user = new DevExpress.XtraEditors.LabelControl();
+            labelControl5 = new DevExpress.XtraEditors.LabelControl();
+            labelControl6 = new DevExpress.XtraEditors.LabelControl();
+            labelControl7 = new DevExpress.XtraEditors.LabelControl();
             tableLayoutPanelMain.SuspendLayout();
             tableLayoutPanelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtScanCode.Properties).BeginInit();
@@ -135,15 +141,16 @@
             tableLayoutPanel8.SuspendLayout();
             tableLayoutPanel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridControlBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewBox).BeginInit();
             tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridControlBoxChild).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewXp).BeginInit();
             tableLayoutPanel11.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel6.SuspendLayout();
             tableLayoutPanel7.SuspendLayout();
+            tableLayoutPanelFoot.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanelMain
@@ -153,12 +160,14 @@
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanelMain.Controls.Add(tableLayoutPanelHeader, 0, 0);
             tableLayoutPanelMain.Controls.Add(tableLayoutPanelContent, 0, 1);
+            tableLayoutPanelMain.Controls.Add(tableLayoutPanelFoot, 0, 2);
             tableLayoutPanelMain.Dock = DockStyle.Fill;
             tableLayoutPanelMain.Location = new Point(0, 0);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
-            tableLayoutPanelMain.RowCount = 2;
+            tableLayoutPanelMain.RowCount = 3;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 53F));
             tableLayoutPanelMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanelMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanelMain.Size = new Size(1598, 768);
             tableLayoutPanelMain.TabIndex = 0;
             // 
@@ -254,7 +263,7 @@
             tableLayoutPanelContent.Name = "tableLayoutPanelContent";
             tableLayoutPanelContent.RowCount = 1;
             tableLayoutPanelContent.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanelContent.Size = new Size(1590, 706);
+            tableLayoutPanelContent.Size = new Size(1590, 670);
             tableLayoutPanelContent.TabIndex = 1;
             // 
             // panelControl1
@@ -265,7 +274,7 @@
             panelControl1.Location = new Point(5, 5);
             panelControl1.Margin = new Padding(5);
             panelControl1.Name = "panelControl1";
-            panelControl1.Size = new Size(315, 696);
+            panelControl1.Size = new Size(315, 660);
             panelControl1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -321,7 +330,7 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(311, 692);
+            tableLayoutPanel2.Size = new Size(311, 656);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // lb_product_order_no
@@ -587,7 +596,7 @@
             panel1.Location = new Point(330, 5);
             panel1.Margin = new Padding(5);
             panel1.Name = "panel1";
-            panel1.Size = new Size(305, 696);
+            panel1.Size = new Size(305, 660);
             panel1.TabIndex = 2;
             // 
             // tableLayoutPanel3
@@ -608,7 +617,7 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
-            tableLayoutPanel3.Size = new Size(303, 694);
+            tableLayoutPanel3.Size = new Size(303, 658);
             tableLayoutPanel3.TabIndex = 1;
             // 
             // labelControl23
@@ -652,7 +661,7 @@
             labelControl43.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             labelControl43.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             labelControl43.Dock = DockStyle.Fill;
-            labelControl43.Location = new Point(10, 310);
+            labelControl43.Location = new Point(10, 296);
             labelControl43.Margin = new Padding(10, 3, 3, 3);
             labelControl43.Name = "labelControl43";
             labelControl43.Size = new Size(290, 24);
@@ -666,17 +675,17 @@
             picCertificate.Name = "picCertificate";
             picCertificate.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
             picCertificate.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            picCertificate.Size = new Size(297, 231);
+            picCertificate.Size = new Size(297, 217);
             picCertificate.TabIndex = 3;
             // 
             // picBoxList
             // 
             picBoxList.Dock = DockStyle.Fill;
-            picBoxList.Location = new Point(3, 340);
+            picBoxList.Location = new Point(3, 326);
             picBoxList.Name = "picBoxList";
             picBoxList.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
             picBoxList.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            picBoxList.Size = new Size(297, 351);
+            picBoxList.Size = new Size(297, 329);
             picBoxList.TabIndex = 3;
             // 
             // panel3
@@ -687,7 +696,7 @@
             panel3.Location = new Point(645, 5);
             panel3.Margin = new Padding(5);
             panel3.Name = "panel3";
-            panel3.Size = new Size(740, 696);
+            panel3.Size = new Size(740, 660);
             panel3.TabIndex = 2;
             // 
             // tableLayoutPanel8
@@ -705,7 +714,7 @@
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 400F));
-            tableLayoutPanel8.Size = new Size(738, 694);
+            tableLayoutPanel8.Size = new Size(738, 658);
             tableLayoutPanel8.TabIndex = 0;
             // 
             // tableLayoutPanel9
@@ -786,20 +795,23 @@
             gridControlBox.Dock = DockStyle.Fill;
             gridControlBox.EmbeddedNavigator.Margin = new Padding(0);
             gridControlBox.Location = new Point(7, 89);
-            gridControlBox.MainView = gridView1;
+            gridControlBox.MainView = gridViewBox;
             gridControlBox.Margin = new Padding(5);
             gridControlBox.Name = "gridControlBox";
-            gridControlBox.Size = new Size(724, 196);
+            gridControlBox.Size = new Size(724, 160);
             gridControlBox.TabIndex = 1;
-            gridControlBox.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
+            gridControlBox.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewBox });
+            gridControlBox.Click += gridControlBox_Click;
             // 
-            // gridView1
+            // gridViewBox
             // 
-            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn2, gridColumn3, gridColumn4 });
-            gridView1.GridControl = gridControlBox;
-            gridView1.IndicatorWidth = 60;
-            gridView1.Name = "gridView1";
-            gridView1.CustomDrawRowIndicator += gridView1_CustomDrawRowIndicator;
+            gridViewBox.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn2, gridColumn3, gridColumn4 });
+            gridViewBox.GridControl = gridControlBox;
+            gridViewBox.IndicatorWidth = 60;
+            gridViewBox.Name = "gridViewBox";
+            gridViewBox.OptionsBehavior.Editable = false;
+            gridViewBox.CustomDrawRowIndicator += gridViewBox_CustomDrawRowIndicator;
+            gridViewBox.FocusedRowChanged += gridViewBox_FocusedRowChanged;
             // 
             // gridColumn2
             // 
@@ -862,7 +874,7 @@
             tableLayoutPanel10.Controls.Add(gridControlBoxChild, 0, 0);
             tableLayoutPanel10.Controls.Add(tableLayoutPanel11, 0, 1);
             tableLayoutPanel10.Dock = DockStyle.Fill;
-            tableLayoutPanel10.Location = new Point(5, 295);
+            tableLayoutPanel10.Location = new Point(5, 259);
             tableLayoutPanel10.Name = "tableLayoutPanel10";
             tableLayoutPanel10.RowCount = 2;
             tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Absolute, 200F));
@@ -875,17 +887,20 @@
             gridControlBoxChild.Dock = DockStyle.Fill;
             gridControlBoxChild.EmbeddedNavigator.Margin = new Padding(0);
             gridControlBoxChild.Location = new Point(3, 3);
-            gridControlBoxChild.MainView = gridView2;
+            gridControlBoxChild.MainView = gridViewXp;
             gridControlBoxChild.Name = "gridControlBoxChild";
             gridControlBoxChild.Size = new Size(722, 194);
             gridControlBoxChild.TabIndex = 0;
-            gridControlBoxChild.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView2 });
+            gridControlBoxChild.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewXp });
+            gridControlBoxChild.Click += gridControlBoxChild_Click;
             // 
-            // gridView2
+            // gridViewXp
             // 
-            gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn5, gridColumn6, gridColumn7, gridColumn8 });
-            gridView2.GridControl = gridControlBoxChild;
-            gridView2.Name = "gridView2";
+            gridViewXp.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn5, gridColumn6, gridColumn7, gridColumn8 });
+            gridViewXp.GridControl = gridControlBoxChild;
+            gridViewXp.Name = "gridViewXp";
+            gridViewXp.OptionsBehavior.Editable = false;
+            gridViewXp.FocusedRowChanged += gridViewXp_FocusedRowChanged;
             // 
             // gridColumn5
             // 
@@ -918,7 +933,7 @@
             gridColumn6.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn6.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn6.Caption = "生产码";
-            gridColumn6.FieldName = "productCode";
+            gridColumn6.FieldName = "productionCode";
             gridColumn6.Name = "gridColumn6";
             gridColumn6.Visible = true;
             gridColumn6.VisibleIndex = 1;
@@ -936,7 +951,7 @@
             gridColumn7.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn7.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn7.Caption = "毛重";
-            gridColumn7.FieldName = "grossWeight";
+            gridColumn7.FieldName = "crossWeight";
             gridColumn7.Name = "gridColumn7";
             gridColumn7.Visible = true;
             gridColumn7.VisibleIndex = 2;
@@ -1187,12 +1202,12 @@
             lbTotalWeight.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             lbTotalWeight.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             lbTotalWeight.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
-            tableLayoutPanel11.SetColumnSpan(lbTotalWeight, 2);
+            tableLayoutPanel11.SetColumnSpan(lbTotalWeight, 3);
             lbTotalWeight.Dock = DockStyle.Fill;
             lbTotalWeight.Location = new Point(163, 3);
             lbTotalWeight.Name = "lbTotalWeight";
             tableLayoutPanel11.SetRowSpan(lbTotalWeight, 2);
-            lbTotalWeight.Size = new Size(154, 88);
+            lbTotalWeight.Size = new Size(234, 88);
             lbTotalWeight.TabIndex = 1;
             lbTotalWeight.Text = "123.05";
             // 
@@ -1284,14 +1299,14 @@
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
-            tableLayoutPanel4.Size = new Size(194, 700);
+            tableLayoutPanel4.Size = new Size(194, 664);
             tableLayoutPanel4.TabIndex = 3;
             // 
             // tableLayoutPanel5
             // 
             tableLayoutPanel5.ColumnCount = 1;
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel5.Controls.Add(btnPrinter, 0, 2);
+            tableLayoutPanel5.Controls.Add(btnTemplateDesign, 0, 2);
             tableLayoutPanel5.Controls.Add(btnComm, 0, 1);
             tableLayoutPanel5.Controls.Add(btnLabelSetting, 0, 0);
             tableLayoutPanel5.Dock = DockStyle.Fill;
@@ -1302,22 +1317,22 @@
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel5.Size = new Size(184, 201);
+            tableLayoutPanel5.Size = new Size(184, 190);
             tableLayoutPanel5.TabIndex = 0;
             // 
-            // btnPrinter
+            // btnTemplateDesign
             // 
-            btnPrinter.Appearance.Font = new Font("微软雅黑", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnPrinter.Appearance.Options.UseFont = true;
-            btnPrinter.Dock = DockStyle.Fill;
-            btnPrinter.Location = new Point(10, 120);
-            btnPrinter.Margin = new Padding(10);
-            btnPrinter.MinimumSize = new Size(130, 40);
-            btnPrinter.Name = "btnPrinter";
-            btnPrinter.Size = new Size(164, 40);
-            btnPrinter.TabIndex = 0;
-            btnPrinter.Text = "打印机设置";
-            btnPrinter.Click += PrinterSettings;
+            btnTemplateDesign.Appearance.Font = new Font("微软雅黑", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            btnTemplateDesign.Appearance.Options.UseFont = true;
+            btnTemplateDesign.Dock = DockStyle.Fill;
+            btnTemplateDesign.Location = new Point(10, 120);
+            btnTemplateDesign.Margin = new Padding(10);
+            btnTemplateDesign.MinimumSize = new Size(130, 40);
+            btnTemplateDesign.Name = "btnTemplateDesign";
+            btnTemplateDesign.Size = new Size(164, 40);
+            btnTemplateDesign.TabIndex = 0;
+            btnTemplateDesign.Text = "标签模板设计";
+            btnTemplateDesign.Click += EditPrintTemplate;
             // 
             // btnComm
             // 
@@ -1359,7 +1374,7 @@
             tableLayoutPanel6.Controls.Add(lb_currentInfo, 0, 5);
             tableLayoutPanel6.Controls.Add(lb_leftNum, 0, 6);
             tableLayoutPanel6.Dock = DockStyle.Fill;
-            tableLayoutPanel6.Location = new Point(5, 214);
+            tableLayoutPanel6.Location = new Point(5, 203);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
             tableLayoutPanel6.RowCount = 8;
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
@@ -1370,7 +1385,7 @@
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel6.Size = new Size(184, 201);
+            tableLayoutPanel6.Size = new Size(184, 190);
             tableLayoutPanel6.TabIndex = 1;
             // 
             // labelControl44
@@ -1463,58 +1478,147 @@
             // 
             tableLayoutPanel7.ColumnCount = 1;
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel7.Controls.Add(checkBox1, 0, 0);
-            tableLayoutPanel7.Controls.Add(checkBox2, 0, 2);
-            tableLayoutPanel7.Controls.Add(checkBox3, 0, 3);
+            tableLayoutPanel7.Controls.Add(cbxAutoMode, 0, 0);
+            tableLayoutPanel7.Controls.Add(cbxMigration, 0, 2);
+            tableLayoutPanel7.Controls.Add(cbxBoxPrint, 0, 3);
             tableLayoutPanel7.Dock = DockStyle.Fill;
-            tableLayoutPanel7.Location = new Point(5, 423);
+            tableLayoutPanel7.Location = new Point(5, 401);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
             tableLayoutPanel7.RowCount = 4;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel7.Size = new Size(184, 272);
+            tableLayoutPanel7.Size = new Size(184, 258);
             tableLayoutPanel7.TabIndex = 2;
             // 
-            // checkBox1
+            // cbxAutoMode
             // 
-            checkBox1.Anchor = AnchorStyles.Left;
-            checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            checkBox1.Location = new Point(10, 17);
-            checkBox1.Margin = new Padding(10, 3, 3, 3);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(93, 25);
-            checkBox1.TabIndex = 0;
-            checkBox1.Text = "自动模式";
-            checkBox1.UseVisualStyleBackColor = true;
+            cbxAutoMode.Anchor = AnchorStyles.Left;
+            cbxAutoMode.AutoSize = true;
+            cbxAutoMode.Checked = true;
+            cbxAutoMode.CheckState = CheckState.Checked;
+            cbxAutoMode.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            cbxAutoMode.Location = new Point(10, 17);
+            cbxAutoMode.Margin = new Padding(10, 3, 3, 3);
+            cbxAutoMode.Name = "cbxAutoMode";
+            cbxAutoMode.Size = new Size(93, 25);
+            cbxAutoMode.TabIndex = 0;
+            cbxAutoMode.Text = "自动模式";
+            cbxAutoMode.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // cbxMigration
             // 
-            checkBox2.Anchor = AnchorStyles.Left;
-            checkBox2.AutoSize = true;
-            checkBox2.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            checkBox2.Location = new Point(10, 207);
-            checkBox2.Margin = new Padding(10, 3, 3, 3);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(93, 25);
-            checkBox2.TabIndex = 0;
-            checkBox2.Text = "改线入库";
-            checkBox2.UseVisualStyleBackColor = true;
+            cbxMigration.Anchor = AnchorStyles.Left;
+            cbxMigration.AutoSize = true;
+            cbxMigration.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            cbxMigration.Location = new Point(10, 193);
+            cbxMigration.Margin = new Padding(10, 3, 3, 3);
+            cbxMigration.Name = "cbxMigration";
+            cbxMigration.Size = new Size(93, 25);
+            cbxMigration.TabIndex = 0;
+            cbxMigration.Text = "改线入库";
+            cbxMigration.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // cbxBoxPrint
             // 
-            checkBox3.Anchor = AnchorStyles.Left;
-            checkBox3.AutoSize = true;
-            checkBox3.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            checkBox3.Location = new Point(10, 242);
-            checkBox3.Margin = new Padding(10, 3, 3, 3);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(93, 25);
-            checkBox3.TabIndex = 0;
-            checkBox3.Text = "装箱打印";
-            checkBox3.UseVisualStyleBackColor = true;
+            cbxBoxPrint.Anchor = AnchorStyles.Left;
+            cbxBoxPrint.AutoSize = true;
+            cbxBoxPrint.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            cbxBoxPrint.Location = new Point(10, 228);
+            cbxBoxPrint.Margin = new Padding(10, 3, 3, 3);
+            cbxBoxPrint.Name = "cbxBoxPrint";
+            cbxBoxPrint.Size = new Size(93, 25);
+            cbxBoxPrint.TabIndex = 0;
+            cbxBoxPrint.Text = "装箱打印";
+            cbxBoxPrint.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanelFoot
+            // 
+            tableLayoutPanelFoot.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
+            tableLayoutPanelFoot.ColumnCount = 5;
+            tableLayoutPanelFoot.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanelFoot.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanelFoot.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanelFoot.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanelFoot.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanelFoot.Controls.Add(labelControl3, 0, 0);
+            tableLayoutPanelFoot.Controls.Add(lb_user, 1, 0);
+            tableLayoutPanelFoot.Controls.Add(labelControl5, 2, 0);
+            tableLayoutPanelFoot.Controls.Add(labelControl6, 3, 0);
+            tableLayoutPanelFoot.Controls.Add(labelControl7, 4, 0);
+            tableLayoutPanelFoot.Dock = DockStyle.Fill;
+            tableLayoutPanelFoot.Location = new Point(4, 735);
+            tableLayoutPanelFoot.Name = "tableLayoutPanelFoot";
+            tableLayoutPanelFoot.RowCount = 1;
+            tableLayoutPanelFoot.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanelFoot.Size = new Size(1590, 29);
+            tableLayoutPanelFoot.TabIndex = 2;
+            // 
+            // labelControl3
+            // 
+            labelControl3.Appearance.Options.UseTextOptions = true;
+            labelControl3.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            labelControl3.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            labelControl3.Dock = DockStyle.Fill;
+            labelControl3.Location = new Point(7, 5);
+            labelControl3.Margin = new Padding(5, 3, 5, 3);
+            labelControl3.Name = "labelControl3";
+            labelControl3.Size = new Size(305, 19);
+            labelControl3.TabIndex = 0;
+            labelControl3.Text = "先登高科电气股份有限公司";
+            // 
+            // lb_user
+            // 
+            lb_user.Appearance.Options.UseTextOptions = true;
+            lb_user.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lb_user.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lb_user.Dock = DockStyle.Fill;
+            lb_user.Location = new Point(324, 5);
+            lb_user.Margin = new Padding(5, 3, 5, 3);
+            lb_user.Name = "lb_user";
+            lb_user.Size = new Size(305, 19);
+            lb_user.TabIndex = 1;
+            lb_user.Text = "user";
+            // 
+            // labelControl5
+            // 
+            labelControl5.Appearance.Options.UseTextOptions = true;
+            labelControl5.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            labelControl5.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            labelControl5.Dock = DockStyle.Fill;
+            labelControl5.Location = new Point(641, 5);
+            labelControl5.Margin = new Padding(5, 3, 5, 3);
+            labelControl5.Name = "labelControl5";
+            labelControl5.Size = new Size(305, 19);
+            labelControl5.TabIndex = 1;
+            labelControl5.Text = "先登高科有限公司";
+            // 
+            // labelControl6
+            // 
+            labelControl6.Appearance.Options.UseTextOptions = true;
+            labelControl6.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            labelControl6.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            labelControl6.Dock = DockStyle.Fill;
+            labelControl6.Location = new Point(958, 5);
+            labelControl6.Margin = new Padding(5, 3, 5, 3);
+            labelControl6.Name = "labelControl6";
+            labelControl6.Size = new Size(305, 19);
+            labelControl6.TabIndex = 1;
+            labelControl6.Text = "PMES-V1.0";
+            // 
+            // labelControl7
+            // 
+            labelControl7.Appearance.Options.UseTextOptions = true;
+            labelControl7.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            labelControl7.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            labelControl7.Dock = DockStyle.Fill;
+            labelControl7.Location = new Point(1275, 5);
+            labelControl7.Margin = new Padding(5, 3, 5, 3);
+            labelControl7.Name = "labelControl7";
+            labelControl7.Size = new Size(308, 19);
+            labelControl7.TabIndex = 1;
+            labelControl7.Text = "copyright:";
             // 
             // MainForm
             // 
@@ -1524,8 +1628,9 @@
             ClientSize = new Size(1598, 768);
             Controls.Add(tableLayoutPanelMain);
             Font = new Font("微软雅黑", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(6, 7, 6, 7);
-            MinimumSize = new Size(1600, 800);
+            MinimumSize = new Size(1598, 768);
             Name = "MainForm";
             Text = "MainForm";
             Load += MainForm_Load;
@@ -1548,10 +1653,10 @@
             tableLayoutPanel9.ResumeLayout(false);
             tableLayoutPanel9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)gridControlBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewBox).EndInit();
             tableLayoutPanel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridControlBoxChild).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewXp).EndInit();
             tableLayoutPanel11.ResumeLayout(false);
             tableLayoutPanel11.PerformLayout();
             tableLayoutPanel4.ResumeLayout(false);
@@ -1560,6 +1665,8 @@
             tableLayoutPanel6.PerformLayout();
             tableLayoutPanel7.ResumeLayout(false);
             tableLayoutPanel7.PerformLayout();
+            tableLayoutPanelFoot.ResumeLayout(false);
+            tableLayoutPanelFoot.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1605,7 +1712,7 @@
         private TableLayoutPanel tableLayoutPanel5;
         private DevExpress.XtraEditors.SimpleButton btnLabelSetting;
         private DevExpress.XtraEditors.SimpleButton btnComm;
-        private DevExpress.XtraEditors.SimpleButton btnPrinter;
+        private DevExpress.XtraEditors.SimpleButton btnTemplateDesign;
         private TableLayoutPanel tableLayoutPanel6;
         private DevExpress.XtraEditors.LabelControl labelControl44;
         private DevExpress.XtraEditors.LabelControl lb_putStyle;
@@ -1615,9 +1722,9 @@
         private DevExpress.XtraEditors.LabelControl lb_currentInfo;
         private DevExpress.XtraEditors.LabelControl lb_leftNum;
         private TableLayoutPanel tableLayoutPanel7;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
-        private CheckBox checkBox3;
+        private CheckBox cbxAutoMode;
+        private CheckBox cbxMigration;
+        private CheckBox cbxBoxPrint;
         private TableLayoutPanel tableLayoutPanel8;
         private TableLayoutPanel tableLayoutPanel9;
         private DevExpress.XtraEditors.LabelControl lb_parentCode;
@@ -1625,13 +1732,13 @@
         private DevExpress.XtraEditors.LabelControl lb_paperBox;
         private DevExpress.XtraEditors.LabelControl lb_PackageNums;
         private DevExpress.XtraGrid.GridControl gridControlBox;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewBox;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
         private TableLayoutPanel tableLayoutPanel10;
         private DevExpress.XtraGrid.GridControl gridControlBoxChild;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewXp;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
@@ -1657,5 +1764,11 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton3;
         private DevExpress.XtraEditors.PictureEdit picBoxList;
         private DevExpress.XtraEditors.PictureEdit picCertificate;
+        private TableLayoutPanel tableLayoutPanelFoot;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private DevExpress.XtraEditors.LabelControl lb_user;
+        private DevExpress.XtraEditors.LabelControl labelControl5;
+        private DevExpress.XtraEditors.LabelControl labelControl6;
+        private DevExpress.XtraEditors.LabelControl labelControl7;
     }
 }

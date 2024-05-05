@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PMES": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

@@ -46,13 +46,20 @@ public partial class LoginForm : XtraForm
         //    ShowMsg("用户不存在.");
         //    return;
         //}
-        var param = new Dictionary<string, string>();
-        param.Add("password", $"{txtPassword.Text}");
-        param.Add("username", $"{txtUser.Text}");
-        var data = "";
+        var param = new Dictionary<string, string>
+        {
+            { "password", $"{txtPassword.Text}" },
+            { "username", $"{txtUser.Text}" }
+        };
         try
         {
             var userInfo = await WebService.Instance.Post<UserInfo>(param, ApiUrls.Login);
+            if (userInfo == null)
+            {
+                XtraMessageBox.Show("登录失败，请检查用户名或密码！", "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             GlobalVar.CurrentUserInfo = userInfo;
         }
         catch (Exception exception)

@@ -9,13 +9,18 @@ namespace PMES.Model.users
 {
     public class UserInfo
     {
-        public int authory { get; set; } = 1;
-        public string belongLine { get; set; } = "人工线包装组";
         public string code { get; set; } = "TZQZ";
+        public int isDel { get; set; } = 1;
         public int isLoginAutoLine { get; set; } = 1;
-        public string lineNo { get; set; } = "A1";
-        public string loginUser { get; set; } = "18080808080";
-        public string name { get; set; } = "aaa";
+
+        /// <summary>
+        ///     包装组编号
+        /// </summary>
+        public string packageGroupCode { get; set; } = "BAT";
+
+        public string packageGroupName { get; set; } = "A1";
+        public string productionLineNum { get; set; } = "1号自动线";
         public int userId { get; set; } = 1;
+        public string username { get; set; } = "aaa";
     }
 }

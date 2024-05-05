@@ -1,5 +1,9 @@
 ﻿using System.Net.Http;
+using DevExpress.DataAccess.Native.Web;
+using DevExpress.Skins;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PMES.Model.ApiResponse;
 using Serilog;
 
 // ReSharper disable InconsistentNaming
@@ -8,7 +12,7 @@ namespace PMES.Core;
 
 public class WebService
 {
-    public static Lazy<WebService> Holder = new(() => new WebService());
+    private static readonly Lazy<WebService> Holder = new(() => new WebService());
     private readonly HttpClient _httpClient;
 
     private WebService()
@@ -18,7 +22,7 @@ public class WebService
         _httpClient = new HttpClient(handler);
     }
 
-    public static ILogger Logger { get; set; }
+    public static ILogger? Logger { get; set; }
     public static WebService Instance => Holder.Value;
 
     public async Task<T> Get<T>(string url) where T : class
@@ -57,7 +61,7 @@ public class WebService
         }
         catch (Exception exception)
         {
-            Logger.Error(exception.Message);
+            Logger?.Error(exception.Message);
             return null;
         }
     }
@@ -80,19 +84,23 @@ public class WebService
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var responseStr = await response.Content.ReadAsStringAsync();
-            var responseStruct = JsonConvert.DeserializeObject<ResponseStruct>(responseStr);
-            if (responseStruct == null)
+            var jObject = (JObject)JsonConvert.DeserializeObject(responseStr)!;
+
+            if (!int.TryParse(jObject["status"]!["code"]!.ToString(), out int code))
             {
                 return null;
             }
 
-            if (responseStruct.status.Code != 200)
+            if (code != 200)
             {
                 return null;
             }
 
-            var dataStr = responseStruct.data;
-            return JsonConvert.DeserializeObject<T>(dataStr);
+            var data = jObject["data"]!.ToString();
+
+            var res = JsonConvert.DeserializeObject<T>(data);
+
+            return res;
         }
         catch (Exception exception)
         {
@@ -113,23 +121,28 @@ public class WebService
         try
         {
             var request = new HttpRequestMessage(HttpMethod.Post, url);
-            request.Content = new StringContent(JsonConvert.SerializeObject(body));
+            request.Content = new StringContent(JsonConvert.SerializeObject(body), null, "application/json");
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var responseStr = await response.Content.ReadAsStringAsync();
             var responseStruct = JsonConvert.DeserializeObject<ResponseStruct>(responseStr);
-            if (responseStruct == null)
+            var jObject = (JObject)JsonConvert.DeserializeObject(responseStr)!;
+
+            if (!int.TryParse(jObject["status"]!["code"]!.ToString(), out int code))
             {
                 return null;
             }
 
-            if (responseStruct.status.Code != 200)
+            if (code != 200)
             {
                 return null;
             }
 
-            var dataStr = responseStruct.data;
-            return JsonConvert.DeserializeObject<T>(dataStr);
+            var data = jObject["data"]!.ToString();
+
+            var res = JsonConvert.DeserializeObject<T>(data);
+
+            return res;
         }
         catch (Exception exception)
         {
@@ -138,47 +151,88 @@ public class WebService
         }
     }
 
-    public async Task<ResponseStruct> ConfirmParticularFinish(string receiptBillId, string userId)
+    public async Task<UploadTemplateRes?> UploadReportTemplate<T>(MultipartFormDataContent content, string url)
+    {
+        var response = await _httpClient.PostAsync(url, content);
+        response.EnsureSuccessStatusCode();
+        var responseStr = await response.Content.ReadAsStringAsync();
+        var jObject = (JObject)JsonConvert.DeserializeObject(responseStr)!;
+        if (!int.TryParse(jObject["status"]!["code"]!.ToString(), out int code))
+        {
+            return null;
+        }
+
+        if (code != 200)
+        {
+            return null;
+        }
+
+        var data = jObject["data"]!.ToString();
+
+        var res = JsonConvert.DeserializeObject<T>(data);
+
+        return null;
+    }
+
+    #region 直接返回泛型结构体
+
+    /// <summary>
+    ///     发送post请求
+    ///     body:json对象
+    /// </summary>
+    /// <param name="body"></param>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    public async Task<T?> PostJsonT<T>(object body, string url) where T : class, new()
     {
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Post,
-                "http://8.142.72.79:8089/api/weight/confirmParticularFinish");
-            var collection = new List<KeyValuePair<string, string>>();
-            collection.Add(new KeyValuePair<string, string>("receiptBillId", receiptBillId));
-            collection.Add(new KeyValuePair<string, string>("userId", userId));
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Content = new StringContent(JsonConvert.SerializeObject(body), null, "application/json");
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var responseStr = await response.Content.ReadAsStringAsync();
+            dynamic responseT = JsonConvert.DeserializeObject<T>(responseStr) ?? throw new InvalidOperationException();
+
+            return responseT.status.code != 200 ? null : (T?)responseT;
+        }
+        catch (Exception exception)
+        {
+            Logger?.Error(exception.Message);
+            return null;
+        }
+    }
+    
+    /// <summary>
+    ///     发送post请求
+    ///     body:x-www-form-urlencoded 
+    /// </summary>
+    /// <param name="param"></param>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    public async Task<T?> PostFormT<T>(Dictionary<string, string> param, string url) where T : class, new()
+    {
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            var collection = param.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value)).ToList();
             var content = new FormUrlEncodedContent(collection);
             request.Content = content;
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            var res = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ResponseStruct>(res);
+            var responseStr = await response.Content.ReadAsStringAsync();
+            dynamic responseT=  JsonConvert.DeserializeObject<T>(responseStr) ?? throw new InvalidOperationException();
+            return responseT.status.code != 200 ? null : (T?)responseT;
         }
         catch (Exception exception)
         {
-            Logger.Error(exception.Message);
+            Logger?.Error(exception.Message);
             return null;
         }
     }
 
-    public async Task<ResponseStruct> ConfirmParticular(string particular)
-    {
-        try
-        {
-            var request = new HttpRequestMessage(HttpMethod.Post,
-                "http://8.142.72.79:8089/api/weight/confirmParticular");
-            request.Content = new StringContent(particular);
-            var response = await _httpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            var res = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ResponseStruct>(res);
-        }
-        catch (Exception exception)
-        {
-            Logger.Error(exception.Message);
-            return null;
-        }
-    }
+    #endregion
+
 }
 
 #region post 请求体
@@ -212,12 +266,28 @@ public class ResponseStruct
 
 public class status
 {
-    public int Code { get; set; }
+    public int code { get; set; }
     public string statusMsg { get; set; }
+}
+
+/// <summary>
+///     上传模板后返回值
+/// </summary>
+public class UploadTemplateRes
+{
+    public string fileName { get; set; }
+    public int id { get; set; }
 }
 
 public static class ApiUrls
 {
+    #region erp 查询订单
+
+    public static string QueryOrder =
+        "https://test.chengzhong-api.site.xiandeng.com:3443/api/product-info?semi_finished=";
+
+    #endregion
+
     #region 人工线管理
 
     /// <summary>
@@ -231,7 +301,6 @@ public static class ApiUrls
     public static string PackingPrinting = "http://8.142.72.79:8089/api/manual/packingPrinting";
 
     #endregion
-
 
     #region 操作工管理
 

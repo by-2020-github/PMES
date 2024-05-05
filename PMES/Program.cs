@@ -6,6 +6,7 @@ using PMES.UI.Login;
 using PMES.UI.MainWindow;
 using Serilog;
 using System.Data;
+using PMES.Model;
 
 namespace PMES;
 
@@ -20,6 +21,8 @@ internal static class Program
     [STAThread]
     private static void Main()
     {
+        DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(PackingList));
+        DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(Certificate));
         //前初始化事件，处理全局未处理异常
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
         AppDomain.CurrentDomain.UnhandledException += NUiExceptionHandler; //处理非UI线程异常
@@ -36,7 +39,7 @@ internal static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm());
+        //Application.Run(new MainForm());
         Application.Run(new LoginForm());
     }
 

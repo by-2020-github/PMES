@@ -8,6 +8,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="DevExpress.Win.Design" Version="22.1.12" />
     <PackageReference Include="FreeSql" Version="3.2.821" />
@@ -25,6 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Model\ApiResponse\Document\" />
+    <Folder Include="Model\ApiResponse\Templates\" />
+    <Folder Include="Model\ApiResponse\User\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
 

@@ -1,45 +1,50 @@
-﻿using FreeSql.DataAnnotations;
+﻿using FreeSql.DatabaseModel;using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
+using FreeSql.DataAnnotations;
 
-// ReSharper disable InconsistentNaming
-namespace PMES.Model.tbs;
+namespace PMES.Model.tbs {
 
-[JsonObject(MemberSerialization.OptIn)]
-[Table(Name = "t_label", DisableSyncStructure = true)]
-public class T_label
-{
-    /// <summary>
-    ///     标签定义表主键ID
-    /// </summary>
-    [JsonProperty]
-    [Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
-    public uint Id { get; set; }
+	[JsonObject(MemberSerialization.OptIn), Table(Name = "t_label", DisableSyncStructure = true)]
+	public partial class T_label {
 
-    /// <summary>
-    ///     标签建立时间
-    /// </summary>
-    [JsonProperty]
-    [Column(Name = "createTime", DbType = "datetime")]
-    public DateTime? CreateTime { get; set; }
+		[JsonProperty, Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
+		public uint Id { get; set; }
 
-    /// <summary>
-    ///     文件地址
-    /// </summary>
-    [JsonProperty]
-    [Column(Name = "filePath")]
-    public string FilePath { get; set; }
+		/// <summary>
+		/// 包装代码
+		/// </summary>
+		[JsonProperty, Column(Name = "labelInCode", StringLength = 20)]
+		public string LabelInCode { get; set; }
 
-    /// <summary>
-    ///     标签名称
-    /// </summary>
-    [JsonProperty]
-    [Column(Name = "name", StringLength = 20)]
-    public string Name { get; set; }
+		/// <summary>
+		/// 内包装物料名称
+		/// </summary>
+		[JsonProperty, Column(Name = "materialName", StringLength = 40)]
+		public string MaterialName { get; set; }
 
-    /// <summary>
-    ///     标签更新时间
-    /// </summary>
-    [JsonProperty]
-    [Column(Name = "updateTime", DbType = "datetime")]
-    public DateTime? UpdateTime { get; set; }
+		/// <summary>
+		/// 内包装物料规格
+		/// </summary>
+		[JsonProperty, Column(Name = "materiaSku", StringLength = 40)]
+		public string MateriaSku { get; set; }
+
+		/// <summary>
+		/// 内包装物料示意图
+		/// </summary>
+		[JsonProperty, Column(Name = "picture", StringLength = 200)]
+		public string Picture { get; set; }
+
+		/// <summary>
+		/// 要求描述
+		/// </summary>
+		[JsonProperty, Column(Name = "remark", StringLength = 100)]
+		public string Remark { get; set; }
+
+	}
+
 }

@@ -22,6 +22,7 @@ namespace PMES_WPF
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
         }
     }
 }

@@ -61,6 +61,7 @@
             // txtUser
             // 
             txtUser.Anchor = AnchorStyles.None;
+            txtUser.EditValue = "admin";
             txtUser.Location = new Point(145, 117);
             txtUser.Name = "txtUser";
             txtUser.Properties.Appearance.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -107,6 +108,7 @@
             // txtPassword
             // 
             txtPassword.Anchor = AnchorStyles.None;
+            txtPassword.EditValue = "admin";
             txtPassword.Location = new Point(145, 195);
             txtPassword.Name = "txtPassword";
             txtPassword.Properties.Appearance.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
