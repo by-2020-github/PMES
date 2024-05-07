@@ -60,8 +60,10 @@
             this.xrTableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
+            this.objectDataSource2 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // TopMargin
@@ -400,6 +402,11 @@
             this.objectDataSource1.DataSource = typeof(global::PMES.Model.Certificate);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
+            // objectDataSource2
+            // 
+            this.objectDataSource2.DataSource = typeof(global::PMES.Model.tbs.T_preheater_code);
+            this.objectDataSource2.Name = "objectDataSource2";
+            // 
             // ReportCertificateXD
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -408,8 +415,9 @@
             this.Detail});
             this.BorderColor = System.Drawing.Color.LightGray;
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
-            this.objectDataSource1});
-            this.DataSource = this.objectDataSource1;
+            this.objectDataSource1,
+            this.objectDataSource2});
+            this.DataSource = this.objectDataSource2;
             this.Dpi = 254F;
             this.Font = new System.Drawing.Font("Microsoft JhengHei UI", 6F);
             this.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
@@ -421,6 +429,7 @@
             this.Version = "22.1";
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }
@@ -458,5 +467,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell14;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell17;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell18;
+        private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource2;
     }
 }

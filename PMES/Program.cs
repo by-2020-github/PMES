@@ -7,13 +7,18 @@ using PMES.UI.MainWindow;
 using Serilog;
 using System.Data;
 using PMES.Model;
-
+using RichTextBox = System.Windows.Controls.RichTextBox;
 namespace PMES;
 
 internal static class Program
 {
     private static ILogger _logger;
     private static IFreeSql _freeSql;
+
+    /// <summary>
+    ///     全局日志输出窗口
+    /// </summary>
+    public static System.Windows.Controls.RichTextBox LogViewTextBox = new RichTextBox() { VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto }; //日志输出窗口
 
     /// <summary>
     ///     The main entry point for the application.
@@ -23,6 +28,7 @@ internal static class Program
     {
         DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(PackingList));
         DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(Certificate));
+        DevExpress.XtraReports.Configuration.Settings.Default.StorageOptions.RootDirectory = "C:\\ProgramData\\PMES_Templates";
         //前初始化事件，处理全局未处理异常
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
         AppDomain.CurrentDomain.UnhandledException += NUiExceptionHandler; //处理非UI线程异常
@@ -35,6 +41,7 @@ internal static class Program
         //2 初始化freeSqlHelper并加载数据
         FreeSqlManager.DbLogger = _logger;
         _freeSql = FreeSqlManager.FSql;
+        FreeSqlManager.SyncDbStructure();
 
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.

@@ -13,56 +13,58 @@ using System.Windows.Forms;
 using Serilog;
 using SICD_Automatic.Core;
 using PMES.Model.report;
+using PMES.Model.tbs;
+using PMES.Core.Managers;
 
 namespace PMES.UI.Settings
 {
     public partial class TemplateManage : DevExpress.XtraEditors.XtraForm
     {
-        private Serilog.ILogger logger;
+        private readonly ILogger _logger;
+        private readonly IFreeSql _freeSql = FreeSqlManager.FSql;
         private List<string> _boxList = new List<string>();
-        private List<TemplateManagement> _templateManages = new List<TemplateManagement>();
+        private List<T_label> _tLabels = new List<T_label>();
+
         public TemplateManage(ILogger logger)
         {
-            this.logger = logger;
+            this._logger = logger;
             InitializeComponent();
         }
 
         private void TemplateManage_Load(object sender, EventArgs e)
         {
-            var files = Directory.GetFiles(GlobalVar.TemplatePath);
-            foreach (var file in files)
-            {
-                if (!file.EndsWith(".repx") || file.Contains("box")) continue;
-                _boxList.Add(file);
-                _templateManages.Add(new TemplateManagement()
-                {
-                    Name = Path.GetFileName(file)
-                });
-            }
-    
-            gridControlTemplates.DataSource = _templateManages;
-
+            gridViewTemplates.FocusedRowChanged -= gridViewTemplates_FocusedRowChanged;
+            _tLabels = _freeSql.Select<T_label>().ToList();
+            gridControlTemplates.DataSource = _tLabels;
+            gridViewTemplates.FocusedRowChanged += gridViewTemplates_FocusedRowChanged;
         }
 
-        private void gridViewTemplates_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        private void gridViewTemplates_FocusedRowChanged(object sender,
+            DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
             var row = e.FocusedRowHandle;
             if (row < 0)
             {
                 return;
             }
-            _templateManages.ForEach(s => s.Enable = false);
-            _templateManages[row].Enable = true;
+
+            _tLabels.ForEach(s => s.IsCurrent = false);
+            _tLabels[row].IsCurrent = true;
             gridViewTemplates.FocusedRowChanged -= gridViewTemplates_FocusedRowChanged;
             gridControlTemplates.DataSource = null;
-            gridControlTemplates.DataSource = _templateManages;
+            gridControlTemplates.DataSource = _tLabels;
             gridViewTemplates.FocusedRowHandle = row;
             gridViewTemplates.FocusedRowChanged += gridViewTemplates_FocusedRowChanged;
         }
 
-        private void btnConfirm_Click(object sender, EventArgs e)
+        private async void btnConfirm_Click(object sender, EventArgs e)
         {
-            GlobalVar.CurrentTemplate = $"{GlobalVar.TemplatePath}\\{_templateManages.First(s=>s.Enable).Name}";
+            if (await _freeSql.Update<T_label>().SetSource(_tLabels).ExecuteAffrowsAsync() > 0)
+            {
+                XtraMessageBox.Show("修改成功");
+            }
+
+            GlobalVar.CurrentTemplate = $"{GlobalVar.TemplatePath}\\{_tLabels.First(s => (bool)s.IsCurrent).Name}";
             Trace.WriteLine($"current:{GlobalVar.CurrentTemplate}");
             this.Close();
         }

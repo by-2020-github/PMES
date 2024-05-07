@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using PMES.Model.tbs;
+using Serilog;
 
 namespace PMES.Core.Managers;
 
@@ -24,7 +25,8 @@ public class FreeSqlManager
 
     public static void SyncDbStructure()
     {
-        //FSql.CodeFirst.SyncStructure<ModuleParam>();
+        FSql.CodeFirst.SyncStructure<T_label>();
+        FSql.CodeFirst.SyncStructure<T_label_template>();
     }
 
     public static void ConfigNavigate()

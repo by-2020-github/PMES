@@ -1,6 +1,7 @@
 ﻿using PMES.Core.Managers;
 using PMES.Model;
 using PMES.Model.report;
+using PMES.Model.tbs;
 using PMES.Model.users;
 
 namespace SICD_Automatic.Core;
@@ -16,5 +17,6 @@ public class GlobalVar
     public static string CurrentTemplate { get; set; }
     
     public static ReportFilters ReportFilters { get; set; }
+    public static T_label_template NewLabelTemplate { get; set; }
 }
 

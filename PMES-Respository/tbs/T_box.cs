@@ -46,6 +46,12 @@ namespace PMES.Model.tbs {
 		public string LabelName { get; set; }
 
 		/// <summary>
+		/// 打印标签模板Id
+		/// </summary>
+		[JsonProperty, Column(Name = "labelTemplateId", DbType = "int")]
+		public int? LabelTemplateId { get; set; }
+
+		/// <summary>
 		/// 包装组编号：PMES系统自定义---几号包装线或人工包装线
 		/// </summary>
 		[JsonProperty, Column(Name = "packagingCode", StringLength = 50)]
@@ -86,6 +92,12 @@ namespace PMES.Model.tbs {
 		/// </summary>
 		[JsonProperty, Column(Name = "packingWeight")]
 		public double? PackingWeight { get; set; }
+
+		/// <summary>
+		/// 字母合托 0未合托 1已合托
+		/// </summary>
+		[JsonProperty, Column(Name = "status", DbType = "int")]
+		public int? Status { get; set; }
 
 		/// <summary>
 		/// 母托盘条码

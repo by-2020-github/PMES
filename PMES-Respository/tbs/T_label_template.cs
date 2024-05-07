@@ -10,19 +10,19 @@ using FreeSql.DataAnnotations;
 namespace PMES.Model.tbs {
 
 	/// <summary>
-	/// 打印标签表
+	/// 标签模版表
 	/// </summary>
-	[JsonObject(MemberSerialization.OptIn), Table(Name = "t_print_label", DisableSyncStructure = true)]
-	public partial class T_print_label {
+	[JsonObject(MemberSerialization.OptIn), Table(Name = "t_label_template" )]
+	public partial class T_label_template {
 
 		/// <summary>
-		/// 标签定义表主键ID
+		/// 标签模版表 -- 主键ID
 		/// </summary>
 		[JsonProperty, Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
 		public uint Id { get; set; }
 
 		/// <summary>
-		/// 标签建立时间
+		/// 记录建立时间
 		/// </summary>
 		[JsonProperty, Column(Name = "createTime", DbType = "datetime")]
 		public DateTime? CreateTime { get; set; }
@@ -37,19 +37,19 @@ namespace PMES.Model.tbs {
 		/// 是否系统默认：1.系统默认；2.客户指定
 		/// </summary>
 		[JsonProperty, Column(Name = "defaultType", DbType = "int")]
-		public int? DefaultType { get; set; }
+		public int? DefaultType { get; set; } = 1;
 
 		/// <summary>
-		/// 标签名称
+		/// 0有效；1删除
 		/// </summary>
-		[JsonProperty, Column(Name = "name", StringLength = 20)]
-		public string Name { get; set; }
+		[JsonProperty, Column(Name = "isDel", DbType = "int")]
+		public int? IsDel { get; set; }
 
 		/// <summary>
-		/// 装箱件数
+		/// 标签表-主键id
 		/// </summary>
-		[JsonProperty, Column(Name = "numOfPackedItems")]
-		public string NumOfPackedItems { get; set; }
+		[JsonProperty, Column(Name = "labelId", DbType = "int")]
+		public int? LabelId { get; set; }
 
 		/// <summary>
 		/// 线盘代码
@@ -58,7 +58,7 @@ namespace PMES.Model.tbs {
 		public string PreheaterCode { get; set; }
 
 		/// <summary>
-		/// 标签类型：0. 盘内标签；1. 盘外标签；3. 发货标签
+		/// 标签类型：0. 盘标签；1. 箱标签；3. 发货标签
 		/// </summary>
 		[JsonProperty, Column(Name = "printLabelType", DbType = "int")]
 		public int? PrintLabelType { get; set; }
@@ -76,19 +76,22 @@ namespace PMES.Model.tbs {
 		public string Remark { get; set; }
 
 		/// <summary>
-		/// 状态 0无效；1有效
-		/// </summary>
-		[JsonProperty, Column(Name = "status", DbType = "int")]
-		public int? Status { get; set; }
-
-		/// <summary>
-		/// 标签文件
+		/// 标签打印文件
 		/// </summary>
 		[JsonProperty, Column(Name = "templateFile", DbType = "blob")]
 		public byte[] TemplateFile { get; set; }
 
+		[JsonProperty, Column(Name = "templateFileName", StringLength = -1)]
+		public string TemplateFileName { get; set; }
+
 		/// <summary>
-		/// 标签更新时间
+		/// 标签预览图片
+		/// </summary>
+		[JsonProperty, Column(Name = "templatePicture", DbType = "blob")]
+		public byte[] TemplatePicture { get; set; }
+
+		/// <summary>
+		/// 记录更新时间
 		/// </summary>
 		[JsonProperty, Column(Name = "updateTime", DbType = "datetime")]
 		public DateTime? UpdateTime { get; set; }

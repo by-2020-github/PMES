@@ -100,6 +100,12 @@ namespace PMES.Model.tbs {
 		public int? IsQualified { get; set; } = 1;
 
 		/// <summary>
+		/// 打印标签模板Id
+		/// </summary>
+		[JsonProperty, Column(Name = "labelTemplateId", DbType = "int")]
+		public int? LabelTemplateId { get; set; }
+
+		/// <summary>
 		/// 机台编号
 		/// </summary>
 		[JsonProperty, Column(Name = "machineCode", StringLength = 50)]

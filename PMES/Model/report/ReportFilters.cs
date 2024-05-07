@@ -14,14 +14,13 @@ namespace PMES.Model.report
         /// <summary>
         ///     装箱编号
         /// </summary>
-        public string PackingNumber { get; set; } = "";
+        public string PackingBoxCode { get; set; } = "";
 
         public string PreheaterCode { get; set; } = "";
         public string PreheaterSpec { get; set; } = "";
         public string ProductCode { get; set; } = "";
         public string ProductSpec { get; set; } = "";
-        public string ProductionBarCode { get; set; } = "";
-        public string ProductionBatchNo { get; set; } = "";
+        public string ProductBatchNo { get; set; } = "";
         public string UserStandardCode { get; set; } = "";
     }
 }

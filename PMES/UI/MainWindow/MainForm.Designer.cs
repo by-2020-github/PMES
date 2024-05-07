@@ -118,8 +118,10 @@
             lb_leftNum = new DevExpress.XtraEditors.LabelControl();
             tableLayoutPanel7 = new TableLayoutPanel();
             cbxAutoMode = new CheckBox();
-            cbxMigration = new CheckBox();
             cbxBoxPrint = new CheckBox();
+            cbxMigration = new CheckBox();
+            lbOld = new DevExpress.XtraEditors.LabelControl();
+            lbNew = new DevExpress.XtraEditors.LabelControl();
             tableLayoutPanelFoot = new TableLayoutPanel();
             labelControl3 = new DevExpress.XtraEditors.LabelControl();
             lb_user = new DevExpress.XtraEditors.LabelControl();
@@ -174,15 +176,16 @@
             // tableLayoutPanelHeader
             // 
             tableLayoutPanelHeader.BackColor = Color.FromArgb(129, 211, 248);
-            tableLayoutPanelHeader.ColumnCount = 4;
-            tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 534F));
+            tableLayoutPanelHeader.ColumnCount = 5;
+            tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 240F));
             tableLayoutPanelHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 135F));
-            tableLayoutPanelHeader.Controls.Add(txtScanCode, 2, 0);
-            tableLayoutPanelHeader.Controls.Add(btnExit, 3, 0);
+            tableLayoutPanelHeader.Controls.Add(txtScanCode, 3, 0);
+            tableLayoutPanelHeader.Controls.Add(btnExit, 4, 0);
             tableLayoutPanelHeader.Controls.Add(labelControl1, 0, 0);
-            tableLayoutPanelHeader.Controls.Add(lbErroInfo, 1, 0);
+            tableLayoutPanelHeader.Controls.Add(lbErroInfo, 2, 0);
             tableLayoutPanelHeader.Dock = DockStyle.Fill;
             tableLayoutPanelHeader.Location = new Point(4, 4);
             tableLayoutPanelHeader.Name = "tableLayoutPanelHeader";
@@ -195,7 +198,7 @@
             // 
             txtScanCode.Dock = DockStyle.Fill;
             txtScanCode.EditValue = "1";
-            txtScanCode.Location = new Point(1218, 10);
+            txtScanCode.Location = new Point(1217, 10);
             txtScanCode.Margin = new Padding(3, 10, 15, 3);
             txtScanCode.Name = "txtScanCode";
             txtScanCode.Properties.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
@@ -215,7 +218,7 @@
             btnExit.Appearance.Font = new Font("微软雅黑", 14F, FontStyle.Regular, GraphicsUnit.Point);
             btnExit.Appearance.Options.UseFont = true;
             btnExit.Dock = DockStyle.Fill;
-            btnExit.Location = new Point(1460, 5);
+            btnExit.Location = new Point(1459, 5);
             btnExit.Margin = new Padding(5);
             btnExit.MinimumSize = new Size(126, 36);
             btnExit.Name = "btnExit";
@@ -231,18 +234,18 @@
             labelControl1.Dock = DockStyle.Fill;
             labelControl1.Location = new Point(3, 3);
             labelControl1.Name = "labelControl1";
-            labelControl1.Size = new Size(675, 41);
+            labelControl1.Size = new Size(541, 41);
             labelControl1.TabIndex = 0;
-            labelControl1.Text = "    PMES -  欢迎使用成品智能包装系统";
+            labelControl1.Text = "    PMES -  欢迎使用智能打包执行系统";
             // 
             // lbErroInfo
             // 
             lbErroInfo.AutoSize = true;
             lbErroInfo.Dock = DockStyle.Fill;
             lbErroInfo.ForeColor = Color.Red;
-            lbErroInfo.Location = new Point(684, 0);
+            lbErroInfo.Location = new Point(1097, 0);
             lbErroInfo.Name = "lbErroInfo";
-            lbErroInfo.Size = new Size(528, 47);
+            lbErroInfo.Size = new Size(114, 47);
             lbErroInfo.TabIndex = 3;
             lbErroInfo.Text = "ErroInfo";
             lbErroInfo.TextAlign = ContentAlignment.MiddleCenter;
@@ -811,6 +814,7 @@
             gridViewBox.IndicatorWidth = 60;
             gridViewBox.Name = "gridViewBox";
             gridViewBox.OptionsBehavior.Editable = false;
+            gridViewBox.OptionsView.ShowFooter = true;
             gridViewBox.CustomDrawRowIndicator += gridViewBox_CustomDrawRowIndicator;
             gridViewBox.FocusedRowChanged += gridViewBox_FocusedRowChanged;
             // 
@@ -829,6 +833,7 @@
             gridColumn2.Caption = "箱码";
             gridColumn2.FieldName = "PackingBarCode";
             gridColumn2.Name = "gridColumn2";
+            gridColumn2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, DevExpress.Data.SummaryMode.Mixed, "PackingBarCode", "小计：", "小计：") });
             gridColumn2.Visible = true;
             gridColumn2.VisibleIndex = 0;
             // 
@@ -849,6 +854,7 @@
             gridColumn3.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             gridColumn3.FieldName = "PackingGrossWeight";
             gridColumn3.Name = "gridColumn3";
+            gridColumn3.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PackingGrossWeight", "{0:F2}") });
             gridColumn3.Visible = true;
             gridColumn3.VisibleIndex = 1;
             // 
@@ -869,6 +875,7 @@
             gridColumn4.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             gridColumn4.FieldName = "PackingWeight";
             gridColumn4.Name = "gridColumn4";
+            gridColumn4.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PackingWeight", "{0:F2}") });
             gridColumn4.Visible = true;
             gridColumn4.VisibleIndex = 2;
             // 
@@ -905,6 +912,7 @@
             gridViewXp.GridControl = gridControlBoxChild;
             gridViewXp.Name = "gridViewXp";
             gridViewXp.OptionsBehavior.Editable = false;
+            gridViewXp.OptionsView.ShowFooter = true;
             gridViewXp.FocusedRowChanged += gridViewXp_FocusedRowChanged;
             // 
             // gridColumn5
@@ -940,6 +948,7 @@
             gridColumn6.Caption = "生产码";
             gridColumn6.FieldName = "ProductCode";
             gridColumn6.Name = "gridColumn6";
+            gridColumn6.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "ProductCode", "小计：", "小计：") });
             gridColumn6.Visible = true;
             gridColumn6.VisibleIndex = 1;
             // 
@@ -960,6 +969,7 @@
             gridColumn7.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             gridColumn7.FieldName = "GrossWeight";
             gridColumn7.Name = "gridColumn7";
+            gridColumn7.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GrossWeight", "{0:F2}") });
             gridColumn7.Visible = true;
             gridColumn7.VisibleIndex = 2;
             // 
@@ -980,6 +990,7 @@
             gridColumn8.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             gridColumn8.FieldName = "NetWeight";
             gridColumn8.Name = "gridColumn8";
+            gridColumn8.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetWeight", "{0:F2}") });
             gridColumn8.Visible = true;
             gridColumn8.VisibleIndex = 3;
             // 
@@ -1165,7 +1176,7 @@
             lbGrossWeight.Name = "lbGrossWeight";
             lbGrossWeight.Size = new Size(74, 41);
             lbGrossWeight.TabIndex = 1;
-            lbGrossWeight.Text = "123";
+            lbGrossWeight.Text = "0.00";
             // 
             // lbSkinWeight
             // 
@@ -1182,7 +1193,7 @@
             lbSkinWeight.Name = "lbSkinWeight";
             lbSkinWeight.Size = new Size(74, 41);
             lbSkinWeight.TabIndex = 1;
-            lbSkinWeight.Text = "123";
+            lbSkinWeight.Text = "0.00";
             // 
             // lbNetWeight
             // 
@@ -1199,7 +1210,7 @@
             lbNetWeight.Name = "lbNetWeight";
             lbNetWeight.Size = new Size(74, 41);
             lbNetWeight.TabIndex = 1;
-            lbNetWeight.Text = "123";
+            lbNetWeight.Text = "0.00";
             // 
             // lbTotalWeight
             // 
@@ -1218,7 +1229,7 @@
             tableLayoutPanel11.SetRowSpan(lbTotalWeight, 2);
             lbTotalWeight.Size = new Size(234, 88);
             lbTotalWeight.TabIndex = 1;
-            lbTotalWeight.Text = "123.05";
+            lbTotalWeight.Text = "0.00";
             // 
             // lbTareWeight
             // 
@@ -1486,17 +1497,21 @@
             // tableLayoutPanel7
             // 
             tableLayoutPanel7.ColumnCount = 1;
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel7.Controls.Add(cbxAutoMode, 0, 0);
+            tableLayoutPanel7.Controls.Add(cbxBoxPrint, 0, 5);
             tableLayoutPanel7.Controls.Add(cbxMigration, 0, 2);
-            tableLayoutPanel7.Controls.Add(cbxBoxPrint, 0, 3);
+            tableLayoutPanel7.Controls.Add(lbOld, 0, 3);
+            tableLayoutPanel7.Controls.Add(lbNew, 0, 4);
             tableLayoutPanel7.Dock = DockStyle.Fill;
             tableLayoutPanel7.Location = new Point(5, 401);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
-            tableLayoutPanel7.RowCount = 4;
+            tableLayoutPanel7.RowCount = 6;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel7.Size = new Size(184, 258);
             tableLayoutPanel7.TabIndex = 2;
@@ -1516,19 +1531,6 @@
             cbxAutoMode.Text = "自动模式";
             cbxAutoMode.UseVisualStyleBackColor = true;
             // 
-            // cbxMigration
-            // 
-            cbxMigration.Anchor = AnchorStyles.Left;
-            cbxMigration.AutoSize = true;
-            cbxMigration.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            cbxMigration.Location = new Point(10, 193);
-            cbxMigration.Margin = new Padding(10, 3, 3, 3);
-            cbxMigration.Name = "cbxMigration";
-            cbxMigration.Size = new Size(93, 25);
-            cbxMigration.TabIndex = 0;
-            cbxMigration.Text = "改线入库";
-            cbxMigration.UseVisualStyleBackColor = true;
-            // 
             // cbxBoxPrint
             // 
             cbxBoxPrint.Anchor = AnchorStyles.Left;
@@ -1541,6 +1543,50 @@
             cbxBoxPrint.TabIndex = 0;
             cbxBoxPrint.Text = "装箱打印";
             cbxBoxPrint.UseVisualStyleBackColor = true;
+            // 
+            // cbxMigration
+            // 
+            cbxMigration.Anchor = AnchorStyles.Left;
+            cbxMigration.AutoSize = true;
+            cbxMigration.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            cbxMigration.Location = new Point(10, 123);
+            cbxMigration.Margin = new Padding(10, 3, 3, 3);
+            cbxMigration.Name = "cbxMigration";
+            cbxMigration.Size = new Size(93, 25);
+            cbxMigration.TabIndex = 0;
+            cbxMigration.Text = "改线入库";
+            cbxMigration.UseVisualStyleBackColor = true;
+            cbxMigration.CheckedChanged += cbxMigration_CheckedChanged;
+            // 
+            // lbOld
+            // 
+            lbOld.Appearance.Options.UseTextOptions = true;
+            lbOld.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbOld.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbOld.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            lbOld.Dock = DockStyle.Fill;
+            lbOld.Location = new Point(5, 158);
+            lbOld.Margin = new Padding(5);
+            lbOld.Name = "lbOld";
+            lbOld.Size = new Size(174, 26);
+            lbOld.TabIndex = 1;
+            lbOld.Text = "oldCode";
+            lbOld.Visible = false;
+            // 
+            // lbNew
+            // 
+            lbNew.Appearance.Options.UseTextOptions = true;
+            lbNew.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            lbNew.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            lbNew.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            lbNew.Dock = DockStyle.Fill;
+            lbNew.Location = new Point(5, 194);
+            lbNew.Margin = new Padding(5);
+            lbNew.Name = "lbNew";
+            lbNew.Size = new Size(174, 24);
+            lbNew.TabIndex = 1;
+            lbNew.Text = "newCode";
+            lbNew.Visible = false;
             // 
             // tableLayoutPanelFoot
             // 
@@ -1778,5 +1824,7 @@
         private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraEditors.LabelControl labelControl6;
         private DevExpress.XtraEditors.LabelControl labelControl7;
+        private DevExpress.XtraEditors.LabelControl lbOld;
+        private DevExpress.XtraEditors.LabelControl lbNew;
     }
 }

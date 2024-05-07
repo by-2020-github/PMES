@@ -91,7 +91,7 @@
             gridColumn2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn2.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridColumn2.Caption = "是否启用";
-            gridColumn2.FieldName = "Enable";
+            gridColumn2.FieldName = "IsCurrent";
             gridColumn2.Name = "gridColumn2";
             gridColumn2.OptionsColumn.AllowEdit = false;
             gridColumn2.Visible = true;

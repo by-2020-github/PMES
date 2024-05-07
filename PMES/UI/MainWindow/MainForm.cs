@@ -2,6 +2,7 @@
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Forms.Integration;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraReports.Design;
@@ -123,9 +124,23 @@ public partial class MainForm : XtraForm
 
     #endregion
 
+    #region 打印相关
+
+    private T_label _currentLabel;
+    private T_label_template _printTemplatePCode;
+    private T_label_template _printTemplateBoxCode;
+    private T_label_template _printTemplateDeliveryCode;
+
+    #endregion
+
     public MainForm()
     {
         InitializeComponent();
+
+        var element = new ElementHost(){Dock = DockStyle.Fill};
+        tableLayoutPanelHeader.Controls.Add(element,1,0);
+        Program.LogViewTextBox.FontSize = 12;
+        element.Child = Program.LogViewTextBox;
         StartPosition = FormStartPosition.CenterScreen;
         lb_user.Text = GlobalVar.CurrentUserInfo.username;
         _logger = SerilogManager.GetOrCreateLogger();
@@ -134,6 +149,8 @@ public partial class MainForm : XtraForm
         UpdateProductInfo(new ProductInfo());
     }
 
+    private int _change = 1;
+
     /// <summary>
     ///     扫码枪触发
     /// </summary>
@@ -141,6 +158,34 @@ public partial class MainForm : XtraForm
     /// <param name="e"></param>
     private async void ScanCodeChanged(object sender, EventArgs e)
     {
+        if (cbxMigration.Checked)
+        {
+            if (_change == 1)
+            {
+                lbOld.Text = txtScanCode.Text;
+                _change++;
+            }
+            else
+            {
+                lbNew.Text = txtScanCode.Text;
+                if (await _freeSql.Insert<T_order_exchange>(new T_order_exchange
+                    {
+                        CreateTime = DateTime.Now,
+                        NewCode = lbNew.Text,
+                        OldCode = lbOld.Text,
+                        WeightUserId = GlobalVar.CurrentUserInfo.userId
+                    }).ExecuteAffrowsAsync()>0)
+                {
+                    ShowInfoMsg("改线入库成功!");
+
+                    lbNew.Text = "";
+                    lbOld.Text = "";
+                }
+                _change--;
+            }
+            return;
+        }
+
         if (string.IsNullOrEmpty(txtScanCode.Text)) return;
 
         if (txtScanCode.Text.Length < 5) return;
@@ -438,7 +483,7 @@ public partial class MainForm : XtraForm
 
         #region 更新表格
 
-        UpdateGridControl();
+        UpdateGridControl(_boxIdList);
 
         #endregion
 
@@ -464,25 +509,103 @@ public partial class MainForm : XtraForm
         }
 
         #endregion
-    }
 
-    private void UpdateGridControl()
-    {
-        if (_boxIdList.Count == 0)
+        #region 标签打印和预览
+
+        var _currentLabel = _freeSql.Select<T_label>().Where(s => (bool)s.IsCurrent).First();
+        if (_currentLabel == null)
         {
+            ShowErrorMsg("没有可用的标签！");
             return;
         }
+
+        var labelTs = await _freeSql.Select<T_label_template>()
+            .Where(s => s.LabelId == _currentLabel.Id).ToListAsync();
+        _printTemplatePCode = labelTs.First(s => s.PrintLabelType == 0);
+
+        if (_printTemplatePCode == null)
+        {
+            ShowErrorMsg("没有可用的盘标签！");
+            return;
+        }
+
+        _printTemplateBoxCode = _freeSql.Select<T_label_template>()
+            .Where(s => s.LabelId == _currentLabel.Id && s.PrintLabelType == 1).First();
+
+        if (_printTemplateBoxCode == null)
+        {
+            ShowErrorMsg("没有可用的箱标签！");
+            return;
+        }
+
+        var reportP = new XtraReport();
+        var reportBox = new XtraReport();
+        reportP.LoadLayout(_printTemplatePCode.TemplateFileName);
+        reportBox.LoadLayout(_printTemplateBoxCode.TemplateFileName);
+
+        reportP.DataSource = new List<Certificate>()
+        {
+            new Certificate
+            {
+                Title = null,
+                MaterialNo = null,
+                Model = null,
+                Specifications = null,
+                GrossWeight = null,
+                NetWeight = null,
+                BatchNum = null,
+                No = null,
+                DateTime = null
+            }
+        };
+
+        reportBox.DataSource = new List<PackingList>()
+        {
+            new PackingList
+            {
+                MaterialNo = null,
+                Model = null,
+                Specifications = null,
+                NetWeight = null,
+                BatchNum = null,
+                No = null,
+                Standard = null,
+                ProductNo = null,
+                DateTime = null
+            }
+        };
+
+        reportP.ExportToImage("xp.png");
+        reportBox.ExportToImage("box.png");
+        picCertificate.Image = new Bitmap("xp.png");
+        picBoxList.Image = new Bitmap("box.png");
+
+        // reportP.Print();
+        // reportBox.Print();
+
+        #endregion
+    }
+
+    private void UpdateGridControl(List<int> boxIds)
+    {
         gridViewXp.FocusedRowChanged -= gridViewXp_FocusedRowChanged;
         gridViewBox.FocusedRowChanged -= gridViewBox_FocusedRowChanged;
 
+        if (boxIds.Count == 0)
+        {
+            gridControlBox.DataSource = null;
+            gridControlBoxChild.DataSource = null;
+            return;
+        }
+
         //1 更新箱码
-        var tBoxes = _freeSql.Select<T_box>().Where(s => _boxIdList.Contains((int)s.Id)).ToList();
+        var tBoxes = _freeSql.Select<T_box>().Where(s => boxIds.Contains((int)s.Id)).ToList();
         gridControlBox.DataSource = null;
         gridControlBox.DataSource = tBoxes;
-        gridViewBox.FocusedRowHandle = _boxIdList.Count - 1;
+        gridViewBox.FocusedRowHandle = boxIds.Count - 1;
 
         //2 更新盘码
-        var boxId = _boxIdList[^1];
+        var boxId = boxIds[^1];
         var rel = _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxId).ToList();
         var preIdList = rel.Select(s => s.PreheaterCodeId).ToList();
         var tPreList = _freeSql.Select<T_preheater_code>().Where(s => preIdList.Contains((int)s.Id)).ToList();
@@ -503,9 +626,6 @@ public partial class MainForm : XtraForm
     }
 
     #region 按钮事件
-
- 
-
 
     /// <summary>
     ///     选择不同的打印标签模板
@@ -536,22 +656,6 @@ public partial class MainForm : XtraForm
     /// <param name="e"></param>
     private void EditPrintTemplate(object sender, EventArgs e)
     {
-        //var report = new ReportCertificateXD();
-        //report.DataSource = new List<Certificate>()
-        //{
-        //    new Certificate()
-        //};
-        //report.ShowPreview();
-
-        //var report = new ReportPackingList();
-        //report.DataSource = new List<PackingList>
-        //{
-        //    new()
-        //};
-        //report.ShowDesigner();
-        //report.ShowPreview();
-        //report.ExportToImage("boxList.jpg");
-
         var form = new ReportTemplate(_logger);
         form.ShowDialog();
     }
@@ -561,8 +665,63 @@ public partial class MainForm : XtraForm
         Application.Exit();
     }
 
-    private void Save(object sender, EventArgs e)
+
+    /// <summary>
+    ///     装箱不满时仍保存
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void Save(object sender, EventArgs e)
     {
+        if (_tPreheaterCodes.Count == 0)
+        {
+            ShowInfoMsg("没有需要手动保存的数据！");
+            return;
+        }
+
+        _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
+        var tBox = new T_box
+        {
+            CreateTime = DateTime.Now,
+            IsDel = 0,
+            LabelId = 1, //标签Id
+            LabelName = "",
+            PackagingCode = GlobalVar.CurrentUserInfo.packageGroupCode,
+            PackagingSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{_totalBoxNum:D4}",
+            PackagingWorker = GlobalVar.CurrentUserInfo.username,
+            PackingBarCode = lbBoxCode.Text,
+            PackingQty = _tPreheaterCodes.Count.ToString(),
+            PackingWeight = _tPreheaterCodes.Sum(s => s.NetWeight),
+            PackingGrossWeight = _tPreheaterCodes.Sum(s => s.GrossWeight),
+            TrayBarcode = txtScanCode.Text,
+            UpdateTime = DateTime.Now
+        };
+        var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
+        _boxIdList.Add((int)boxId);
+        tBox.Id = (uint)boxId;
+        _tBoxes.Add(tBox);
+        _tBoxesManual.Add(tBox);
+        var relList = _tPreheaterCodes.Select(s => new T_box_releated_preheater
+        {
+            BoxCodeId = (int)boxId,
+            CreateTime = DateTime.Now,
+            IsDel = 0,
+            PreheaterCodeId = (int)s.Id,
+            UpdateTime = DateTime.Now
+        }).ToList();
+        if (await _freeSql.Insert<T_box_releated_preheater>(relList).ExecuteAffrowsAsync() <= 0)
+        {
+            ShowErrorMsg("插入关系表失败！");
+            return;
+        }
+
+        ClearData();
+        _totalBoxNum++;
+
+        ShowInfoMsg("保存成功！");
+        //清空内容
+        _preheaterNum = 0;
+        ClearData();
     }
 
     private async void Delete(object sender, EventArgs e)
@@ -571,50 +730,130 @@ public partial class MainForm : XtraForm
         {
             var rowXp = gridViewXp.FocusedRowHandle;
             if (rowXp < 0) return;
-            var templateInfo = gridViewXp.GetRow(rowXp) as T_preheater_code;
-            if (templateInfo == null) return;
+            var tPCode = gridViewXp.GetRow(rowXp) as T_preheater_code;
+            if (tPCode == null) return;
 
-            var result = XtraMessageBox.Show("是否确认删除？", "", MessageBoxButtons.OKCancel);
+            var result = XtraMessageBox.Show("是否确认删除？", "QA", MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
                 //todo:执行真实的删除操作
                 gridViewXp.DeleteSelectedRows();
+                var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == tPCode.Id)
+                    .FirstAsync();
+                var boxId = rel.BoxCodeId;
+                var relBoxList = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxId)
+                    .ToListAsync();
+                if (relBoxList.Count == 1)
+                {
+                    if (await _freeSql.Update<T_box>().Where(s => s.Id == boxId).Set(s => s.IsDel, 1)
+                            .ExecuteAffrowsAsync() <= 0)
+                    {
+                        ShowErrorMsg($"删除箱码{boxId}失败");
+                    }
+                }
 
-                XtraMessageBox.Show("删除成功！", "", MessageBoxButtons.OK);
+                if (await _freeSql.Update<T_preheater_code>().Where(s => s.Id == tPCode.Id).Set(s => s.IsDel, 1)
+                        .ExecuteAffrowsAsync() <= 0)
+                {
+                    ShowErrorMsg($"删除盘码{boxId}失败");
+                }
+
+                if (await _freeSql.Update<T_box_releated_preheater>().Where(s => s.Id == rel.Id).Set(s => s.IsDel, 1)
+                        .ExecuteAffrowsAsync() <= 0)
+                {
+                    ShowErrorMsg($"删除关系表{boxId}失败");
+                }
+
+                await SearchExec();
+                ShowInfoMsg("删除成功！");
             }
             else if (result == DialogResult.Cancel)
             {
-                XtraMessageBox.Show("取消删除！", "", MessageBoxButtons.OK);
+                ShowInfoMsg("取消删除！");
             }
         }
         else if (_currentControl == gridControlBox) //删除箱码
         {
             var rowBox = gridViewBox.FocusedRowHandle;
             if (rowBox < 0) return;
-            var boxTemplateInfo = gridViewBox.GetRow(rowBox) as T_box;
-            if (boxTemplateInfo == null) return;
+            var box = gridViewBox.GetRow(rowBox) as T_box;
+            if (box == null) return;
 
-            var result = XtraMessageBox.Show("是否确认删除？", "", MessageBoxButtons.OKCancel);
+            var result = XtraMessageBox.Show("是否确认删除？", "QA", MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
                 //todo:执行真实的删除操作
                 gridViewBox.DeleteSelectedRows();
+                var relList = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == box.Id)
+                    .ToListAsync();
+                if (await _freeSql.Update<T_box_releated_preheater>().Set(s => s.IsDel, 1).SetSource(relList)
+                        .ExecuteAffrowsAsync() <= 0)
+                {
+                    ShowErrorMsg($"删除关系表失败,{string.Join(",", relList.Select(s => s.Id).ToList())}");
+                }
 
-                XtraMessageBox.Show("删除成功！", "", MessageBoxButtons.OK);
-                //级联删除盘码
+                var pIds = relList.Select(s => s.PreheaterCodeId).ToList();
+                if (await _freeSql.Update<T_preheater_code>().Where(s => pIds.Contains((int)s.Id)).Set(s => s.IsDel, 1)
+                        .ExecuteAffrowsAsync() <= 0)
+                {
+                    ShowErrorMsg($"删除盘码表失败,{string.Join(",", pIds)}");
+                }
+
+                if (await _freeSql.Update<T_box>().Where(s => s.Id == box.Id).Set(s => s.IsDel, 1)
+                        .ExecuteAffrowsAsync() <= 0)
+                {
+                    ShowErrorMsg($"删除箱码表失败,{box.Id}");
+                }
+
+                await SearchExec();
+                ShowInfoMsg("删除成功！");
             }
             else if (result == DialogResult.Cancel)
             {
-                XtraMessageBox.Show("取消删除！", "", MessageBoxButtons.OK);
+                ShowInfoMsg("取消删除！");
             }
         }
     }
 
-    private void Print(object sender, EventArgs e)
+    private async void Print(object sender, EventArgs e)
     {
         //todo:打印盘码和箱码
-        var rowXp = gridViewXp.FocusedRowHandle;
-        var rowBox = gridViewBox.FocusedRowHandle;
+        if (_currentControl == gridControlBoxChild) //打印盘码（合格证）
+        {
+            var rowXp = gridViewXp.FocusedRowHandle;
+            if (rowXp < 0) return;
+            var tPCode = gridViewXp.GetRow(rowXp) as T_preheater_code;
+            if (tPCode == null) return;
+            var result = XtraMessageBox.Show("是否确认打印？", "QA", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
+            {
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                ShowInfoMsg("取消打印！");
+            }
+        }
+        else if (_currentControl == gridControlBox) //打印合格证（盘码）和箱码
+        {
+            var rowBox = gridViewBox.FocusedRowHandle;
+            if (rowBox < 0) return;
+            var box = gridViewBox.GetRow(rowBox) as T_box;
+            if (box == null) return;
+
+            var result = XtraMessageBox.Show("是否确认打印？", "QA", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
+            {
+                var relList = await _freeSql.Select<T_box_releated_preheater>()
+                    .Where(s => s.IsDel != 1 && s.BoxCodeId == box.Id).ToListAsync();
+                var pIds = relList.Select(s => s.PreheaterCodeId).ToList();
+                var preList = await _freeSql.Select<T_preheater_code>().Where(s => pIds.Contains((int)s.Id))
+                    .ToListAsync();
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                ShowInfoMsg("取消打印！");
+            }
+        }
 
         var report = new ReportPackingList();
         report.DataSource = new List<PackingList>
@@ -630,57 +869,7 @@ public partial class MainForm : XtraForm
         var result = form.ShowDialog();
         if (result == DialogResult.OK)
         {
-            var tPCodes = _freeSql.Select<T_preheater_code>().Where(s => s.ProductDate > DateTime.Today);
-            var filter = GlobalVar.ReportFilters;
-            if (!string.IsNullOrEmpty(filter.PreheaterCode))
-            {
-                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.PreheaterCode));
-            }
-
-            if (!string.IsNullOrEmpty(filter.PreheaterSpec))
-            {
-                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.PreheaterSpec));
-            }
-
-            if (!string.IsNullOrEmpty(filter.ProductCode))
-            {
-                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductCode));
-            }
-
-            if (!string.IsNullOrEmpty(filter.ProductSpec))
-            {
-                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductSpec));
-            }
-
-            if (!string.IsNullOrEmpty(filter.ProductionBarCode))
-            {
-                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductionBarCode));
-            }
-
-            if (!string.IsNullOrEmpty(filter.ProductionBatchNo))
-            {
-                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.ProductionBatchNo));
-            }
-
-            if (!string.IsNullOrEmpty(filter.UserStandardCode))
-            {
-                tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.UserStandardCode));
-            }
-
-            if (filter.NetWeightMin > 0)
-            {
-                tPCodes = tPCodes.Where(s => s.NetWeight > filter.NetWeightMin);
-            }
-
-            if (filter.NetWeightMax > 0)
-            {
-                tPCodes = tPCodes.Where(s => s.NetWeight < filter.NetWeightMax);
-            }
-
-            var tPCodesData = await tPCodes.ToListAsync();
-            gridViewBox.Columns.ForEach(s => s.BestFit());
-            gridViewXp.Columns.ForEach(s => s.BestFit());
- 
+            await SearchExec();
         }
         else
         {
@@ -688,6 +877,59 @@ public partial class MainForm : XtraForm
         }
 
         form.Dispose();
+    }
+
+    private async Task SearchExec()
+    {
+        var tPCodes = _freeSql.Select<T_preheater_code>()
+            .Where(s => s.ProductDate >= DateTime.Today && s.IsDel != 1);
+        var filter = GlobalVar.ReportFilters;
+        if (!string.IsNullOrEmpty(filter.PreheaterCode))
+        {
+            tPCodes = tPCodes.Where(s => s.PreheaterCode.Contains(filter.PreheaterCode));
+        }
+
+        if (!string.IsNullOrEmpty(filter.PreheaterSpec))
+        {
+            tPCodes = tPCodes.Where(s => s.PreheaterSpec.Contains(filter.PreheaterSpec));
+        }
+
+        if (!string.IsNullOrEmpty(filter.ProductCode))
+        {
+            tPCodes = tPCodes.Where(s => s.ProductCode.Contains(filter.ProductCode));
+        }
+
+        if (!string.IsNullOrEmpty(filter.ProductSpec))
+        {
+            tPCodes = tPCodes.Where(s => s.ProductSpec.Contains(filter.ProductSpec));
+        }
+
+        if (!string.IsNullOrEmpty(filter.ProductBatchNo))
+        {
+            tPCodes = tPCodes.Where(s => s.BatchNO.Contains(filter.ProductBatchNo));
+        }
+
+        if (!string.IsNullOrEmpty(filter.UserStandardCode))
+        {
+            tPCodes = tPCodes.Where(s => s.UserStandardCode.Contains(filter.UserStandardCode));
+        }
+
+        if (filter.NetWeightMin > 0)
+        {
+            tPCodes = tPCodes.Where(s => s.NetWeight > filter.NetWeightMin);
+        }
+
+        if (filter.NetWeightMax > 0)
+        {
+            tPCodes = tPCodes.Where(s => s.NetWeight < filter.NetWeightMax);
+        }
+
+        var tPCodesData = await tPCodes.ToListAsync();
+        var pIds = tPCodesData.Select(s => (int)s.Id).ToList();
+        var relLists = await _freeSql.Select<T_box_releated_preheater>()
+            .Where(s => pIds.Contains(s.PreheaterCodeId)).ToListAsync();
+        var boxIds = relLists.Select(s => s.BoxCodeId).Distinct().ToList();
+        UpdateGridControl(boxIds);
     }
 
     private async void gridViewXp_FocusedRowChanged(object sender,
@@ -726,7 +968,7 @@ public partial class MainForm : XtraForm
         var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
         var boxInfo = boxInfos[e.FocusedRowHandle];
-        var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == boxInfo.Id)
+        var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxInfo.Id)
             .ToListAsync();
         var tPIds = rel.Select(s => s.PreheaterCodeId).ToList();
 
@@ -759,11 +1001,9 @@ public partial class MainForm : XtraForm
 
     #endregion
 
-
     private void MainForm_Load(object sender, EventArgs e)
     {
     }
-
 
     private void ShowErrorMsg(string msg)
     {
@@ -793,5 +1033,11 @@ public partial class MainForm : XtraForm
         };
         var next = new Random().Next(0, 20);
         txtScanCode.Text = list[next % 10];
+    }
+
+    private void cbxMigration_CheckedChanged(object sender, EventArgs e)
+    {
+        lbNew.Visible = cbxMigration.Checked;
+        lbOld.Visible = cbxMigration.Checked;
     }
 }
