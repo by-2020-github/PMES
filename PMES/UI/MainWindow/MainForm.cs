@@ -827,6 +827,14 @@ public partial class MainForm : XtraForm
             var result = XtraMessageBox.Show("是否确认打印？", "QA", MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
+                //todo:打印
+
+                // var report = new ReportPackingList();
+                // report.DataSource = new List<PackingList>
+                // {
+                //     new()
+                // };
+                // report.Print();
             }
             else if (result == DialogResult.Cancel)
             {
@@ -848,6 +856,14 @@ public partial class MainForm : XtraForm
                 var pIds = relList.Select(s => s.PreheaterCodeId).ToList();
                 var preList = await _freeSql.Select<T_preheater_code>().Where(s => pIds.Contains((int)s.Id))
                     .ToListAsync();
+                //todo:打印
+
+                // var report = new ReportPackingList();
+                // report.DataSource = new List<PackingList>
+                // {
+                //     new()
+                // };
+                // report.Print();
             }
             else if (result == DialogResult.Cancel)
             {
@@ -855,12 +871,6 @@ public partial class MainForm : XtraForm
             }
         }
 
-        var report = new ReportPackingList();
-        report.DataSource = new List<PackingList>
-        {
-            new()
-        };
-        report.Print();
     }
 
     private async void HistorySearch(object sender, EventArgs e)

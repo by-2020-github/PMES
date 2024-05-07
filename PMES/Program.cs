@@ -6,6 +6,7 @@ using PMES.UI.Login;
 using PMES.UI.MainWindow;
 using Serilog;
 using System.Data;
+using System.IO;
 using PMES.Model;
 using RichTextBox = System.Windows.Controls.RichTextBox;
 namespace PMES;
@@ -26,6 +27,11 @@ internal static class Program
     [STAThread]
     private static void Main()
     {
+        if (!Directory.Exists("C:\\ProgramData\\PMES_Templates"))
+        {
+            Directory.CreateDirectory("C:\\ProgramData\\PMES_Templates");
+        }
+
         DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(PackingList));
         DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(Certificate));
         DevExpress.XtraReports.Configuration.Settings.Default.StorageOptions.RootDirectory = "C:\\ProgramData\\PMES_Templates";
