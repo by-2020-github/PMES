@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors;
 using PMES.Core;
 using PMES.Core.Managers;
+using PMES.Model.settings;
 using Serilog;
 using SICD_Automatic.Core;
 
@@ -10,6 +11,7 @@ namespace PMES.UI.Settings;
 public partial class SerialPortSettings : XtraForm
 {
     private readonly ILogger _logger;
+    private readonly IFreeSql _freeSql = FreeSqlManager.FSql;
 
     public SerialPortSettings()
     {
@@ -44,6 +46,12 @@ public partial class SerialPortSettings : XtraForm
             GlobalVar.WeighingMachine?.Close();
             GlobalVar.WeighingMachine = new WeighingMachine(_logger);
             GlobalVar.WeighingMachine.Open(cbxCom.Text, int.Parse(cbxBa.Text));
+            _freeSql.InsertOrUpdate<SystemSettings>().SetSource(new SystemSettings
+            {
+                Id = 1,
+                SerialPort = cbxCom.Text,
+                BaudRate = int.Parse(cbxBa.Text)
+            }).ExecuteAffrows();
             XtraMessageBox.Show("称初始化成功！", "Info:", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
@@ -57,8 +65,8 @@ public partial class SerialPortSettings : XtraForm
 
     private void SerialPortSettings_Load(object sender, EventArgs e)
     {
-        var portNames = SerialPort.GetPortNames();
-        if (portNames == null) return;
+        var portNames = SerialPort.GetPortNames().Where(s=>!string.IsNullOrEmpty(s)).ToList();
+        if (portNames.Count == 0) return;
         cbxCom.Properties.Items.Clear();
         cbxCom.Properties.Items.AddRange(portNames);
     }

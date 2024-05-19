@@ -51,7 +51,7 @@ public class WeighingMachine
     {
         if (_serialPort.IsOpen)
         {
-            _serialPort.Open();
+            _serialPort.Close();
         }
     }
 

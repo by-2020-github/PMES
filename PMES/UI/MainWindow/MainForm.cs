@@ -16,6 +16,7 @@ using PMES.Core;
 using PMES.Core.Managers;
 using PMES.Model;
 using PMES.Model.report;
+using PMES.Model.settings;
 using PMES.Model.tbs;
 using PMES.UI.MainWindow.ChildPages;
 using PMES.UI.Report;
@@ -30,9 +31,6 @@ public partial class MainForm : XtraForm
     private readonly ILogger _logger;
     private readonly IFreeSql _freeSql = FreeSqlManager.FSql;
     private ProductInfo _productInfo = new();
-    private readonly double _skinWeight = 2.01;
-    private readonly double _tareWeight = 0;
-    private readonly double _totalWeight = 52.03;
 
     /// <summary>
     ///     线盘数量
@@ -158,6 +156,8 @@ public partial class MainForm : XtraForm
     /// <param name="e"></param>
     private async void ScanCodeChanged(object sender, EventArgs e)
     {
+        #region 检查称是否正确初始化
+
         if (_weighingMachine == null)
         {
             ShowErrorMsg("请在【通信设置里】先设置称的信息！");
@@ -169,6 +169,10 @@ public partial class MainForm : XtraForm
             ShowErrorMsg("端口号未打开，请先初始化称！");
             return;
         }
+
+        #endregion
+
+        #region 改线入库
 
         if (cbxMigration.Checked)
         {
@@ -200,6 +204,8 @@ public partial class MainForm : XtraForm
             return;
         }
 
+        #endregion
+
         if (string.IsNullOrEmpty(txtScanCode.Text)) return;
 
         if (txtScanCode.Text.Length < 5) return;
@@ -230,6 +236,7 @@ public partial class MainForm : XtraForm
                 }
 
                 await UpdateProductInfo(product);
+           
             }
             catch (Exception exception)
             {
@@ -238,7 +245,8 @@ public partial class MainForm : XtraForm
         }
     }
 
-    private async Task UpdateProductInfo(ProductInfo product)
+
+    private async Task UpdateProductInfo(ProductInfo product,bool review = false)
     {
         if (txtScanCode.Text.Length < 10) return;
 
@@ -294,7 +302,7 @@ public partial class MainForm : XtraForm
         lb_xpzl_weight.AllowHtmlString = true;
         lbBoxCode.AllowHtmlString = true;
 
-        _currentTotalWeight = await _weighingMachine.GetWeight();
+        _currentTotalWeight = await _weighingMachine!.GetWeight();
         lbGrossWeight.Text = @$"<color=red>{_currentTotalWeight:F2}</color>";
         lbTotalWeight.Text = @$"<color=red><b>{_currentTotalWeight:F2}</b></color>";
 
@@ -1022,10 +1030,24 @@ public partial class MainForm : XtraForm
         _currentControl = gridControlBoxChild;
     }
 
-    #endregion
-
     private void MainForm_Load(object sender, EventArgs e)
     {
+        //主窗口加载的时候尝试初始化称的信息
+        var settings = _freeSql.Select<SystemSettings>().First();
+        if (settings == null)
+        {
+            var ret = XtraMessageBox.Show("暂时没有配置称的信息,是否前往配置？如果取消，则稍后可以前往[通讯设置]中设置。", "QA:", MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question);
+            if (ret != DialogResult.OK) return;
+            var form = new SerialPortSettings();
+            form.ShowDialog();
+        }
+        else
+        {
+            GlobalVar.WeighingMachine = new WeighingMachine(_logger);
+            _weighingMachine!.Open(settings.SerialPort,settings.BaudRate);
+
+        }
     }
 
     private void ShowErrorMsg(string msg)
@@ -1063,4 +1085,7 @@ public partial class MainForm : XtraForm
         lbNew.Visible = cbxMigration.Checked;
         lbOld.Visible = cbxMigration.Checked;
     }
+    #endregion
+
+
 }

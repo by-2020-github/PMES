@@ -223,7 +223,7 @@
             // cbxBa
             // 
             cbxBa.Dock = DockStyle.Fill;
-            cbxBa.EditValue = "9600";
+            cbxBa.EditValue = "115200";
             cbxBa.Location = new Point(83, 36);
             cbxBa.Name = "cbxBa";
             cbxBa.Properties.Appearance.Font = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -232,7 +232,7 @@
             cbxBa.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             cbxBa.Properties.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             cbxBa.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbxBa.Properties.Items.AddRange(new object[] { "4800", "9600", "19200" });
+            cbxBa.Properties.Items.AddRange(new object[] { "4800", "9600", "19200", "115200" });
             cbxBa.Size = new Size(129, 24);
             cbxBa.TabIndex = 1;
             // 
