@@ -120,7 +120,7 @@ public partial class MainForm : XtraForm
     /// <summary>
     ///     称对象
     /// </summary>
-    private WeighingMachine _weighingMachine;
+    private WeighingMachine? _weighingMachine => GlobalVar.WeighingMachine;
 
     #endregion
 
@@ -136,16 +136,16 @@ public partial class MainForm : XtraForm
     public MainForm()
     {
         InitializeComponent();
-
-        var element = new ElementHost(){Dock = DockStyle.Fill};
-        tableLayoutPanelHeader.Controls.Add(element,1,0);
+        this.WindowState = FormWindowState.Maximized;
+        var element = new ElementHost() { Dock = DockStyle.Fill };
+        tableLayoutPanelHeader.Controls.Add(element, 1, 0);
         Program.LogViewTextBox.FontSize = 12;
         element.Child = Program.LogViewTextBox;
         StartPosition = FormStartPosition.CenterScreen;
         lb_user.Text = GlobalVar.CurrentUserInfo.username;
         _logger = SerilogManager.GetOrCreateLogger();
-        _weighingMachine = new WeighingMachine(_logger);
-        _weighingMachine.Open("COM3", 115200);
+        // _weighingMachine = new WeighingMachine(_logger);
+        // _weighingMachine.Open("COM3", 115200);
         UpdateProductInfo(new ProductInfo());
     }
 
@@ -158,6 +158,18 @@ public partial class MainForm : XtraForm
     /// <param name="e"></param>
     private async void ScanCodeChanged(object sender, EventArgs e)
     {
+        if (_weighingMachine == null)
+        {
+            ShowErrorMsg("请在【通信设置里】先设置称的信息！");
+            return;
+        }
+
+        if (!_weighingMachine.IsOpen)
+        {
+            ShowErrorMsg("端口号未打开，请先初始化称！");
+            return;
+        }
+
         if (cbxMigration.Checked)
         {
             if (_change == 1)
@@ -174,15 +186,17 @@ public partial class MainForm : XtraForm
                         NewCode = lbNew.Text,
                         OldCode = lbOld.Text,
                         WeightUserId = GlobalVar.CurrentUserInfo.userId
-                    }).ExecuteAffrowsAsync()>0)
+                    }).ExecuteAffrowsAsync() > 0)
                 {
                     ShowInfoMsg("改线入库成功!");
 
                     lbNew.Text = "";
                     lbOld.Text = "";
                 }
+
                 _change--;
             }
+
             return;
         }
 
@@ -870,7 +884,6 @@ public partial class MainForm : XtraForm
                 ShowInfoMsg("取消打印！");
             }
         }
-
     }
 
     private async void HistorySearch(object sender, EventArgs e)

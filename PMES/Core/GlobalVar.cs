@@ -1,4 +1,5 @@
-﻿using PMES.Core.Managers;
+﻿using PMES.Core;
+using PMES.Core.Managers;
 using PMES.Model;
 using PMES.Model.report;
 using PMES.Model.tbs;
@@ -18,5 +19,7 @@ public class GlobalVar
     
     public static ReportFilters ReportFilters { get; set; }
     public static T_label_template NewLabelTemplate { get; set; }
+
+    public static WeighingMachine? WeighingMachine { get; set; }
 }
 

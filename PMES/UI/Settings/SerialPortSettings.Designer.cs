@@ -74,6 +74,7 @@
             // 
             btnClose.Dock = DockStyle.Right;
             btnClose.ImageOptions.Image = (Image)resources.GetObject("btnClose.ImageOptions.Image");
+            btnClose.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             btnClose.Location = new Point(404, 0);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(29, 27);
@@ -222,7 +223,7 @@
             // cbxBa
             // 
             cbxBa.Dock = DockStyle.Fill;
-            cbxBa.EditValue = "4800";
+            cbxBa.EditValue = "9600";
             cbxBa.Location = new Point(83, 36);
             cbxBa.Name = "cbxBa";
             cbxBa.Properties.Appearance.Font = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -342,6 +343,7 @@
             MinimumSize = new Size(433, 254);
             Name = "SerialPortSettings";
             Text = "SerialPortSettings";
+            Load += SerialPortSettings_Load;
             panel1.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();

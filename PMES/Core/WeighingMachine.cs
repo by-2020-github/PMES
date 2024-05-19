@@ -10,10 +10,11 @@ public class WeighingMachine
     private int _port;
 
     private string _portName;
-    private SerialPort _serialPort;
+    private SerialPort? _serialPort;
 
     public Action<double> OnGetWeight { get; set; }
     private List<double> _buffer = new List<double>();
+    public bool IsOpen  => _serialPort?.IsOpen ?? false;
 
     public WeighingMachine(ILogger logger)
     {

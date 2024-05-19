@@ -1683,6 +1683,7 @@
             ClientSize = new Size(1598, 768);
             Controls.Add(tableLayoutPanelMain);
             Font = new Font("微软雅黑", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(6, 7, 6, 7);
             MinimumSize = new Size(1598, 768);
             Name = "MainForm";
