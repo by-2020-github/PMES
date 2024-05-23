@@ -1073,8 +1073,7 @@
             lbBoxCode.Name = "lbBoxCode";
             lbBoxCode.Size = new Size(636, 41);
             lbBoxCode.TabIndex = 1;
-            lbBoxCode.Tag = "产品码：";
-            lbBoxCode.Text = "TY4121050-A206-BZ001-B12310001-04903";
+            lbBoxCode.Tag = "TY4121050-A206-BZ001-B12310001-04903";
             // 
             // labelControl58
             // 

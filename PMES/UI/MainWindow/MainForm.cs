@@ -3,6 +3,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms.Integration;
+using DevExpress.DataAccess.Native.Json;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraReports.Design;
@@ -96,6 +97,9 @@ public partial class MainForm : XtraForm
     /// </summary>
     public string CurrentProductCode { get; set; }
 
+    private Dictionary<string, T_preheater_code> _preheaterCodesReview = new Dictionary<string, T_preheater_code>();
+    private Dictionary<string, ProductInfo> _productionReview = new Dictionary<string, ProductInfo>();
+
     #endregion
 
     #region 称重模块
@@ -185,12 +189,12 @@ public partial class MainForm : XtraForm
             {
                 lbNew.Text = txtScanCode.Text;
                 if (await _freeSql.Insert<T_order_exchange>(new T_order_exchange
-                    {
-                        CreateTime = DateTime.Now,
-                        NewCode = lbNew.Text,
-                        OldCode = lbOld.Text,
-                        WeightUserId = GlobalVar.CurrentUserInfo.userId
-                    }).ExecuteAffrowsAsync() > 0)
+                {
+                    CreateTime = DateTime.Now,
+                    NewCode = lbNew.Text,
+                    OldCode = lbOld.Text,
+                    WeightUserId = GlobalVar.CurrentUserInfo.userId
+                }).ExecuteAffrowsAsync() > 0)
                 {
                     ShowInfoMsg("改线入库成功!");
 
@@ -234,9 +238,9 @@ public partial class MainForm : XtraForm
                     product.package_info.stacking_layers = 2;
                     product.package_info.stacking_per_layer = 4;
                 }
-
+                _productionReview[txtScanCode.Text] = product;
                 await UpdateProductInfo(product);
-           
+
             }
             catch (Exception exception)
             {
@@ -245,8 +249,18 @@ public partial class MainForm : XtraForm
         }
     }
 
+    private async Task<string> ValidateOrder(double weight, string order)
+    {
+        //var validate =
+        //    await WebService.Instance.GetJObject(
+        //        $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}");
 
-    private async Task UpdateProductInfo(ProductInfo product,bool review = false)
+        //return validate["detail"]!.First().ToString();
+        return "完成";
+    }
+
+
+    private async Task UpdateProductInfo(ProductInfo product, bool review = false, string order = "")
     {
         if (txtScanCode.Text.Length < 10) return;
 
@@ -302,21 +316,44 @@ public partial class MainForm : XtraForm
         lb_xpzl_weight.AllowHtmlString = true;
         lbBoxCode.AllowHtmlString = true;
 
-        _currentTotalWeight = await _weighingMachine!.GetWeight();
-        lbGrossWeight.Text = @$"<color=red>{_currentTotalWeight:F2}</color>";
-        lbTotalWeight.Text = @$"<color=red><b>{_currentTotalWeight:F2}</b></color>";
-
-        //2 更新皮重 --> 净重 和 总重需要在称的代码里实现
-        if (double.TryParse(product.package_info.tare_weight, out double sw))
+        if (review)
         {
-            _currentSkinWeight = sw;
+            var code = _preheaterCodesReview[order];
+            lbGrossWeight.Text = @$"<color=red>{code.GrossWeight}</color>";
+            lbTotalWeight.Text = @$"<color=red><b>{code.GrossWeight}</b></color>";
+
+            //2 更新皮重 --> 净重 和 总重需要在称的代码里实现
+            if (double.TryParse(product.package_info.tare_weight, out double sw))
+            {
+                _currentSkinWeight = sw;
+            }
+
+            lbSkinWeight.Text = @$"<color=red>{double.Parse(product.xpzl_weight):F2}</color> kg";
+
+            //3 更新净重 todo:这里需要加入最大值最小值校验
+            lbNetWeight.Text = @$"<color=red>{code.NetWeight}</color>";
+            lb_xpzl_weight.Text = @$"线盘重量：<color=red>{code.NetWeight} kg</color>";
+        }
+        else
+        {
+            _currentTotalWeight = await _weighingMachine!.GetWeight();
+            lbGrossWeight.Text = @$"<color=red>{_currentTotalWeight:F2}</color>";
+            lbTotalWeight.Text = @$"<color=red><b>{_currentTotalWeight:F2}</b></color>";
+
+            //2 更新皮重 --> 净重 和 总重需要在称的代码里实现
+            if (double.TryParse(product.package_info.tare_weight, out double sw))
+            {
+                _currentSkinWeight = sw;
+            }
+
+            lbSkinWeight.Text = @$"<color=red>{double.Parse(product.xpzl_weight):F2}</color> kg";
+
+            //3 更新净重 todo:这里需要加入最大值最小值校验
+            lbNetWeight.Text = @$"<color=red>{_currentNetWeight:F2}</color>";
+            lb_xpzl_weight.Text = @$"线盘重量：<color=red>{_currentNetWeight:F2} kg</color>";
         }
 
-        lbSkinWeight.Text = @$"<color=red>{double.Parse(product.xpzl_weight):F2}</color> kg";
 
-        //3 更新净重 todo:这里需要加入最大值最小值校验
-        lbNetWeight.Text = @$"<color=red>{_currentNetWeight:F2}</color>";
-        lb_xpzl_weight.Text = @$"线盘重量：<color=red>{_currentNetWeight:F2} kg</color>";
 
         //4 箱码 最后五位是重量 放到插入数据那里更新
         // 52.00 -> [0.05200] ->  05200  #####
@@ -327,140 +364,80 @@ public partial class MainForm : XtraForm
 
         #region 创建盘码 | 箱码 | 判断是否装够
 
-        var tPreheaterCode = new T_preheater_code
+        if (!review)
         {
-            BatchNO = @$"{txtScanCode.Text}-{DateTime.Now: MMdd}A",
-            CreateTime = DateTime.Now,
-            CustomerCode = product.customer_number,
-            CustomerId = product.customer_id,
-            CustomerMaterialCode = product.customer_material_number,
-            CustomerMaterialName = product.customer_material_name,
-            CustomerMaterialSpec = product.customer_material_spec,
-            CustomerName = product.customer_name,
-            GrossWeight = _currentTotalWeight,
-            ICMOBillNO = product.product_order_no, //生产工单 之前是null，todo:确认是否需要
-            IsDel = 0,
-            IsQualified = 0, //是否合格
-            MachineCode = product.machine_number,
-            MachineId = product.machine_id,
-            MachineName = product.machine_name,
-            NetWeight = _currentNetWeight,
-            NoQualifiedReason = "",
-            OperatorCode = product.operator_code,
-            OperatorName = product.operator_name,
-            PreheaterCode = product.xpzl_number,
-            PreheaterId = product.xpzl_id,
-            PreheaterName = product.xpzl_name,
-            PreheaterSpec = product.xpzl_spec,
-            PreheaterWeight = double.Parse(product.xpzl_weight),
-            ProductCode = product.material_number,
-            ProductDate = DateTime.Parse(product.product_date), // product.product_date
-            ProductGBName = product.material_ns_model,
-            ProductId = product.material_id,
-            ProductionBarcode = txtScanCode.Text,
-            ProductionOrgNO = product.product_org_number,
-            ProductMnemonicCode = product.material_mnemonic_code,
-            ProductName = product.material_name,
-            ProductSpec = product.customer_material_spec,
-            ProductStandardName = product.material_execution_standard,
-            PSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:MMdd}{0001}",
-            Status = 1, //装箱状态
-            StockCode = product.stock_number,
-            StockId = product.stock_id,
-            StockName = product.stock_name,
-            UpdateTime = DateTime.Now,
-            UserStandardCode = product.jsbz_number,
-            UserStandardId = product.jsbz_id,
-            UserStandardName = product.jsbz_name,
-            Weight1 = null,
-            WeightUserId = GlobalVar.CurrentUserInfo.userId
-        };
-
-        //这里判断是否合格
-        {
-            var max = double.Parse(product.package_info.cu_max_weight);
-            var min = double.Parse(product.package_info.cu_min_weight);
-            if (_currentNetWeight < min)
+            var tPreheaterCode = new T_preheater_code
             {
-                tPreheaterCode.NoQualifiedReason = $"小于最小值:{min}";
+                BatchNO = @$"{txtScanCode.Text}-{DateTime.Now: MMdd}A",
+                CreateTime = DateTime.Now,
+                CustomerCode = product.customer_number,
+                CustomerId = product.customer_id,
+                CustomerMaterialCode = product.customer_material_number,
+                CustomerMaterialName = product.customer_material_name,
+                CustomerMaterialSpec = product.customer_material_spec,
+                CustomerName = product.customer_name,
+                GrossWeight = _currentTotalWeight,
+                ICMOBillNO = product.product_order_no, //生产工单 之前是null，todo:确认是否需要
+                IsDel = 0,
+                IsQualified = 0, //是否合格
+                MachineCode = product.machine_number,
+                MachineId = product.machine_id,
+                MachineName = product.machine_name,
+                NetWeight = _currentNetWeight,
+                NoQualifiedReason = "",
+                OperatorCode = product.operator_code,
+                OperatorName = product.operator_name,
+                PreheaterCode = product.xpzl_number,
+                PreheaterId = product.xpzl_id,
+                PreheaterName = product.xpzl_name,
+                PreheaterSpec = product.xpzl_spec,
+                PreheaterWeight = double.Parse(product.xpzl_weight),
+                ProductCode = product.material_number,
+                ProductDate = DateTime.Parse(product.product_date), // product.product_date
+                ProductGBName = product.material_ns_model,
+                ProductId = product.material_id,
+                ProductionBarcode = txtScanCode.Text,
+                ProductionOrgNO = product.product_org_number,
+                ProductMnemonicCode = product.material_mnemonic_code,
+                ProductName = product.material_name,
+                ProductSpec = product.customer_material_spec,
+                ProductStandardName = product.material_execution_standard,
+                PSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:MMdd}{0001}",
+                Status = 1, //装箱状态
+                StockCode = product.stock_number,
+                StockId = product.stock_id,
+                StockName = product.stock_name,
+                UpdateTime = DateTime.Now,
+                UserStandardCode = product.jsbz_number,
+                UserStandardId = product.jsbz_id,
+                UserStandardName = product.jsbz_name,
+                Weight1 = null,
+                WeightUserId = GlobalVar.CurrentUserInfo.userId
+            };
+
+            //这里判断是否合格
+            var validateOrder = await ValidateOrder(_currentNetWeight, txtScanCode.Text);
+            if (!validateOrder.Contains("完工"))
+            {
+                tPreheaterCode.NoQualifiedReason = validateOrder;
                 tPreheaterCode.IsQualified = 0;
             }
+            //记录方便回看
+            _preheaterCodesReview[txtScanCode.Text] = tPreheaterCode;
 
-            if (_currentNetWeight > max)
+            _preheaterNum++; //增加了一个线盘
+
+            _tPreheaterCodes.Add(tPreheaterCode);
+            _tPreheaterCodesManual.Add(tPreheaterCode);
+
+            if (product.package_info.packing_quantity == 1) //如果是一箱只有一个
             {
-                tPreheaterCode.NoQualifiedReason = $"大于最大值:{max}";
-                tPreheaterCode.IsQualified = 0;
-            }
-        }
-        _preheaterNum++; //增加了一个线盘
+                var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
+                var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
+                var w = (int)(totalNet * 100);
+                lbBoxCode.Text =
+                    @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
 
-        _tPreheaterCodes.Add(tPreheaterCode);
-        _tPreheaterCodesManual.Add(tPreheaterCode);
-
-        if (product.package_info.packing_quantity == 1) //如果是一箱只有一个
-        {
-            var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
-            var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
-            var w = (int)(totalNet * 100);
-            lbBoxCode.Text =
-                @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
-
-            var tBox = new T_box
-            {
-                CreateTime = DateTime.Now,
-                IsDel = 0,
-                LabelId = 1, //标签Id
-                LabelName = "",
-                PackagingCode = GlobalVar.CurrentUserInfo.packageGroupCode,
-                PackagingSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{_totalBoxNum:D4}",
-                PackagingWorker = GlobalVar.CurrentUserInfo.username,
-                PackingBarCode = lbBoxCode.Text,
-                PackingQty = product.package_info.packing_quantity.ToString(),
-                PackingWeight = _currentNetWeight,
-                PackingGrossWeight = _currentTotalWeight,
-                TrayBarcode = txtScanCode.Text,
-                UpdateTime = DateTime.Now
-            };
-            var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
-            _boxIdList.Add((int)boxId);
-            tBox.Id = (uint)boxId;
-            _tBoxes.Add(tBox);
-            _tBoxesManual.Add(tBox);
-            var preId = await _freeSql.Insert<T_preheater_code>(tPreheaterCode).ExecuteIdentityAsync();
-            var rel = new T_box_releated_preheater
-            {
-                BoxCodeId = (int)boxId,
-                CreateTime = DateTime.Now,
-                IsDel = 0,
-                PreheaterCodeId = (int)preId,
-                UpdateTime = DateTime.Now
-            };
-            if (await _freeSql.Insert<T_box_releated_preheater>(rel).ExecuteAffrowsAsync() <= 0)
-            {
-                ShowErrorMsg("插入关系表失败！");
-                return;
-            }
-
-            ClearData();
-        }
-        else //一箱多个
-        {
-            for (var i = 1; i < _tPreheaterCodes.Count; i++)
-            {
-                if (_tPreheaterCodes[0].Equals(_tPreheaterCodes[i])) continue;
-                ShowErrorMsg("同一箱中盘码不同");
-                return;
-            }
-
-            var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
-            var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
-            var w = (int)(totalNet * 100);
-            lbBoxCode.Text =
-                @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
-
-            if (_tPreheaterCodes.Count == product.package_info.packing_quantity)
-            {
-                _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
                 var tBox = new T_box
                 {
                     CreateTime = DateTime.Now,
@@ -472,8 +449,8 @@ public partial class MainForm : XtraForm
                     PackagingWorker = GlobalVar.CurrentUserInfo.username,
                     PackingBarCode = lbBoxCode.Text,
                     PackingQty = product.package_info.packing_quantity.ToString(),
-                    PackingWeight = totalNet,
-                    PackingGrossWeight = totalGross,
+                    PackingWeight = _currentNetWeight,
+                    PackingGrossWeight = _currentTotalWeight,
                     TrayBarcode = txtScanCode.Text,
                     UpdateTime = DateTime.Now
                 };
@@ -482,30 +459,89 @@ public partial class MainForm : XtraForm
                 tBox.Id = (uint)boxId;
                 _tBoxes.Add(tBox);
                 _tBoxesManual.Add(tBox);
-                var relList = _tPreheaterCodes.Select(s => new T_box_releated_preheater
+                var preId = await _freeSql.Insert<T_preheater_code>(tPreheaterCode).ExecuteIdentityAsync();
+                var rel = new T_box_releated_preheater
                 {
                     BoxCodeId = (int)boxId,
                     CreateTime = DateTime.Now,
                     IsDel = 0,
-                    PreheaterCodeId = (int)s.Id,
+                    PreheaterCodeId = (int)preId,
                     UpdateTime = DateTime.Now
-                }).ToList();
-                if (await _freeSql.Insert<T_box_releated_preheater>(relList).ExecuteAffrowsAsync() <= 0)
+                };
+                if (await _freeSql.Insert<T_box_releated_preheater>(rel).ExecuteAffrowsAsync() <= 0)
                 {
                     ShowErrorMsg("插入关系表失败！");
                     return;
                 }
 
                 ClearData();
-                _totalBoxNum++;
             }
+            else //一箱多个
+            {
+                for (var i = 1; i < _tPreheaterCodes.Count; i++)
+                {
+                    if (_tPreheaterCodes[0].Equals(_tPreheaterCodes[i])) continue;
+                    ShowErrorMsg("同一箱中盘码不同");
+                    return;
+                }
+
+                var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
+                var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
+                var w = (int)(totalNet * 100);
+                lbBoxCode.Text =
+                    @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
+
+                if (_tPreheaterCodes.Count == product.package_info.packing_quantity)
+                {
+                    _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
+                    var tBox = new T_box
+                    {
+                        CreateTime = DateTime.Now,
+                        IsDel = 0,
+                        LabelId = 1, //标签Id
+                        LabelName = "",
+                        PackagingCode = GlobalVar.CurrentUserInfo.packageGroupCode,
+                        PackagingSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{_totalBoxNum:D4}",
+                        PackagingWorker = GlobalVar.CurrentUserInfo.username,
+                        PackingBarCode = lbBoxCode.Text,
+                        PackingQty = product.package_info.packing_quantity.ToString(),
+                        PackingWeight = totalNet,
+                        PackingGrossWeight = totalGross,
+                        TrayBarcode = txtScanCode.Text,
+                        UpdateTime = DateTime.Now
+                    };
+                    var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
+                    _boxIdList.Add((int)boxId);
+                    tBox.Id = (uint)boxId;
+                    _tBoxes.Add(tBox);
+                    _tBoxesManual.Add(tBox);
+                    var relList = _tPreheaterCodes.Select(s => new T_box_releated_preheater
+                    {
+                        BoxCodeId = (int)boxId,
+                        CreateTime = DateTime.Now,
+                        IsDel = 0,
+                        PreheaterCodeId = (int)s.Id,
+                        UpdateTime = DateTime.Now
+                    }).ToList();
+                    if (await _freeSql.Insert<T_box_releated_preheater>(relList).ExecuteAffrowsAsync() <= 0)
+                    {
+                        ShowErrorMsg("插入关系表失败！");
+                        return;
+                    }
+
+                    ClearData();
+                    _totalBoxNum++;
+                }
+            }
+
+            #region 更新表格
+
+            UpdateGridControl(_boxIdList);
+
+            #endregion
+
         }
 
-        #endregion
-
-        #region 更新表格
-
-        UpdateGridControl(_boxIdList);
 
         #endregion
 
@@ -596,6 +632,10 @@ public partial class MainForm : XtraForm
                 DateTime = null
             }
         };
+
+        //todo:先释放 再覆盖
+        picCertificate.Image?.Dispose();
+        picBoxList.Image?.Dispose();
 
         reportP.ExportToImage("xp.png");
         reportBox.ExportToImage("box.png");
@@ -974,7 +1014,11 @@ public partial class MainForm : XtraForm
         var preheaterModes = gridControlBoxChild.DataSource as List<T_preheater_code>;
         if (preheaterModes == null) return;
         var preheaterMode = preheaterModes[e.FocusedRowHandle];
-
+        //重新加载界面
+        {
+            var code = preheaterMode.ProductionBarcode;
+            await UpdateProductInfo(_productionReview[code], true, code);
+        }
         var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
         var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == preheaterMode.Id)
@@ -1006,6 +1050,15 @@ public partial class MainForm : XtraForm
         var pCodes = await _freeSql.Select<T_preheater_code>().Where(s => tPIds.Contains((int)s.Id)).ToListAsync();
         gridControlBoxChild.DataSource = null;
         gridControlBoxChild.DataSource = pCodes;
+        //重新加载界面
+        {
+            if (pCodes.Count > 0)
+            {
+                var code = pCodes.First().ProductionBarcode;
+                await UpdateProductInfo(_productionReview[code], true, code);
+            }
+
+        }
 
         gridViewXp.FocusedRowChanged += gridViewXp_FocusedRowChanged;
         gridViewBox.FocusedRowChanged += gridViewBox_FocusedRowChanged;
@@ -1045,7 +1098,7 @@ public partial class MainForm : XtraForm
         else
         {
             GlobalVar.WeighingMachine = new WeighingMachine(_logger);
-            _weighingMachine!.Open(settings.SerialPort,settings.BaudRate);
+            _weighingMachine!.Open(settings.SerialPort, settings.BaudRate);
 
         }
     }
@@ -1082,8 +1135,10 @@ public partial class MainForm : XtraForm
 
     private void cbxMigration_CheckedChanged(object sender, EventArgs e)
     {
-        lbNew.Visible = cbxMigration.Checked;
-        lbOld.Visible = cbxMigration.Checked;
+        //lbNew.Visible = cbxMigration.Checked;
+        //lbOld.Visible = cbxMigration.Checked;
+        lbNew.Visible = false;
+        lbOld.Visible = false;
     }
     #endregion
 
