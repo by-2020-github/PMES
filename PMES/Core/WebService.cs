@@ -64,6 +64,26 @@ public class WebService
         }
     }
 
+    public async Task<JObject> GetJObjectValidate(string url)
+    {
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("Cookie",
+                "csrftoken=4GjfFB1WhRHfI30HeenFN6CEyYSarg0R; sl-session=l/jXE8c+KGZOFwujhtgpVg==");
+            var response = await _httpClient.SendAsync(request);
+            //response.EnsureSuccessStatusCode();
+            var res = await response.Content.ReadAsStringAsync();
+            var jobject = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(res);
+            return jobject;
+        }
+        catch (Exception exception)
+        {
+            Logger?.Error(exception.Message);
+            return null;
+        }
+    }
+
 
     public async Task<ResponseStruct?> Post(string url)
     {

@@ -22,6 +22,7 @@ using PMES.Model.tbs;
 using PMES.UI.MainWindow.ChildPages;
 using PMES.UI.Report;
 using PMES.UI.Settings;
+using PMES_Respository.reportModel;
 using Serilog;
 using SICD_Automatic.Core;
 
@@ -32,6 +33,7 @@ public partial class MainForm : XtraForm
     private readonly ILogger _logger;
     private readonly IFreeSql _freeSql = FreeSqlManager.FSql;
     private ProductInfo _productInfo = new();
+
 
     /// <summary>
     ///     线盘数量
@@ -46,6 +48,7 @@ public partial class MainForm : XtraForm
     private GridControl _currentControl;
 
     #region 线盘 | 箱子(子托) | 母托信息
+
 
     private List<int> _boxIdList = new List<int>();
 
@@ -78,9 +81,14 @@ public partial class MainForm : XtraForm
     //c.扫皮重码，获皮重重量，
 
     /// <summary>
+    ///     如果之前没有扫描母托 满了的时候需要合托
+    /// </summary>
+    private bool _needMerger = false;
+
+    /// <summary>
     ///     当前母托盘信息
     /// </summary>
-    public string CurrentTrayCode { get; set; } = "TP12345678";
+    public string CurrentTrayCode { get; set; } = "";
 
     /// <summary>
     ///     包装纸皮重
@@ -251,11 +259,11 @@ public partial class MainForm : XtraForm
 
     private async Task<string> ValidateOrder(double weight, string order)
     {
-        //var validate =
-        //    await WebService.Instance.GetJObject(
-        //        $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}");
+        var validate =
+            await WebService.Instance.GetJObjectValidate(
+                $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}");
 
-        //return validate["detail"]!.First().ToString();
+        return validate["detail"]!.First().ToString();
         return "完成";
     }
 
@@ -534,9 +542,59 @@ public partial class MainForm : XtraForm
                 }
             }
 
-            #region 更新表格
+            var xps = _tPreheaterCodes.Select(s => new XianPanReportModel
+            {
+                Title = "",
+                MaterialNo = s.CustomerMaterialCode,
+                Model = s.ProductSpec,
+                Specifications = s.PreheaterSpec,
+                GrossWeight = s.GrossWeight.ToString(),
+                NetWeight = s.NetWeight.ToString(),
+                BatchNum = s.BatchNO,
+                No = s.PSN,
+                DateTime = DateTime.Now.ToString("yy-MM-dd")
+            }).ToList();
 
+            var boxs = new List<BoxReportModel>() { new BoxReportModel
+                {
+                    MaterialNo = _tPreheaterCodes.Last().CustomerMaterialCode,
+                    Model = _tPreheaterCodes.Last().ProductSpec,
+                    Specifications = _tPreheaterCodes.Last().PreheaterSpec,
+                    NetWeight = _tBoxes.Last().PackingWeight?.ToString("F2"),
+                    BatchNum = _tBoxes.Last().PackingQty,
+                    No = _tBoxes.Last().PackagingSN,
+                    Standard = _tPreheaterCodes.Last().ProductStandardName,
+                    ProductNo = _tPreheaterCodes.Last().ProductCode,
+                    DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                    GrossWeight = _tBoxes.Last().PackingGrossWeight?.ToString("F2"),
+                }
+            };
+
+            PrintCode(xps, boxs);
+
+            //更新表格
             UpdateGridControl(_boxIdList);
+
+            #region 更新码垛信息
+
+            lb_putStyle.Text = @$"放置方式：竖方式";
+            lb_layers.Text = @$"码垛层数：{product.package_info.stacking_layers}";
+            lb_numsPerLayer.Text = @$"每层轴数：{product.package_info.stacking_per_layer}";
+
+            var layers = product.package_info.stacking_layers;
+            layers = layers <= 0 ? 1 : layers;
+            var perNum = product.package_info.stacking_per_layer;
+            perNum = perNum <= 0 ? 2 : perNum;
+            lb_currentInfo.Text = @$"已码{Math.Ceiling(_preheaterNum * 1f / perNum):F0}层,共{_preheaterNum}个";
+            lb_leftNum.Text = @$"剩余个数：{layers * perNum - _preheaterNum}";
+
+            if (_preheaterNum == layers * perNum)
+            {
+                XtraMessageBox.Show("托盘已满，请移走.", "Info:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //清空内容
+                _preheaterNum = 0;
+                ClearData();
+            }
 
             #endregion
 
@@ -545,31 +603,16 @@ public partial class MainForm : XtraForm
 
         #endregion
 
-        #region 更新码垛信息
 
-        lb_putStyle.Text = @$"放置方式：竖方式";
-        lb_layers.Text = @$"码垛层数：{product.package_info.stacking_layers}";
-        lb_numsPerLayer.Text = @$"每层轴数：{product.package_info.stacking_per_layer}";
 
-        var layers = product.package_info.stacking_layers;
-        layers = layers <= 0 ? 1 : layers;
-        var perNum = product.package_info.stacking_per_layer;
-        perNum = perNum <= 0 ? 2 : perNum;
-        lb_currentInfo.Text = @$"已码{Math.Ceiling(_preheaterNum * 1f / perNum):F0}层,共{_preheaterNum}个";
-        lb_leftNum.Text = @$"剩余个数：{layers * perNum - _preheaterNum}";
-
-        if (_preheaterNum == layers * perNum)
-        {
-            XtraMessageBox.Show("托盘已满，请移走.", "Info:", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //清空内容
-            _preheaterNum = 0;
-            ClearData();
-        }
-
-        #endregion
-
-        #region 标签打印和预览
-
+    }
+    /// <summary>
+    ///     标签打印和预览
+    /// </summary>
+    /// <param name="xianPans"></param>
+    /// <param name="boxs"></param>
+    private async void PrintCode(List<XianPanReportModel> xianPans, List<BoxReportModel> boxs)
+    {
         var _currentLabel = _freeSql.Select<T_label>().Where(s => (bool)s.IsCurrent).First();
         if (_currentLabel == null)
         {
@@ -596,56 +639,32 @@ public partial class MainForm : XtraForm
             return;
         }
 
-        var reportP = new XtraReport();
-        var reportBox = new XtraReport();
-        reportP.LoadLayout(_printTemplatePCode.TemplateFileName);
-        reportBox.LoadLayout(_printTemplateBoxCode.TemplateFileName);
-
-        reportP.DataSource = new List<Certificate>()
-        {
-            new Certificate
-            {
-                Title = null,
-                MaterialNo = null,
-                Model = null,
-                Specifications = null,
-                GrossWeight = null,
-                NetWeight = null,
-                BatchNum = null,
-                No = null,
-                DateTime = null
-            }
-        };
-
-        reportBox.DataSource = new List<PackingList>()
-        {
-            new PackingList
-            {
-                MaterialNo = null,
-                Model = null,
-                Specifications = null,
-                NetWeight = null,
-                BatchNum = null,
-                No = null,
-                Standard = null,
-                ProductNo = null,
-                DateTime = null
-            }
-        };
 
         //todo:先释放 再覆盖
         picCertificate.Image?.Dispose();
         picBoxList.Image?.Dispose();
 
-        reportP.ExportToImage("xp.png");
-        reportBox.ExportToImage("box.png");
-        picCertificate.Image = new Bitmap("xp.png");
-        picBoxList.Image = new Bitmap("box.png");
+        if (xianPans.Count > 0)
+        {
+            var reportP = new XtraReport();
+            reportP.LoadLayout(_printTemplatePCode.TemplateFileName);
+            reportP.DataSource = xianPans;
+            reportP.ExportToImage("xp.png");
+            picCertificate.Image = new Bitmap("xp.png");
+        }
+
+        if (boxs.Count > 0)
+        {
+            var reportBox = new XtraReport();
+            reportBox.LoadLayout(_printTemplateBoxCode.TemplateFileName);
+            reportBox.DataSource = boxs;
+            reportBox.ExportToImage("box.png");
+            picBoxList.Image = new Bitmap("box.png");
+        }
+
 
         // reportP.Print();
         // reportBox.Print();
-
-        #endregion
     }
 
     private void UpdateGridControl(List<int> boxIds)
