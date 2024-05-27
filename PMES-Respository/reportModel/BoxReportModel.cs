@@ -41,6 +41,11 @@ namespace PMES_Respository.reportModel
         /// </summary>
         public string ProductNo { get; set; } = "TY4121050";
 
+        /// <summary>
+        ///     箱码
+        /// </summary>
+        public string BoxCode { get; set; } = "";
+
         public string DateTime { get; set; } = System.DateTime.Now.ToString("YY-MM-dd");
 
 

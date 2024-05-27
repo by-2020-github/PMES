@@ -33,6 +33,7 @@
     <Reference Include="DevExpress.Charts.v22.1.Core, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.Desktop.v22.1, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v22.1, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v22.1, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Office.v22.1.Core, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Pdf.v22.1.Core, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.PivotGrid.v22.1.Core, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -40,6 +41,7 @@
     <Reference Include="DevExpress.RichEdit.v22.1.Core, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.RichEdit.v22.1.Export, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Sparkline.v22.1.Core, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v22.1, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraCharts.v22.1, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGauges.v22.1.Core, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v22.1, Version=22.1.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -56,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reports\TemplateBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="reports\TemplateBox.Designer.cs">
+      <DependentUpon>TemplateBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="reports\TemplateXianPan.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -66,9 +74,23 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="reports\TemplateBox.resx">
+      <DependentUpon>TemplateBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="reports\TemplateXianPan.resx">
       <DependentUpon>TemplateXianPan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PMES-Common\PMES-Common.csproj">
+      <Project>{75aac553-ac2f-4d46-8456-76afb807b2c7}</Project>
+      <Name>PMES-Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PMES-Respository\PMES-Respository.csproj">
+      <Project>{c879edf1-24a5-4ef0-b41e-891c5f8750ee}</Project>
+      <Name>PMES-Respository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

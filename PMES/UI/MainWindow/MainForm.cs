@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms.Integration;
 using DevExpress.DataAccess.Native.Json;
@@ -19,6 +21,8 @@ using PMES.Model;
 using PMES.Model.report;
 using PMES.Model.settings;
 using PMES.Model.tbs;
+using PMES.Properties;
+using PMES.UC.reports;
 using PMES.UI.MainWindow.ChildPages;
 using PMES.UI.Report;
 using PMES.UI.Settings;
@@ -48,7 +52,6 @@ public partial class MainForm : XtraForm
     private GridControl _currentControl;
 
     #region 线盘 | 箱子(子托) | 母托信息
-
 
     private List<int> _boxIdList = new List<int>();
 
@@ -197,12 +200,12 @@ public partial class MainForm : XtraForm
             {
                 lbNew.Text = txtScanCode.Text;
                 if (await _freeSql.Insert<T_order_exchange>(new T_order_exchange
-                {
-                    CreateTime = DateTime.Now,
-                    NewCode = lbNew.Text,
-                    OldCode = lbOld.Text,
-                    WeightUserId = GlobalVar.CurrentUserInfo.userId
-                }).ExecuteAffrowsAsync() > 0)
+                    {
+                        CreateTime = DateTime.Now,
+                        NewCode = lbNew.Text,
+                        OldCode = lbOld.Text,
+                        WeightUserId = GlobalVar.CurrentUserInfo.userId
+                    }).ExecuteAffrowsAsync() > 0)
                 {
                     ShowInfoMsg("改线入库成功!");
 
@@ -224,6 +227,7 @@ public partial class MainForm : XtraForm
 
         if (txtScanCode.Text.StartsWith("TP"))
         {
+            _needMerger = false;
             CurrentTrayCode = txtScanCode.Text;
             lb_parentCode.Text = @$"母托编码：<color=red> {CurrentTrayCode}</color> ";
         }
@@ -246,9 +250,9 @@ public partial class MainForm : XtraForm
                     product.package_info.stacking_layers = 2;
                     product.package_info.stacking_per_layer = 4;
                 }
+
                 _productionReview[txtScanCode.Text] = product;
                 await UpdateProductInfo(product);
-
             }
             catch (Exception exception)
             {
@@ -257,14 +261,13 @@ public partial class MainForm : XtraForm
         }
     }
 
-    private async Task<string> ValidateOrder(double weight, string order)
+    private async Task<Tuple<bool, string>> ValidateOrder(double weight, string order)
     {
         var validate =
             await WebService.Instance.GetJObjectValidate(
                 $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}");
 
-        return validate["detail"]!.First().ToString();
-        return "完成";
+        return validate;
     }
 
 
@@ -362,7 +365,6 @@ public partial class MainForm : XtraForm
         }
 
 
-
         //4 箱码 最后五位是重量 放到插入数据那里更新
         // 52.00 -> [0.05200] ->  05200  #####
         //包装条码；产品助记码 + 线盘分组代码 + 用户标准代码 + 包装组编号 + 年月 + 4位流水号 + 装箱净重，
@@ -425,11 +427,12 @@ public partial class MainForm : XtraForm
 
             //这里判断是否合格
             var validateOrder = await ValidateOrder(_currentNetWeight, txtScanCode.Text);
-            if (!validateOrder.Contains("完工"))
+            if (!validateOrder.Item1)
             {
-                tPreheaterCode.NoQualifiedReason = validateOrder;
+                tPreheaterCode.NoQualifiedReason = validateOrder.Item2;
                 tPreheaterCode.IsQualified = 0;
             }
+
             //记录方便回看
             _preheaterCodesReview[txtScanCode.Text] = tPreheaterCode;
 
@@ -482,6 +485,38 @@ public partial class MainForm : XtraForm
                     return;
                 }
 
+                var xps = _tPreheaterCodes.Select(s => new XianPanReportModel
+                {
+                    Title = "",
+                    MaterialNo = product.material_number,
+                    Model = product.xpzl_spec,
+                    Specifications = s.PreheaterSpec,
+                    GrossWeight = s.GrossWeight.ToString(),
+                    NetWeight = s.NetWeight.ToString(),
+                    BatchNum = s.BatchNO,
+                    No = s.PSN,
+                    DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                    WaterMark = s.NoQualifiedReason
+                }).ToList();
+
+                var boxs = new List<BoxReportModel>()
+                {
+                    new BoxReportModel
+                    {
+                        MaterialNo = product.material_number,
+                        Model = product.xpzl_spec,
+                        Specifications = _tPreheaterCodes.Last().PreheaterSpec,
+                        NetWeight = _tBoxes.Last().PackingWeight?.ToString("F2"),
+                        BatchNum = _tBoxes.Last().PackingQty,
+                        No = _tBoxes.Last().PackagingSN,
+                        Standard = _tPreheaterCodes.Last().ProductStandardName,
+                        ProductNo = _tPreheaterCodes.Last().ProductCode,
+                        DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                        GrossWeight = _tBoxes.Last().PackingGrossWeight?.ToString("F2"),
+                        BoxCode = _tBoxes.Last().PackingBarCode
+                    }
+                };
+                PrintCode(xps, boxs);
                 ClearData();
             }
             else //一箱多个
@@ -537,40 +572,44 @@ public partial class MainForm : XtraForm
                         return;
                     }
 
+
+                    var xps = _tPreheaterCodes.Select(s => new XianPanReportModel
+                    {
+                        Title = "",
+                        MaterialNo = s.CustomerMaterialCode,
+                        Model = s.ProductSpec,
+                        Specifications = s.PreheaterSpec,
+                        GrossWeight = s.GrossWeight.ToString(),
+                        NetWeight = s.NetWeight.ToString(),
+                        BatchNum = s.BatchNO,
+                        No = s.PSN,
+                        DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                        WaterMark = s.NoQualifiedReason
+                    }).ToList();
+
+                    var boxs = new List<BoxReportModel>()
+                    {
+                        new BoxReportModel
+                        {
+                            MaterialNo = _tPreheaterCodes.Last().CustomerMaterialCode,
+                            Model = _tPreheaterCodes.Last().ProductSpec,
+                            Specifications = _tPreheaterCodes.Last().PreheaterSpec,
+                            NetWeight = _tBoxes.Last().PackingWeight?.ToString("F2"),
+                            BatchNum = _tBoxes.Last().PackingQty,
+                            No = _tBoxes.Last().PackagingSN,
+                            Standard = _tPreheaterCodes.Last().ProductStandardName,
+                            ProductNo = _tPreheaterCodes.Last().ProductCode,
+                            DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                            GrossWeight = _tBoxes.Last().PackingGrossWeight?.ToString("F2"),
+                            BoxCode = _tBoxes.Last().PackingBarCode
+                        }
+                    };
+                    PrintCode(xps, boxs);
                     ClearData();
                     _totalBoxNum++;
                 }
             }
 
-            var xps = _tPreheaterCodes.Select(s => new XianPanReportModel
-            {
-                Title = "",
-                MaterialNo = s.CustomerMaterialCode,
-                Model = s.ProductSpec,
-                Specifications = s.PreheaterSpec,
-                GrossWeight = s.GrossWeight.ToString(),
-                NetWeight = s.NetWeight.ToString(),
-                BatchNum = s.BatchNO,
-                No = s.PSN,
-                DateTime = DateTime.Now.ToString("yy-MM-dd")
-            }).ToList();
-
-            var boxs = new List<BoxReportModel>() { new BoxReportModel
-                {
-                    MaterialNo = _tPreheaterCodes.Last().CustomerMaterialCode,
-                    Model = _tPreheaterCodes.Last().ProductSpec,
-                    Specifications = _tPreheaterCodes.Last().PreheaterSpec,
-                    NetWeight = _tBoxes.Last().PackingWeight?.ToString("F2"),
-                    BatchNum = _tBoxes.Last().PackingQty,
-                    No = _tBoxes.Last().PackagingSN,
-                    Standard = _tPreheaterCodes.Last().ProductStandardName,
-                    ProductNo = _tPreheaterCodes.Last().ProductCode,
-                    DateTime = DateTime.Now.ToString("yy-MM-dd"),
-                    GrossWeight = _tBoxes.Last().PackingGrossWeight?.ToString("F2"),
-                }
-            };
-
-            PrintCode(xps, boxs);
 
             //更新表格
             UpdateGridControl(_boxIdList);
@@ -593,19 +632,38 @@ public partial class MainForm : XtraForm
                 XtraMessageBox.Show("托盘已满，请移走.", "Info:", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //清空内容
                 _preheaterNum = 0;
+                CurrentTrayCode = "";
+
+                //if (_needMerger)
+                //{
+                //    var boxInfos = gridControlBox.DataSource as List<T_box>;
+                //    boxInfos.ForEach(s => s.TrayBarcode = txtScanCode.Text);
+                //    _freeSql.Update<T_box>().SetSource(boxInfos).ExecuteAffrows();
+                //    CurrentTrayCode = "";
+                //}
                 ClearData();
             }
 
             #endregion
-
         }
 
-
         #endregion
-
-
-
     }
+
+    public void CheckIfNeedMerger()
+    {
+        if (string.IsNullOrEmpty(CurrentTrayCode))
+        {
+            XtraMessageBox.Show("需要子母合托，请扫描木托盘条码");
+            _needMerger = true;
+        }
+        else
+        {
+            _needMerger = false;
+        }
+    }
+
+
     /// <summary>
     ///     标签打印和预览
     /// </summary>
@@ -613,31 +671,31 @@ public partial class MainForm : XtraForm
     /// <param name="boxs"></param>
     private async void PrintCode(List<XianPanReportModel> xianPans, List<BoxReportModel> boxs)
     {
-        var _currentLabel = _freeSql.Select<T_label>().Where(s => (bool)s.IsCurrent).First();
-        if (_currentLabel == null)
-        {
-            ShowErrorMsg("没有可用的标签！");
-            return;
-        }
+        //var _currentLabel = _freeSql.Select<T_label>().Where(s => (bool)s.IsCurrent).First();
+        //if (_currentLabel == null)
+        //{
+        //    ShowErrorMsg("没有可用的标签！");
+        //    return;
+        //}
 
-        var labelTs = await _freeSql.Select<T_label_template>()
-            .Where(s => s.LabelId == _currentLabel.Id).ToListAsync();
-        _printTemplatePCode = labelTs.First(s => s.PrintLabelType == 0);
+        //var labelTs = await _freeSql.Select<T_label_template>()
+        //    .Where(s => s.LabelId == _currentLabel.Id).ToListAsync();
+        //_printTemplatePCode = labelTs.First(s => s.PrintLabelType == 0);
 
-        if (_printTemplatePCode == null)
-        {
-            ShowErrorMsg("没有可用的盘标签！");
-            return;
-        }
+        //if (_printTemplatePCode == null)
+        //{
+        //    ShowErrorMsg("没有可用的盘标签！");
+        //    return;
+        //}
 
-        _printTemplateBoxCode = _freeSql.Select<T_label_template>()
-            .Where(s => s.LabelId == _currentLabel.Id && s.PrintLabelType == 1).First();
+        //_printTemplateBoxCode = _freeSql.Select<T_label_template>()
+        //    .Where(s => s.LabelId == _currentLabel.Id && s.PrintLabelType == 1).First();
 
-        if (_printTemplateBoxCode == null)
-        {
-            ShowErrorMsg("没有可用的箱标签！");
-            return;
-        }
+        //if (_printTemplateBoxCode == null)
+        //{
+        //    ShowErrorMsg("没有可用的箱标签！");
+        //    return;
+        //}
 
 
         //todo:先释放 再覆盖
@@ -646,17 +704,20 @@ public partial class MainForm : XtraForm
 
         if (xianPans.Count > 0)
         {
-            var reportP = new XtraReport();
-            reportP.LoadLayout(_printTemplatePCode.TemplateFileName);
+            var reportP = new TemplateXianPan();
+            //var reportP = new XtraReport();
+            //reportP.LoadLayout(_printTemplatePCode.TemplateFileName);
             reportP.DataSource = xianPans;
+            reportP.Watermark.Text = xianPans.Last().WaterMark;
+            reportP.Watermark.ShowBehind = false;
             reportP.ExportToImage("xp.png");
             picCertificate.Image = new Bitmap("xp.png");
         }
 
         if (boxs.Count > 0)
         {
-            var reportBox = new XtraReport();
-            reportBox.LoadLayout(_printTemplateBoxCode.TemplateFileName);
+            var reportBox = new TemplateBox();
+            //reportBox.LoadLayout(_printTemplateBoxCode.TemplateFileName);
             reportBox.DataSource = boxs;
             reportBox.ExportToImage("box.png");
             picBoxList.Image = new Bitmap("box.png");
@@ -1076,7 +1137,6 @@ public partial class MainForm : XtraForm
                 var code = pCodes.First().ProductionBarcode;
                 await UpdateProductInfo(_productionReview[code], true, code);
             }
-
         }
 
         gridViewXp.FocusedRowChanged += gridViewXp_FocusedRowChanged;
@@ -1105,8 +1165,8 @@ public partial class MainForm : XtraForm
     private void MainForm_Load(object sender, EventArgs e)
     {
         //主窗口加载的时候尝试初始化称的信息
-        var settings = _freeSql.Select<SystemSettings>().First();
-        if (settings == null)
+        var ports = SerialPort.GetPortNames().Where(s => !string.IsNullOrEmpty(s)).ToList();
+        if (!ports.Contains(PMES_Settings.Default.COM))
         {
             var ret = XtraMessageBox.Show("暂时没有配置称的信息,是否前往配置？如果取消，则稍后可以前往[通讯设置]中设置。", "QA:", MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question);
@@ -1117,8 +1177,35 @@ public partial class MainForm : XtraForm
         else
         {
             GlobalVar.WeighingMachine = new WeighingMachine(_logger);
-            _weighingMachine!.Open(settings.SerialPort, settings.BaudRate);
+            if (_weighingMachine!.Open(PMES_Settings.Default.COM, PMES_Settings.Default.BaudRate))
+            {
+                ShowInfoMsg("称初始化成功！");
+            }
+            else
+            {
+                ShowErrorMsg("称初始化失败，请前往[通讯设置]中设置。");
+            }
+        }
 
+        //同步数据库标签文件模板
+        var remoteFiles = _freeSql.Select<T_label_template>().ToList(a => a.TemplateFileName);
+        if (remoteFiles.Count > 0)
+        {
+            var localFiles = Directory.GetFiles(PMES_Settings.Default.TemplatePath);
+            foreach (var file in remoteFiles)
+            {
+                if (!localFiles.Contains(file))
+                {
+                    var labelTemplate = _freeSql.Select<T_label_template>().Where(s => s.TemplateFileName == file)
+                        .First(s => s.TemplateFile);
+                    if (labelTemplate.Length > 0)
+                    {
+                        using var fw = new FileStream(file, FileMode.Create);
+                        fw.Write(labelTemplate);
+                        fw.Flush();
+                    }
+                }
+            }
         }
     }
 
@@ -1159,7 +1246,6 @@ public partial class MainForm : XtraForm
         lbNew.Visible = false;
         lbOld.Visible = false;
     }
+
     #endregion
-
-
 }

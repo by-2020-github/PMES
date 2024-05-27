@@ -89,10 +89,10 @@
             DevExpress.Utils.SuperToolTip superToolTip20 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem20 = new DevExpress.Utils.ToolTipTitleItem();
             DevExpress.Utils.ToolTipItem toolTipItem20 = new DevExpress.Utils.ToolTipItem();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportTemplate));
             DevExpress.Utils.SuperToolTip superToolTip21 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem21 = new DevExpress.Utils.ToolTipTitleItem();
             DevExpress.Utils.ToolTipItem toolTipItem21 = new DevExpress.Utils.ToolTipItem();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportTemplate));
             DevExpress.Utils.SuperToolTip superToolTip22 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem22 = new DevExpress.Utils.ToolTipTitleItem();
             DevExpress.Utils.ToolTipItem toolTipItem22 = new DevExpress.Utils.ToolTipItem();
@@ -630,9 +630,6 @@
             DevExpress.Utils.SuperToolTip superToolTip200 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem200 = new DevExpress.Utils.ToolTipTitleItem();
             DevExpress.Utils.ToolTipItem toolTipItem200 = new DevExpress.Utils.ToolTipItem();
-            DevExpress.Utils.SuperToolTip superToolTip201 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem201 = new DevExpress.Utils.ToolTipTitleItem();
-            DevExpress.Utils.ToolTipItem toolTipItem201 = new DevExpress.Utils.ToolTipItem();
             DevExpress.XtraReports.UserDesigner.XRDesignPanelListener xrDesignPanelListener1 = new DevExpress.XtraReports.UserDesigner.XRDesignPanelListener();
             DevExpress.XtraReports.UserDesigner.XRDesignPanelListener xrDesignPanelListener2 = new DevExpress.XtraReports.UserDesigner.XRDesignPanelListener();
             DevExpress.XtraReports.UserDesigner.XRDesignPanelListener xrDesignPanelListener3 = new DevExpress.XtraReports.UserDesigner.XRDesignPanelListener();
@@ -647,7 +644,6 @@
             commandBarItem6 = new DevExpress.XtraReports.UserDesigner.CommandBarItem();
             commandBarItem9 = new DevExpress.XtraReports.UserDesigner.CommandBarItem();
             btnSave = new DevExpress.XtraReports.UserDesigner.CommandBarItem();
-            btnSaveAll = new DevExpress.XtraReports.UserDesigner.CommandBarItem();
             commandBarItem127 = new DevExpress.XtraReports.UserDesigner.CommandBarItem();
             commandBarItem128 = new DevExpress.XtraReports.UserDesigner.CommandBarItem();
             commandBarItem1 = new DevExpress.XtraReports.UserDesigner.CommandBarItem();
@@ -901,6 +897,11 @@
             repositoryItemZoomTrackBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar();
             btnBoxCode = new DevExpress.XtraBars.BarButtonItem();
             btnPCode = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
             ribbonPageCategory1 = new DevExpress.XtraReports.UserDesigner.XRCharacterCombRibbonPageCategory();
             ribbonPage6 = new DevExpress.XtraReports.UserDesigner.XRCharacterCombDesignContextRibbonPage();
             xrDesignRibbonPageGroup20 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
@@ -1021,9 +1022,9 @@
             ribbonControl1.AutoHideEmptyItems = true;
             ribbonControl1.AutoSizeItems = true;
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, commandBarItem1, commandBarItem2, commandBarItem3, commandBarItem4, commandBarItem5, commandBarItem6, btnSave, btnSaveAll, commandBarItem9, commandBarItem10, commandBarItem11, commandBarItem12, commandBarItem13, commandBarItem14, commandBarItem15, commandBarItem16, barEditItem1, barEditItem2, barDockPanelsListItem1, commandBarItem17, commandBarItem18, commandBarItem19, commandColorBarItem1, commandColorBarItem2, commandBarItem20, commandBarItem21, commandBarItem22, commandBarItem23, commandBarItem24, commandBarItem25, commandBarItem26, commandBarItem27, commandBarItem28, commandBarItem29, commandBarItem31, commandBarItem32, commandBarItem33, commandBarItem34, commandBarItem35, commandBarItem36, commandBarItem37, commandColorBarItem3, commandBarItem38, commandBarItem39, commandBarItem40, commandBarItem41, commandBarItem42, commandBarItem43, commandBarItem44, commandBarItem45, commandBarItem46, commandBarItem47, commandBarItem48, commandBarItem49, commandBarItem50, commandBarItem51, commandBarItem52, commandBarItem53, commandBarItem54, commandBarItem55, commandBarItem56, commandBarItem57, commandBarItem58, commandBarItem59, commandBarItem60, commandBarItem61, commandBarCheckItem1, commandBarCheckItem2, commandBarItem62, commandBarItem63, commandBarItem64, commandBarItem65, commandColorBarItem4, commandBarItem66, commandBarItem67, commandBarItem68, commandBarItem69, commandBarItem70, commandBarItem71, commandBarItem72, commandBarEditItem1, commandBarCheckItem3, commandBarItem73, commandBarItem74, commandBarItem75, commandBarItem76, commandGalleryBarItem1, commandGalleryBarItem2, commandGalleryBarItem3, commandGalleryBarItem4, commandGalleryBarItem5, commandGalleryBarItem6, commandBarEditItem2, commandBarEditItem3, commandBarEditItem4, commandBarEditItem5, commandBarEditItem6, commandBarEditItem7, commandBarEditItem8, commandBarItem77, commandBarItem78, commandBarItem79, commandBarItem80, commandBarItem81, commandBarItem82, commandBarItem83, commandBarItem84, commandBarItem85, commandBarItem86, commandBarItem87, commandBarItem88, commandBarItem89, commandBarItem90, commandBarItem91, commandBarItem92, commandBarItem93, commandBarItem94, commandBarItem95, commandBarItem96, commandBarItem97, commandBarItem98, commandBarItem99, commandBarItem100, commandBarItem101, commandBarItem102, commandBarItem103, commandBarItem104, commandBarItem105, commandBarItem106, commandBarItem107, commandBarItem108, commandBarItem109, commandBarItem110, commandBarItem111, commandBarItem112, commandBarItem113, commandBarItem114, commandBarItem115, commandBarItem116, commandBarItem117, commandBarItem118, commandBarItem119, commandBarItem120, commandBarItem121, commandBarItem122, commandBarCheckItem4, commandBarCheckItem5, commandBarCheckItem6, commandBarCheckItem7, commandBarCheckItem8, commandBarCheckItem9, commandBarItem123, commandBarItem124, commandBarItem125, commandBarItem126, commandBarItem127, commandBarItem128, xrDesignBarButtonGroup1, xrDesignBarButtonGroup2, xrDesignBarButtonGroup3, xrDesignBarButtonGroup4, xrDesignBarButtonGroup5, xrDesignBarButtonGroup6, xrDesignBarButtonGroup7, xrDesignBarButtonGroup8, xrDesignBarButtonGroup9, xrDesignBarButtonGroup10, xrDesignBarButtonGroup11, xrDesignBarButtonGroup12, xrDesignBarButtonGroup13, xrDesignBarButtonGroup14, printPreviewBarItem1, printPreviewBarItem2, printPreviewBarItem3, printPreviewBarItem4, printPreviewBarItem5, printPreviewBarItem7, printPreviewBarItem8, printPreviewBarItem9, printPreviewBarItem11, printPreviewBarItem12, printPreviewBarItem13, printPreviewBarItem14, printPreviewBarItem15, printPreviewBarItem16, printPreviewBarItem17, printPreviewBarItem18, printPreviewBarItem19, printPreviewBarItem20, printPreviewBarItem21, printPreviewBarItem22, printPreviewBarItem23, printPreviewBarItem24, printPreviewBarItem25, printPreviewBarItem26, printPreviewBarItem27, printPreviewBarItem28, printPreviewBarItem29, printPreviewBarItem30, printPreviewBarItem31, printPreviewBarItem32, printPreviewBarItem33, printPreviewBarItem34, printPreviewBarItem35, printPreviewBarItem36, printPreviewBarItem37, printPreviewBarItem38, printPreviewBarItem39, printPreviewBarItem40, printPreviewBarItem41, printPreviewBarItem42, printPreviewBarItem43, printPreviewBarItem44, printPreviewBarItem45, printPreviewBarItem46, printPreviewBarItem47, printPreviewBarItem48, printPreviewBarItem49, printPreviewBarItem50, printPreviewBarItem51, printPreviewStaticItem1, progressBarEditItem1, printPreviewBarItem52, commandBarItem129, printPreviewStaticItem2, zoomTrackBarEditItem1, btnBoxCode, btnPCode });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, commandBarItem1, commandBarItem2, commandBarItem3, commandBarItem4, commandBarItem5, commandBarItem6, btnSave, commandBarItem9, commandBarItem10, commandBarItem11, commandBarItem12, commandBarItem13, commandBarItem14, commandBarItem15, commandBarItem16, barEditItem1, barEditItem2, barDockPanelsListItem1, commandBarItem17, commandBarItem18, commandBarItem19, commandColorBarItem1, commandColorBarItem2, commandBarItem20, commandBarItem21, commandBarItem22, commandBarItem23, commandBarItem24, commandBarItem25, commandBarItem26, commandBarItem27, commandBarItem28, commandBarItem29, commandBarItem31, commandBarItem32, commandBarItem33, commandBarItem34, commandBarItem35, commandBarItem36, commandBarItem37, commandColorBarItem3, commandBarItem38, commandBarItem39, commandBarItem40, commandBarItem41, commandBarItem42, commandBarItem43, commandBarItem44, commandBarItem45, commandBarItem46, commandBarItem47, commandBarItem48, commandBarItem49, commandBarItem50, commandBarItem51, commandBarItem52, commandBarItem53, commandBarItem54, commandBarItem55, commandBarItem56, commandBarItem57, commandBarItem58, commandBarItem59, commandBarItem60, commandBarItem61, commandBarCheckItem1, commandBarCheckItem2, commandBarItem62, commandBarItem63, commandBarItem64, commandBarItem65, commandColorBarItem4, commandBarItem66, commandBarItem67, commandBarItem68, commandBarItem69, commandBarItem70, commandBarItem71, commandBarItem72, commandBarEditItem1, commandBarCheckItem3, commandBarItem73, commandBarItem74, commandBarItem75, commandBarItem76, commandGalleryBarItem1, commandGalleryBarItem2, commandGalleryBarItem3, commandGalleryBarItem4, commandGalleryBarItem5, commandGalleryBarItem6, commandBarEditItem2, commandBarEditItem3, commandBarEditItem4, commandBarEditItem5, commandBarEditItem6, commandBarEditItem7, commandBarEditItem8, commandBarItem77, commandBarItem78, commandBarItem79, commandBarItem80, commandBarItem81, commandBarItem82, commandBarItem83, commandBarItem84, commandBarItem85, commandBarItem86, commandBarItem87, commandBarItem88, commandBarItem89, commandBarItem90, commandBarItem91, commandBarItem92, commandBarItem93, commandBarItem94, commandBarItem95, commandBarItem96, commandBarItem97, commandBarItem98, commandBarItem99, commandBarItem100, commandBarItem101, commandBarItem102, commandBarItem103, commandBarItem104, commandBarItem105, commandBarItem106, commandBarItem107, commandBarItem108, commandBarItem109, commandBarItem110, commandBarItem111, commandBarItem112, commandBarItem113, commandBarItem114, commandBarItem115, commandBarItem116, commandBarItem117, commandBarItem118, commandBarItem119, commandBarItem120, commandBarItem121, commandBarItem122, commandBarCheckItem4, commandBarCheckItem5, commandBarCheckItem6, commandBarCheckItem7, commandBarCheckItem8, commandBarCheckItem9, commandBarItem123, commandBarItem124, commandBarItem125, commandBarItem126, commandBarItem127, commandBarItem128, xrDesignBarButtonGroup1, xrDesignBarButtonGroup2, xrDesignBarButtonGroup3, xrDesignBarButtonGroup4, xrDesignBarButtonGroup5, xrDesignBarButtonGroup6, xrDesignBarButtonGroup7, xrDesignBarButtonGroup8, xrDesignBarButtonGroup9, xrDesignBarButtonGroup10, xrDesignBarButtonGroup11, xrDesignBarButtonGroup12, xrDesignBarButtonGroup13, xrDesignBarButtonGroup14, printPreviewBarItem1, printPreviewBarItem2, printPreviewBarItem3, printPreviewBarItem4, printPreviewBarItem5, printPreviewBarItem7, printPreviewBarItem8, printPreviewBarItem9, printPreviewBarItem11, printPreviewBarItem12, printPreviewBarItem13, printPreviewBarItem14, printPreviewBarItem15, printPreviewBarItem16, printPreviewBarItem17, printPreviewBarItem18, printPreviewBarItem19, printPreviewBarItem20, printPreviewBarItem21, printPreviewBarItem22, printPreviewBarItem23, printPreviewBarItem24, printPreviewBarItem25, printPreviewBarItem26, printPreviewBarItem27, printPreviewBarItem28, printPreviewBarItem29, printPreviewBarItem30, printPreviewBarItem31, printPreviewBarItem32, printPreviewBarItem33, printPreviewBarItem34, printPreviewBarItem35, printPreviewBarItem36, printPreviewBarItem37, printPreviewBarItem38, printPreviewBarItem39, printPreviewBarItem40, printPreviewBarItem41, printPreviewBarItem42, printPreviewBarItem43, printPreviewBarItem44, printPreviewBarItem45, printPreviewBarItem46, printPreviewBarItem47, printPreviewBarItem48, printPreviewBarItem49, printPreviewBarItem50, printPreviewBarItem51, printPreviewStaticItem1, progressBarEditItem1, printPreviewBarItem52, commandBarItem129, printPreviewStaticItem2, zoomTrackBarEditItem1, btnBoxCode, btnPCode, barButtonItem1, barButtonItem2, barButtonItem3, barButtonItem4, barButtonItem5 });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 229;
+            ribbonControl1.MaxItemId = 234;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.PageCategories.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageCategory[] { ribbonPageCategory1, ribbonPageCategory2, ribbonPageCategory3, ribbonPageCategory4, ribbonPageCategory5, ribbonPageCategory6, ribbonPageCategory7, ribbonPageCategory8, ribbonPageCategory9 });
             ribbonControl1.PageHeaderItemLinks.Add(commandBarItem1);
@@ -1043,7 +1044,6 @@
             applicationMenu1.ItemLinks.Add(commandBarItem6);
             applicationMenu1.ItemLinks.Add(commandBarItem9);
             applicationMenu1.ItemLinks.Add(btnSave);
-            applicationMenu1.ItemLinks.Add(btnSaveAll);
             applicationMenu1.ItemLinks.Add(commandBarItem127, true);
             applicationMenu1.ItemLinks.Add(commandBarItem128, true);
             applicationMenu1.MenuDrawMode = DevExpress.XtraBars.MenuDrawMode.LargeImagesText;
@@ -1101,23 +1101,6 @@
             superToolTip3.MaxWidth = 210;
             btnSave.SuperTip = superToolTip3;
             // 
-            // btnSaveAll
-            // 
-            btnSaveAll.Caption = "Save All";
-            btnSaveAll.Command = DevExpress.XtraReports.UserDesigner.ReportCommand.SaveAll;
-            btnSaveAll.Enabled = false;
-            btnSaveAll.Id = 8;
-            btnSaveAll.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.L);
-            btnSaveAll.Name = "btnSaveAll";
-            superToolTip4.FixedTooltipWidth = true;
-            toolTipTitleItem4.Text = "Save All Reports (Ctrl+L)";
-            toolTipItem4.LeftIndent = 6;
-            toolTipItem4.Text = "Save all modified reports.";
-            superToolTip4.Items.Add(toolTipTitleItem4);
-            superToolTip4.Items.Add(toolTipItem4);
-            superToolTip4.MaxWidth = 210;
-            btnSaveAll.SuperTip = superToolTip4;
-            // 
             // commandBarItem127
             // 
             commandBarItem127.Caption = "Close";
@@ -1126,14 +1109,14 @@
             commandBarItem127.Id = 157;
             commandBarItem127.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.F4);
             commandBarItem127.Name = "commandBarItem127";
-            superToolTip5.FixedTooltipWidth = true;
-            toolTipTitleItem5.Text = "Close (Ctrl+F4)";
-            toolTipItem5.LeftIndent = 6;
-            toolTipItem5.Text = "Close the current report.";
-            superToolTip5.Items.Add(toolTipTitleItem5);
-            superToolTip5.Items.Add(toolTipItem5);
-            superToolTip5.MaxWidth = 210;
-            commandBarItem127.SuperTip = superToolTip5;
+            superToolTip4.FixedTooltipWidth = true;
+            toolTipTitleItem4.Text = "Close (Ctrl+F4)";
+            toolTipItem4.LeftIndent = 6;
+            toolTipItem4.Text = "Close the current report.";
+            superToolTip4.Items.Add(toolTipTitleItem4);
+            superToolTip4.Items.Add(toolTipItem4);
+            superToolTip4.MaxWidth = 210;
+            commandBarItem127.SuperTip = superToolTip4;
             // 
             // commandBarItem128
             // 
@@ -1142,14 +1125,14 @@
             commandBarItem128.Enabled = false;
             commandBarItem128.Id = 158;
             commandBarItem128.Name = "commandBarItem128";
-            superToolTip6.FixedTooltipWidth = true;
-            toolTipTitleItem6.Text = "Exit";
-            toolTipItem6.LeftIndent = 6;
-            toolTipItem6.Text = "Close the report designer.";
-            superToolTip6.Items.Add(toolTipTitleItem6);
-            superToolTip6.Items.Add(toolTipItem6);
-            superToolTip6.MaxWidth = 210;
-            commandBarItem128.SuperTip = superToolTip6;
+            superToolTip5.FixedTooltipWidth = true;
+            toolTipTitleItem5.Text = "Exit";
+            toolTipItem5.LeftIndent = 6;
+            toolTipItem5.Text = "Close the report designer.";
+            superToolTip5.Items.Add(toolTipTitleItem5);
+            superToolTip5.Items.Add(toolTipItem5);
+            superToolTip5.MaxWidth = 210;
+            commandBarItem128.SuperTip = superToolTip5;
             // 
             // commandBarItem1
             // 
@@ -1159,14 +1142,14 @@
             commandBarItem1.Id = 1;
             commandBarItem1.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F4);
             commandBarItem1.Name = "commandBarItem1";
-            superToolTip7.FixedTooltipWidth = true;
-            toolTipTitleItem7.Text = "Report Designer (F4)";
-            toolTipItem7.LeftIndent = 6;
-            toolTipItem7.Text = "Customize the report layout or create a new layout in the feature-rich Report Designer.";
-            superToolTip7.Items.Add(toolTipTitleItem7);
-            superToolTip7.Items.Add(toolTipItem7);
-            superToolTip7.MaxWidth = 210;
-            commandBarItem1.SuperTip = superToolTip7;
+            superToolTip6.FixedTooltipWidth = true;
+            toolTipTitleItem6.Text = "Report Designer (F4)";
+            toolTipItem6.LeftIndent = 6;
+            toolTipItem6.Text = "Customize the report layout or create a new layout in the feature-rich Report Designer.";
+            superToolTip6.Items.Add(toolTipTitleItem6);
+            superToolTip6.Items.Add(toolTipItem6);
+            superToolTip6.MaxWidth = 210;
+            commandBarItem1.SuperTip = superToolTip6;
             // 
             // commandBarItem2
             // 
@@ -1176,14 +1159,14 @@
             commandBarItem2.Id = 2;
             commandBarItem2.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
             commandBarItem2.Name = "commandBarItem2";
-            superToolTip8.FixedTooltipWidth = true;
-            toolTipTitleItem8.Text = "Print Preview (F5)";
-            toolTipItem8.LeftIndent = 6;
-            toolTipItem8.Text = "Display a report populated with data and divided into pages, customize its print settings and print or export this report.";
-            superToolTip8.Items.Add(toolTipTitleItem8);
-            superToolTip8.Items.Add(toolTipItem8);
-            superToolTip8.MaxWidth = 210;
-            commandBarItem2.SuperTip = superToolTip8;
+            superToolTip7.FixedTooltipWidth = true;
+            toolTipTitleItem7.Text = "Print Preview (F5)";
+            toolTipItem7.LeftIndent = 6;
+            toolTipItem7.Text = "Display a report populated with data and divided into pages, customize its print settings and print or export this report.";
+            superToolTip7.Items.Add(toolTipTitleItem7);
+            superToolTip7.Items.Add(toolTipItem7);
+            superToolTip7.MaxWidth = 210;
+            commandBarItem2.SuperTip = superToolTip7;
             // 
             // commandBarItem3
             // 
@@ -1193,14 +1176,14 @@
             commandBarItem3.Id = 3;
             commandBarItem3.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F6);
             commandBarItem3.Name = "commandBarItem3";
-            superToolTip9.FixedTooltipWidth = true;
-            toolTipTitleItem9.Text = "Scripts (F6)";
-            toolTipItem9.LeftIndent = 6;
-            toolTipItem9.Text = "Perform custom calculations by handling script events.";
-            superToolTip9.Items.Add(toolTipTitleItem9);
-            superToolTip9.Items.Add(toolTipItem9);
-            superToolTip9.MaxWidth = 210;
-            commandBarItem3.SuperTip = superToolTip9;
+            superToolTip8.FixedTooltipWidth = true;
+            toolTipTitleItem8.Text = "Scripts (F6)";
+            toolTipItem8.LeftIndent = 6;
+            toolTipItem8.Text = "Perform custom calculations by handling script events.";
+            superToolTip8.Items.Add(toolTipTitleItem8);
+            superToolTip8.Items.Add(toolTipItem8);
+            superToolTip8.MaxWidth = 210;
+            commandBarItem3.SuperTip = superToolTip8;
             // 
             // commandBarItem4
             // 
@@ -1210,14 +1193,14 @@
             commandBarItem4.Id = 4;
             commandBarItem4.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.Z);
             commandBarItem4.Name = "commandBarItem4";
-            superToolTip10.FixedTooltipWidth = true;
-            toolTipTitleItem10.Text = "Undo (Ctrl+Z)";
-            toolTipItem10.LeftIndent = 6;
-            toolTipItem10.Text = "Undo the last operation.";
-            superToolTip10.Items.Add(toolTipTitleItem10);
-            superToolTip10.Items.Add(toolTipItem10);
-            superToolTip10.MaxWidth = 210;
-            commandBarItem4.SuperTip = superToolTip10;
+            superToolTip9.FixedTooltipWidth = true;
+            toolTipTitleItem9.Text = "Undo (Ctrl+Z)";
+            toolTipItem9.LeftIndent = 6;
+            toolTipItem9.Text = "Undo the last operation.";
+            superToolTip9.Items.Add(toolTipTitleItem9);
+            superToolTip9.Items.Add(toolTipItem9);
+            superToolTip9.MaxWidth = 210;
+            commandBarItem4.SuperTip = superToolTip9;
             // 
             // commandBarItem5
             // 
@@ -1227,14 +1210,14 @@
             commandBarItem5.Id = 5;
             commandBarItem5.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.Y);
             commandBarItem5.Name = "commandBarItem5";
-            superToolTip11.FixedTooltipWidth = true;
-            toolTipTitleItem11.Text = "Redo (Ctrl+Y)";
-            toolTipItem11.LeftIndent = 6;
-            toolTipItem11.Text = "Redo the last operation.";
-            superToolTip11.Items.Add(toolTipTitleItem11);
-            superToolTip11.Items.Add(toolTipItem11);
-            superToolTip11.MaxWidth = 210;
-            commandBarItem5.SuperTip = superToolTip11;
+            superToolTip10.FixedTooltipWidth = true;
+            toolTipTitleItem10.Text = "Redo (Ctrl+Y)";
+            toolTipItem10.LeftIndent = 6;
+            toolTipItem10.Text = "Redo the last operation.";
+            superToolTip10.Items.Add(toolTipTitleItem10);
+            superToolTip10.Items.Add(toolTipItem10);
+            superToolTip10.MaxWidth = 210;
+            commandBarItem5.SuperTip = superToolTip10;
             // 
             // commandBarItem10
             // 
@@ -1245,14 +1228,14 @@
             commandBarItem10.Id = 10;
             commandBarItem10.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
             commandBarItem10.Name = "commandBarItem10";
-            superToolTip12.FixedTooltipWidth = true;
-            toolTipTitleItem12.Text = "New Blank Report (Ctrl+N)";
-            toolTipItem12.LeftIndent = 6;
-            toolTipItem12.Text = "Create a new blank report.";
-            superToolTip12.Items.Add(toolTipTitleItem12);
-            superToolTip12.Items.Add(toolTipItem12);
-            superToolTip12.MaxWidth = 210;
-            commandBarItem10.SuperTip = superToolTip12;
+            superToolTip11.FixedTooltipWidth = true;
+            toolTipTitleItem11.Text = "New Blank Report (Ctrl+N)";
+            toolTipItem11.LeftIndent = 6;
+            toolTipItem11.Text = "Create a new blank report.";
+            superToolTip11.Items.Add(toolTipTitleItem11);
+            superToolTip11.Items.Add(toolTipItem11);
+            superToolTip11.MaxWidth = 210;
+            commandBarItem10.SuperTip = superToolTip11;
             // 
             // commandBarItem11
             // 
@@ -1263,14 +1246,14 @@
             commandBarItem11.Id = 11;
             commandBarItem11.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.W);
             commandBarItem11.Name = "commandBarItem11";
-            superToolTip13.FixedTooltipWidth = true;
-            toolTipTitleItem13.Text = "New Report via Wizard (Ctrl+W)";
-            toolTipItem13.LeftIndent = 6;
-            toolTipItem13.Text = "Launch the report wizard to create a new report.";
-            superToolTip13.Items.Add(toolTipTitleItem13);
-            superToolTip13.Items.Add(toolTipItem13);
-            superToolTip13.MaxWidth = 210;
-            commandBarItem11.SuperTip = superToolTip13;
+            superToolTip12.FixedTooltipWidth = true;
+            toolTipTitleItem12.Text = "New Report via Wizard (Ctrl+W)";
+            toolTipItem12.LeftIndent = 6;
+            toolTipItem12.Text = "Launch the report wizard to create a new report.";
+            superToolTip12.Items.Add(toolTipTitleItem12);
+            superToolTip12.Items.Add(toolTipItem12);
+            superToolTip12.MaxWidth = 210;
+            commandBarItem11.SuperTip = superToolTip12;
             // 
             // commandBarItem12
             // 
@@ -1281,14 +1264,14 @@
             commandBarItem12.Id = 12;
             commandBarItem12.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.S);
             commandBarItem12.Name = "commandBarItem12";
-            superToolTip14.FixedTooltipWidth = true;
-            toolTipTitleItem14.Text = "Save Report (Ctrl+S)";
-            toolTipItem14.LeftIndent = 6;
-            toolTipItem14.Text = "Save the current report.";
-            superToolTip14.Items.Add(toolTipTitleItem14);
-            superToolTip14.Items.Add(toolTipItem14);
-            superToolTip14.MaxWidth = 210;
-            commandBarItem12.SuperTip = superToolTip14;
+            superToolTip13.FixedTooltipWidth = true;
+            toolTipTitleItem13.Text = "Save Report (Ctrl+S)";
+            toolTipItem13.LeftIndent = 6;
+            toolTipItem13.Text = "Save the current report.";
+            superToolTip13.Items.Add(toolTipTitleItem13);
+            superToolTip13.Items.Add(toolTipItem13);
+            superToolTip13.MaxWidth = 210;
+            commandBarItem12.SuperTip = superToolTip13;
             // 
             // commandBarItem13
             // 
@@ -1298,14 +1281,14 @@
             commandBarItem13.Enabled = false;
             commandBarItem13.Id = 13;
             commandBarItem13.Name = "commandBarItem13";
-            superToolTip15.FixedTooltipWidth = true;
-            toolTipTitleItem15.Text = "Save Report As";
-            toolTipItem15.LeftIndent = 6;
-            toolTipItem15.Text = "Save the current report with a new name.";
-            superToolTip15.Items.Add(toolTipTitleItem15);
-            superToolTip15.Items.Add(toolTipItem15);
-            superToolTip15.MaxWidth = 210;
-            commandBarItem13.SuperTip = superToolTip15;
+            superToolTip14.FixedTooltipWidth = true;
+            toolTipTitleItem14.Text = "Save Report As";
+            toolTipItem14.LeftIndent = 6;
+            toolTipItem14.Text = "Save the current report with a new name.";
+            superToolTip14.Items.Add(toolTipTitleItem14);
+            superToolTip14.Items.Add(toolTipItem14);
+            superToolTip14.MaxWidth = 210;
+            commandBarItem13.SuperTip = superToolTip14;
             // 
             // commandBarItem14
             // 
@@ -1315,14 +1298,14 @@
             commandBarItem14.Id = 14;
             commandBarItem14.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.V);
             commandBarItem14.Name = "commandBarItem14";
-            superToolTip16.FixedTooltipWidth = true;
-            toolTipTitleItem16.Text = "Paste (Ctrl+V)";
-            toolTipItem16.LeftIndent = 6;
-            toolTipItem16.Text = "Paste the contents of the Clipboard.";
-            superToolTip16.Items.Add(toolTipTitleItem16);
-            superToolTip16.Items.Add(toolTipItem16);
-            superToolTip16.MaxWidth = 210;
-            commandBarItem14.SuperTip = superToolTip16;
+            superToolTip15.FixedTooltipWidth = true;
+            toolTipTitleItem15.Text = "Paste (Ctrl+V)";
+            toolTipItem15.LeftIndent = 6;
+            toolTipItem15.Text = "Paste the contents of the Clipboard.";
+            superToolTip15.Items.Add(toolTipTitleItem15);
+            superToolTip15.Items.Add(toolTipItem15);
+            superToolTip15.MaxWidth = 210;
+            commandBarItem14.SuperTip = superToolTip15;
             // 
             // commandBarItem15
             // 
@@ -1333,14 +1316,14 @@
             commandBarItem15.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.X);
             commandBarItem15.Name = "commandBarItem15";
             commandBarItem15.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip17.FixedTooltipWidth = true;
-            toolTipTitleItem17.Text = "Cut (Ctrl+X)";
-            toolTipItem17.LeftIndent = 6;
-            toolTipItem17.Text = "Cut the selected controls from the report and put them on the Clipboard.";
-            superToolTip17.Items.Add(toolTipTitleItem17);
-            superToolTip17.Items.Add(toolTipItem17);
-            superToolTip17.MaxWidth = 210;
-            commandBarItem15.SuperTip = superToolTip17;
+            superToolTip16.FixedTooltipWidth = true;
+            toolTipTitleItem16.Text = "Cut (Ctrl+X)";
+            toolTipItem16.LeftIndent = 6;
+            toolTipItem16.Text = "Cut the selected controls from the report and put them on the Clipboard.";
+            superToolTip16.Items.Add(toolTipTitleItem16);
+            superToolTip16.Items.Add(toolTipItem16);
+            superToolTip16.MaxWidth = 210;
+            commandBarItem15.SuperTip = superToolTip16;
             // 
             // commandBarItem16
             // 
@@ -1351,14 +1334,14 @@
             commandBarItem16.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.C);
             commandBarItem16.Name = "commandBarItem16";
             commandBarItem16.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip18.FixedTooltipWidth = true;
-            toolTipTitleItem18.Text = "Copy (Ctrl+C)";
-            toolTipItem18.LeftIndent = 6;
-            toolTipItem18.Text = "Copy the selected controls and put them on the Clipboard.";
-            superToolTip18.Items.Add(toolTipTitleItem18);
-            superToolTip18.Items.Add(toolTipItem18);
-            superToolTip18.MaxWidth = 210;
-            commandBarItem16.SuperTip = superToolTip18;
+            superToolTip17.FixedTooltipWidth = true;
+            toolTipTitleItem17.Text = "Copy (Ctrl+C)";
+            toolTipItem17.LeftIndent = 6;
+            toolTipItem17.Text = "Copy the selected controls and put them on the Clipboard.";
+            superToolTip17.Items.Add(toolTipTitleItem17);
+            superToolTip17.Items.Add(toolTipItem17);
+            superToolTip17.MaxWidth = 210;
+            commandBarItem16.SuperTip = superToolTip17;
             // 
             // barEditItem1
             // 
@@ -1366,14 +1349,14 @@
             barEditItem1.EditWidth = 140;
             barEditItem1.Id = 17;
             barEditItem1.Name = "barEditItem1";
-            superToolTip19.FixedTooltipWidth = true;
-            toolTipTitleItem19.Text = "Font";
-            toolTipItem19.LeftIndent = 6;
-            toolTipItem19.Text = "Change the font face.";
-            superToolTip19.Items.Add(toolTipTitleItem19);
-            superToolTip19.Items.Add(toolTipItem19);
-            superToolTip19.MaxWidth = 210;
-            barEditItem1.SuperTip = superToolTip19;
+            superToolTip18.FixedTooltipWidth = true;
+            toolTipTitleItem18.Text = "Font";
+            toolTipItem18.LeftIndent = 6;
+            toolTipItem18.Text = "Change the font face.";
+            superToolTip18.Items.Add(toolTipTitleItem18);
+            superToolTip18.Items.Add(toolTipItem18);
+            superToolTip18.MaxWidth = 210;
+            barEditItem1.SuperTip = superToolTip18;
             // 
             // recentlyUsedItemsComboBox1
             // 
@@ -1389,14 +1372,14 @@
             barEditItem2.EditWidth = 55;
             barEditItem2.Id = 18;
             barEditItem2.Name = "barEditItem2";
-            superToolTip20.FixedTooltipWidth = true;
-            toolTipTitleItem20.Text = "Font Size";
-            toolTipItem20.LeftIndent = 6;
-            toolTipItem20.Text = "Change the font size.";
-            superToolTip20.Items.Add(toolTipTitleItem20);
-            superToolTip20.Items.Add(toolTipItem20);
-            superToolTip20.MaxWidth = 210;
-            barEditItem2.SuperTip = superToolTip20;
+            superToolTip19.FixedTooltipWidth = true;
+            toolTipTitleItem19.Text = "Font Size";
+            toolTipItem19.LeftIndent = 6;
+            toolTipItem19.Text = "Change the font size.";
+            superToolTip19.Items.Add(toolTipTitleItem19);
+            superToolTip19.Items.Add(toolTipItem19);
+            superToolTip19.MaxWidth = 210;
+            barEditItem2.SuperTip = superToolTip19;
             // 
             // designRepositoryItemComboBox1
             // 
@@ -1413,14 +1396,14 @@
             barDockPanelsListItem1.ShowCustomizationItem = false;
             barDockPanelsListItem1.ShowDockPanels = true;
             barDockPanelsListItem1.ShowToolbars = false;
-            superToolTip21.FixedTooltipWidth = true;
-            toolTipTitleItem21.Text = "Show/Hide Windows";
-            toolTipItem21.LeftIndent = 6;
-            toolTipItem21.Text = "Change the visibility of dock panels that assist in report creation.";
-            superToolTip21.Items.Add(toolTipTitleItem21);
-            superToolTip21.Items.Add(toolTipItem21);
-            superToolTip21.MaxWidth = 210;
-            barDockPanelsListItem1.SuperTip = superToolTip21;
+            superToolTip20.FixedTooltipWidth = true;
+            toolTipTitleItem20.Text = "Show/Hide Windows";
+            toolTipItem20.LeftIndent = 6;
+            toolTipItem20.Text = "Change the visibility of dock panels that assist in report creation.";
+            superToolTip20.Items.Add(toolTipTitleItem20);
+            superToolTip20.Items.Add(toolTipItem20);
+            superToolTip20.MaxWidth = 210;
+            barDockPanelsListItem1.SuperTip = superToolTip20;
             // 
             // xrDesignDockManager1
             // 
@@ -1599,14 +1582,14 @@
             commandBarItem17.Id = 20;
             commandBarItem17.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.B);
             commandBarItem17.Name = "commandBarItem17";
-            superToolTip22.FixedTooltipWidth = true;
-            toolTipTitleItem22.Text = "Bold (Ctrl+B)";
-            toolTipItem22.LeftIndent = 6;
-            toolTipItem22.Text = "Make the selected text bold.";
-            superToolTip22.Items.Add(toolTipTitleItem22);
-            superToolTip22.Items.Add(toolTipItem22);
-            superToolTip22.MaxWidth = 210;
-            commandBarItem17.SuperTip = superToolTip22;
+            superToolTip21.FixedTooltipWidth = true;
+            toolTipTitleItem21.Text = "Bold (Ctrl+B)";
+            toolTipItem21.LeftIndent = 6;
+            toolTipItem21.Text = "Make the selected text bold.";
+            superToolTip21.Items.Add(toolTipTitleItem21);
+            superToolTip21.Items.Add(toolTipItem21);
+            superToolTip21.MaxWidth = 210;
+            commandBarItem17.SuperTip = superToolTip21;
             // 
             // commandBarItem18
             // 
@@ -1616,14 +1599,14 @@
             commandBarItem18.Id = 21;
             commandBarItem18.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.I);
             commandBarItem18.Name = "commandBarItem18";
-            superToolTip23.FixedTooltipWidth = true;
-            toolTipTitleItem23.Text = "Italic (Ctrl+I)";
-            toolTipItem23.LeftIndent = 6;
-            toolTipItem23.Text = "Italicize the text.";
-            superToolTip23.Items.Add(toolTipTitleItem23);
-            superToolTip23.Items.Add(toolTipItem23);
-            superToolTip23.MaxWidth = 210;
-            commandBarItem18.SuperTip = superToolTip23;
+            superToolTip22.FixedTooltipWidth = true;
+            toolTipTitleItem22.Text = "Italic (Ctrl+I)";
+            toolTipItem22.LeftIndent = 6;
+            toolTipItem22.Text = "Italicize the text.";
+            superToolTip22.Items.Add(toolTipTitleItem22);
+            superToolTip22.Items.Add(toolTipItem22);
+            superToolTip22.MaxWidth = 210;
+            commandBarItem18.SuperTip = superToolTip22;
             // 
             // commandBarItem19
             // 
@@ -1633,14 +1616,14 @@
             commandBarItem19.Id = 22;
             commandBarItem19.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.U);
             commandBarItem19.Name = "commandBarItem19";
-            superToolTip24.FixedTooltipWidth = true;
-            toolTipTitleItem24.Text = "Underline (Ctrl+U)";
-            toolTipItem24.LeftIndent = 6;
-            toolTipItem24.Text = "Underline the selected text.";
-            superToolTip24.Items.Add(toolTipTitleItem24);
-            superToolTip24.Items.Add(toolTipItem24);
-            superToolTip24.MaxWidth = 210;
-            commandBarItem19.SuperTip = superToolTip24;
+            superToolTip23.FixedTooltipWidth = true;
+            toolTipTitleItem23.Text = "Underline (Ctrl+U)";
+            toolTipItem23.LeftIndent = 6;
+            toolTipItem23.Text = "Underline the selected text.";
+            superToolTip23.Items.Add(toolTipTitleItem23);
+            superToolTip23.Items.Add(toolTipItem23);
+            superToolTip23.MaxWidth = 210;
+            commandBarItem19.SuperTip = superToolTip23;
             // 
             // commandColorBarItem1
             // 
@@ -1651,14 +1634,14 @@
             commandColorBarItem1.Enabled = false;
             commandColorBarItem1.Id = 23;
             commandColorBarItem1.Name = "commandColorBarItem1";
-            superToolTip25.FixedTooltipWidth = true;
-            toolTipTitleItem25.Text = "Foreground Color";
-            toolTipItem25.LeftIndent = 6;
-            toolTipItem25.Text = "Change the text foreground color.";
-            superToolTip25.Items.Add(toolTipTitleItem25);
-            superToolTip25.Items.Add(toolTipItem25);
-            superToolTip25.MaxWidth = 210;
-            commandColorBarItem1.SuperTip = superToolTip25;
+            superToolTip24.FixedTooltipWidth = true;
+            toolTipTitleItem24.Text = "Foreground Color";
+            toolTipItem24.LeftIndent = 6;
+            toolTipItem24.Text = "Change the text foreground color.";
+            superToolTip24.Items.Add(toolTipTitleItem24);
+            superToolTip24.Items.Add(toolTipItem24);
+            superToolTip24.MaxWidth = 210;
+            commandColorBarItem1.SuperTip = superToolTip24;
             // 
             // commandColorBarItem2
             // 
@@ -1669,14 +1652,14 @@
             commandColorBarItem2.Enabled = false;
             commandColorBarItem2.Id = 24;
             commandColorBarItem2.Name = "commandColorBarItem2";
-            superToolTip26.FixedTooltipWidth = true;
-            toolTipTitleItem26.Text = "Background Color";
-            toolTipItem26.LeftIndent = 6;
-            toolTipItem26.Text = "Change the text background color.";
-            superToolTip26.Items.Add(toolTipTitleItem26);
-            superToolTip26.Items.Add(toolTipItem26);
-            superToolTip26.MaxWidth = 210;
-            commandColorBarItem2.SuperTip = superToolTip26;
+            superToolTip25.FixedTooltipWidth = true;
+            toolTipTitleItem25.Text = "Background Color";
+            toolTipItem25.LeftIndent = 6;
+            toolTipItem25.Text = "Change the text background color.";
+            superToolTip25.Items.Add(toolTipTitleItem25);
+            superToolTip25.Items.Add(toolTipItem25);
+            superToolTip25.MaxWidth = 210;
+            commandColorBarItem2.SuperTip = superToolTip25;
             // 
             // commandBarItem20
             // 
@@ -1685,14 +1668,14 @@
             commandBarItem20.Enabled = false;
             commandBarItem20.Id = 25;
             commandBarItem20.Name = "commandBarItem20";
-            superToolTip27.FixedTooltipWidth = true;
-            toolTipTitleItem27.Text = "Align Text Left";
-            toolTipItem27.LeftIndent = 6;
-            toolTipItem27.Text = "Align text to the left.";
-            superToolTip27.Items.Add(toolTipTitleItem27);
-            superToolTip27.Items.Add(toolTipItem27);
-            superToolTip27.MaxWidth = 210;
-            commandBarItem20.SuperTip = superToolTip27;
+            superToolTip26.FixedTooltipWidth = true;
+            toolTipTitleItem26.Text = "Align Text Left";
+            toolTipItem26.LeftIndent = 6;
+            toolTipItem26.Text = "Align text to the left.";
+            superToolTip26.Items.Add(toolTipTitleItem26);
+            superToolTip26.Items.Add(toolTipItem26);
+            superToolTip26.MaxWidth = 210;
+            commandBarItem20.SuperTip = superToolTip26;
             // 
             // commandBarItem21
             // 
@@ -1701,14 +1684,14 @@
             commandBarItem21.Enabled = false;
             commandBarItem21.Id = 26;
             commandBarItem21.Name = "commandBarItem21";
-            superToolTip28.FixedTooltipWidth = true;
-            toolTipTitleItem28.Text = "Center Text";
-            toolTipItem28.LeftIndent = 6;
-            toolTipItem28.Text = "Center text between the left and right sides.";
-            superToolTip28.Items.Add(toolTipTitleItem28);
-            superToolTip28.Items.Add(toolTipItem28);
-            superToolTip28.MaxWidth = 210;
-            commandBarItem21.SuperTip = superToolTip28;
+            superToolTip27.FixedTooltipWidth = true;
+            toolTipTitleItem27.Text = "Center Text";
+            toolTipItem27.LeftIndent = 6;
+            toolTipItem27.Text = "Center text between the left and right sides.";
+            superToolTip27.Items.Add(toolTipTitleItem27);
+            superToolTip27.Items.Add(toolTipItem27);
+            superToolTip27.MaxWidth = 210;
+            commandBarItem21.SuperTip = superToolTip27;
             // 
             // commandBarItem22
             // 
@@ -1717,14 +1700,14 @@
             commandBarItem22.Enabled = false;
             commandBarItem22.Id = 27;
             commandBarItem22.Name = "commandBarItem22";
-            superToolTip29.FixedTooltipWidth = true;
-            toolTipTitleItem29.Text = "Align Text Right";
-            toolTipItem29.LeftIndent = 6;
-            toolTipItem29.Text = "Align text to the right.";
-            superToolTip29.Items.Add(toolTipTitleItem29);
-            superToolTip29.Items.Add(toolTipItem29);
-            superToolTip29.MaxWidth = 210;
-            commandBarItem22.SuperTip = superToolTip29;
+            superToolTip28.FixedTooltipWidth = true;
+            toolTipTitleItem28.Text = "Align Text Right";
+            toolTipItem28.LeftIndent = 6;
+            toolTipItem28.Text = "Align text to the right.";
+            superToolTip28.Items.Add(toolTipTitleItem28);
+            superToolTip28.Items.Add(toolTipItem28);
+            superToolTip28.MaxWidth = 210;
+            commandBarItem22.SuperTip = superToolTip28;
             // 
             // commandBarItem23
             // 
@@ -1733,14 +1716,14 @@
             commandBarItem23.Enabled = false;
             commandBarItem23.Id = 28;
             commandBarItem23.Name = "commandBarItem23";
-            superToolTip30.FixedTooltipWidth = true;
-            toolTipTitleItem30.Text = "Justify";
-            toolTipItem30.LeftIndent = 6;
-            toolTipItem30.Text = "Distribute text evenly to the left and right sides.";
-            superToolTip30.Items.Add(toolTipTitleItem30);
-            superToolTip30.Items.Add(toolTipItem30);
-            superToolTip30.MaxWidth = 210;
-            commandBarItem23.SuperTip = superToolTip30;
+            superToolTip29.FixedTooltipWidth = true;
+            toolTipTitleItem29.Text = "Justify";
+            toolTipItem29.LeftIndent = 6;
+            toolTipItem29.Text = "Distribute text evenly to the left and right sides.";
+            superToolTip29.Items.Add(toolTipTitleItem29);
+            superToolTip29.Items.Add(toolTipItem29);
+            superToolTip29.MaxWidth = 210;
+            commandBarItem23.SuperTip = superToolTip29;
             // 
             // commandBarItem24
             // 
@@ -1749,14 +1732,14 @@
             commandBarItem24.Enabled = false;
             commandBarItem24.Id = 29;
             commandBarItem24.Name = "commandBarItem24";
-            superToolTip31.FixedTooltipWidth = true;
-            toolTipTitleItem31.Text = "Strikethrough";
-            toolTipItem31.LeftIndent = 6;
-            toolTipItem31.Text = "Cross the selected text out by drawing a line through it.";
-            superToolTip31.Items.Add(toolTipTitleItem31);
-            superToolTip31.Items.Add(toolTipItem31);
-            superToolTip31.MaxWidth = 210;
-            commandBarItem24.SuperTip = superToolTip31;
+            superToolTip30.FixedTooltipWidth = true;
+            toolTipTitleItem30.Text = "Strikethrough";
+            toolTipItem30.LeftIndent = 6;
+            toolTipItem30.Text = "Cross the selected text out by drawing a line through it.";
+            superToolTip30.Items.Add(toolTipTitleItem30);
+            superToolTip30.Items.Add(toolTipItem30);
+            superToolTip30.MaxWidth = 210;
+            commandBarItem24.SuperTip = superToolTip30;
             // 
             // commandBarItem25
             // 
@@ -1765,14 +1748,14 @@
             commandBarItem25.Enabled = false;
             commandBarItem25.Id = 30;
             commandBarItem25.Name = "commandBarItem25";
-            superToolTip32.FixedTooltipWidth = true;
-            toolTipTitleItem32.Text = "Align Text Top";
-            toolTipItem32.LeftIndent = 6;
-            toolTipItem32.Text = "Align text to the top.";
-            superToolTip32.Items.Add(toolTipTitleItem32);
-            superToolTip32.Items.Add(toolTipItem32);
-            superToolTip32.MaxWidth = 210;
-            commandBarItem25.SuperTip = superToolTip32;
+            superToolTip31.FixedTooltipWidth = true;
+            toolTipTitleItem31.Text = "Align Text Top";
+            toolTipItem31.LeftIndent = 6;
+            toolTipItem31.Text = "Align text to the top.";
+            superToolTip31.Items.Add(toolTipTitleItem31);
+            superToolTip31.Items.Add(toolTipItem31);
+            superToolTip31.MaxWidth = 210;
+            commandBarItem25.SuperTip = superToolTip31;
             // 
             // commandBarItem26
             // 
@@ -1781,14 +1764,14 @@
             commandBarItem26.Enabled = false;
             commandBarItem26.Id = 31;
             commandBarItem26.Name = "commandBarItem26";
-            superToolTip33.FixedTooltipWidth = true;
-            toolTipTitleItem33.Text = "Align Text Middle";
-            toolTipItem33.LeftIndent = 6;
-            toolTipItem33.Text = "Center text between the top and bottom.";
-            superToolTip33.Items.Add(toolTipTitleItem33);
-            superToolTip33.Items.Add(toolTipItem33);
-            superToolTip33.MaxWidth = 210;
-            commandBarItem26.SuperTip = superToolTip33;
+            superToolTip32.FixedTooltipWidth = true;
+            toolTipTitleItem32.Text = "Align Text Middle";
+            toolTipItem32.LeftIndent = 6;
+            toolTipItem32.Text = "Center text between the top and bottom.";
+            superToolTip32.Items.Add(toolTipTitleItem32);
+            superToolTip32.Items.Add(toolTipItem32);
+            superToolTip32.MaxWidth = 210;
+            commandBarItem26.SuperTip = superToolTip32;
             // 
             // commandBarItem27
             // 
@@ -1797,14 +1780,14 @@
             commandBarItem27.Enabled = false;
             commandBarItem27.Id = 32;
             commandBarItem27.Name = "commandBarItem27";
-            superToolTip34.FixedTooltipWidth = true;
-            toolTipTitleItem34.Text = "Align Text Bottom";
-            toolTipItem34.LeftIndent = 6;
-            toolTipItem34.Text = "Align text to the bottom.";
-            superToolTip34.Items.Add(toolTipTitleItem34);
-            superToolTip34.Items.Add(toolTipItem34);
-            superToolTip34.MaxWidth = 210;
-            commandBarItem27.SuperTip = superToolTip34;
+            superToolTip33.FixedTooltipWidth = true;
+            toolTipTitleItem33.Text = "Align Text Bottom";
+            toolTipItem33.LeftIndent = 6;
+            toolTipItem33.Text = "Align text to the bottom.";
+            superToolTip33.Items.Add(toolTipTitleItem33);
+            superToolTip33.Items.Add(toolTipItem33);
+            superToolTip33.MaxWidth = 210;
+            commandBarItem27.SuperTip = superToolTip33;
             // 
             // commandBarItem28
             // 
@@ -1814,14 +1797,14 @@
             commandBarItem28.Id = 33;
             commandBarItem28.Name = "commandBarItem28";
             commandBarItem28.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip35.FixedTooltipWidth = true;
-            toolTipTitleItem35.Text = "Add Calculated Field";
-            toolTipItem35.LeftIndent = 6;
-            toolTipItem35.Text = "Create a custom field whose value is evaluated using an expression based on available data fields.";
-            superToolTip35.Items.Add(toolTipTitleItem35);
-            superToolTip35.Items.Add(toolTipItem35);
-            superToolTip35.MaxWidth = 210;
-            commandBarItem28.SuperTip = superToolTip35;
+            superToolTip34.FixedTooltipWidth = true;
+            toolTipTitleItem34.Text = "Add Calculated Field";
+            toolTipItem34.LeftIndent = 6;
+            toolTipItem34.Text = "Create a custom field whose value is evaluated using an expression based on available data fields.";
+            superToolTip34.Items.Add(toolTipTitleItem34);
+            superToolTip34.Items.Add(toolTipItem34);
+            superToolTip34.MaxWidth = 210;
+            commandBarItem28.SuperTip = superToolTip34;
             // 
             // commandBarItem29
             // 
@@ -1831,14 +1814,14 @@
             commandBarItem29.Id = 34;
             commandBarItem29.Name = "commandBarItem29";
             commandBarItem29.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip36.FixedTooltipWidth = true;
-            toolTipTitleItem36.Text = "Add Parameter";
-            toolTipItem36.LeftIndent = 6;
-            toolTipItem36.Text = "Create a new parameter to pass dynamic values to your report.";
-            superToolTip36.Items.Add(toolTipTitleItem36);
-            superToolTip36.Items.Add(toolTipItem36);
-            superToolTip36.MaxWidth = 210;
-            commandBarItem29.SuperTip = superToolTip36;
+            superToolTip35.FixedTooltipWidth = true;
+            toolTipTitleItem35.Text = "Add Parameter";
+            toolTipItem35.LeftIndent = 6;
+            toolTipItem35.Text = "Create a new parameter to pass dynamic values to your report.";
+            superToolTip35.Items.Add(toolTipTitleItem35);
+            superToolTip35.Items.Add(toolTipItem35);
+            superToolTip35.MaxWidth = 210;
+            commandBarItem29.SuperTip = superToolTip35;
             // 
             // commandBarItem31
             // 
@@ -1847,14 +1830,14 @@
             commandBarItem31.Enabled = false;
             commandBarItem31.Id = 36;
             commandBarItem31.Name = "commandBarItem31";
-            superToolTip37.FixedTooltipWidth = true;
-            toolTipTitleItem37.Text = "Extract Style";
-            toolTipItem37.LeftIndent = 6;
-            toolTipItem37.Text = "Create a new style based on the selected control's appearance settings. Apply the created style from the Styles gallery to other controls in your report.";
-            superToolTip37.Items.Add(toolTipTitleItem37);
-            superToolTip37.Items.Add(toolTipItem37);
-            superToolTip37.MaxWidth = 210;
-            commandBarItem31.SuperTip = superToolTip37;
+            superToolTip36.FixedTooltipWidth = true;
+            toolTipTitleItem36.Text = "Extract Style";
+            toolTipItem36.LeftIndent = 6;
+            toolTipItem36.Text = "Create a new style based on the selected control's appearance settings. Apply the created style from the Styles gallery to other controls in your report.";
+            superToolTip36.Items.Add(toolTipTitleItem36);
+            superToolTip36.Items.Add(toolTipItem36);
+            superToolTip36.MaxWidth = 210;
+            commandBarItem31.SuperTip = superToolTip36;
             // 
             // commandBarItem32
             // 
@@ -1863,14 +1846,14 @@
             commandBarItem32.Enabled = false;
             commandBarItem32.Id = 37;
             commandBarItem32.Name = "commandBarItem32";
-            superToolTip38.FixedTooltipWidth = true;
-            toolTipTitleItem38.Text = "All Borders";
-            toolTipItem38.LeftIndent = 6;
-            toolTipItem38.Text = "Add all borders to the selected controls.";
-            superToolTip38.Items.Add(toolTipTitleItem38);
-            superToolTip38.Items.Add(toolTipItem38);
-            superToolTip38.MaxWidth = 210;
-            commandBarItem32.SuperTip = superToolTip38;
+            superToolTip37.FixedTooltipWidth = true;
+            toolTipTitleItem37.Text = "All Borders";
+            toolTipItem37.LeftIndent = 6;
+            toolTipItem37.Text = "Add all borders to the selected controls.";
+            superToolTip37.Items.Add(toolTipTitleItem37);
+            superToolTip37.Items.Add(toolTipItem37);
+            superToolTip37.MaxWidth = 210;
+            commandBarItem32.SuperTip = superToolTip37;
             // 
             // commandBarItem33
             // 
@@ -1879,14 +1862,14 @@
             commandBarItem33.Enabled = false;
             commandBarItem33.Id = 38;
             commandBarItem33.Name = "commandBarItem33";
-            superToolTip39.FixedTooltipWidth = true;
-            toolTipTitleItem39.Text = "No Border";
-            toolTipItem39.LeftIndent = 6;
-            toolTipItem39.Text = "Remove borders from the selected controls.";
-            superToolTip39.Items.Add(toolTipTitleItem39);
-            superToolTip39.Items.Add(toolTipItem39);
-            superToolTip39.MaxWidth = 210;
-            commandBarItem33.SuperTip = superToolTip39;
+            superToolTip38.FixedTooltipWidth = true;
+            toolTipTitleItem38.Text = "No Border";
+            toolTipItem38.LeftIndent = 6;
+            toolTipItem38.Text = "Remove borders from the selected controls.";
+            superToolTip38.Items.Add(toolTipTitleItem38);
+            superToolTip38.Items.Add(toolTipItem38);
+            superToolTip38.MaxWidth = 210;
+            commandBarItem33.SuperTip = superToolTip38;
             // 
             // commandBarItem34
             // 
@@ -1895,14 +1878,14 @@
             commandBarItem34.Enabled = false;
             commandBarItem34.Id = 39;
             commandBarItem34.Name = "commandBarItem34";
-            superToolTip40.FixedTooltipWidth = true;
-            toolTipTitleItem40.Text = "Left Border";
-            toolTipItem40.LeftIndent = 6;
-            toolTipItem40.Text = "Add the left border to the selected controls.";
-            superToolTip40.Items.Add(toolTipTitleItem40);
-            superToolTip40.Items.Add(toolTipItem40);
-            superToolTip40.MaxWidth = 210;
-            commandBarItem34.SuperTip = superToolTip40;
+            superToolTip39.FixedTooltipWidth = true;
+            toolTipTitleItem39.Text = "Left Border";
+            toolTipItem39.LeftIndent = 6;
+            toolTipItem39.Text = "Add the left border to the selected controls.";
+            superToolTip39.Items.Add(toolTipTitleItem39);
+            superToolTip39.Items.Add(toolTipItem39);
+            superToolTip39.MaxWidth = 210;
+            commandBarItem34.SuperTip = superToolTip39;
             // 
             // commandBarItem35
             // 
@@ -1911,14 +1894,14 @@
             commandBarItem35.Enabled = false;
             commandBarItem35.Id = 40;
             commandBarItem35.Name = "commandBarItem35";
-            superToolTip41.FixedTooltipWidth = true;
-            toolTipTitleItem41.Text = "Top Border";
-            toolTipItem41.LeftIndent = 6;
-            toolTipItem41.Text = "Add the top border to the selected controls.";
-            superToolTip41.Items.Add(toolTipTitleItem41);
-            superToolTip41.Items.Add(toolTipItem41);
-            superToolTip41.MaxWidth = 210;
-            commandBarItem35.SuperTip = superToolTip41;
+            superToolTip40.FixedTooltipWidth = true;
+            toolTipTitleItem40.Text = "Top Border";
+            toolTipItem40.LeftIndent = 6;
+            toolTipItem40.Text = "Add the top border to the selected controls.";
+            superToolTip40.Items.Add(toolTipTitleItem40);
+            superToolTip40.Items.Add(toolTipItem40);
+            superToolTip40.MaxWidth = 210;
+            commandBarItem35.SuperTip = superToolTip40;
             // 
             // commandBarItem36
             // 
@@ -1927,14 +1910,14 @@
             commandBarItem36.Enabled = false;
             commandBarItem36.Id = 41;
             commandBarItem36.Name = "commandBarItem36";
-            superToolTip42.FixedTooltipWidth = true;
-            toolTipTitleItem42.Text = "Right Border";
-            toolTipItem42.LeftIndent = 6;
-            toolTipItem42.Text = "Add the right border to the selected controls.";
-            superToolTip42.Items.Add(toolTipTitleItem42);
-            superToolTip42.Items.Add(toolTipItem42);
-            superToolTip42.MaxWidth = 210;
-            commandBarItem36.SuperTip = superToolTip42;
+            superToolTip41.FixedTooltipWidth = true;
+            toolTipTitleItem41.Text = "Right Border";
+            toolTipItem41.LeftIndent = 6;
+            toolTipItem41.Text = "Add the right border to the selected controls.";
+            superToolTip41.Items.Add(toolTipTitleItem41);
+            superToolTip41.Items.Add(toolTipItem41);
+            superToolTip41.MaxWidth = 210;
+            commandBarItem36.SuperTip = superToolTip41;
             // 
             // commandBarItem37
             // 
@@ -1943,14 +1926,14 @@
             commandBarItem37.Enabled = false;
             commandBarItem37.Id = 42;
             commandBarItem37.Name = "commandBarItem37";
-            superToolTip43.FixedTooltipWidth = true;
-            toolTipTitleItem43.Text = "Bottom Border";
-            toolTipItem43.LeftIndent = 6;
-            toolTipItem43.Text = "Add the bottom border to the selected controls.";
-            superToolTip43.Items.Add(toolTipTitleItem43);
-            superToolTip43.Items.Add(toolTipItem43);
-            superToolTip43.MaxWidth = 210;
-            commandBarItem37.SuperTip = superToolTip43;
+            superToolTip42.FixedTooltipWidth = true;
+            toolTipTitleItem42.Text = "Bottom Border";
+            toolTipItem42.LeftIndent = 6;
+            toolTipItem42.Text = "Add the bottom border to the selected controls.";
+            superToolTip42.Items.Add(toolTipTitleItem42);
+            superToolTip42.Items.Add(toolTipItem42);
+            superToolTip42.MaxWidth = 210;
+            commandBarItem37.SuperTip = superToolTip42;
             // 
             // commandColorBarItem3
             // 
@@ -1961,14 +1944,14 @@
             commandColorBarItem3.Enabled = false;
             commandColorBarItem3.Id = 43;
             commandColorBarItem3.Name = "commandColorBarItem3";
-            superToolTip44.FixedTooltipWidth = true;
-            toolTipTitleItem44.Text = "Border Color";
-            toolTipItem44.LeftIndent = 6;
-            toolTipItem44.Text = "Change the border color.";
-            superToolTip44.Items.Add(toolTipTitleItem44);
-            superToolTip44.Items.Add(toolTipItem44);
-            superToolTip44.MaxWidth = 210;
-            commandColorBarItem3.SuperTip = superToolTip44;
+            superToolTip43.FixedTooltipWidth = true;
+            toolTipTitleItem43.Text = "Border Color";
+            toolTipItem43.LeftIndent = 6;
+            toolTipItem43.Text = "Change the border color.";
+            superToolTip43.Items.Add(toolTipTitleItem43);
+            superToolTip43.Items.Add(toolTipItem43);
+            superToolTip43.MaxWidth = 210;
+            commandColorBarItem3.SuperTip = superToolTip43;
             // 
             // commandBarItem38
             // 
@@ -1979,14 +1962,14 @@
             commandBarItem38.Enabled = false;
             commandBarItem38.Id = 44;
             commandBarItem38.Name = "commandBarItem38";
-            superToolTip45.FixedTooltipWidth = true;
-            toolTipTitleItem45.Text = "Border Width";
-            toolTipItem45.LeftIndent = 6;
-            toolTipItem45.Text = "Change the border width.";
-            superToolTip45.Items.Add(toolTipTitleItem45);
-            superToolTip45.Items.Add(toolTipItem45);
-            superToolTip45.MaxWidth = 210;
-            commandBarItem38.SuperTip = superToolTip45;
+            superToolTip44.FixedTooltipWidth = true;
+            toolTipTitleItem44.Text = "Border Width";
+            toolTipItem44.LeftIndent = 6;
+            toolTipItem44.Text = "Change the border width.";
+            superToolTip44.Items.Add(toolTipTitleItem44);
+            superToolTip44.Items.Add(toolTipItem44);
+            superToolTip44.MaxWidth = 210;
+            commandBarItem38.SuperTip = superToolTip44;
             // 
             // commandBarItem39
             // 
@@ -1995,14 +1978,14 @@
             commandBarItem39.Enabled = false;
             commandBarItem39.Id = 45;
             commandBarItem39.Name = "commandBarItem39";
-            superToolTip46.FixedTooltipWidth = true;
-            toolTipTitleItem46.Text = "Align to Grid";
-            toolTipItem46.LeftIndent = 6;
-            toolTipItem46.Text = "Align the positions of the selected controls to the grid.";
-            superToolTip46.Items.Add(toolTipTitleItem46);
-            superToolTip46.Items.Add(toolTipItem46);
-            superToolTip46.MaxWidth = 210;
-            commandBarItem39.SuperTip = superToolTip46;
+            superToolTip45.FixedTooltipWidth = true;
+            toolTipTitleItem45.Text = "Align to Grid";
+            toolTipItem45.LeftIndent = 6;
+            toolTipItem45.Text = "Align the positions of the selected controls to the grid.";
+            superToolTip45.Items.Add(toolTipTitleItem45);
+            superToolTip45.Items.Add(toolTipItem45);
+            superToolTip45.MaxWidth = 210;
+            commandBarItem39.SuperTip = superToolTip45;
             // 
             // commandBarItem40
             // 
@@ -2011,14 +1994,14 @@
             commandBarItem40.Enabled = false;
             commandBarItem40.Id = 46;
             commandBarItem40.Name = "commandBarItem40";
-            superToolTip47.FixedTooltipWidth = true;
-            toolTipTitleItem47.Text = "Align Lefts";
-            toolTipItem47.LeftIndent = 6;
-            toolTipItem47.Text = "Left align the selected controls.";
-            superToolTip47.Items.Add(toolTipTitleItem47);
-            superToolTip47.Items.Add(toolTipItem47);
-            superToolTip47.MaxWidth = 210;
-            commandBarItem40.SuperTip = superToolTip47;
+            superToolTip46.FixedTooltipWidth = true;
+            toolTipTitleItem46.Text = "Align Lefts";
+            toolTipItem46.LeftIndent = 6;
+            toolTipItem46.Text = "Left align the selected controls.";
+            superToolTip46.Items.Add(toolTipTitleItem46);
+            superToolTip46.Items.Add(toolTipItem46);
+            superToolTip46.MaxWidth = 210;
+            commandBarItem40.SuperTip = superToolTip46;
             // 
             // commandBarItem41
             // 
@@ -2027,14 +2010,14 @@
             commandBarItem41.Enabled = false;
             commandBarItem41.Id = 47;
             commandBarItem41.Name = "commandBarItem41";
-            superToolTip48.FixedTooltipWidth = true;
-            toolTipTitleItem48.Text = "Align Centers";
-            toolTipItem48.LeftIndent = 6;
-            toolTipItem48.Text = "Align the centers of the selected controls vertically.";
-            superToolTip48.Items.Add(toolTipTitleItem48);
-            superToolTip48.Items.Add(toolTipItem48);
-            superToolTip48.MaxWidth = 210;
-            commandBarItem41.SuperTip = superToolTip48;
+            superToolTip47.FixedTooltipWidth = true;
+            toolTipTitleItem47.Text = "Align Centers";
+            toolTipItem47.LeftIndent = 6;
+            toolTipItem47.Text = "Align the centers of the selected controls vertically.";
+            superToolTip47.Items.Add(toolTipTitleItem47);
+            superToolTip47.Items.Add(toolTipItem47);
+            superToolTip47.MaxWidth = 210;
+            commandBarItem41.SuperTip = superToolTip47;
             // 
             // commandBarItem42
             // 
@@ -2043,14 +2026,14 @@
             commandBarItem42.Enabled = false;
             commandBarItem42.Id = 48;
             commandBarItem42.Name = "commandBarItem42";
-            superToolTip49.FixedTooltipWidth = true;
-            toolTipTitleItem49.Text = "Align Rights";
-            toolTipItem49.LeftIndent = 6;
-            toolTipItem49.Text = "Right align the selected controls.";
-            superToolTip49.Items.Add(toolTipTitleItem49);
-            superToolTip49.Items.Add(toolTipItem49);
-            superToolTip49.MaxWidth = 210;
-            commandBarItem42.SuperTip = superToolTip49;
+            superToolTip48.FixedTooltipWidth = true;
+            toolTipTitleItem48.Text = "Align Rights";
+            toolTipItem48.LeftIndent = 6;
+            toolTipItem48.Text = "Right align the selected controls.";
+            superToolTip48.Items.Add(toolTipTitleItem48);
+            superToolTip48.Items.Add(toolTipItem48);
+            superToolTip48.MaxWidth = 210;
+            commandBarItem42.SuperTip = superToolTip48;
             // 
             // commandBarItem43
             // 
@@ -2059,14 +2042,14 @@
             commandBarItem43.Enabled = false;
             commandBarItem43.Id = 49;
             commandBarItem43.Name = "commandBarItem43";
-            superToolTip50.FixedTooltipWidth = true;
-            toolTipTitleItem50.Text = "Align Tops";
-            toolTipItem50.LeftIndent = 6;
-            toolTipItem50.Text = "Align the tops of the selected controls.";
-            superToolTip50.Items.Add(toolTipTitleItem50);
-            superToolTip50.Items.Add(toolTipItem50);
-            superToolTip50.MaxWidth = 210;
-            commandBarItem43.SuperTip = superToolTip50;
+            superToolTip49.FixedTooltipWidth = true;
+            toolTipTitleItem49.Text = "Align Tops";
+            toolTipItem49.LeftIndent = 6;
+            toolTipItem49.Text = "Align the tops of the selected controls.";
+            superToolTip49.Items.Add(toolTipTitleItem49);
+            superToolTip49.Items.Add(toolTipItem49);
+            superToolTip49.MaxWidth = 210;
+            commandBarItem43.SuperTip = superToolTip49;
             // 
             // commandBarItem44
             // 
@@ -2075,14 +2058,14 @@
             commandBarItem44.Enabled = false;
             commandBarItem44.Id = 50;
             commandBarItem44.Name = "commandBarItem44";
-            superToolTip51.FixedTooltipWidth = true;
-            toolTipTitleItem51.Text = "Align Middles";
-            toolTipItem51.LeftIndent = 6;
-            toolTipItem51.Text = "Align the centers of the selected controls horizontally.";
-            superToolTip51.Items.Add(toolTipTitleItem51);
-            superToolTip51.Items.Add(toolTipItem51);
-            superToolTip51.MaxWidth = 210;
-            commandBarItem44.SuperTip = superToolTip51;
+            superToolTip50.FixedTooltipWidth = true;
+            toolTipTitleItem50.Text = "Align Middles";
+            toolTipItem50.LeftIndent = 6;
+            toolTipItem50.Text = "Align the centers of the selected controls horizontally.";
+            superToolTip50.Items.Add(toolTipTitleItem50);
+            superToolTip50.Items.Add(toolTipItem50);
+            superToolTip50.MaxWidth = 210;
+            commandBarItem44.SuperTip = superToolTip50;
             // 
             // commandBarItem45
             // 
@@ -2091,14 +2074,14 @@
             commandBarItem45.Enabled = false;
             commandBarItem45.Id = 51;
             commandBarItem45.Name = "commandBarItem45";
-            superToolTip52.FixedTooltipWidth = true;
-            toolTipTitleItem52.Text = "Align Bottoms";
-            toolTipItem52.LeftIndent = 6;
-            toolTipItem52.Text = "Align the bottoms of the selected controls.";
-            superToolTip52.Items.Add(toolTipTitleItem52);
-            superToolTip52.Items.Add(toolTipItem52);
-            superToolTip52.MaxWidth = 210;
-            commandBarItem45.SuperTip = superToolTip52;
+            superToolTip51.FixedTooltipWidth = true;
+            toolTipTitleItem51.Text = "Align Bottoms";
+            toolTipItem51.LeftIndent = 6;
+            toolTipItem51.Text = "Align the bottoms of the selected controls.";
+            superToolTip51.Items.Add(toolTipTitleItem51);
+            superToolTip51.Items.Add(toolTipItem51);
+            superToolTip51.MaxWidth = 210;
+            commandBarItem45.SuperTip = superToolTip51;
             // 
             // commandBarItem46
             // 
@@ -2107,14 +2090,14 @@
             commandBarItem46.Enabled = false;
             commandBarItem46.Id = 52;
             commandBarItem46.Name = "commandBarItem46";
-            superToolTip53.FixedTooltipWidth = true;
-            toolTipTitleItem53.Text = "Make Same Width";
-            toolTipItem53.LeftIndent = 6;
-            toolTipItem53.Text = "Make the selected controls have the same width.";
-            superToolTip53.Items.Add(toolTipTitleItem53);
-            superToolTip53.Items.Add(toolTipItem53);
-            superToolTip53.MaxWidth = 210;
-            commandBarItem46.SuperTip = superToolTip53;
+            superToolTip52.FixedTooltipWidth = true;
+            toolTipTitleItem52.Text = "Make Same Width";
+            toolTipItem52.LeftIndent = 6;
+            toolTipItem52.Text = "Make the selected controls have the same width.";
+            superToolTip52.Items.Add(toolTipTitleItem52);
+            superToolTip52.Items.Add(toolTipItem52);
+            superToolTip52.MaxWidth = 210;
+            commandBarItem46.SuperTip = superToolTip52;
             // 
             // commandBarItem47
             // 
@@ -2123,14 +2106,14 @@
             commandBarItem47.Enabled = false;
             commandBarItem47.Id = 53;
             commandBarItem47.Name = "commandBarItem47";
-            superToolTip54.FixedTooltipWidth = true;
-            toolTipTitleItem54.Text = "Size to Grid";
-            toolTipItem54.LeftIndent = 6;
-            toolTipItem54.Text = "Adjust the size of the selected controls according to the grid size.";
-            superToolTip54.Items.Add(toolTipTitleItem54);
-            superToolTip54.Items.Add(toolTipItem54);
-            superToolTip54.MaxWidth = 210;
-            commandBarItem47.SuperTip = superToolTip54;
+            superToolTip53.FixedTooltipWidth = true;
+            toolTipTitleItem53.Text = "Size to Grid";
+            toolTipItem53.LeftIndent = 6;
+            toolTipItem53.Text = "Adjust the size of the selected controls according to the grid size.";
+            superToolTip53.Items.Add(toolTipTitleItem53);
+            superToolTip53.Items.Add(toolTipItem53);
+            superToolTip53.MaxWidth = 210;
+            commandBarItem47.SuperTip = superToolTip53;
             // 
             // commandBarItem48
             // 
@@ -2139,14 +2122,14 @@
             commandBarItem48.Enabled = false;
             commandBarItem48.Id = 54;
             commandBarItem48.Name = "commandBarItem48";
-            superToolTip55.FixedTooltipWidth = true;
-            toolTipTitleItem55.Text = "Make Same Height";
-            toolTipItem55.LeftIndent = 6;
-            toolTipItem55.Text = "Make the selected controls have the same height.";
-            superToolTip55.Items.Add(toolTipTitleItem55);
-            superToolTip55.Items.Add(toolTipItem55);
-            superToolTip55.MaxWidth = 210;
-            commandBarItem48.SuperTip = superToolTip55;
+            superToolTip54.FixedTooltipWidth = true;
+            toolTipTitleItem54.Text = "Make Same Height";
+            toolTipItem54.LeftIndent = 6;
+            toolTipItem54.Text = "Make the selected controls have the same height.";
+            superToolTip54.Items.Add(toolTipTitleItem54);
+            superToolTip54.Items.Add(toolTipItem54);
+            superToolTip54.MaxWidth = 210;
+            commandBarItem48.SuperTip = superToolTip54;
             // 
             // commandBarItem49
             // 
@@ -2155,14 +2138,14 @@
             commandBarItem49.Enabled = false;
             commandBarItem49.Id = 55;
             commandBarItem49.Name = "commandBarItem49";
-            superToolTip56.FixedTooltipWidth = true;
-            toolTipTitleItem56.Text = "Make Same Size";
-            toolTipItem56.LeftIndent = 6;
-            toolTipItem56.Text = "Make the selected controls have the same size.";
-            superToolTip56.Items.Add(toolTipTitleItem56);
-            superToolTip56.Items.Add(toolTipItem56);
-            superToolTip56.MaxWidth = 210;
-            commandBarItem49.SuperTip = superToolTip56;
+            superToolTip55.FixedTooltipWidth = true;
+            toolTipTitleItem55.Text = "Make Same Size";
+            toolTipItem55.LeftIndent = 6;
+            toolTipItem55.Text = "Make the selected controls have the same size.";
+            superToolTip55.Items.Add(toolTipTitleItem55);
+            superToolTip55.Items.Add(toolTipItem55);
+            superToolTip55.MaxWidth = 210;
+            commandBarItem49.SuperTip = superToolTip55;
             // 
             // commandBarItem50
             // 
@@ -2171,14 +2154,14 @@
             commandBarItem50.Enabled = false;
             commandBarItem50.Id = 56;
             commandBarItem50.Name = "commandBarItem50";
-            superToolTip57.FixedTooltipWidth = true;
-            toolTipTitleItem57.Text = "Make Horizontal Spacing Equal";
-            toolTipItem57.LeftIndent = 6;
-            toolTipItem57.Text = "Make the horizontal spacing between the selected controls equal.";
-            superToolTip57.Items.Add(toolTipTitleItem57);
-            superToolTip57.Items.Add(toolTipItem57);
-            superToolTip57.MaxWidth = 210;
-            commandBarItem50.SuperTip = superToolTip57;
+            superToolTip56.FixedTooltipWidth = true;
+            toolTipTitleItem56.Text = "Make Horizontal Spacing Equal";
+            toolTipItem56.LeftIndent = 6;
+            toolTipItem56.Text = "Make the horizontal spacing between the selected controls equal.";
+            superToolTip56.Items.Add(toolTipTitleItem56);
+            superToolTip56.Items.Add(toolTipItem56);
+            superToolTip56.MaxWidth = 210;
+            commandBarItem50.SuperTip = superToolTip56;
             // 
             // commandBarItem51
             // 
@@ -2187,14 +2170,14 @@
             commandBarItem51.Enabled = false;
             commandBarItem51.Id = 57;
             commandBarItem51.Name = "commandBarItem51";
-            superToolTip58.FixedTooltipWidth = true;
-            toolTipTitleItem58.Text = "Increase Horizontal Spacing";
-            toolTipItem58.LeftIndent = 6;
-            toolTipItem58.Text = "Increase the horizontal spacing between the selected controls.";
-            superToolTip58.Items.Add(toolTipTitleItem58);
-            superToolTip58.Items.Add(toolTipItem58);
-            superToolTip58.MaxWidth = 210;
-            commandBarItem51.SuperTip = superToolTip58;
+            superToolTip57.FixedTooltipWidth = true;
+            toolTipTitleItem57.Text = "Increase Horizontal Spacing";
+            toolTipItem57.LeftIndent = 6;
+            toolTipItem57.Text = "Increase the horizontal spacing between the selected controls.";
+            superToolTip57.Items.Add(toolTipTitleItem57);
+            superToolTip57.Items.Add(toolTipItem57);
+            superToolTip57.MaxWidth = 210;
+            commandBarItem51.SuperTip = superToolTip57;
             // 
             // commandBarItem52
             // 
@@ -2203,14 +2186,14 @@
             commandBarItem52.Enabled = false;
             commandBarItem52.Id = 58;
             commandBarItem52.Name = "commandBarItem52";
-            superToolTip59.FixedTooltipWidth = true;
-            toolTipTitleItem59.Text = "Decrease Horizontal Spacing";
-            toolTipItem59.LeftIndent = 6;
-            toolTipItem59.Text = "Decrease the horizontal spacing between the selected controls.";
-            superToolTip59.Items.Add(toolTipTitleItem59);
-            superToolTip59.Items.Add(toolTipItem59);
-            superToolTip59.MaxWidth = 210;
-            commandBarItem52.SuperTip = superToolTip59;
+            superToolTip58.FixedTooltipWidth = true;
+            toolTipTitleItem58.Text = "Decrease Horizontal Spacing";
+            toolTipItem58.LeftIndent = 6;
+            toolTipItem58.Text = "Decrease the horizontal spacing between the selected controls.";
+            superToolTip58.Items.Add(toolTipTitleItem58);
+            superToolTip58.Items.Add(toolTipItem58);
+            superToolTip58.MaxWidth = 210;
+            commandBarItem52.SuperTip = superToolTip58;
             // 
             // commandBarItem53
             // 
@@ -2219,14 +2202,14 @@
             commandBarItem53.Enabled = false;
             commandBarItem53.Id = 59;
             commandBarItem53.Name = "commandBarItem53";
-            superToolTip60.FixedTooltipWidth = true;
-            toolTipTitleItem60.Text = "Remove Horizontal Spacing";
-            toolTipItem60.LeftIndent = 6;
-            toolTipItem60.Text = "Remove the horizontal spacing between the selected controls.";
-            superToolTip60.Items.Add(toolTipTitleItem60);
-            superToolTip60.Items.Add(toolTipItem60);
-            superToolTip60.MaxWidth = 210;
-            commandBarItem53.SuperTip = superToolTip60;
+            superToolTip59.FixedTooltipWidth = true;
+            toolTipTitleItem59.Text = "Remove Horizontal Spacing";
+            toolTipItem59.LeftIndent = 6;
+            toolTipItem59.Text = "Remove the horizontal spacing between the selected controls.";
+            superToolTip59.Items.Add(toolTipTitleItem59);
+            superToolTip59.Items.Add(toolTipItem59);
+            superToolTip59.MaxWidth = 210;
+            commandBarItem53.SuperTip = superToolTip59;
             // 
             // commandBarItem54
             // 
@@ -2235,14 +2218,14 @@
             commandBarItem54.Enabled = false;
             commandBarItem54.Id = 60;
             commandBarItem54.Name = "commandBarItem54";
-            superToolTip61.FixedTooltipWidth = true;
-            toolTipTitleItem61.Text = "Make Vertical Spacing Equal";
-            toolTipItem61.LeftIndent = 6;
-            toolTipItem61.Text = "Make the vertical spacing between the selected controls equal.";
-            superToolTip61.Items.Add(toolTipTitleItem61);
-            superToolTip61.Items.Add(toolTipItem61);
-            superToolTip61.MaxWidth = 210;
-            commandBarItem54.SuperTip = superToolTip61;
+            superToolTip60.FixedTooltipWidth = true;
+            toolTipTitleItem60.Text = "Make Vertical Spacing Equal";
+            toolTipItem60.LeftIndent = 6;
+            toolTipItem60.Text = "Make the vertical spacing between the selected controls equal.";
+            superToolTip60.Items.Add(toolTipTitleItem60);
+            superToolTip60.Items.Add(toolTipItem60);
+            superToolTip60.MaxWidth = 210;
+            commandBarItem54.SuperTip = superToolTip60;
             // 
             // commandBarItem55
             // 
@@ -2251,14 +2234,14 @@
             commandBarItem55.Enabled = false;
             commandBarItem55.Id = 61;
             commandBarItem55.Name = "commandBarItem55";
-            superToolTip62.FixedTooltipWidth = true;
-            toolTipTitleItem62.Text = "Increase Vertical Spacing";
-            toolTipItem62.LeftIndent = 6;
-            toolTipItem62.Text = "Increase the vertical spacing between the selected controls.";
-            superToolTip62.Items.Add(toolTipTitleItem62);
-            superToolTip62.Items.Add(toolTipItem62);
-            superToolTip62.MaxWidth = 210;
-            commandBarItem55.SuperTip = superToolTip62;
+            superToolTip61.FixedTooltipWidth = true;
+            toolTipTitleItem61.Text = "Increase Vertical Spacing";
+            toolTipItem61.LeftIndent = 6;
+            toolTipItem61.Text = "Increase the vertical spacing between the selected controls.";
+            superToolTip61.Items.Add(toolTipTitleItem61);
+            superToolTip61.Items.Add(toolTipItem61);
+            superToolTip61.MaxWidth = 210;
+            commandBarItem55.SuperTip = superToolTip61;
             // 
             // commandBarItem56
             // 
@@ -2267,14 +2250,14 @@
             commandBarItem56.Enabled = false;
             commandBarItem56.Id = 62;
             commandBarItem56.Name = "commandBarItem56";
-            superToolTip63.FixedTooltipWidth = true;
-            toolTipTitleItem63.Text = "Decrease Vertical Spacing";
-            toolTipItem63.LeftIndent = 6;
-            toolTipItem63.Text = "Decrease the vertical spacing between the selected controls.";
-            superToolTip63.Items.Add(toolTipTitleItem63);
-            superToolTip63.Items.Add(toolTipItem63);
-            superToolTip63.MaxWidth = 210;
-            commandBarItem56.SuperTip = superToolTip63;
+            superToolTip62.FixedTooltipWidth = true;
+            toolTipTitleItem62.Text = "Decrease Vertical Spacing";
+            toolTipItem62.LeftIndent = 6;
+            toolTipItem62.Text = "Decrease the vertical spacing between the selected controls.";
+            superToolTip62.Items.Add(toolTipTitleItem62);
+            superToolTip62.Items.Add(toolTipItem62);
+            superToolTip62.MaxWidth = 210;
+            commandBarItem56.SuperTip = superToolTip62;
             // 
             // commandBarItem57
             // 
@@ -2283,14 +2266,14 @@
             commandBarItem57.Enabled = false;
             commandBarItem57.Id = 63;
             commandBarItem57.Name = "commandBarItem57";
-            superToolTip64.FixedTooltipWidth = true;
-            toolTipTitleItem64.Text = "Remove Vertical Spacing";
-            toolTipItem64.LeftIndent = 6;
-            toolTipItem64.Text = "Remove the vertical spacing between the selected controls.";
-            superToolTip64.Items.Add(toolTipTitleItem64);
-            superToolTip64.Items.Add(toolTipItem64);
-            superToolTip64.MaxWidth = 210;
-            commandBarItem57.SuperTip = superToolTip64;
+            superToolTip63.FixedTooltipWidth = true;
+            toolTipTitleItem63.Text = "Remove Vertical Spacing";
+            toolTipItem63.LeftIndent = 6;
+            toolTipItem63.Text = "Remove the vertical spacing between the selected controls.";
+            superToolTip63.Items.Add(toolTipTitleItem63);
+            superToolTip63.Items.Add(toolTipItem63);
+            superToolTip63.MaxWidth = 210;
+            commandBarItem57.SuperTip = superToolTip63;
             // 
             // commandBarItem58
             // 
@@ -2299,14 +2282,14 @@
             commandBarItem58.Enabled = false;
             commandBarItem58.Id = 64;
             commandBarItem58.Name = "commandBarItem58";
-            superToolTip65.FixedTooltipWidth = true;
-            toolTipTitleItem65.Text = "Center Horizontally";
-            toolTipItem65.LeftIndent = 6;
-            toolTipItem65.Text = "Horizontally center the selected controls within a band.";
-            superToolTip65.Items.Add(toolTipTitleItem65);
-            superToolTip65.Items.Add(toolTipItem65);
-            superToolTip65.MaxWidth = 210;
-            commandBarItem58.SuperTip = superToolTip65;
+            superToolTip64.FixedTooltipWidth = true;
+            toolTipTitleItem64.Text = "Center Horizontally";
+            toolTipItem64.LeftIndent = 6;
+            toolTipItem64.Text = "Horizontally center the selected controls within a band.";
+            superToolTip64.Items.Add(toolTipTitleItem64);
+            superToolTip64.Items.Add(toolTipItem64);
+            superToolTip64.MaxWidth = 210;
+            commandBarItem58.SuperTip = superToolTip64;
             // 
             // commandBarItem59
             // 
@@ -2315,14 +2298,14 @@
             commandBarItem59.Enabled = false;
             commandBarItem59.Id = 65;
             commandBarItem59.Name = "commandBarItem59";
-            superToolTip66.FixedTooltipWidth = true;
-            toolTipTitleItem66.Text = "Center Vertically";
-            toolTipItem66.LeftIndent = 6;
-            toolTipItem66.Text = "Vertically center the selected controls within a band.";
-            superToolTip66.Items.Add(toolTipTitleItem66);
-            superToolTip66.Items.Add(toolTipItem66);
-            superToolTip66.MaxWidth = 210;
-            commandBarItem59.SuperTip = superToolTip66;
+            superToolTip65.FixedTooltipWidth = true;
+            toolTipTitleItem65.Text = "Center Vertically";
+            toolTipItem65.LeftIndent = 6;
+            toolTipItem65.Text = "Vertically center the selected controls within a band.";
+            superToolTip65.Items.Add(toolTipTitleItem65);
+            superToolTip65.Items.Add(toolTipItem65);
+            superToolTip65.MaxWidth = 210;
+            commandBarItem59.SuperTip = superToolTip65;
             // 
             // commandBarItem60
             // 
@@ -2331,14 +2314,14 @@
             commandBarItem60.Enabled = false;
             commandBarItem60.Id = 66;
             commandBarItem60.Name = "commandBarItem60";
-            superToolTip67.FixedTooltipWidth = true;
-            toolTipTitleItem67.Text = "Bring to Front";
-            toolTipItem67.LeftIndent = 6;
-            toolTipItem67.Text = "Bring the selected controls to the front.";
-            superToolTip67.Items.Add(toolTipTitleItem67);
-            superToolTip67.Items.Add(toolTipItem67);
-            superToolTip67.MaxWidth = 210;
-            commandBarItem60.SuperTip = superToolTip67;
+            superToolTip66.FixedTooltipWidth = true;
+            toolTipTitleItem66.Text = "Bring to Front";
+            toolTipItem66.LeftIndent = 6;
+            toolTipItem66.Text = "Bring the selected controls to the front.";
+            superToolTip66.Items.Add(toolTipTitleItem66);
+            superToolTip66.Items.Add(toolTipItem66);
+            superToolTip66.MaxWidth = 210;
+            commandBarItem60.SuperTip = superToolTip66;
             // 
             // commandBarItem61
             // 
@@ -2347,14 +2330,14 @@
             commandBarItem61.Enabled = false;
             commandBarItem61.Id = 67;
             commandBarItem61.Name = "commandBarItem61";
-            superToolTip68.FixedTooltipWidth = true;
-            toolTipTitleItem68.Text = "Send to Back";
-            toolTipItem68.LeftIndent = 6;
-            toolTipItem68.Text = "Move the selected controls to the back.";
-            superToolTip68.Items.Add(toolTipTitleItem68);
-            superToolTip68.Items.Add(toolTipItem68);
-            superToolTip68.MaxWidth = 210;
-            commandBarItem61.SuperTip = superToolTip68;
+            superToolTip67.FixedTooltipWidth = true;
+            toolTipTitleItem67.Text = "Send to Back";
+            toolTipItem67.LeftIndent = 6;
+            toolTipItem67.Text = "Move the selected controls to the back.";
+            superToolTip67.Items.Add(toolTipTitleItem67);
+            superToolTip67.Items.Add(toolTipItem67);
+            superToolTip67.MaxWidth = 210;
+            commandBarItem61.SuperTip = superToolTip67;
             // 
             // commandBarCheckItem1
             // 
@@ -2364,14 +2347,14 @@
             commandBarCheckItem1.Enabled = false;
             commandBarCheckItem1.Id = 68;
             commandBarCheckItem1.Name = "commandBarCheckItem1";
-            superToolTip69.FixedTooltipWidth = true;
-            toolTipTitleItem69.Text = "Snap to Grid";
-            toolTipItem69.LeftIndent = 6;
-            toolTipItem69.Text = "Enable snapping to the snap grid.";
-            superToolTip69.Items.Add(toolTipTitleItem69);
-            superToolTip69.Items.Add(toolTipItem69);
-            superToolTip69.MaxWidth = 210;
-            commandBarCheckItem1.SuperTip = superToolTip69;
+            superToolTip68.FixedTooltipWidth = true;
+            toolTipTitleItem68.Text = "Snap to Grid";
+            toolTipItem68.LeftIndent = 6;
+            toolTipItem68.Text = "Enable snapping to the snap grid.";
+            superToolTip68.Items.Add(toolTipTitleItem68);
+            superToolTip68.Items.Add(toolTipItem68);
+            superToolTip68.MaxWidth = 210;
+            commandBarCheckItem1.SuperTip = superToolTip68;
             // 
             // commandBarCheckItem2
             // 
@@ -2381,14 +2364,14 @@
             commandBarCheckItem2.Enabled = false;
             commandBarCheckItem2.Id = 69;
             commandBarCheckItem2.Name = "commandBarCheckItem2";
-            superToolTip70.FixedTooltipWidth = true;
-            toolTipTitleItem70.Text = "Snap Lines";
-            toolTipItem70.LeftIndent = 6;
-            toolTipItem70.Text = "Enable snapping to snap lines.";
-            superToolTip70.Items.Add(toolTipTitleItem70);
-            superToolTip70.Items.Add(toolTipItem70);
-            superToolTip70.MaxWidth = 210;
-            commandBarCheckItem2.SuperTip = superToolTip70;
+            superToolTip69.FixedTooltipWidth = true;
+            toolTipTitleItem69.Text = "Snap Lines";
+            toolTipItem69.LeftIndent = 6;
+            toolTipItem69.Text = "Enable snapping to snap lines.";
+            superToolTip69.Items.Add(toolTipTitleItem69);
+            superToolTip69.Items.Add(toolTipItem69);
+            superToolTip69.MaxWidth = 210;
+            commandBarCheckItem2.SuperTip = superToolTip69;
             // 
             // commandBarItem62
             // 
@@ -2397,14 +2380,14 @@
             commandBarItem62.Enabled = false;
             commandBarItem62.Id = 70;
             commandBarItem62.Name = "commandBarItem62";
-            superToolTip71.FixedTooltipWidth = true;
-            toolTipTitleItem71.Text = "Fit Bounds to Container";
-            toolTipItem71.LeftIndent = 6;
-            toolTipItem71.Text = "Adjust the control size to occupy all the available container space.";
-            superToolTip71.Items.Add(toolTipTitleItem71);
-            superToolTip71.Items.Add(toolTipItem71);
-            superToolTip71.MaxWidth = 210;
-            commandBarItem62.SuperTip = superToolTip71;
+            superToolTip70.FixedTooltipWidth = true;
+            toolTipTitleItem70.Text = "Fit Bounds to Container";
+            toolTipItem70.LeftIndent = 6;
+            toolTipItem70.Text = "Adjust the control size to occupy all the available container space.";
+            superToolTip70.Items.Add(toolTipTitleItem70);
+            superToolTip70.Items.Add(toolTipItem70);
+            superToolTip70.MaxWidth = 210;
+            commandBarItem62.SuperTip = superToolTip70;
             // 
             // commandBarItem63
             // 
@@ -2415,14 +2398,14 @@
             commandBarItem63.Enabled = false;
             commandBarItem63.Id = 71;
             commandBarItem63.Name = "commandBarItem63";
-            superToolTip72.FixedTooltipWidth = true;
-            toolTipTitleItem72.Text = "Choose Page Size";
-            toolTipItem72.LeftIndent = 6;
-            toolTipItem72.Text = "Choose a commonly used paper size for a report or click More Paper Sizes to define your own size.";
-            superToolTip72.Items.Add(toolTipTitleItem72);
-            superToolTip72.Items.Add(toolTipItem72);
-            superToolTip72.MaxWidth = 210;
-            commandBarItem63.SuperTip = superToolTip72;
+            superToolTip71.FixedTooltipWidth = true;
+            toolTipTitleItem71.Text = "Choose Page Size";
+            toolTipItem71.LeftIndent = 6;
+            toolTipItem71.Text = "Choose a commonly used paper size for a report or click More Paper Sizes to define your own size.";
+            superToolTip71.Items.Add(toolTipTitleItem71);
+            superToolTip71.Items.Add(toolTipItem71);
+            superToolTip71.MaxWidth = 210;
+            commandBarItem63.SuperTip = superToolTip71;
             // 
             // commandBarItem64
             // 
@@ -2433,14 +2416,14 @@
             commandBarItem64.Enabled = false;
             commandBarItem64.Id = 72;
             commandBarItem64.Name = "commandBarItem64";
-            superToolTip73.FixedTooltipWidth = true;
-            toolTipTitleItem73.Text = "Change Page Orientation";
-            toolTipItem73.LeftIndent = 6;
-            toolTipItem73.Text = "Switch between portrait and landscape page layouts.";
-            superToolTip73.Items.Add(toolTipTitleItem73);
-            superToolTip73.Items.Add(toolTipItem73);
-            superToolTip73.MaxWidth = 210;
-            commandBarItem64.SuperTip = superToolTip73;
+            superToolTip72.FixedTooltipWidth = true;
+            toolTipTitleItem72.Text = "Change Page Orientation";
+            toolTipItem72.LeftIndent = 6;
+            toolTipItem72.Text = "Switch between portrait and landscape page layouts.";
+            superToolTip72.Items.Add(toolTipTitleItem72);
+            superToolTip72.Items.Add(toolTipItem72);
+            superToolTip72.MaxWidth = 210;
+            commandBarItem64.SuperTip = superToolTip72;
             // 
             // commandBarItem65
             // 
@@ -2451,14 +2434,14 @@
             commandBarItem65.Enabled = false;
             commandBarItem65.Id = 73;
             commandBarItem65.Name = "commandBarItem65";
-            superToolTip74.FixedTooltipWidth = true;
-            toolTipTitleItem74.Text = "Adjust Margins";
-            toolTipItem74.LeftIndent = 6;
-            toolTipItem74.Text = "Set margin sizes for a report. Choose from several commonly used formats or click Custom Margins to define your own format.";
-            superToolTip74.Items.Add(toolTipTitleItem74);
-            superToolTip74.Items.Add(toolTipItem74);
-            superToolTip74.MaxWidth = 210;
-            commandBarItem65.SuperTip = superToolTip74;
+            superToolTip73.FixedTooltipWidth = true;
+            toolTipTitleItem73.Text = "Adjust Margins";
+            toolTipItem73.LeftIndent = 6;
+            toolTipItem73.Text = "Set margin sizes for a report. Choose from several commonly used formats or click Custom Margins to define your own format.";
+            superToolTip73.Items.Add(toolTipTitleItem73);
+            superToolTip73.Items.Add(toolTipItem73);
+            superToolTip73.MaxWidth = 210;
+            commandBarItem65.SuperTip = superToolTip73;
             // 
             // commandColorBarItem4
             // 
@@ -2469,14 +2452,14 @@
             commandColorBarItem4.Enabled = false;
             commandColorBarItem4.Id = 74;
             commandColorBarItem4.Name = "commandColorBarItem4";
-            superToolTip75.FixedTooltipWidth = true;
-            toolTipTitleItem75.Text = "Choose Page Color";
-            toolTipItem75.LeftIndent = 6;
-            toolTipItem75.Text = "Select the background color for report pages.";
-            superToolTip75.Items.Add(toolTipTitleItem75);
-            superToolTip75.Items.Add(toolTipItem75);
-            superToolTip75.MaxWidth = 210;
-            commandColorBarItem4.SuperTip = superToolTip75;
+            superToolTip74.FixedTooltipWidth = true;
+            toolTipTitleItem74.Text = "Choose Page Color";
+            toolTipItem74.LeftIndent = 6;
+            toolTipItem74.Text = "Select the background color for report pages.";
+            superToolTip74.Items.Add(toolTipTitleItem74);
+            superToolTip74.Items.Add(toolTipItem74);
+            superToolTip74.MaxWidth = 210;
+            commandColorBarItem4.SuperTip = superToolTip74;
             // 
             // commandBarItem66
             // 
@@ -2485,14 +2468,14 @@
             commandBarItem66.Enabled = false;
             commandBarItem66.Id = 75;
             commandBarItem66.Name = "commandBarItem66";
-            superToolTip76.FixedTooltipWidth = true;
-            toolTipTitleItem76.Text = "Add Watermark";
-            toolTipItem76.LeftIndent = 6;
-            toolTipItem76.Text = "Insert ghost text or image behind the page content to indicate that a report requires special treatment. Use the View tab to display a watermark at design time and use it as a template for a report.";
-            superToolTip76.Items.Add(toolTipTitleItem76);
-            superToolTip76.Items.Add(toolTipItem76);
-            superToolTip76.MaxWidth = 210;
-            commandBarItem66.SuperTip = superToolTip76;
+            superToolTip75.FixedTooltipWidth = true;
+            toolTipTitleItem75.Text = "Add Watermark";
+            toolTipItem75.LeftIndent = 6;
+            toolTipItem75.Text = "Insert ghost text or image behind the page content to indicate that a report requires special treatment. Use the View tab to display a watermark at design time and use it as a template for a report.";
+            superToolTip75.Items.Add(toolTipTitleItem75);
+            superToolTip75.Items.Add(toolTipItem75);
+            superToolTip75.MaxWidth = 210;
+            commandBarItem66.SuperTip = superToolTip75;
             // 
             // commandBarItem67
             // 
@@ -2501,14 +2484,14 @@
             commandBarItem67.Enabled = false;
             commandBarItem67.Id = 76;
             commandBarItem67.Name = "commandBarItem67";
-            superToolTip77.FixedTooltipWidth = true;
-            toolTipTitleItem77.Text = "Show Printing Warnings";
-            toolTipItem77.LeftIndent = 6;
-            toolTipItem77.Text = "Highlight report controls that overrun the right page margin to warn you about extra pages when printing the document.";
-            superToolTip77.Items.Add(toolTipTitleItem77);
-            superToolTip77.Items.Add(toolTipItem77);
-            superToolTip77.MaxWidth = 210;
-            commandBarItem67.SuperTip = superToolTip77;
+            superToolTip76.FixedTooltipWidth = true;
+            toolTipTitleItem76.Text = "Show Printing Warnings";
+            toolTipItem76.LeftIndent = 6;
+            toolTipItem76.Text = "Highlight report controls that overrun the right page margin to warn you about extra pages when printing the document.";
+            superToolTip76.Items.Add(toolTipTitleItem76);
+            superToolTip76.Items.Add(toolTipItem76);
+            superToolTip76.MaxWidth = 210;
+            commandBarItem67.SuperTip = superToolTip76;
             // 
             // commandBarItem68
             // 
@@ -2517,14 +2500,14 @@
             commandBarItem68.Enabled = false;
             commandBarItem68.Id = 77;
             commandBarItem68.Name = "commandBarItem68";
-            superToolTip78.FixedTooltipWidth = true;
-            toolTipTitleItem78.Text = "Show Export Warnings";
-            toolTipItem78.LeftIndent = 6;
-            toolTipItem78.Text = "Highlight intersecting report controls to warn you about the possibility of corrupting the document layout when exporting the document to specific formats.";
-            superToolTip78.Items.Add(toolTipTitleItem78);
-            superToolTip78.Items.Add(toolTipItem78);
-            superToolTip78.MaxWidth = 210;
-            commandBarItem68.SuperTip = superToolTip78;
+            superToolTip77.FixedTooltipWidth = true;
+            toolTipTitleItem77.Text = "Show Export Warnings";
+            toolTipItem77.LeftIndent = 6;
+            toolTipItem77.Text = "Highlight intersecting report controls to warn you about the possibility of corrupting the document layout when exporting the document to specific formats.";
+            superToolTip77.Items.Add(toolTipTitleItem77);
+            superToolTip77.Items.Add(toolTipItem77);
+            superToolTip77.MaxWidth = 210;
+            commandBarItem68.SuperTip = superToolTip77;
             // 
             // commandBarItem69
             // 
@@ -2534,14 +2517,14 @@
             commandBarItem69.Id = 78;
             commandBarItem69.Name = "commandBarItem69";
             commandBarItem69.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip79.FixedTooltipWidth = true;
-            toolTipTitleItem79.Text = "Show Watermark";
-            toolTipItem79.LeftIndent = 6;
-            toolTipItem79.Text = "Display the document's watermark on the design surface for the better design experience. Specify watermark settings in the Page tab.";
-            superToolTip79.Items.Add(toolTipTitleItem79);
-            superToolTip79.Items.Add(toolTipItem79);
-            superToolTip79.MaxWidth = 210;
-            commandBarItem69.SuperTip = superToolTip79;
+            superToolTip78.FixedTooltipWidth = true;
+            toolTipTitleItem78.Text = "Show Watermark";
+            toolTipItem78.LeftIndent = 6;
+            toolTipItem78.Text = "Display the document's watermark on the design surface for the better design experience. Specify watermark settings in the Page tab.";
+            superToolTip78.Items.Add(toolTipTitleItem78);
+            superToolTip78.Items.Add(toolTipItem78);
+            superToolTip78.MaxWidth = 210;
+            commandBarItem69.SuperTip = superToolTip78;
             // 
             // commandBarItem70
             // 
@@ -2551,14 +2534,14 @@
             commandBarItem70.Id = 79;
             commandBarItem70.Name = "commandBarItem70";
             commandBarItem70.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip80.FixedTooltipWidth = true;
-            toolTipTitleItem80.Text = "Show Grid Lines";
-            toolTipItem80.LeftIndent = 6;
-            toolTipItem80.Text = "Show gridlines on the report surface for perfect control placement.";
-            superToolTip80.Items.Add(toolTipTitleItem80);
-            superToolTip80.Items.Add(toolTipItem80);
-            superToolTip80.MaxWidth = 210;
-            commandBarItem70.SuperTip = superToolTip80;
+            superToolTip79.FixedTooltipWidth = true;
+            toolTipTitleItem79.Text = "Show Grid Lines";
+            toolTipItem79.LeftIndent = 6;
+            toolTipItem79.Text = "Show gridlines on the report surface for perfect control placement.";
+            superToolTip79.Items.Add(toolTipTitleItem79);
+            superToolTip79.Items.Add(toolTipItem79);
+            superToolTip79.MaxWidth = 210;
+            commandBarItem70.SuperTip = superToolTip79;
             // 
             // commandBarItem71
             // 
@@ -2567,14 +2550,14 @@
             commandBarItem71.Enabled = false;
             commandBarItem71.Id = 80;
             commandBarItem71.Name = "commandBarItem71";
-            superToolTip81.FixedTooltipWidth = true;
-            toolTipTitleItem81.Text = "Expand All Bands";
-            toolTipItem81.LeftIndent = 6;
-            toolTipItem81.Text = "Expand all bands on the design surface.";
-            superToolTip81.Items.Add(toolTipTitleItem81);
-            superToolTip81.Items.Add(toolTipItem81);
-            superToolTip81.MaxWidth = 210;
-            commandBarItem71.SuperTip = superToolTip81;
+            superToolTip80.FixedTooltipWidth = true;
+            toolTipTitleItem80.Text = "Expand All Bands";
+            toolTipItem80.LeftIndent = 6;
+            toolTipItem80.Text = "Expand all bands on the design surface.";
+            superToolTip80.Items.Add(toolTipTitleItem80);
+            superToolTip80.Items.Add(toolTipItem80);
+            superToolTip80.MaxWidth = 210;
+            commandBarItem71.SuperTip = superToolTip80;
             // 
             // commandBarItem72
             // 
@@ -2583,14 +2566,14 @@
             commandBarItem72.Enabled = false;
             commandBarItem72.Id = 81;
             commandBarItem72.Name = "commandBarItem72";
-            superToolTip82.FixedTooltipWidth = true;
-            toolTipTitleItem82.Text = "Collapse All Bands";
-            toolTipItem82.LeftIndent = 6;
-            toolTipItem82.Text = "Collapse all bands on the design surface.";
-            superToolTip82.Items.Add(toolTipTitleItem82);
-            superToolTip82.Items.Add(toolTipItem82);
-            superToolTip82.MaxWidth = 210;
-            commandBarItem72.SuperTip = superToolTip82;
+            superToolTip81.FixedTooltipWidth = true;
+            toolTipTitleItem81.Text = "Collapse All Bands";
+            toolTipItem81.LeftIndent = 6;
+            toolTipItem81.Text = "Collapse all bands on the design surface.";
+            superToolTip81.Items.Add(toolTipTitleItem81);
+            superToolTip81.Items.Add(toolTipItem81);
+            superToolTip81.MaxWidth = 210;
+            commandBarItem72.SuperTip = superToolTip81;
             // 
             // commandBarEditItem1
             // 
@@ -2601,14 +2584,14 @@
             commandBarEditItem1.Enabled = false;
             commandBarEditItem1.Id = 82;
             commandBarEditItem1.Name = "commandBarEditItem1";
-            superToolTip83.FixedTooltipWidth = true;
-            toolTipTitleItem83.Text = "Language";
-            toolTipItem83.LeftIndent = 6;
-            toolTipItem83.Text = "Specifies the language associated with the localizable property values. Every language can have its own set of property values.";
-            superToolTip83.Items.Add(toolTipTitleItem83);
-            superToolTip83.Items.Add(toolTipItem83);
-            superToolTip83.MaxWidth = 210;
-            commandBarEditItem1.SuperTip = superToolTip83;
+            superToolTip82.FixedTooltipWidth = true;
+            toolTipTitleItem82.Text = "Language";
+            toolTipItem82.LeftIndent = 6;
+            toolTipItem82.Text = "Specifies the language associated with the localizable property values. Every language can have its own set of property values.";
+            superToolTip82.Items.Add(toolTipTitleItem82);
+            superToolTip82.Items.Add(toolTipItem82);
+            superToolTip82.MaxWidth = 210;
+            commandBarEditItem1.SuperTip = superToolTip82;
             // 
             // repositoryItemLookUpEdit1
             // 
@@ -2624,14 +2607,14 @@
             commandBarCheckItem3.Enabled = false;
             commandBarCheckItem3.Id = 83;
             commandBarCheckItem3.Name = "commandBarCheckItem3";
-            superToolTip84.FixedTooltipWidth = true;
-            toolTipTitleItem84.Text = "Show Localizable Properties";
-            toolTipItem84.LeftIndent = 6;
-            toolTipItem84.Text = "Filters the Properties window to display only localizable properties.";
-            superToolTip84.Items.Add(toolTipTitleItem84);
-            superToolTip84.Items.Add(toolTipItem84);
-            superToolTip84.MaxWidth = 210;
-            commandBarCheckItem3.SuperTip = superToolTip84;
+            superToolTip83.FixedTooltipWidth = true;
+            toolTipTitleItem83.Text = "Show Localizable Properties";
+            toolTipItem83.LeftIndent = 6;
+            toolTipItem83.Text = "Filters the Properties window to display only localizable properties.";
+            superToolTip83.Items.Add(toolTipTitleItem83);
+            superToolTip83.Items.Add(toolTipItem83);
+            superToolTip83.MaxWidth = 210;
+            commandBarCheckItem3.SuperTip = superToolTip83;
             // 
             // commandBarItem73
             // 
@@ -2641,14 +2624,14 @@
             commandBarItem73.Enabled = false;
             commandBarItem73.Id = 84;
             commandBarItem73.Name = "commandBarItem73";
-            superToolTip85.FixedTooltipWidth = true;
-            toolTipTitleItem85.Text = "Zoom";
-            toolTipItem85.LeftIndent = 6;
-            toolTipItem85.Text = "Change the zoom level of the document designer.";
-            superToolTip85.Items.Add(toolTipTitleItem85);
-            superToolTip85.Items.Add(toolTipItem85);
-            superToolTip85.MaxWidth = 210;
-            commandBarItem73.SuperTip = superToolTip85;
+            superToolTip84.FixedTooltipWidth = true;
+            toolTipTitleItem84.Text = "Zoom";
+            toolTipItem84.LeftIndent = 6;
+            toolTipItem84.Text = "Change the zoom level of the document designer.";
+            superToolTip84.Items.Add(toolTipTitleItem84);
+            superToolTip84.Items.Add(toolTipItem84);
+            superToolTip84.MaxWidth = 210;
+            commandBarItem73.SuperTip = superToolTip84;
             // 
             // commandBarItem74
             // 
@@ -2658,14 +2641,14 @@
             commandBarItem74.Id = 85;
             commandBarItem74.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.Add);
             commandBarItem74.Name = "commandBarItem74";
-            superToolTip86.FixedTooltipWidth = true;
-            toolTipTitleItem86.Text = "Zoom In (Ctrl+Add)";
-            toolTipItem86.LeftIndent = 6;
-            toolTipItem86.Text = "Zoom in to get a close-up view of the report.";
-            superToolTip86.Items.Add(toolTipTitleItem86);
-            superToolTip86.Items.Add(toolTipItem86);
-            superToolTip86.MaxWidth = 210;
-            commandBarItem74.SuperTip = superToolTip86;
+            superToolTip85.FixedTooltipWidth = true;
+            toolTipTitleItem85.Text = "Zoom In (Ctrl+Add)";
+            toolTipItem85.LeftIndent = 6;
+            toolTipItem85.Text = "Zoom in to get a close-up view of the report.";
+            superToolTip85.Items.Add(toolTipTitleItem85);
+            superToolTip85.Items.Add(toolTipItem85);
+            superToolTip85.MaxWidth = 210;
+            commandBarItem74.SuperTip = superToolTip85;
             // 
             // commandBarItem75
             // 
@@ -2675,14 +2658,14 @@
             commandBarItem75.Id = 86;
             commandBarItem75.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.Subtract);
             commandBarItem75.Name = "commandBarItem75";
-            superToolTip87.FixedTooltipWidth = true;
-            toolTipTitleItem87.Text = "Zoom Out (Ctrl+Subtract)";
-            toolTipItem87.LeftIndent = 6;
-            toolTipItem87.Text = "Zoom out to see more of the report at a reduced size.";
-            superToolTip87.Items.Add(toolTipTitleItem87);
-            superToolTip87.Items.Add(toolTipItem87);
-            superToolTip87.MaxWidth = 210;
-            commandBarItem75.SuperTip = superToolTip87;
+            superToolTip86.FixedTooltipWidth = true;
+            toolTipTitleItem86.Text = "Zoom Out (Ctrl+Subtract)";
+            toolTipItem86.LeftIndent = 6;
+            toolTipItem86.Text = "Zoom out to see more of the report at a reduced size.";
+            superToolTip86.Items.Add(toolTipTitleItem86);
+            superToolTip86.Items.Add(toolTipItem86);
+            superToolTip86.MaxWidth = 210;
+            commandBarItem75.SuperTip = superToolTip86;
             // 
             // commandBarItem76
             // 
@@ -2691,14 +2674,14 @@
             commandBarItem76.Enabled = false;
             commandBarItem76.Id = 87;
             commandBarItem76.Name = "commandBarItem76";
-            superToolTip88.FixedTooltipWidth = true;
-            toolTipTitleItem88.Text = "Validate Scripts";
-            toolTipItem88.LeftIndent = 6;
-            toolTipItem88.Text = "Check whether report scripts contain errors. If errors are found, they are listed in the Scripts Errors panel.";
-            superToolTip88.Items.Add(toolTipTitleItem88);
-            superToolTip88.Items.Add(toolTipItem88);
-            superToolTip88.MaxWidth = 210;
-            commandBarItem76.SuperTip = superToolTip88;
+            superToolTip87.FixedTooltipWidth = true;
+            toolTipTitleItem87.Text = "Validate Scripts";
+            toolTipItem87.LeftIndent = 6;
+            toolTipItem87.Text = "Check whether report scripts contain errors. If errors are found, they are listed in the Scripts Errors panel.";
+            superToolTip87.Items.Add(toolTipTitleItem87);
+            superToolTip87.Items.Add(toolTipItem87);
+            superToolTip87.MaxWidth = 210;
+            commandBarItem76.SuperTip = superToolTip87;
             // 
             // commandGalleryBarItem1
             // 
@@ -2802,14 +2785,14 @@
             commandBarEditItem2.Enabled = false;
             commandBarEditItem2.Id = 94;
             commandBarEditItem2.Name = "commandBarEditItem2";
-            superToolTip89.FixedTooltipWidth = true;
-            toolTipTitleItem89.Text = "Cell Width";
-            toolTipItem89.LeftIndent = 6;
-            toolTipItem89.Text = "Set the cell width.";
-            superToolTip89.Items.Add(toolTipTitleItem89);
-            superToolTip89.Items.Add(toolTipItem89);
-            superToolTip89.MaxWidth = 210;
-            commandBarEditItem2.SuperTip = superToolTip89;
+            superToolTip88.FixedTooltipWidth = true;
+            toolTipTitleItem88.Text = "Cell Width";
+            toolTipItem88.LeftIndent = 6;
+            toolTipItem88.Text = "Set the cell width.";
+            superToolTip88.Items.Add(toolTipTitleItem88);
+            superToolTip88.Items.Add(toolTipItem88);
+            superToolTip88.MaxWidth = 210;
+            commandBarEditItem2.SuperTip = superToolTip88;
             // 
             // repositoryItemSpinEdit1
             // 
@@ -2827,14 +2810,14 @@
             commandBarEditItem3.Enabled = false;
             commandBarEditItem3.Id = 95;
             commandBarEditItem3.Name = "commandBarEditItem3";
-            superToolTip90.FixedTooltipWidth = true;
-            toolTipTitleItem90.Text = "Cell Height";
-            toolTipItem90.LeftIndent = 6;
-            toolTipItem90.Text = "Set the cell height.";
-            superToolTip90.Items.Add(toolTipTitleItem90);
-            superToolTip90.Items.Add(toolTipItem90);
-            superToolTip90.MaxWidth = 210;
-            commandBarEditItem3.SuperTip = superToolTip90;
+            superToolTip89.FixedTooltipWidth = true;
+            toolTipTitleItem89.Text = "Cell Height";
+            toolTipItem89.LeftIndent = 6;
+            toolTipItem89.Text = "Set the cell height.";
+            superToolTip89.Items.Add(toolTipTitleItem89);
+            superToolTip89.Items.Add(toolTipItem89);
+            superToolTip89.MaxWidth = 210;
+            commandBarEditItem3.SuperTip = superToolTip89;
             // 
             // repositoryItemSpinEdit2
             // 
@@ -2852,14 +2835,14 @@
             commandBarEditItem4.Enabled = false;
             commandBarEditItem4.Id = 96;
             commandBarEditItem4.Name = "commandBarEditItem4";
-            superToolTip91.FixedTooltipWidth = true;
-            toolTipTitleItem91.Text = "Cell Horizontal Spacing";
-            toolTipItem91.LeftIndent = 6;
-            toolTipItem91.Text = "Set the horizontal spacing between adjacent cells.";
-            superToolTip91.Items.Add(toolTipTitleItem91);
-            superToolTip91.Items.Add(toolTipItem91);
-            superToolTip91.MaxWidth = 210;
-            commandBarEditItem4.SuperTip = superToolTip91;
+            superToolTip90.FixedTooltipWidth = true;
+            toolTipTitleItem90.Text = "Cell Horizontal Spacing";
+            toolTipItem90.LeftIndent = 6;
+            toolTipItem90.Text = "Set the horizontal spacing between adjacent cells.";
+            superToolTip90.Items.Add(toolTipTitleItem90);
+            superToolTip90.Items.Add(toolTipItem90);
+            superToolTip90.MaxWidth = 210;
+            commandBarEditItem4.SuperTip = superToolTip90;
             // 
             // repositoryItemSpinEdit3
             // 
@@ -2877,14 +2860,14 @@
             commandBarEditItem5.Enabled = false;
             commandBarEditItem5.Id = 97;
             commandBarEditItem5.Name = "commandBarEditItem5";
-            superToolTip92.FixedTooltipWidth = true;
-            toolTipTitleItem92.Text = "Cell Vertical Spacing";
-            toolTipItem92.LeftIndent = 6;
-            toolTipItem92.Text = "Set the vertical spacing between adjacent cells.";
-            superToolTip92.Items.Add(toolTipTitleItem92);
-            superToolTip92.Items.Add(toolTipItem92);
-            superToolTip92.MaxWidth = 210;
-            commandBarEditItem5.SuperTip = superToolTip92;
+            superToolTip91.FixedTooltipWidth = true;
+            toolTipTitleItem91.Text = "Cell Vertical Spacing";
+            toolTipItem91.LeftIndent = 6;
+            toolTipItem91.Text = "Set the vertical spacing between adjacent cells.";
+            superToolTip91.Items.Add(toolTipTitleItem91);
+            superToolTip91.Items.Add(toolTipItem91);
+            superToolTip91.MaxWidth = 210;
+            commandBarEditItem5.SuperTip = superToolTip91;
             // 
             // repositoryItemSpinEdit4
             // 
@@ -2902,14 +2885,14 @@
             commandBarEditItem6.Enabled = false;
             commandBarEditItem6.Id = 98;
             commandBarEditItem6.Name = "commandBarEditItem6";
-            superToolTip93.FixedTooltipWidth = true;
-            toolTipTitleItem93.Text = "Border Dash Style";
-            toolTipItem93.LeftIndent = 6;
-            toolTipItem93.Text = "Change the border dash style.";
-            superToolTip93.Items.Add(toolTipTitleItem93);
-            superToolTip93.Items.Add(toolTipItem93);
-            superToolTip93.MaxWidth = 210;
-            commandBarEditItem6.SuperTip = superToolTip93;
+            superToolTip92.FixedTooltipWidth = true;
+            toolTipTitleItem92.Text = "Border Dash Style";
+            toolTipItem92.LeftIndent = 6;
+            toolTipItem92.Text = "Change the border dash style.";
+            superToolTip92.Items.Add(toolTipTitleItem92);
+            superToolTip92.Items.Add(toolTipItem92);
+            superToolTip92.MaxWidth = 210;
+            commandBarEditItem6.SuperTip = superToolTip92;
             // 
             // repositoryItemImageComboBox1
             // 
@@ -2926,14 +2909,14 @@
             commandBarEditItem7.Enabled = false;
             commandBarEditItem7.Id = 99;
             commandBarEditItem7.Name = "commandBarEditItem7";
-            superToolTip94.FixedTooltipWidth = true;
-            toolTipTitleItem94.Text = "Control";
-            toolTipItem94.LeftIndent = 6;
-            toolTipItem94.Text = "Select a required control for specifying an event.";
-            superToolTip94.Items.Add(toolTipTitleItem94);
-            superToolTip94.Items.Add(toolTipItem94);
-            superToolTip94.MaxWidth = 210;
-            commandBarEditItem7.SuperTip = superToolTip94;
+            superToolTip93.FixedTooltipWidth = true;
+            toolTipTitleItem93.Text = "Control";
+            toolTipItem93.LeftIndent = 6;
+            toolTipItem93.Text = "Select a required control for specifying an event.";
+            superToolTip93.Items.Add(toolTipTitleItem93);
+            superToolTip93.Items.Add(toolTipItem93);
+            superToolTip93.MaxWidth = 210;
+            commandBarEditItem7.SuperTip = superToolTip93;
             // 
             // repositoryItemLookUpEdit2
             // 
@@ -2950,14 +2933,14 @@
             commandBarEditItem8.Enabled = false;
             commandBarEditItem8.Id = 100;
             commandBarEditItem8.Name = "commandBarEditItem8";
-            superToolTip95.FixedTooltipWidth = true;
-            toolTipTitleItem95.Text = "Event";
-            toolTipItem95.LeftIndent = 6;
-            toolTipItem95.Text = "Select one of the available events.";
-            superToolTip95.Items.Add(toolTipTitleItem95);
-            superToolTip95.Items.Add(toolTipItem95);
-            superToolTip95.MaxWidth = 210;
-            commandBarEditItem8.SuperTip = superToolTip95;
+            superToolTip94.FixedTooltipWidth = true;
+            toolTipTitleItem94.Text = "Event";
+            toolTipItem94.LeftIndent = 6;
+            toolTipItem94.Text = "Select one of the available events.";
+            superToolTip94.Items.Add(toolTipTitleItem94);
+            superToolTip94.Items.Add(toolTipItem94);
+            superToolTip94.MaxWidth = 210;
+            commandBarEditItem8.SuperTip = superToolTip94;
             // 
             // repositoryItemComboBox1
             // 
@@ -2972,14 +2955,14 @@
             commandBarItem77.Enabled = false;
             commandBarItem77.Id = 101;
             commandBarItem77.Name = "commandBarItem77";
-            superToolTip96.FixedTooltipWidth = true;
-            toolTipTitleItem96.Text = "Select Table";
-            toolTipItem96.LeftIndent = 6;
-            toolTipItem96.Text = "Select the entire table.";
-            superToolTip96.Items.Add(toolTipTitleItem96);
-            superToolTip96.Items.Add(toolTipItem96);
-            superToolTip96.MaxWidth = 210;
-            commandBarItem77.SuperTip = superToolTip96;
+            superToolTip95.FixedTooltipWidth = true;
+            toolTipTitleItem95.Text = "Select Table";
+            toolTipItem95.LeftIndent = 6;
+            toolTipItem95.Text = "Select the entire table.";
+            superToolTip95.Items.Add(toolTipTitleItem95);
+            superToolTip95.Items.Add(toolTipItem95);
+            superToolTip95.MaxWidth = 210;
+            commandBarItem77.SuperTip = superToolTip95;
             // 
             // commandBarItem78
             // 
@@ -2988,14 +2971,14 @@
             commandBarItem78.Enabled = false;
             commandBarItem78.Id = 102;
             commandBarItem78.Name = "commandBarItem78";
-            superToolTip97.FixedTooltipWidth = true;
-            toolTipTitleItem97.Text = "Select Row";
-            toolTipItem97.LeftIndent = 6;
-            toolTipItem97.Text = "Select the current row.";
-            superToolTip97.Items.Add(toolTipTitleItem97);
-            superToolTip97.Items.Add(toolTipItem97);
-            superToolTip97.MaxWidth = 210;
-            commandBarItem78.SuperTip = superToolTip97;
+            superToolTip96.FixedTooltipWidth = true;
+            toolTipTitleItem96.Text = "Select Row";
+            toolTipItem96.LeftIndent = 6;
+            toolTipItem96.Text = "Select the current row.";
+            superToolTip96.Items.Add(toolTipTitleItem96);
+            superToolTip96.Items.Add(toolTipItem96);
+            superToolTip96.MaxWidth = 210;
+            commandBarItem78.SuperTip = superToolTip96;
             // 
             // commandBarItem79
             // 
@@ -3004,14 +2987,14 @@
             commandBarItem79.Enabled = false;
             commandBarItem79.Id = 103;
             commandBarItem79.Name = "commandBarItem79";
-            superToolTip98.FixedTooltipWidth = true;
-            toolTipTitleItem98.Text = "Select Column";
-            toolTipItem98.LeftIndent = 6;
-            toolTipItem98.Text = "Select the current column.";
-            superToolTip98.Items.Add(toolTipTitleItem98);
-            superToolTip98.Items.Add(toolTipItem98);
-            superToolTip98.MaxWidth = 210;
-            commandBarItem79.SuperTip = superToolTip98;
+            superToolTip97.FixedTooltipWidth = true;
+            toolTipTitleItem97.Text = "Select Column";
+            toolTipItem97.LeftIndent = 6;
+            toolTipItem97.Text = "Select the current column.";
+            superToolTip97.Items.Add(toolTipTitleItem97);
+            superToolTip97.Items.Add(toolTipItem97);
+            superToolTip97.MaxWidth = 210;
+            commandBarItem79.SuperTip = superToolTip97;
             // 
             // commandBarItem80
             // 
@@ -3020,14 +3003,14 @@
             commandBarItem80.Enabled = false;
             commandBarItem80.Id = 104;
             commandBarItem80.Name = "commandBarItem80";
-            superToolTip99.FixedTooltipWidth = true;
-            toolTipTitleItem99.Text = "Delete Cell";
-            toolTipItem99.LeftIndent = 6;
-            toolTipItem99.Text = "Delete the current cell.";
-            superToolTip99.Items.Add(toolTipTitleItem99);
-            superToolTip99.Items.Add(toolTipItem99);
-            superToolTip99.MaxWidth = 210;
-            commandBarItem80.SuperTip = superToolTip99;
+            superToolTip98.FixedTooltipWidth = true;
+            toolTipTitleItem98.Text = "Delete Cell";
+            toolTipItem98.LeftIndent = 6;
+            toolTipItem98.Text = "Delete the current cell.";
+            superToolTip98.Items.Add(toolTipTitleItem98);
+            superToolTip98.Items.Add(toolTipItem98);
+            superToolTip98.MaxWidth = 210;
+            commandBarItem80.SuperTip = superToolTip98;
             // 
             // commandBarItem81
             // 
@@ -3036,14 +3019,14 @@
             commandBarItem81.Enabled = false;
             commandBarItem81.Id = 105;
             commandBarItem81.Name = "commandBarItem81";
-            superToolTip100.FixedTooltipWidth = true;
-            toolTipTitleItem100.Text = "Delete Row";
-            toolTipItem100.LeftIndent = 6;
-            toolTipItem100.Text = "Delete the current row.";
-            superToolTip100.Items.Add(toolTipTitleItem100);
-            superToolTip100.Items.Add(toolTipItem100);
-            superToolTip100.MaxWidth = 210;
-            commandBarItem81.SuperTip = superToolTip100;
+            superToolTip99.FixedTooltipWidth = true;
+            toolTipTitleItem99.Text = "Delete Row";
+            toolTipItem99.LeftIndent = 6;
+            toolTipItem99.Text = "Delete the current row.";
+            superToolTip99.Items.Add(toolTipTitleItem99);
+            superToolTip99.Items.Add(toolTipItem99);
+            superToolTip99.MaxWidth = 210;
+            commandBarItem81.SuperTip = superToolTip99;
             // 
             // commandBarItem82
             // 
@@ -3052,14 +3035,14 @@
             commandBarItem82.Enabled = false;
             commandBarItem82.Id = 106;
             commandBarItem82.Name = "commandBarItem82";
-            superToolTip101.FixedTooltipWidth = true;
-            toolTipTitleItem101.Text = "Delete Column";
-            toolTipItem101.LeftIndent = 6;
-            toolTipItem101.Text = "Delete the current column.";
-            superToolTip101.Items.Add(toolTipTitleItem101);
-            superToolTip101.Items.Add(toolTipItem101);
-            superToolTip101.MaxWidth = 210;
-            commandBarItem82.SuperTip = superToolTip101;
+            superToolTip100.FixedTooltipWidth = true;
+            toolTipTitleItem100.Text = "Delete Column";
+            toolTipItem100.LeftIndent = 6;
+            toolTipItem100.Text = "Delete the current column.";
+            superToolTip100.Items.Add(toolTipTitleItem100);
+            superToolTip100.Items.Add(toolTipItem100);
+            superToolTip100.MaxWidth = 210;
+            commandBarItem82.SuperTip = superToolTip100;
             // 
             // commandBarItem83
             // 
@@ -3068,14 +3051,14 @@
             commandBarItem83.Enabled = false;
             commandBarItem83.Id = 107;
             commandBarItem83.Name = "commandBarItem83";
-            superToolTip102.FixedTooltipWidth = true;
-            toolTipTitleItem102.Text = "Delete Table";
-            toolTipItem102.LeftIndent = 6;
-            toolTipItem102.Text = "Delete the entire table.";
-            superToolTip102.Items.Add(toolTipTitleItem102);
-            superToolTip102.Items.Add(toolTipItem102);
-            superToolTip102.MaxWidth = 210;
-            commandBarItem83.SuperTip = superToolTip102;
+            superToolTip101.FixedTooltipWidth = true;
+            toolTipTitleItem101.Text = "Delete Table";
+            toolTipItem101.LeftIndent = 6;
+            toolTipItem101.Text = "Delete the entire table.";
+            superToolTip101.Items.Add(toolTipTitleItem101);
+            superToolTip101.Items.Add(toolTipItem101);
+            superToolTip101.MaxWidth = 210;
+            commandBarItem83.SuperTip = superToolTip101;
             // 
             // commandBarItem84
             // 
@@ -3084,14 +3067,14 @@
             commandBarItem84.Enabled = false;
             commandBarItem84.Id = 108;
             commandBarItem84.Name = "commandBarItem84";
-            superToolTip103.FixedTooltipWidth = true;
-            toolTipTitleItem103.Text = "Insert Row Above";
-            toolTipItem103.LeftIndent = 6;
-            toolTipItem103.Text = "Add a new row directly above the current row.";
-            superToolTip103.Items.Add(toolTipTitleItem103);
-            superToolTip103.Items.Add(toolTipItem103);
-            superToolTip103.MaxWidth = 210;
-            commandBarItem84.SuperTip = superToolTip103;
+            superToolTip102.FixedTooltipWidth = true;
+            toolTipTitleItem102.Text = "Insert Row Above";
+            toolTipItem102.LeftIndent = 6;
+            toolTipItem102.Text = "Add a new row directly above the current row.";
+            superToolTip102.Items.Add(toolTipTitleItem102);
+            superToolTip102.Items.Add(toolTipItem102);
+            superToolTip102.MaxWidth = 210;
+            commandBarItem84.SuperTip = superToolTip102;
             // 
             // commandBarItem85
             // 
@@ -3100,14 +3083,14 @@
             commandBarItem85.Enabled = false;
             commandBarItem85.Id = 109;
             commandBarItem85.Name = "commandBarItem85";
-            superToolTip104.FixedTooltipWidth = true;
-            toolTipTitleItem104.Text = "Insert Row Below";
-            toolTipItem104.LeftIndent = 6;
-            toolTipItem104.Text = "Add a new row directly below the current row.";
-            superToolTip104.Items.Add(toolTipTitleItem104);
-            superToolTip104.Items.Add(toolTipItem104);
-            superToolTip104.MaxWidth = 210;
-            commandBarItem85.SuperTip = superToolTip104;
+            superToolTip103.FixedTooltipWidth = true;
+            toolTipTitleItem103.Text = "Insert Row Below";
+            toolTipItem103.LeftIndent = 6;
+            toolTipItem103.Text = "Add a new row directly below the current row.";
+            superToolTip103.Items.Add(toolTipTitleItem103);
+            superToolTip103.Items.Add(toolTipItem103);
+            superToolTip103.MaxWidth = 210;
+            commandBarItem85.SuperTip = superToolTip103;
             // 
             // commandBarItem86
             // 
@@ -3116,14 +3099,14 @@
             commandBarItem86.Enabled = false;
             commandBarItem86.Id = 110;
             commandBarItem86.Name = "commandBarItem86";
-            superToolTip105.FixedTooltipWidth = true;
-            toolTipTitleItem105.Text = "Insert Column to Left";
-            toolTipItem105.LeftIndent = 6;
-            toolTipItem105.Text = "Add a new column directly to the left of the current column.";
-            superToolTip105.Items.Add(toolTipTitleItem105);
-            superToolTip105.Items.Add(toolTipItem105);
-            superToolTip105.MaxWidth = 210;
-            commandBarItem86.SuperTip = superToolTip105;
+            superToolTip104.FixedTooltipWidth = true;
+            toolTipTitleItem104.Text = "Insert Column to Left";
+            toolTipItem104.LeftIndent = 6;
+            toolTipItem104.Text = "Add a new column directly to the left of the current column.";
+            superToolTip104.Items.Add(toolTipTitleItem104);
+            superToolTip104.Items.Add(toolTipItem104);
+            superToolTip104.MaxWidth = 210;
+            commandBarItem86.SuperTip = superToolTip104;
             // 
             // commandBarItem87
             // 
@@ -3132,14 +3115,14 @@
             commandBarItem87.Enabled = false;
             commandBarItem87.Id = 111;
             commandBarItem87.Name = "commandBarItem87";
-            superToolTip106.FixedTooltipWidth = true;
-            toolTipTitleItem106.Text = "Insert Column to Right";
-            toolTipItem106.LeftIndent = 6;
-            toolTipItem106.Text = "Add a new column directly to the right of the current column.";
-            superToolTip106.Items.Add(toolTipTitleItem106);
-            superToolTip106.Items.Add(toolTipItem106);
-            superToolTip106.MaxWidth = 210;
-            commandBarItem87.SuperTip = superToolTip106;
+            superToolTip105.FixedTooltipWidth = true;
+            toolTipTitleItem105.Text = "Insert Column to Right";
+            toolTipItem105.LeftIndent = 6;
+            toolTipItem105.Text = "Add a new column directly to the right of the current column.";
+            superToolTip105.Items.Add(toolTipTitleItem105);
+            superToolTip105.Items.Add(toolTipItem105);
+            superToolTip105.MaxWidth = 210;
+            commandBarItem87.SuperTip = superToolTip105;
             // 
             // commandBarItem88
             // 
@@ -3148,14 +3131,14 @@
             commandBarItem88.Enabled = false;
             commandBarItem88.Id = 112;
             commandBarItem88.Name = "commandBarItem88";
-            superToolTip107.FixedTooltipWidth = true;
-            toolTipTitleItem107.Text = "Distribute Rows Evenly";
-            toolTipItem107.LeftIndent = 6;
-            toolTipItem107.Text = "Distribute the height of the selected rows equally between them.";
-            superToolTip107.Items.Add(toolTipTitleItem107);
-            superToolTip107.Items.Add(toolTipItem107);
-            superToolTip107.MaxWidth = 210;
-            commandBarItem88.SuperTip = superToolTip107;
+            superToolTip106.FixedTooltipWidth = true;
+            toolTipTitleItem106.Text = "Distribute Rows Evenly";
+            toolTipItem106.LeftIndent = 6;
+            toolTipItem106.Text = "Distribute the height of the selected rows equally between them.";
+            superToolTip106.Items.Add(toolTipTitleItem106);
+            superToolTip106.Items.Add(toolTipItem106);
+            superToolTip106.MaxWidth = 210;
+            commandBarItem88.SuperTip = superToolTip106;
             // 
             // commandBarItem89
             // 
@@ -3164,14 +3147,14 @@
             commandBarItem89.Enabled = false;
             commandBarItem89.Id = 113;
             commandBarItem89.Name = "commandBarItem89";
-            superToolTip108.FixedTooltipWidth = true;
-            toolTipTitleItem108.Text = "Distribute Columns Evenly";
-            toolTipItem108.LeftIndent = 6;
-            toolTipItem108.Text = "Distribute the width of the selected columns equally between them.";
-            superToolTip108.Items.Add(toolTipTitleItem108);
-            superToolTip108.Items.Add(toolTipItem108);
-            superToolTip108.MaxWidth = 210;
-            commandBarItem89.SuperTip = superToolTip108;
+            superToolTip107.FixedTooltipWidth = true;
+            toolTipTitleItem107.Text = "Distribute Columns Evenly";
+            toolTipItem107.LeftIndent = 6;
+            toolTipItem107.Text = "Distribute the width of the selected columns equally between them.";
+            superToolTip107.Items.Add(toolTipTitleItem107);
+            superToolTip107.Items.Add(toolTipItem107);
+            superToolTip107.MaxWidth = 210;
+            commandBarItem89.SuperTip = superToolTip107;
             // 
             // commandBarItem90
             // 
@@ -3180,14 +3163,14 @@
             commandBarItem90.Enabled = false;
             commandBarItem90.Id = 114;
             commandBarItem90.Name = "commandBarItem90";
-            superToolTip109.FixedTooltipWidth = true;
-            toolTipTitleItem109.Text = "Merge Cells";
-            toolTipItem109.LeftIndent = 6;
-            toolTipItem109.Text = "Merge the selected cells into one cell.";
-            superToolTip109.Items.Add(toolTipTitleItem109);
-            superToolTip109.Items.Add(toolTipItem109);
-            superToolTip109.MaxWidth = 210;
-            commandBarItem90.SuperTip = superToolTip109;
+            superToolTip108.FixedTooltipWidth = true;
+            toolTipTitleItem108.Text = "Merge Cells";
+            toolTipItem108.LeftIndent = 6;
+            toolTipItem108.Text = "Merge the selected cells into one cell.";
+            superToolTip108.Items.Add(toolTipTitleItem108);
+            superToolTip108.Items.Add(toolTipItem108);
+            superToolTip108.MaxWidth = 210;
+            commandBarItem90.SuperTip = superToolTip108;
             // 
             // commandBarItem91
             // 
@@ -3196,14 +3179,14 @@
             commandBarItem91.Enabled = false;
             commandBarItem91.Id = 115;
             commandBarItem91.Name = "commandBarItem91";
-            superToolTip110.FixedTooltipWidth = true;
-            toolTipTitleItem110.Text = "Split Cells";
-            toolTipItem110.LeftIndent = 6;
-            toolTipItem110.Text = "Split the selected cells into the specified number of rows or columns.";
-            superToolTip110.Items.Add(toolTipTitleItem110);
-            superToolTip110.Items.Add(toolTipItem110);
-            superToolTip110.MaxWidth = 210;
-            commandBarItem91.SuperTip = superToolTip110;
+            superToolTip109.FixedTooltipWidth = true;
+            toolTipTitleItem109.Text = "Split Cells";
+            toolTipItem109.LeftIndent = 6;
+            toolTipItem109.Text = "Split the selected cells into the specified number of rows or columns.";
+            superToolTip109.Items.Add(toolTipTitleItem109);
+            superToolTip109.Items.Add(toolTipItem109);
+            superToolTip109.MaxWidth = 210;
+            commandBarItem91.SuperTip = superToolTip109;
             // 
             // commandBarItem92
             // 
@@ -3212,14 +3195,14 @@
             commandBarItem92.Enabled = false;
             commandBarItem92.Id = 116;
             commandBarItem92.Name = "commandBarItem92";
-            superToolTip111.FixedTooltipWidth = true;
-            toolTipTitleItem111.Text = "Run Designer";
-            toolTipItem111.LeftIndent = 6;
-            toolTipItem111.Text = "Run the Pivot Grid Designer that allows customizing fields, the control's layout, appearance settings and printing options.";
-            superToolTip111.Items.Add(toolTipTitleItem111);
-            superToolTip111.Items.Add(toolTipItem111);
-            superToolTip111.MaxWidth = 210;
-            commandBarItem92.SuperTip = superToolTip111;
+            superToolTip110.FixedTooltipWidth = true;
+            toolTipTitleItem110.Text = "Run Designer";
+            toolTipItem110.LeftIndent = 6;
+            toolTipItem110.Text = "Run the Pivot Grid Designer that allows customizing fields, the control's layout, appearance settings and printing options.";
+            superToolTip110.Items.Add(toolTipTitleItem110);
+            superToolTip110.Items.Add(toolTipItem110);
+            superToolTip110.MaxWidth = 210;
+            commandBarItem92.SuperTip = superToolTip110;
             // 
             // commandBarItem93
             // 
@@ -3228,14 +3211,14 @@
             commandBarItem93.Enabled = false;
             commandBarItem93.Id = 117;
             commandBarItem93.Name = "commandBarItem93";
-            superToolTip112.FixedTooltipWidth = true;
-            toolTipTitleItem112.Text = "Add Data Source";
-            toolTipItem112.LeftIndent = 6;
-            toolTipItem112.Text = "Set up a data source for a Pivot Grid.";
-            superToolTip112.Items.Add(toolTipTitleItem112);
-            superToolTip112.Items.Add(toolTipItem112);
-            superToolTip112.MaxWidth = 210;
-            commandBarItem93.SuperTip = superToolTip112;
+            superToolTip111.FixedTooltipWidth = true;
+            toolTipTitleItem111.Text = "Add Data Source";
+            toolTipItem111.LeftIndent = 6;
+            toolTipItem111.Text = "Set up a data source for a Pivot Grid.";
+            superToolTip111.Items.Add(toolTipTitleItem111);
+            superToolTip111.Items.Add(toolTipItem111);
+            superToolTip111.MaxWidth = 210;
+            commandBarItem93.SuperTip = superToolTip111;
             // 
             // commandBarItem94
             // 
@@ -3244,14 +3227,14 @@
             commandBarItem94.Enabled = false;
             commandBarItem94.Id = 118;
             commandBarItem94.Name = "commandBarItem94";
-            superToolTip113.FixedTooltipWidth = true;
-            toolTipTitleItem113.Text = "Remove Field";
-            toolTipItem113.LeftIndent = 6;
-            toolTipItem113.Text = "Remove the selected Pivot Grid field.";
-            superToolTip113.Items.Add(toolTipTitleItem113);
-            superToolTip113.Items.Add(toolTipItem113);
-            superToolTip113.MaxWidth = 210;
-            commandBarItem94.SuperTip = superToolTip113;
+            superToolTip112.FixedTooltipWidth = true;
+            toolTipTitleItem112.Text = "Remove Field";
+            toolTipItem112.LeftIndent = 6;
+            toolTipItem112.Text = "Remove the selected Pivot Grid field.";
+            superToolTip112.Items.Add(toolTipTitleItem112);
+            superToolTip112.Items.Add(toolTipItem112);
+            superToolTip112.MaxWidth = 210;
+            commandBarItem94.SuperTip = superToolTip112;
             // 
             // commandBarItem95
             // 
@@ -3262,14 +3245,14 @@
             commandBarItem95.Enabled = false;
             commandBarItem95.Id = 119;
             commandBarItem95.Name = "commandBarItem95";
-            superToolTip114.FixedTooltipWidth = true;
-            toolTipTitleItem114.Text = "Add Field";
-            toolTipItem114.LeftIndent = 6;
-            toolTipItem114.Text = "Add a new Pivot Grid field to a required header area.";
-            superToolTip114.Items.Add(toolTipTitleItem114);
-            superToolTip114.Items.Add(toolTipItem114);
-            superToolTip114.MaxWidth = 210;
-            commandBarItem95.SuperTip = superToolTip114;
+            superToolTip113.FixedTooltipWidth = true;
+            toolTipTitleItem113.Text = "Add Field";
+            toolTipItem113.LeftIndent = 6;
+            toolTipItem113.Text = "Add a new Pivot Grid field to a required header area.";
+            superToolTip113.Items.Add(toolTipTitleItem113);
+            superToolTip113.Items.Add(toolTipItem113);
+            superToolTip113.MaxWidth = 210;
+            commandBarItem95.SuperTip = superToolTip113;
             // 
             // commandBarItem96
             // 
@@ -3278,14 +3261,14 @@
             commandBarItem96.Enabled = false;
             commandBarItem96.Id = 120;
             commandBarItem96.Name = "commandBarItem96";
-            superToolTip115.FixedTooltipWidth = true;
-            toolTipTitleItem115.Text = "Print Vertical Lines";
-            toolTipItem115.LeftIndent = 6;
-            toolTipItem115.Text = "Print vertical grid lines.";
-            superToolTip115.Items.Add(toolTipTitleItem115);
-            superToolTip115.Items.Add(toolTipItem115);
-            superToolTip115.MaxWidth = 210;
-            commandBarItem96.SuperTip = superToolTip115;
+            superToolTip114.FixedTooltipWidth = true;
+            toolTipTitleItem114.Text = "Print Vertical Lines";
+            toolTipItem114.LeftIndent = 6;
+            toolTipItem114.Text = "Print vertical grid lines.";
+            superToolTip114.Items.Add(toolTipTitleItem114);
+            superToolTip114.Items.Add(toolTipItem114);
+            superToolTip114.MaxWidth = 210;
+            commandBarItem96.SuperTip = superToolTip114;
             // 
             // commandBarItem97
             // 
@@ -3294,14 +3277,14 @@
             commandBarItem97.Enabled = false;
             commandBarItem97.Id = 121;
             commandBarItem97.Name = "commandBarItem97";
-            superToolTip116.FixedTooltipWidth = true;
-            toolTipTitleItem116.Text = "Print Horizontal Lines";
-            toolTipItem116.LeftIndent = 6;
-            toolTipItem116.Text = "Print horizontal grid lines.";
-            superToolTip116.Items.Add(toolTipTitleItem116);
-            superToolTip116.Items.Add(toolTipItem116);
-            superToolTip116.MaxWidth = 210;
-            commandBarItem97.SuperTip = superToolTip116;
+            superToolTip115.FixedTooltipWidth = true;
+            toolTipTitleItem115.Text = "Print Horizontal Lines";
+            toolTipItem115.LeftIndent = 6;
+            toolTipItem115.Text = "Print horizontal grid lines.";
+            superToolTip115.Items.Add(toolTipTitleItem115);
+            superToolTip115.Items.Add(toolTipItem115);
+            superToolTip115.MaxWidth = 210;
+            commandBarItem97.SuperTip = superToolTip115;
             // 
             // commandBarItem98
             // 
@@ -3310,14 +3293,14 @@
             commandBarItem98.Enabled = false;
             commandBarItem98.Id = 122;
             commandBarItem98.Name = "commandBarItem98";
-            superToolTip117.FixedTooltipWidth = true;
-            toolTipTitleItem117.Text = "Print Data Headers";
-            toolTipItem117.LeftIndent = 6;
-            toolTipItem117.Text = "Print data field headers.";
-            superToolTip117.Items.Add(toolTipTitleItem117);
-            superToolTip117.Items.Add(toolTipItem117);
-            superToolTip117.MaxWidth = 210;
-            commandBarItem98.SuperTip = superToolTip117;
+            superToolTip116.FixedTooltipWidth = true;
+            toolTipTitleItem116.Text = "Print Data Headers";
+            toolTipItem116.LeftIndent = 6;
+            toolTipItem116.Text = "Print data field headers.";
+            superToolTip116.Items.Add(toolTipTitleItem116);
+            superToolTip116.Items.Add(toolTipItem116);
+            superToolTip116.MaxWidth = 210;
+            commandBarItem98.SuperTip = superToolTip116;
             // 
             // commandBarItem99
             // 
@@ -3326,14 +3309,14 @@
             commandBarItem99.Enabled = false;
             commandBarItem99.Id = 123;
             commandBarItem99.Name = "commandBarItem99";
-            superToolTip118.FixedTooltipWidth = true;
-            toolTipTitleItem118.Text = "Print Column Headers";
-            toolTipItem118.LeftIndent = 6;
-            toolTipItem118.Text = "Print column field headers.";
-            superToolTip118.Items.Add(toolTipTitleItem118);
-            superToolTip118.Items.Add(toolTipItem118);
-            superToolTip118.MaxWidth = 210;
-            commandBarItem99.SuperTip = superToolTip118;
+            superToolTip117.FixedTooltipWidth = true;
+            toolTipTitleItem117.Text = "Print Column Headers";
+            toolTipItem117.LeftIndent = 6;
+            toolTipItem117.Text = "Print column field headers.";
+            superToolTip117.Items.Add(toolTipTitleItem117);
+            superToolTip117.Items.Add(toolTipItem117);
+            superToolTip117.MaxWidth = 210;
+            commandBarItem99.SuperTip = superToolTip117;
             // 
             // commandBarItem100
             // 
@@ -3342,14 +3325,14 @@
             commandBarItem100.Enabled = false;
             commandBarItem100.Id = 124;
             commandBarItem100.Name = "commandBarItem100";
-            superToolTip119.FixedTooltipWidth = true;
-            toolTipTitleItem119.Text = "Print Row Headers";
-            toolTipItem119.LeftIndent = 6;
-            toolTipItem119.Text = "Print row field headers.";
-            superToolTip119.Items.Add(toolTipTitleItem119);
-            superToolTip119.Items.Add(toolTipItem119);
-            superToolTip119.MaxWidth = 210;
-            commandBarItem100.SuperTip = superToolTip119;
+            superToolTip118.FixedTooltipWidth = true;
+            toolTipTitleItem118.Text = "Print Row Headers";
+            toolTipItem118.LeftIndent = 6;
+            toolTipItem118.Text = "Print row field headers.";
+            superToolTip118.Items.Add(toolTipTitleItem118);
+            superToolTip118.Items.Add(toolTipItem118);
+            superToolTip118.MaxWidth = 210;
+            commandBarItem100.SuperTip = superToolTip118;
             // 
             // commandBarItem101
             // 
@@ -3359,14 +3342,14 @@
             commandBarItem101.Id = 125;
             commandBarItem101.Name = "commandBarItem101";
             commandBarItem101.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip120.FixedTooltipWidth = true;
-            toolTipTitleItem120.Text = "Print Column Area On Every Page";
-            toolTipItem120.LeftIndent = 6;
-            toolTipItem120.Text = "Print column area on every page.";
-            superToolTip120.Items.Add(toolTipTitleItem120);
-            superToolTip120.Items.Add(toolTipItem120);
-            superToolTip120.MaxWidth = 210;
-            commandBarItem101.SuperTip = superToolTip120;
+            superToolTip119.FixedTooltipWidth = true;
+            toolTipTitleItem119.Text = "Print Column Area On Every Page";
+            toolTipItem119.LeftIndent = 6;
+            toolTipItem119.Text = "Print column area on every page.";
+            superToolTip119.Items.Add(toolTipTitleItem119);
+            superToolTip119.Items.Add(toolTipItem119);
+            superToolTip119.MaxWidth = 210;
+            commandBarItem101.SuperTip = superToolTip119;
             // 
             // commandBarItem102
             // 
@@ -3376,14 +3359,14 @@
             commandBarItem102.Id = 126;
             commandBarItem102.Name = "commandBarItem102";
             commandBarItem102.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip121.FixedTooltipWidth = true;
-            toolTipTitleItem121.Text = "Print Row Area On Every Page";
-            toolTipItem121.LeftIndent = 6;
-            toolTipItem121.Text = "Print row area on every page.";
-            superToolTip121.Items.Add(toolTipTitleItem121);
-            superToolTip121.Items.Add(toolTipItem121);
-            superToolTip121.MaxWidth = 210;
-            commandBarItem102.SuperTip = superToolTip121;
+            superToolTip120.FixedTooltipWidth = true;
+            toolTipTitleItem120.Text = "Print Row Area On Every Page";
+            toolTipItem120.LeftIndent = 6;
+            toolTipItem120.Text = "Print row area on every page.";
+            superToolTip120.Items.Add(toolTipTitleItem120);
+            superToolTip120.Items.Add(toolTipItem120);
+            superToolTip120.MaxWidth = 210;
+            commandBarItem102.SuperTip = superToolTip120;
             // 
             // commandBarItem103
             // 
@@ -3393,14 +3376,14 @@
             commandBarItem103.Id = 127;
             commandBarItem103.Name = "commandBarItem103";
             commandBarItem103.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip122.FixedTooltipWidth = true;
-            toolTipTitleItem122.Text = "Load";
-            toolTipItem122.LeftIndent = 6;
-            toolTipItem122.Text = "Load a chart from an XML file.";
-            superToolTip122.Items.Add(toolTipTitleItem122);
-            superToolTip122.Items.Add(toolTipItem122);
-            superToolTip122.MaxWidth = 210;
-            commandBarItem103.SuperTip = superToolTip122;
+            superToolTip121.FixedTooltipWidth = true;
+            toolTipTitleItem121.Text = "Load";
+            toolTipItem121.LeftIndent = 6;
+            toolTipItem121.Text = "Load a chart from an XML file.";
+            superToolTip121.Items.Add(toolTipTitleItem121);
+            superToolTip121.Items.Add(toolTipItem121);
+            superToolTip121.MaxWidth = 210;
+            commandBarItem103.SuperTip = superToolTip121;
             // 
             // commandBarItem104
             // 
@@ -3410,14 +3393,14 @@
             commandBarItem104.Id = 128;
             commandBarItem104.Name = "commandBarItem104";
             commandBarItem104.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            superToolTip123.FixedTooltipWidth = true;
-            toolTipTitleItem123.Text = "Save";
-            toolTipItem123.LeftIndent = 6;
-            toolTipItem123.Text = "Save a chart to an XML file.";
-            superToolTip123.Items.Add(toolTipTitleItem123);
-            superToolTip123.Items.Add(toolTipItem123);
-            superToolTip123.MaxWidth = 210;
-            commandBarItem104.SuperTip = superToolTip123;
+            superToolTip122.FixedTooltipWidth = true;
+            toolTipTitleItem122.Text = "Save";
+            toolTipItem122.LeftIndent = 6;
+            toolTipItem122.Text = "Save a chart to an XML file.";
+            superToolTip122.Items.Add(toolTipTitleItem122);
+            superToolTip122.Items.Add(toolTipItem122);
+            superToolTip122.MaxWidth = 210;
+            commandBarItem104.SuperTip = superToolTip122;
             // 
             // commandBarItem105
             // 
@@ -3426,14 +3409,14 @@
             commandBarItem105.Enabled = false;
             commandBarItem105.Id = 129;
             commandBarItem105.Name = "commandBarItem105";
-            superToolTip124.FixedTooltipWidth = true;
-            toolTipTitleItem124.Text = "Run Designer";
-            toolTipItem124.LeftIndent = 6;
-            toolTipItem124.Text = "Run the Chart Designer that allows creating and editing properties of a chart and its elements.";
-            superToolTip124.Items.Add(toolTipTitleItem124);
-            superToolTip124.Items.Add(toolTipItem124);
-            superToolTip124.MaxWidth = 210;
-            commandBarItem105.SuperTip = superToolTip124;
+            superToolTip123.FixedTooltipWidth = true;
+            toolTipTitleItem123.Text = "Run Designer";
+            toolTipItem123.LeftIndent = 6;
+            toolTipItem123.Text = "Run the Chart Designer that allows creating and editing properties of a chart and its elements.";
+            superToolTip123.Items.Add(toolTipTitleItem123);
+            superToolTip123.Items.Add(toolTipItem123);
+            superToolTip123.MaxWidth = 210;
+            commandBarItem105.SuperTip = superToolTip123;
             // 
             // commandBarItem106
             // 
@@ -3442,14 +3425,14 @@
             commandBarItem106.Enabled = false;
             commandBarItem106.Id = 130;
             commandBarItem106.Name = "commandBarItem106";
-            superToolTip125.FixedTooltipWidth = true;
-            toolTipTitleItem125.Text = "Add Data Source";
-            toolTipItem125.LeftIndent = 6;
-            toolTipItem125.Text = "Set up a data source for a chart.";
-            superToolTip125.Items.Add(toolTipTitleItem125);
-            superToolTip125.Items.Add(toolTipItem125);
-            superToolTip125.MaxWidth = 210;
-            commandBarItem106.SuperTip = superToolTip125;
+            superToolTip124.FixedTooltipWidth = true;
+            toolTipTitleItem124.Text = "Add Data Source";
+            toolTipItem124.LeftIndent = 6;
+            toolTipItem124.Text = "Set up a data source for a chart.";
+            superToolTip124.Items.Add(toolTipTitleItem124);
+            superToolTip124.Items.Add(toolTipItem124);
+            superToolTip124.MaxWidth = 210;
+            commandBarItem106.SuperTip = superToolTip124;
             // 
             // commandBarItem107
             // 
@@ -3460,14 +3443,14 @@
             commandBarItem107.Enabled = false;
             commandBarItem107.Id = 131;
             commandBarItem107.Name = "commandBarItem107";
-            superToolTip126.FixedTooltipWidth = true;
-            toolTipTitleItem126.Text = "Palette";
-            toolTipItem126.LeftIndent = 6;
-            toolTipItem126.Text = "Select a palette for painting a chart's series.";
-            superToolTip126.Items.Add(toolTipTitleItem126);
-            superToolTip126.Items.Add(toolTipItem126);
-            superToolTip126.MaxWidth = 210;
-            commandBarItem107.SuperTip = superToolTip126;
+            superToolTip125.FixedTooltipWidth = true;
+            toolTipTitleItem125.Text = "Palette";
+            toolTipItem125.LeftIndent = 6;
+            toolTipItem125.Text = "Select a palette for painting a chart's series.";
+            superToolTip125.Items.Add(toolTipTitleItem125);
+            superToolTip125.Items.Add(toolTipItem125);
+            superToolTip125.MaxWidth = 210;
+            commandBarItem107.SuperTip = superToolTip125;
             // 
             // commandBarItem108
             // 
@@ -3478,14 +3461,14 @@
             commandBarItem108.Enabled = false;
             commandBarItem108.Id = 132;
             commandBarItem108.Name = "commandBarItem108";
-            superToolTip127.FixedTooltipWidth = true;
-            toolTipTitleItem127.Text = "Bar Series";
-            toolTipItem127.LeftIndent = 6;
-            toolTipItem127.Text = "Add a bar series to display values as vertical columns grouped by categories.";
-            superToolTip127.Items.Add(toolTipTitleItem127);
-            superToolTip127.Items.Add(toolTipItem127);
-            superToolTip127.MaxWidth = 210;
-            commandBarItem108.SuperTip = superToolTip127;
+            superToolTip126.FixedTooltipWidth = true;
+            toolTipTitleItem126.Text = "Bar Series";
+            toolTipItem126.LeftIndent = 6;
+            toolTipItem126.Text = "Add a bar series to display values as vertical columns grouped by categories.";
+            superToolTip126.Items.Add(toolTipTitleItem126);
+            superToolTip126.Items.Add(toolTipItem126);
+            superToolTip126.MaxWidth = 210;
+            commandBarItem108.SuperTip = superToolTip126;
             // 
             // commandBarItem109
             // 
@@ -3496,14 +3479,14 @@
             commandBarItem109.Enabled = false;
             commandBarItem109.Id = 133;
             commandBarItem109.Name = "commandBarItem109";
-            superToolTip128.FixedTooltipWidth = true;
-            toolTipTitleItem128.Text = "Line Series";
-            toolTipItem128.LeftIndent = 6;
-            toolTipItem128.Text = "Add a line series to show line trends over time or categories.";
-            superToolTip128.Items.Add(toolTipTitleItem128);
-            superToolTip128.Items.Add(toolTipItem128);
-            superToolTip128.MaxWidth = 210;
-            commandBarItem109.SuperTip = superToolTip128;
+            superToolTip127.FixedTooltipWidth = true;
+            toolTipTitleItem127.Text = "Line Series";
+            toolTipItem127.LeftIndent = 6;
+            toolTipItem127.Text = "Add a line series to show line trends over time or categories.";
+            superToolTip127.Items.Add(toolTipTitleItem127);
+            superToolTip127.Items.Add(toolTipItem127);
+            superToolTip127.MaxWidth = 210;
+            commandBarItem109.SuperTip = superToolTip127;
             // 
             // commandBarItem110
             // 
@@ -3514,14 +3497,14 @@
             commandBarItem110.Enabled = false;
             commandBarItem110.Id = 134;
             commandBarItem110.Name = "commandBarItem110";
-            superToolTip129.FixedTooltipWidth = true;
-            toolTipTitleItem129.Text = "Area Series";
-            toolTipItem129.LeftIndent = 6;
-            toolTipItem129.Text = "Add an area series to display values as a filled area with peaks and hollows.";
-            superToolTip129.Items.Add(toolTipTitleItem129);
-            superToolTip129.Items.Add(toolTipItem129);
-            superToolTip129.MaxWidth = 210;
-            commandBarItem110.SuperTip = superToolTip129;
+            superToolTip128.FixedTooltipWidth = true;
+            toolTipTitleItem128.Text = "Area Series";
+            toolTipItem128.LeftIndent = 6;
+            toolTipItem128.Text = "Add an area series to display values as a filled area with peaks and hollows.";
+            superToolTip128.Items.Add(toolTipTitleItem128);
+            superToolTip128.Items.Add(toolTipItem128);
+            superToolTip128.MaxWidth = 210;
+            commandBarItem110.SuperTip = superToolTip128;
             // 
             // commandBarItem111
             // 
@@ -3532,14 +3515,14 @@
             commandBarItem111.Enabled = false;
             commandBarItem111.Id = 135;
             commandBarItem111.Name = "commandBarItem111";
-            superToolTip130.FixedTooltipWidth = true;
-            toolTipTitleItem130.Text = "Range Series";
-            toolTipItem130.LeftIndent = 6;
-            toolTipItem130.Text = "Add a series to display a range of values with the minimum and maximum limits. ";
-            superToolTip130.Items.Add(toolTipTitleItem130);
-            superToolTip130.Items.Add(toolTipItem130);
-            superToolTip130.MaxWidth = 210;
-            commandBarItem111.SuperTip = superToolTip130;
+            superToolTip129.FixedTooltipWidth = true;
+            toolTipTitleItem129.Text = "Range Series";
+            toolTipItem129.LeftIndent = 6;
+            toolTipItem129.Text = "Add a series to display a range of values with the minimum and maximum limits. ";
+            superToolTip129.Items.Add(toolTipTitleItem129);
+            superToolTip129.Items.Add(toolTipItem129);
+            superToolTip129.MaxWidth = 210;
+            commandBarItem111.SuperTip = superToolTip129;
             // 
             // commandBarItem112
             // 
@@ -3550,14 +3533,14 @@
             commandBarItem112.Enabled = false;
             commandBarItem112.Id = 136;
             commandBarItem112.Name = "commandBarItem112";
-            superToolTip131.FixedTooltipWidth = true;
-            toolTipTitleItem131.Text = "Pie And Doughnut Series";
-            toolTipItem131.LeftIndent = 6;
-            toolTipItem131.Text = "Add a series to display the percentage values of different point arguments to compare their significance.";
-            superToolTip131.Items.Add(toolTipTitleItem131);
-            superToolTip131.Items.Add(toolTipItem131);
-            superToolTip131.MaxWidth = 210;
-            commandBarItem112.SuperTip = superToolTip131;
+            superToolTip130.FixedTooltipWidth = true;
+            toolTipTitleItem130.Text = "Pie And Doughnut Series";
+            toolTipItem130.LeftIndent = 6;
+            toolTipItem130.Text = "Add a series to display the percentage values of different point arguments to compare their significance.";
+            superToolTip130.Items.Add(toolTipTitleItem130);
+            superToolTip130.Items.Add(toolTipItem130);
+            superToolTip130.MaxWidth = 210;
+            commandBarItem112.SuperTip = superToolTip130;
             // 
             // commandBarItem113
             // 
@@ -3568,14 +3551,14 @@
             commandBarItem113.Enabled = false;
             commandBarItem113.Id = 137;
             commandBarItem113.Name = "commandBarItem113";
-            superToolTip132.FixedTooltipWidth = true;
-            toolTipTitleItem132.Text = "Radar And Polar Series";
-            toolTipItem132.LeftIndent = 6;
-            toolTipItem132.Text = "Add a series to display values as a circular graph.";
-            superToolTip132.Items.Add(toolTipTitleItem132);
-            superToolTip132.Items.Add(toolTipItem132);
-            superToolTip132.MaxWidth = 210;
-            commandBarItem113.SuperTip = superToolTip132;
+            superToolTip131.FixedTooltipWidth = true;
+            toolTipTitleItem131.Text = "Radar And Polar Series";
+            toolTipItem131.LeftIndent = 6;
+            toolTipItem131.Text = "Add a series to display values as a circular graph.";
+            superToolTip131.Items.Add(toolTipTitleItem131);
+            superToolTip131.Items.Add(toolTipItem131);
+            superToolTip131.MaxWidth = 210;
+            commandBarItem113.SuperTip = superToolTip131;
             // 
             // commandBarItem114
             // 
@@ -3586,14 +3569,14 @@
             commandBarItem114.Enabled = false;
             commandBarItem114.Id = 138;
             commandBarItem114.Name = "commandBarItem114";
-            superToolTip133.FixedTooltipWidth = true;
-            toolTipTitleItem133.Text = "Other Series";
-            toolTipItem133.LeftIndent = 6;
-            toolTipItem133.Text = "Choose a chart type to display your data.";
-            superToolTip133.Items.Add(toolTipTitleItem133);
-            superToolTip133.Items.Add(toolTipItem133);
-            superToolTip133.MaxWidth = 210;
-            commandBarItem114.SuperTip = superToolTip133;
+            superToolTip132.FixedTooltipWidth = true;
+            toolTipTitleItem132.Text = "Other Series";
+            toolTipItem132.LeftIndent = 6;
+            toolTipItem132.Text = "Choose a chart type to display your data.";
+            superToolTip132.Items.Add(toolTipTitleItem132);
+            superToolTip132.Items.Add(toolTipItem132);
+            superToolTip132.MaxWidth = 210;
+            commandBarItem114.SuperTip = superToolTip132;
             // 
             // commandBarItem115
             // 
@@ -3602,14 +3585,14 @@
             commandBarItem115.Enabled = false;
             commandBarItem115.Id = 139;
             commandBarItem115.Name = "commandBarItem115";
-            superToolTip134.FixedTooltipWidth = true;
-            toolTipTitleItem134.Text = "Remove Series";
-            toolTipItem134.LeftIndent = 6;
-            toolTipItem134.Text = "Remove the selected series.";
-            superToolTip134.Items.Add(toolTipTitleItem134);
-            superToolTip134.Items.Add(toolTipItem134);
-            superToolTip134.MaxWidth = 210;
-            commandBarItem115.SuperTip = superToolTip134;
+            superToolTip133.FixedTooltipWidth = true;
+            toolTipTitleItem133.Text = "Remove Series";
+            toolTipItem133.LeftIndent = 6;
+            toolTipItem133.Text = "Remove the selected series.";
+            superToolTip133.Items.Add(toolTipTitleItem133);
+            superToolTip133.Items.Add(toolTipItem133);
+            superToolTip133.MaxWidth = 210;
+            commandBarItem115.SuperTip = superToolTip133;
             // 
             // commandBarItem116
             // 
@@ -3618,14 +3601,14 @@
             commandBarItem116.Enabled = false;
             commandBarItem116.Id = 140;
             commandBarItem116.Name = "commandBarItem116";
-            superToolTip135.FixedTooltipWidth = true;
-            toolTipTitleItem135.Text = "Add Text Annotation";
-            toolTipItem135.LeftIndent = 6;
-            toolTipItem135.Text = "Add a text annotation to a chart.";
-            superToolTip135.Items.Add(toolTipTitleItem135);
-            superToolTip135.Items.Add(toolTipItem135);
-            superToolTip135.MaxWidth = 210;
-            commandBarItem116.SuperTip = superToolTip135;
+            superToolTip134.FixedTooltipWidth = true;
+            toolTipTitleItem134.Text = "Add Text Annotation";
+            toolTipItem134.LeftIndent = 6;
+            toolTipItem134.Text = "Add a text annotation to a chart.";
+            superToolTip134.Items.Add(toolTipTitleItem134);
+            superToolTip134.Items.Add(toolTipItem134);
+            superToolTip134.MaxWidth = 210;
+            commandBarItem116.SuperTip = superToolTip134;
             // 
             // commandBarItem117
             // 
@@ -3634,14 +3617,14 @@
             commandBarItem117.Enabled = false;
             commandBarItem117.Id = 141;
             commandBarItem117.Name = "commandBarItem117";
-            superToolTip136.FixedTooltipWidth = true;
-            toolTipTitleItem136.Text = "Add Image Annotation";
-            toolTipItem136.LeftIndent = 6;
-            toolTipItem136.Text = "Add an image annotation to a chart.";
-            superToolTip136.Items.Add(toolTipTitleItem136);
-            superToolTip136.Items.Add(toolTipItem136);
-            superToolTip136.MaxWidth = 210;
-            commandBarItem117.SuperTip = superToolTip136;
+            superToolTip135.FixedTooltipWidth = true;
+            toolTipTitleItem135.Text = "Add Image Annotation";
+            toolTipItem135.LeftIndent = 6;
+            toolTipItem135.Text = "Add an image annotation to a chart.";
+            superToolTip135.Items.Add(toolTipTitleItem135);
+            superToolTip135.Items.Add(toolTipItem135);
+            superToolTip135.MaxWidth = 210;
+            commandBarItem117.SuperTip = superToolTip135;
             // 
             // commandBarItem118
             // 
@@ -3650,14 +3633,14 @@
             commandBarItem118.Enabled = false;
             commandBarItem118.Id = 142;
             commandBarItem118.Name = "commandBarItem118";
-            superToolTip137.FixedTooltipWidth = true;
-            toolTipTitleItem137.Text = "Remove Annotation";
-            toolTipItem137.LeftIndent = 6;
-            toolTipItem137.Text = "Remove the selected annotation.";
-            superToolTip137.Items.Add(toolTipTitleItem137);
-            superToolTip137.Items.Add(toolTipItem137);
-            superToolTip137.MaxWidth = 210;
-            commandBarItem118.SuperTip = superToolTip137;
+            superToolTip136.FixedTooltipWidth = true;
+            toolTipTitleItem136.Text = "Remove Annotation";
+            toolTipItem136.LeftIndent = 6;
+            toolTipItem136.Text = "Remove the selected annotation.";
+            superToolTip136.Items.Add(toolTipTitleItem136);
+            superToolTip136.Items.Add(toolTipItem136);
+            superToolTip136.MaxWidth = 210;
+            commandBarItem118.SuperTip = superToolTip136;
             // 
             // commandBarItem119
             // 
@@ -3666,14 +3649,14 @@
             commandBarItem119.Enabled = false;
             commandBarItem119.Id = 143;
             commandBarItem119.Name = "commandBarItem119";
-            superToolTip138.FixedTooltipWidth = true;
-            toolTipTitleItem138.Text = "Auto Module";
-            toolTipItem138.LeftIndent = 6;
-            toolTipItem138.Text = "Automatically calculate the bar width based on barcode dimensions.";
-            superToolTip138.Items.Add(toolTipTitleItem138);
-            superToolTip138.Items.Add(toolTipItem138);
-            superToolTip138.MaxWidth = 210;
-            commandBarItem119.SuperTip = superToolTip138;
+            superToolTip137.FixedTooltipWidth = true;
+            toolTipTitleItem137.Text = "Auto Module";
+            toolTipItem137.LeftIndent = 6;
+            toolTipItem137.Text = "Automatically calculate the bar width based on barcode dimensions.";
+            superToolTip137.Items.Add(toolTipTitleItem137);
+            superToolTip137.Items.Add(toolTipItem137);
+            superToolTip137.MaxWidth = 210;
+            commandBarItem119.SuperTip = superToolTip137;
             // 
             // commandBarItem120
             // 
@@ -3682,14 +3665,14 @@
             commandBarItem120.Enabled = false;
             commandBarItem120.Id = 144;
             commandBarItem120.Name = "commandBarItem120";
-            superToolTip139.FixedTooltipWidth = true;
-            toolTipTitleItem139.Text = "Show Text";
-            toolTipItem139.LeftIndent = 6;
-            toolTipItem139.Text = "Display accompanying text in a barcode.";
-            superToolTip139.Items.Add(toolTipTitleItem139);
-            superToolTip139.Items.Add(toolTipItem139);
-            superToolTip139.MaxWidth = 210;
-            commandBarItem120.SuperTip = superToolTip139;
+            superToolTip138.FixedTooltipWidth = true;
+            toolTipTitleItem138.Text = "Show Text";
+            toolTipItem138.LeftIndent = 6;
+            toolTipItem138.Text = "Display accompanying text in a barcode.";
+            superToolTip138.Items.Add(toolTipTitleItem138);
+            superToolTip138.Items.Add(toolTipItem138);
+            superToolTip138.MaxWidth = 210;
+            commandBarItem120.SuperTip = superToolTip138;
             // 
             // commandBarItem121
             // 
@@ -3698,14 +3681,14 @@
             commandBarItem121.Enabled = false;
             commandBarItem121.Id = 145;
             commandBarItem121.Name = "commandBarItem121";
-            superToolTip140.FixedTooltipWidth = true;
-            toolTipTitleItem140.Text = "Fit Bounds to Text";
-            toolTipItem140.LeftIndent = 6;
-            toolTipItem140.Text = "Adjust the size of the selected controls to fit their text.";
-            superToolTip140.Items.Add(toolTipTitleItem140);
-            superToolTip140.Items.Add(toolTipItem140);
-            superToolTip140.MaxWidth = 210;
-            commandBarItem121.SuperTip = superToolTip140;
+            superToolTip139.FixedTooltipWidth = true;
+            toolTipTitleItem139.Text = "Fit Bounds to Text";
+            toolTipItem139.LeftIndent = 6;
+            toolTipItem139.Text = "Adjust the size of the selected controls to fit their text.";
+            superToolTip139.Items.Add(toolTipTitleItem139);
+            superToolTip139.Items.Add(toolTipItem139);
+            superToolTip139.MaxWidth = 210;
+            commandBarItem121.SuperTip = superToolTip139;
             // 
             // commandBarItem122
             // 
@@ -3714,14 +3697,14 @@
             commandBarItem122.Enabled = false;
             commandBarItem122.Id = 146;
             commandBarItem122.Name = "commandBarItem122";
-            superToolTip141.FixedTooltipWidth = true;
-            toolTipTitleItem141.Text = "Fit Text to Bounds";
-            toolTipItem141.LeftIndent = 6;
-            toolTipItem141.Text = "Adjust the font size of the selected controls to fit their entire area.";
-            superToolTip141.Items.Add(toolTipTitleItem141);
-            superToolTip141.Items.Add(toolTipItem141);
-            superToolTip141.MaxWidth = 210;
-            commandBarItem122.SuperTip = superToolTip141;
+            superToolTip140.FixedTooltipWidth = true;
+            toolTipTitleItem140.Text = "Fit Text to Bounds";
+            toolTipItem140.LeftIndent = 6;
+            toolTipItem140.Text = "Adjust the font size of the selected controls to fit their entire area.";
+            superToolTip140.Items.Add(toolTipTitleItem140);
+            superToolTip140.Items.Add(toolTipItem140);
+            superToolTip140.MaxWidth = 210;
+            commandBarItem122.SuperTip = superToolTip140;
             // 
             // commandBarCheckItem4
             // 
@@ -3731,14 +3714,14 @@
             commandBarCheckItem4.Enabled = false;
             commandBarCheckItem4.Id = 147;
             commandBarCheckItem4.Name = "commandBarCheckItem4";
-            superToolTip142.FixedTooltipWidth = true;
-            toolTipTitleItem142.Text = "Auto Width";
-            toolTipItem142.LeftIndent = 6;
-            toolTipItem142.Text = "Enable the selected controls to adjust their width to fit their content.";
-            superToolTip142.Items.Add(toolTipTitleItem142);
-            superToolTip142.Items.Add(toolTipItem142);
-            superToolTip142.MaxWidth = 210;
-            commandBarCheckItem4.SuperTip = superToolTip142;
+            superToolTip141.FixedTooltipWidth = true;
+            toolTipTitleItem141.Text = "Auto Width";
+            toolTipItem141.LeftIndent = 6;
+            toolTipItem141.Text = "Enable the selected controls to adjust their width to fit their content.";
+            superToolTip141.Items.Add(toolTipTitleItem141);
+            superToolTip141.Items.Add(toolTipItem141);
+            superToolTip141.MaxWidth = 210;
+            commandBarCheckItem4.SuperTip = superToolTip141;
             // 
             // commandBarCheckItem5
             // 
@@ -3748,14 +3731,14 @@
             commandBarCheckItem5.Enabled = false;
             commandBarCheckItem5.Id = 148;
             commandBarCheckItem5.Name = "commandBarCheckItem5";
-            superToolTip143.FixedTooltipWidth = true;
-            toolTipTitleItem143.Text = "Word Wrap";
-            toolTipItem143.LeftIndent = 6;
-            toolTipItem143.Text = "Enable the selected controls to wrap their text if it does not fit a line.";
-            superToolTip143.Items.Add(toolTipTitleItem143);
-            superToolTip143.Items.Add(toolTipItem143);
-            superToolTip143.MaxWidth = 210;
-            commandBarCheckItem5.SuperTip = superToolTip143;
+            superToolTip142.FixedTooltipWidth = true;
+            toolTipTitleItem142.Text = "Word Wrap";
+            toolTipItem142.LeftIndent = 6;
+            toolTipItem142.Text = "Enable the selected controls to wrap their text if it does not fit a line.";
+            superToolTip142.Items.Add(toolTipTitleItem142);
+            superToolTip142.Items.Add(toolTipItem142);
+            superToolTip142.MaxWidth = 210;
+            commandBarCheckItem5.SuperTip = superToolTip142;
             // 
             // commandBarCheckItem6
             // 
@@ -3765,14 +3748,14 @@
             commandBarCheckItem6.Enabled = false;
             commandBarCheckItem6.Id = 149;
             commandBarCheckItem6.Name = "commandBarCheckItem6";
-            superToolTip144.FixedTooltipWidth = true;
-            toolTipTitleItem144.Text = "Can Shrink";
-            toolTipItem144.LeftIndent = 6;
-            toolTipItem144.Text = "Enable the selected controls to decrease their height to fit their content.";
-            superToolTip144.Items.Add(toolTipTitleItem144);
-            superToolTip144.Items.Add(toolTipItem144);
-            superToolTip144.MaxWidth = 210;
-            commandBarCheckItem6.SuperTip = superToolTip144;
+            superToolTip143.FixedTooltipWidth = true;
+            toolTipTitleItem143.Text = "Can Shrink";
+            toolTipItem143.LeftIndent = 6;
+            toolTipItem143.Text = "Enable the selected controls to decrease their height to fit their content.";
+            superToolTip143.Items.Add(toolTipTitleItem143);
+            superToolTip143.Items.Add(toolTipItem143);
+            superToolTip143.MaxWidth = 210;
+            commandBarCheckItem6.SuperTip = superToolTip143;
             // 
             // commandBarCheckItem7
             // 
@@ -3782,14 +3765,14 @@
             commandBarCheckItem7.Enabled = false;
             commandBarCheckItem7.Id = 150;
             commandBarCheckItem7.Name = "commandBarCheckItem7";
-            superToolTip145.FixedTooltipWidth = true;
-            toolTipTitleItem145.Text = "Can Grow";
-            toolTipItem145.LeftIndent = 6;
-            toolTipItem145.Text = "Enable the selected controls to increase their height to fit their content.";
-            superToolTip145.Items.Add(toolTipTitleItem145);
-            superToolTip145.Items.Add(toolTipItem145);
-            superToolTip145.MaxWidth = 210;
-            commandBarCheckItem7.SuperTip = superToolTip145;
+            superToolTip144.FixedTooltipWidth = true;
+            toolTipTitleItem144.Text = "Can Grow";
+            toolTipItem144.LeftIndent = 6;
+            toolTipItem144.Text = "Enable the selected controls to increase their height to fit their content.";
+            superToolTip144.Items.Add(toolTipTitleItem144);
+            superToolTip144.Items.Add(toolTipItem144);
+            superToolTip144.MaxWidth = 210;
+            commandBarCheckItem7.SuperTip = superToolTip144;
             // 
             // commandBarCheckItem8
             // 
@@ -3799,14 +3782,14 @@
             commandBarCheckItem8.Enabled = false;
             commandBarCheckItem8.Id = 151;
             commandBarCheckItem8.Name = "commandBarCheckItem8";
-            superToolTip146.FixedTooltipWidth = true;
-            toolTipTitleItem146.Text = "Cell Auto Width";
-            toolTipItem146.LeftIndent = 6;
-            toolTipItem146.Text = "Automatically adjust the cell width depending on the current font size.";
-            superToolTip146.Items.Add(toolTipTitleItem146);
-            superToolTip146.Items.Add(toolTipItem146);
-            superToolTip146.MaxWidth = 210;
-            commandBarCheckItem8.SuperTip = superToolTip146;
+            superToolTip145.FixedTooltipWidth = true;
+            toolTipTitleItem145.Text = "Cell Auto Width";
+            toolTipItem145.LeftIndent = 6;
+            toolTipItem145.Text = "Automatically adjust the cell width depending on the current font size.";
+            superToolTip145.Items.Add(toolTipTitleItem145);
+            superToolTip145.Items.Add(toolTipItem145);
+            superToolTip145.MaxWidth = 210;
+            commandBarCheckItem8.SuperTip = superToolTip145;
             // 
             // commandBarCheckItem9
             // 
@@ -3816,14 +3799,14 @@
             commandBarCheckItem9.Enabled = false;
             commandBarCheckItem9.Id = 152;
             commandBarCheckItem9.Name = "commandBarCheckItem9";
-            superToolTip147.FixedTooltipWidth = true;
-            toolTipTitleItem147.Text = "Cell Auto Height";
-            toolTipItem147.LeftIndent = 6;
-            toolTipItem147.Text = "Automatically adjust the cell height depending on the current font size.";
-            superToolTip147.Items.Add(toolTipTitleItem147);
-            superToolTip147.Items.Add(toolTipItem147);
-            superToolTip147.MaxWidth = 210;
-            commandBarCheckItem9.SuperTip = superToolTip147;
+            superToolTip146.FixedTooltipWidth = true;
+            toolTipTitleItem146.Text = "Cell Auto Height";
+            toolTipItem146.LeftIndent = 6;
+            toolTipItem146.Text = "Automatically adjust the cell height depending on the current font size.";
+            superToolTip146.Items.Add(toolTipTitleItem146);
+            superToolTip146.Items.Add(toolTipItem146);
+            superToolTip146.MaxWidth = 210;
+            commandBarCheckItem9.SuperTip = superToolTip146;
             // 
             // commandBarItem123
             // 
@@ -3832,14 +3815,14 @@
             commandBarItem123.Enabled = false;
             commandBarItem123.Id = 153;
             commandBarItem123.Name = "commandBarItem123";
-            superToolTip148.FixedTooltipWidth = true;
-            toolTipTitleItem148.Text = "Add Data Source";
-            toolTipItem148.LeftIndent = 6;
-            toolTipItem148.Text = "Set up a data source for a sparkline.";
-            superToolTip148.Items.Add(toolTipTitleItem148);
-            superToolTip148.Items.Add(toolTipItem148);
-            superToolTip148.MaxWidth = 210;
-            commandBarItem123.SuperTip = superToolTip148;
+            superToolTip147.FixedTooltipWidth = true;
+            toolTipTitleItem147.Text = "Add Data Source";
+            toolTipItem147.LeftIndent = 6;
+            toolTipItem147.Text = "Set up a data source for a sparkline.";
+            superToolTip147.Items.Add(toolTipTitleItem147);
+            superToolTip147.Items.Add(toolTipItem147);
+            superToolTip147.MaxWidth = 210;
+            commandBarItem123.SuperTip = superToolTip147;
             // 
             // commandBarItem124
             // 
@@ -3848,14 +3831,14 @@
             commandBarItem124.Enabled = false;
             commandBarItem124.Id = 154;
             commandBarItem124.Name = "commandBarItem124";
-            superToolTip149.FixedTooltipWidth = true;
-            toolTipTitleItem149.Text = "Flat Light Theme";
-            toolTipItem149.LeftIndent = 6;
-            toolTipItem149.Text = "Set the Flat Light color theme for a gauge.";
-            superToolTip149.Items.Add(toolTipTitleItem149);
-            superToolTip149.Items.Add(toolTipItem149);
-            superToolTip149.MaxWidth = 210;
-            commandBarItem124.SuperTip = superToolTip149;
+            superToolTip148.FixedTooltipWidth = true;
+            toolTipTitleItem148.Text = "Flat Light Theme";
+            toolTipItem148.LeftIndent = 6;
+            toolTipItem148.Text = "Set the Flat Light color theme for a gauge.";
+            superToolTip148.Items.Add(toolTipTitleItem148);
+            superToolTip148.Items.Add(toolTipItem148);
+            superToolTip148.MaxWidth = 210;
+            commandBarItem124.SuperTip = superToolTip148;
             // 
             // commandBarItem125
             // 
@@ -3864,14 +3847,14 @@
             commandBarItem125.Enabled = false;
             commandBarItem125.Id = 155;
             commandBarItem125.Name = "commandBarItem125";
-            superToolTip150.FixedTooltipWidth = true;
-            toolTipTitleItem150.Text = "Flat Dark Theme";
-            toolTipItem150.LeftIndent = 6;
-            toolTipItem150.Text = "Set the Flat Dark color theme for a gauge.";
-            superToolTip150.Items.Add(toolTipTitleItem150);
-            superToolTip150.Items.Add(toolTipItem150);
-            superToolTip150.MaxWidth = 210;
-            commandBarItem125.SuperTip = superToolTip150;
+            superToolTip149.FixedTooltipWidth = true;
+            toolTipTitleItem149.Text = "Flat Dark Theme";
+            toolTipItem149.LeftIndent = 6;
+            toolTipItem149.Text = "Set the Flat Dark color theme for a gauge.";
+            superToolTip149.Items.Add(toolTipTitleItem149);
+            superToolTip149.Items.Add(toolTipItem149);
+            superToolTip149.MaxWidth = 210;
+            commandBarItem125.SuperTip = superToolTip149;
             // 
             // commandBarItem126
             // 
@@ -3880,14 +3863,14 @@
             commandBarItem126.Enabled = false;
             commandBarItem126.Id = 156;
             commandBarItem126.Name = "commandBarItem126";
-            superToolTip151.FixedTooltipWidth = true;
-            toolTipTitleItem151.Text = "Stretch";
-            toolTipItem151.LeftIndent = 6;
-            toolTipItem151.Text = "Stretch a shape to fill its entire area when it is rotated.";
-            superToolTip151.Items.Add(toolTipTitleItem151);
-            superToolTip151.Items.Add(toolTipItem151);
-            superToolTip151.MaxWidth = 210;
-            commandBarItem126.SuperTip = superToolTip151;
+            superToolTip150.FixedTooltipWidth = true;
+            toolTipTitleItem150.Text = "Stretch";
+            toolTipItem150.LeftIndent = 6;
+            toolTipItem150.Text = "Stretch a shape to fill its entire area when it is rotated.";
+            superToolTip150.Items.Add(toolTipTitleItem150);
+            superToolTip150.Items.Add(toolTipItem150);
+            superToolTip150.MaxWidth = 210;
+            commandBarItem126.SuperTip = superToolTip150;
             // 
             // xrDesignBarButtonGroup1
             // 
@@ -4011,14 +3994,14 @@
             printPreviewBarItem1.Enabled = false;
             printPreviewBarItem1.Id = 173;
             printPreviewBarItem1.Name = "printPreviewBarItem1";
-            superToolTip152.FixedTooltipWidth = true;
-            toolTipTitleItem152.Text = "Highlight Editing Fields";
-            toolTipItem152.LeftIndent = 6;
-            toolTipItem152.Text = "Highlight all editing fields to quickly discover which of the document elements are editable.";
-            superToolTip152.Items.Add(toolTipTitleItem152);
-            superToolTip152.Items.Add(toolTipItem152);
-            superToolTip152.MaxWidth = 210;
-            printPreviewBarItem1.SuperTip = superToolTip152;
+            superToolTip151.FixedTooltipWidth = true;
+            toolTipTitleItem151.Text = "Highlight Editing Fields";
+            toolTipItem151.LeftIndent = 6;
+            toolTipItem151.Text = "Highlight all editing fields to quickly discover which of the document elements are editable.";
+            superToolTip151.Items.Add(toolTipTitleItem151);
+            superToolTip151.Items.Add(toolTipItem151);
+            superToolTip151.MaxWidth = 210;
+            printPreviewBarItem1.SuperTip = superToolTip151;
             // 
             // printPreviewBarItem2
             // 
@@ -4029,14 +4012,14 @@
             printPreviewBarItem2.Enabled = false;
             printPreviewBarItem2.Id = 174;
             printPreviewBarItem2.Name = "printPreviewBarItem2";
-            superToolTip153.FixedTooltipWidth = true;
-            toolTipTitleItem153.Text = "Document Map";
-            toolTipItem153.LeftIndent = 6;
-            toolTipItem153.Text = "Open the Document Map, which allows you to navigate through a structural view of the document.";
-            superToolTip153.Items.Add(toolTipTitleItem153);
-            superToolTip153.Items.Add(toolTipItem153);
-            superToolTip153.MaxWidth = 210;
-            printPreviewBarItem2.SuperTip = superToolTip153;
+            superToolTip152.FixedTooltipWidth = true;
+            toolTipTitleItem152.Text = "Document Map";
+            toolTipItem152.LeftIndent = 6;
+            toolTipItem152.Text = "Open the Document Map, which allows you to navigate through a structural view of the document.";
+            superToolTip152.Items.Add(toolTipTitleItem152);
+            superToolTip152.Items.Add(toolTipItem152);
+            superToolTip152.MaxWidth = 210;
+            printPreviewBarItem2.SuperTip = superToolTip152;
             // 
             // printPreviewBarItem3
             // 
@@ -4047,14 +4030,14 @@
             printPreviewBarItem3.Enabled = false;
             printPreviewBarItem3.Id = 175;
             printPreviewBarItem3.Name = "printPreviewBarItem3";
-            superToolTip154.FixedTooltipWidth = true;
-            toolTipTitleItem154.Text = "Parameters";
-            toolTipItem154.LeftIndent = 6;
-            toolTipItem154.Text = "Open the Parameters pane, which allows you to enter values for report parameters.";
-            superToolTip154.Items.Add(toolTipTitleItem154);
-            superToolTip154.Items.Add(toolTipItem154);
-            superToolTip154.MaxWidth = 210;
-            printPreviewBarItem3.SuperTip = superToolTip154;
+            superToolTip153.FixedTooltipWidth = true;
+            toolTipTitleItem153.Text = "Parameters";
+            toolTipItem153.LeftIndent = 6;
+            toolTipItem153.Text = "Open the Parameters pane, which allows you to enter values for report parameters.";
+            superToolTip153.Items.Add(toolTipTitleItem153);
+            superToolTip153.Items.Add(toolTipItem153);
+            superToolTip153.MaxWidth = 210;
+            printPreviewBarItem3.SuperTip = superToolTip153;
             // 
             // printPreviewBarItem4
             // 
@@ -4065,14 +4048,14 @@
             printPreviewBarItem4.Enabled = false;
             printPreviewBarItem4.Id = 176;
             printPreviewBarItem4.Name = "printPreviewBarItem4";
-            superToolTip155.FixedTooltipWidth = true;
-            toolTipTitleItem155.Text = "Find";
-            toolTipItem155.LeftIndent = 6;
-            toolTipItem155.Text = "Show the Find dialog to find text in the document.";
-            superToolTip155.Items.Add(toolTipTitleItem155);
-            superToolTip155.Items.Add(toolTipItem155);
-            superToolTip155.MaxWidth = 210;
-            printPreviewBarItem4.SuperTip = superToolTip155;
+            superToolTip154.FixedTooltipWidth = true;
+            toolTipTitleItem154.Text = "Find";
+            toolTipItem154.LeftIndent = 6;
+            toolTipItem154.Text = "Show the Find dialog to find text in the document.";
+            superToolTip154.Items.Add(toolTipTitleItem154);
+            superToolTip154.Items.Add(toolTipItem154);
+            superToolTip154.MaxWidth = 210;
+            printPreviewBarItem4.SuperTip = superToolTip154;
             // 
             // printPreviewBarItem5
             // 
@@ -4083,14 +4066,14 @@
             printPreviewBarItem5.Enabled = false;
             printPreviewBarItem5.Id = 177;
             printPreviewBarItem5.Name = "printPreviewBarItem5";
-            superToolTip156.FixedTooltipWidth = true;
-            toolTipTitleItem156.Text = "Thumbnails";
-            toolTipItem156.LeftIndent = 6;
-            toolTipItem156.Text = "Open the Thumbnails, which allows you to navigate through the document.";
-            superToolTip156.Items.Add(toolTipTitleItem156);
-            superToolTip156.Items.Add(toolTipItem156);
-            superToolTip156.MaxWidth = 210;
-            printPreviewBarItem5.SuperTip = superToolTip156;
+            superToolTip155.FixedTooltipWidth = true;
+            toolTipTitleItem155.Text = "Thumbnails";
+            toolTipItem155.LeftIndent = 6;
+            toolTipItem155.Text = "Open the Thumbnails, which allows you to navigate through the document.";
+            superToolTip155.Items.Add(toolTipTitleItem155);
+            superToolTip155.Items.Add(toolTipItem155);
+            superToolTip155.MaxWidth = 210;
+            printPreviewBarItem5.SuperTip = superToolTip155;
             // 
             // printPreviewBarItem7
             // 
@@ -4100,14 +4083,14 @@
             printPreviewBarItem7.Enabled = false;
             printPreviewBarItem7.Id = 179;
             printPreviewBarItem7.Name = "printPreviewBarItem7";
-            superToolTip157.FixedTooltipWidth = true;
-            toolTipTitleItem157.Text = "Print (Ctrl+P)";
-            toolTipItem157.LeftIndent = 6;
-            toolTipItem157.Text = "Select a printer, number of copies and other printing options before printing.";
-            superToolTip157.Items.Add(toolTipTitleItem157);
-            superToolTip157.Items.Add(toolTipItem157);
-            superToolTip157.MaxWidth = 210;
-            printPreviewBarItem7.SuperTip = superToolTip157;
+            superToolTip156.FixedTooltipWidth = true;
+            toolTipTitleItem156.Text = "Print (Ctrl+P)";
+            toolTipItem156.LeftIndent = 6;
+            toolTipItem156.Text = "Select a printer, number of copies and other printing options before printing.";
+            superToolTip156.Items.Add(toolTipTitleItem156);
+            superToolTip156.Items.Add(toolTipItem156);
+            superToolTip156.MaxWidth = 210;
+            printPreviewBarItem7.SuperTip = superToolTip156;
             // 
             // printPreviewBarItem8
             // 
@@ -4117,14 +4100,14 @@
             printPreviewBarItem8.Enabled = false;
             printPreviewBarItem8.Id = 180;
             printPreviewBarItem8.Name = "printPreviewBarItem8";
-            superToolTip158.FixedTooltipWidth = true;
-            toolTipTitleItem158.Text = "Quick Print";
-            toolTipItem158.LeftIndent = 6;
-            toolTipItem158.Text = "Send the document directly to the default printer without making changes.";
-            superToolTip158.Items.Add(toolTipTitleItem158);
-            superToolTip158.Items.Add(toolTipItem158);
-            superToolTip158.MaxWidth = 210;
-            printPreviewBarItem8.SuperTip = superToolTip158;
+            superToolTip157.FixedTooltipWidth = true;
+            toolTipTitleItem157.Text = "Quick Print";
+            toolTipItem157.LeftIndent = 6;
+            toolTipItem157.Text = "Send the document directly to the default printer without making changes.";
+            superToolTip157.Items.Add(toolTipTitleItem157);
+            superToolTip157.Items.Add(toolTipItem157);
+            superToolTip157.MaxWidth = 210;
+            printPreviewBarItem8.SuperTip = superToolTip157;
             // 
             // printPreviewBarItem9
             // 
@@ -4134,14 +4117,14 @@
             printPreviewBarItem9.Enabled = false;
             printPreviewBarItem9.Id = 181;
             printPreviewBarItem9.Name = "printPreviewBarItem9";
-            superToolTip159.FixedTooltipWidth = true;
-            toolTipTitleItem159.Text = "Page Setup";
-            toolTipItem159.LeftIndent = 6;
-            toolTipItem159.Text = "Show the Page Setup dialog.";
-            superToolTip159.Items.Add(toolTipTitleItem159);
-            superToolTip159.Items.Add(toolTipItem159);
-            superToolTip159.MaxWidth = 210;
-            printPreviewBarItem9.SuperTip = superToolTip159;
+            superToolTip158.FixedTooltipWidth = true;
+            toolTipTitleItem158.Text = "Page Setup";
+            toolTipItem158.LeftIndent = 6;
+            toolTipItem158.Text = "Show the Page Setup dialog.";
+            superToolTip158.Items.Add(toolTipTitleItem158);
+            superToolTip158.Items.Add(toolTipItem158);
+            superToolTip158.MaxWidth = 210;
+            printPreviewBarItem9.SuperTip = superToolTip158;
             // 
             // printPreviewBarItem11
             // 
@@ -4152,14 +4135,14 @@
             printPreviewBarItem11.Enabled = false;
             printPreviewBarItem11.Id = 183;
             printPreviewBarItem11.Name = "printPreviewBarItem11";
-            superToolTip160.FixedTooltipWidth = true;
-            toolTipTitleItem160.Text = "Scale";
-            toolTipItem160.LeftIndent = 6;
-            toolTipItem160.Text = "Stretch or shrink the printed output to a percentage of its actual size.";
-            superToolTip160.Items.Add(toolTipTitleItem160);
-            superToolTip160.Items.Add(toolTipItem160);
-            superToolTip160.MaxWidth = 210;
-            printPreviewBarItem11.SuperTip = superToolTip160;
+            superToolTip159.FixedTooltipWidth = true;
+            toolTipTitleItem159.Text = "Scale";
+            toolTipItem159.LeftIndent = 6;
+            toolTipItem159.Text = "Stretch or shrink the printed output to a percentage of its actual size.";
+            superToolTip159.Items.Add(toolTipTitleItem159);
+            superToolTip159.Items.Add(toolTipItem159);
+            superToolTip159.MaxWidth = 210;
+            printPreviewBarItem11.SuperTip = superToolTip159;
             // 
             // printPreviewBarItem12
             // 
@@ -4172,14 +4155,14 @@
             printPreviewBarItem12.Id = 184;
             printPreviewBarItem12.Name = "printPreviewBarItem12";
             printPreviewBarItem12.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
-            superToolTip161.FixedTooltipWidth = true;
-            toolTipTitleItem161.Text = "Mouse Pointer";
-            toolTipItem161.LeftIndent = 6;
-            toolTipItem161.Text = "Show the mouse pointer.";
-            superToolTip161.Items.Add(toolTipTitleItem161);
-            superToolTip161.Items.Add(toolTipItem161);
-            superToolTip161.MaxWidth = 210;
-            printPreviewBarItem12.SuperTip = superToolTip161;
+            superToolTip160.FixedTooltipWidth = true;
+            toolTipTitleItem160.Text = "Mouse Pointer";
+            toolTipItem160.LeftIndent = 6;
+            toolTipItem160.Text = "Show the mouse pointer.";
+            superToolTip160.Items.Add(toolTipTitleItem160);
+            superToolTip160.Items.Add(toolTipItem160);
+            superToolTip160.MaxWidth = 210;
+            printPreviewBarItem12.SuperTip = superToolTip160;
             // 
             // printPreviewBarItem13
             // 
@@ -4192,14 +4175,14 @@
             printPreviewBarItem13.Id = 185;
             printPreviewBarItem13.Name = "printPreviewBarItem13";
             printPreviewBarItem13.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
-            superToolTip162.FixedTooltipWidth = true;
-            toolTipTitleItem162.Text = "Hand Tool";
-            toolTipItem162.LeftIndent = 6;
-            toolTipItem162.Text = "Invoke the Hand tool to manually scroll through pages.";
-            superToolTip162.Items.Add(toolTipTitleItem162);
-            superToolTip162.Items.Add(toolTipItem162);
-            superToolTip162.MaxWidth = 210;
-            printPreviewBarItem13.SuperTip = superToolTip162;
+            superToolTip161.FixedTooltipWidth = true;
+            toolTipTitleItem161.Text = "Hand Tool";
+            toolTipItem161.LeftIndent = 6;
+            toolTipItem161.Text = "Invoke the Hand tool to manually scroll through pages.";
+            superToolTip161.Items.Add(toolTipTitleItem161);
+            superToolTip161.Items.Add(toolTipItem161);
+            superToolTip161.MaxWidth = 210;
+            printPreviewBarItem13.SuperTip = superToolTip161;
             // 
             // printPreviewBarItem14
             // 
@@ -4212,14 +4195,14 @@
             printPreviewBarItem14.Id = 186;
             printPreviewBarItem14.Name = "printPreviewBarItem14";
             printPreviewBarItem14.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
-            superToolTip163.FixedTooltipWidth = true;
-            toolTipTitleItem163.Text = "Magnifier";
-            toolTipItem163.LeftIndent = 6;
-            toolTipItem163.Text = "Invoke the Magnifier tool.\r\n\r\nClicking once on a document zooms it so that a single page becomes entirely visible, while clicking another time zooms it to 100% of the normal size.";
-            superToolTip163.Items.Add(toolTipTitleItem163);
-            superToolTip163.Items.Add(toolTipItem163);
-            superToolTip163.MaxWidth = 210;
-            printPreviewBarItem14.SuperTip = superToolTip163;
+            superToolTip162.FixedTooltipWidth = true;
+            toolTipTitleItem162.Text = "Magnifier";
+            toolTipItem162.LeftIndent = 6;
+            toolTipItem162.Text = "Invoke the Magnifier tool.\r\n\r\nClicking once on a document zooms it so that a single page becomes entirely visible, while clicking another time zooms it to 100% of the normal size.";
+            superToolTip162.Items.Add(toolTipTitleItem162);
+            superToolTip162.Items.Add(toolTipItem162);
+            superToolTip162.MaxWidth = 210;
+            printPreviewBarItem14.SuperTip = superToolTip162;
             // 
             // printPreviewBarItem15
             // 
@@ -4229,14 +4212,14 @@
             printPreviewBarItem15.Enabled = false;
             printPreviewBarItem15.Id = 187;
             printPreviewBarItem15.Name = "printPreviewBarItem15";
-            superToolTip164.FixedTooltipWidth = true;
-            toolTipTitleItem164.Text = "Zoom Out";
-            toolTipItem164.LeftIndent = 6;
-            toolTipItem164.Text = "Zoom out to see more of the page at a reduced size.";
-            superToolTip164.Items.Add(toolTipTitleItem164);
-            superToolTip164.Items.Add(toolTipItem164);
-            superToolTip164.MaxWidth = 210;
-            printPreviewBarItem15.SuperTip = superToolTip164;
+            superToolTip163.FixedTooltipWidth = true;
+            toolTipTitleItem163.Text = "Zoom Out";
+            toolTipItem163.LeftIndent = 6;
+            toolTipItem163.Text = "Zoom out to see more of the page at a reduced size.";
+            superToolTip163.Items.Add(toolTipTitleItem163);
+            superToolTip163.Items.Add(toolTipItem163);
+            superToolTip163.MaxWidth = 210;
+            printPreviewBarItem15.SuperTip = superToolTip163;
             // 
             // printPreviewBarItem16
             // 
@@ -4246,14 +4229,14 @@
             printPreviewBarItem16.Enabled = false;
             printPreviewBarItem16.Id = 188;
             printPreviewBarItem16.Name = "printPreviewBarItem16";
-            superToolTip165.FixedTooltipWidth = true;
-            toolTipTitleItem165.Text = "Zoom In";
-            toolTipItem165.LeftIndent = 6;
-            toolTipItem165.Text = "Zoom in to get a close-up view of the document.";
-            superToolTip165.Items.Add(toolTipTitleItem165);
-            superToolTip165.Items.Add(toolTipItem165);
-            superToolTip165.MaxWidth = 210;
-            printPreviewBarItem16.SuperTip = superToolTip165;
+            superToolTip164.FixedTooltipWidth = true;
+            toolTipTitleItem164.Text = "Zoom In";
+            toolTipItem164.LeftIndent = 6;
+            toolTipItem164.Text = "Zoom in to get a close-up view of the document.";
+            superToolTip164.Items.Add(toolTipTitleItem164);
+            superToolTip164.Items.Add(toolTipItem164);
+            superToolTip164.MaxWidth = 210;
+            printPreviewBarItem16.SuperTip = superToolTip164;
             // 
             // printPreviewBarItem17
             // 
@@ -4264,14 +4247,14 @@
             printPreviewBarItem17.Enabled = false;
             printPreviewBarItem17.Id = 189;
             printPreviewBarItem17.Name = "printPreviewBarItem17";
-            superToolTip166.FixedTooltipWidth = true;
-            toolTipTitleItem166.Text = "Zoom";
-            toolTipItem166.LeftIndent = 6;
-            toolTipItem166.Text = "Change the zoom level of the document preview.";
-            superToolTip166.Items.Add(toolTipTitleItem166);
-            superToolTip166.Items.Add(toolTipItem166);
-            superToolTip166.MaxWidth = 210;
-            printPreviewBarItem17.SuperTip = superToolTip166;
+            superToolTip165.FixedTooltipWidth = true;
+            toolTipTitleItem165.Text = "Zoom";
+            toolTipItem165.LeftIndent = 6;
+            toolTipItem165.Text = "Change the zoom level of the document preview.";
+            superToolTip165.Items.Add(toolTipTitleItem165);
+            superToolTip165.Items.Add(toolTipItem165);
+            superToolTip165.MaxWidth = 210;
+            printPreviewBarItem17.SuperTip = superToolTip165;
             // 
             // printPreviewBarItem18
             // 
@@ -4281,14 +4264,14 @@
             printPreviewBarItem18.Enabled = false;
             printPreviewBarItem18.Id = 190;
             printPreviewBarItem18.Name = "printPreviewBarItem18";
-            superToolTip167.FixedTooltipWidth = true;
-            toolTipTitleItem167.Text = "First Page (Home)";
-            toolTipItem167.LeftIndent = 6;
-            toolTipItem167.Text = "Navigate to the first page of the document.";
-            superToolTip167.Items.Add(toolTipTitleItem167);
-            superToolTip167.Items.Add(toolTipItem167);
-            superToolTip167.MaxWidth = 210;
-            printPreviewBarItem18.SuperTip = superToolTip167;
+            superToolTip166.FixedTooltipWidth = true;
+            toolTipTitleItem166.Text = "First Page (Home)";
+            toolTipItem166.LeftIndent = 6;
+            toolTipItem166.Text = "Navigate to the first page of the document.";
+            superToolTip166.Items.Add(toolTipTitleItem166);
+            superToolTip166.Items.Add(toolTipItem166);
+            superToolTip166.MaxWidth = 210;
+            printPreviewBarItem18.SuperTip = superToolTip166;
             // 
             // printPreviewBarItem19
             // 
@@ -4298,14 +4281,14 @@
             printPreviewBarItem19.Enabled = false;
             printPreviewBarItem19.Id = 191;
             printPreviewBarItem19.Name = "printPreviewBarItem19";
-            superToolTip168.FixedTooltipWidth = true;
-            toolTipTitleItem168.Text = "Previous Page (Left Arrow)";
-            toolTipItem168.LeftIndent = 6;
-            toolTipItem168.Text = "Navigate to the previous page of the document.";
-            superToolTip168.Items.Add(toolTipTitleItem168);
-            superToolTip168.Items.Add(toolTipItem168);
-            superToolTip168.MaxWidth = 210;
-            printPreviewBarItem19.SuperTip = superToolTip168;
+            superToolTip167.FixedTooltipWidth = true;
+            toolTipTitleItem167.Text = "Previous Page (Left Arrow)";
+            toolTipItem167.LeftIndent = 6;
+            toolTipItem167.Text = "Navigate to the previous page of the document.";
+            superToolTip167.Items.Add(toolTipTitleItem167);
+            superToolTip167.Items.Add(toolTipItem167);
+            superToolTip167.MaxWidth = 210;
+            printPreviewBarItem19.SuperTip = superToolTip167;
             // 
             // printPreviewBarItem20
             // 
@@ -4315,14 +4298,14 @@
             printPreviewBarItem20.Enabled = false;
             printPreviewBarItem20.Id = 192;
             printPreviewBarItem20.Name = "printPreviewBarItem20";
-            superToolTip169.FixedTooltipWidth = true;
-            toolTipTitleItem169.Text = "Next Page (Right Arrow)";
-            toolTipItem169.LeftIndent = 6;
-            toolTipItem169.Text = "Navigate to the next page of the document.";
-            superToolTip169.Items.Add(toolTipTitleItem169);
-            superToolTip169.Items.Add(toolTipItem169);
-            superToolTip169.MaxWidth = 210;
-            printPreviewBarItem20.SuperTip = superToolTip169;
+            superToolTip168.FixedTooltipWidth = true;
+            toolTipTitleItem168.Text = "Next Page (Right Arrow)";
+            toolTipItem168.LeftIndent = 6;
+            toolTipItem168.Text = "Navigate to the next page of the document.";
+            superToolTip168.Items.Add(toolTipTitleItem168);
+            superToolTip168.Items.Add(toolTipItem168);
+            superToolTip168.MaxWidth = 210;
+            printPreviewBarItem20.SuperTip = superToolTip168;
             // 
             // printPreviewBarItem21
             // 
@@ -4332,14 +4315,14 @@
             printPreviewBarItem21.Enabled = false;
             printPreviewBarItem21.Id = 193;
             printPreviewBarItem21.Name = "printPreviewBarItem21";
-            superToolTip170.FixedTooltipWidth = true;
-            toolTipTitleItem170.Text = "Last Page (End)";
-            toolTipItem170.LeftIndent = 6;
-            toolTipItem170.Text = "Navigate to the last page of the document.";
-            superToolTip170.Items.Add(toolTipTitleItem170);
-            superToolTip170.Items.Add(toolTipItem170);
-            superToolTip170.MaxWidth = 210;
-            printPreviewBarItem21.SuperTip = superToolTip170;
+            superToolTip169.FixedTooltipWidth = true;
+            toolTipTitleItem169.Text = "Last Page (End)";
+            toolTipItem169.LeftIndent = 6;
+            toolTipItem169.Text = "Navigate to the last page of the document.";
+            superToolTip169.Items.Add(toolTipTitleItem169);
+            superToolTip169.Items.Add(toolTipItem169);
+            superToolTip169.MaxWidth = 210;
+            printPreviewBarItem21.SuperTip = superToolTip169;
             // 
             // printPreviewBarItem22
             // 
@@ -4350,14 +4333,14 @@
             printPreviewBarItem22.Enabled = false;
             printPreviewBarItem22.Id = 194;
             printPreviewBarItem22.Name = "printPreviewBarItem22";
-            superToolTip171.FixedTooltipWidth = true;
-            toolTipTitleItem171.Text = "View Many Pages";
-            toolTipItem171.LeftIndent = 6;
-            toolTipItem171.Text = "Choose the page layout to arrange the document pages in preview.";
-            superToolTip171.Items.Add(toolTipTitleItem171);
-            superToolTip171.Items.Add(toolTipItem171);
-            superToolTip171.MaxWidth = 210;
-            printPreviewBarItem22.SuperTip = superToolTip171;
+            superToolTip170.FixedTooltipWidth = true;
+            toolTipTitleItem170.Text = "View Many Pages";
+            toolTipItem170.LeftIndent = 6;
+            toolTipItem170.Text = "Choose the page layout to arrange the document pages in preview.";
+            superToolTip170.Items.Add(toolTipTitleItem170);
+            superToolTip170.Items.Add(toolTipItem170);
+            superToolTip170.MaxWidth = 210;
+            printPreviewBarItem22.SuperTip = superToolTip170;
             // 
             // printPreviewBarItem23
             // 
@@ -4368,14 +4351,14 @@
             printPreviewBarItem23.Enabled = false;
             printPreviewBarItem23.Id = 195;
             printPreviewBarItem23.Name = "printPreviewBarItem23";
-            superToolTip172.FixedTooltipWidth = true;
-            toolTipTitleItem172.Text = "Background Color";
-            toolTipItem172.LeftIndent = 6;
-            toolTipItem172.Text = "Choose a color for the background of the document pages.";
-            superToolTip172.Items.Add(toolTipTitleItem172);
-            superToolTip172.Items.Add(toolTipItem172);
-            superToolTip172.MaxWidth = 210;
-            printPreviewBarItem23.SuperTip = superToolTip172;
+            superToolTip171.FixedTooltipWidth = true;
+            toolTipTitleItem171.Text = "Background Color";
+            toolTipItem171.LeftIndent = 6;
+            toolTipItem171.Text = "Choose a color for the background of the document pages.";
+            superToolTip171.Items.Add(toolTipTitleItem171);
+            superToolTip171.Items.Add(toolTipItem171);
+            superToolTip171.MaxWidth = 210;
+            printPreviewBarItem23.SuperTip = superToolTip171;
             // 
             // printPreviewBarItem24
             // 
@@ -4385,14 +4368,14 @@
             printPreviewBarItem24.Enabled = false;
             printPreviewBarItem24.Id = 196;
             printPreviewBarItem24.Name = "printPreviewBarItem24";
-            superToolTip173.FixedTooltipWidth = true;
-            toolTipTitleItem173.Text = "Watermark";
-            toolTipItem173.LeftIndent = 6;
-            toolTipItem173.Text = "Insert ghosted text or image behind the content of a page.\r\n\r\nThis is often used to indicate that a document is to be treated specially.";
-            superToolTip173.Items.Add(toolTipTitleItem173);
-            superToolTip173.Items.Add(toolTipItem173);
-            superToolTip173.MaxWidth = 210;
-            printPreviewBarItem24.SuperTip = superToolTip173;
+            superToolTip172.FixedTooltipWidth = true;
+            toolTipTitleItem172.Text = "Watermark";
+            toolTipItem172.LeftIndent = 6;
+            toolTipItem172.Text = "Insert ghosted text or image behind the content of a page.\r\n\r\nThis is often used to indicate that a document is to be treated specially.";
+            superToolTip172.Items.Add(toolTipTitleItem172);
+            superToolTip172.Items.Add(toolTipItem172);
+            superToolTip172.MaxWidth = 210;
+            printPreviewBarItem24.SuperTip = superToolTip172;
             // 
             // printPreviewBarItem25
             // 
@@ -4403,14 +4386,14 @@
             printPreviewBarItem25.Enabled = false;
             printPreviewBarItem25.Id = 197;
             printPreviewBarItem25.Name = "printPreviewBarItem25";
-            superToolTip174.FixedTooltipWidth = true;
-            toolTipTitleItem174.Text = "Export To...";
-            toolTipItem174.LeftIndent = 6;
-            toolTipItem174.Text = "Export the current document in one of the available formats, and save it to the file on a disk.";
-            superToolTip174.Items.Add(toolTipTitleItem174);
-            superToolTip174.Items.Add(toolTipItem174);
-            superToolTip174.MaxWidth = 210;
-            printPreviewBarItem25.SuperTip = superToolTip174;
+            superToolTip173.FixedTooltipWidth = true;
+            toolTipTitleItem173.Text = "Export To...";
+            toolTipItem173.LeftIndent = 6;
+            toolTipItem173.Text = "Export the current document in one of the available formats, and save it to the file on a disk.";
+            superToolTip173.Items.Add(toolTipTitleItem173);
+            superToolTip173.Items.Add(toolTipItem173);
+            superToolTip173.MaxWidth = 210;
+            printPreviewBarItem25.SuperTip = superToolTip173;
             // 
             // printPreviewBarItem26
             // 
@@ -4421,14 +4404,14 @@
             printPreviewBarItem26.Enabled = false;
             printPreviewBarItem26.Id = 198;
             printPreviewBarItem26.Name = "printPreviewBarItem26";
-            superToolTip175.FixedTooltipWidth = true;
-            toolTipTitleItem175.Text = "E-Mail As...";
-            toolTipItem175.LeftIndent = 6;
-            toolTipItem175.Text = "Export the current document in one of the available formats, and attach it to the e-mail.";
-            superToolTip175.Items.Add(toolTipTitleItem175);
-            superToolTip175.Items.Add(toolTipItem175);
-            superToolTip175.MaxWidth = 210;
-            printPreviewBarItem26.SuperTip = superToolTip175;
+            superToolTip174.FixedTooltipWidth = true;
+            toolTipTitleItem174.Text = "E-Mail As...";
+            toolTipItem174.LeftIndent = 6;
+            toolTipItem174.Text = "Export the current document in one of the available formats, and attach it to the e-mail.";
+            superToolTip174.Items.Add(toolTipTitleItem174);
+            superToolTip174.Items.Add(toolTipItem174);
+            superToolTip174.MaxWidth = 210;
+            printPreviewBarItem26.SuperTip = superToolTip174;
             // 
             // printPreviewBarItem27
             // 
@@ -4438,14 +4421,14 @@
             printPreviewBarItem27.Enabled = false;
             printPreviewBarItem27.Id = 199;
             printPreviewBarItem27.Name = "printPreviewBarItem27";
-            superToolTip176.FixedTooltipWidth = true;
-            toolTipTitleItem176.Text = "Close Print Preview";
-            toolTipItem176.LeftIndent = 6;
-            toolTipItem176.Text = "Close Print Preview of the document.";
-            superToolTip176.Items.Add(toolTipTitleItem176);
-            superToolTip176.Items.Add(toolTipItem176);
-            superToolTip176.MaxWidth = 210;
-            printPreviewBarItem27.SuperTip = superToolTip176;
+            superToolTip175.FixedTooltipWidth = true;
+            toolTipTitleItem175.Text = "Close Print Preview";
+            toolTipItem175.LeftIndent = 6;
+            toolTipItem175.Text = "Close Print Preview of the document.";
+            superToolTip175.Items.Add(toolTipTitleItem175);
+            superToolTip175.Items.Add(toolTipItem175);
+            superToolTip175.MaxWidth = 210;
+            printPreviewBarItem27.SuperTip = superToolTip175;
             // 
             // printPreviewBarItem28
             // 
@@ -4456,14 +4439,14 @@
             printPreviewBarItem28.Enabled = false;
             printPreviewBarItem28.Id = 200;
             printPreviewBarItem28.Name = "printPreviewBarItem28";
-            superToolTip177.FixedTooltipWidth = true;
-            toolTipTitleItem177.Text = "Page Orientation";
-            toolTipItem177.LeftIndent = 6;
-            toolTipItem177.Text = "Switch the pages between portrait and landscape layouts.";
-            superToolTip177.Items.Add(toolTipTitleItem177);
-            superToolTip177.Items.Add(toolTipItem177);
-            superToolTip177.MaxWidth = 210;
-            printPreviewBarItem28.SuperTip = superToolTip177;
+            superToolTip176.FixedTooltipWidth = true;
+            toolTipTitleItem176.Text = "Page Orientation";
+            toolTipItem176.LeftIndent = 6;
+            toolTipItem176.Text = "Switch the pages between portrait and landscape layouts.";
+            superToolTip176.Items.Add(toolTipTitleItem176);
+            superToolTip176.Items.Add(toolTipItem176);
+            superToolTip176.MaxWidth = 210;
+            printPreviewBarItem28.SuperTip = superToolTip176;
             // 
             // printPreviewBarItem29
             // 
@@ -4474,14 +4457,14 @@
             printPreviewBarItem29.Enabled = false;
             printPreviewBarItem29.Id = 201;
             printPreviewBarItem29.Name = "printPreviewBarItem29";
-            superToolTip178.FixedTooltipWidth = true;
-            toolTipTitleItem178.Text = "Page Size";
-            toolTipItem178.LeftIndent = 6;
-            toolTipItem178.Text = "Choose the paper size of the document.";
-            superToolTip178.Items.Add(toolTipTitleItem178);
-            superToolTip178.Items.Add(toolTipItem178);
-            superToolTip178.MaxWidth = 210;
-            printPreviewBarItem29.SuperTip = superToolTip178;
+            superToolTip177.FixedTooltipWidth = true;
+            toolTipTitleItem177.Text = "Page Size";
+            toolTipItem177.LeftIndent = 6;
+            toolTipItem177.Text = "Choose the paper size of the document.";
+            superToolTip177.Items.Add(toolTipTitleItem177);
+            superToolTip177.Items.Add(toolTipItem177);
+            superToolTip177.MaxWidth = 210;
+            printPreviewBarItem29.SuperTip = superToolTip177;
             // 
             // printPreviewBarItem30
             // 
@@ -4492,14 +4475,14 @@
             printPreviewBarItem30.Enabled = false;
             printPreviewBarItem30.Id = 202;
             printPreviewBarItem30.Name = "printPreviewBarItem30";
-            superToolTip179.FixedTooltipWidth = true;
-            toolTipTitleItem179.Text = "Page Margins";
-            toolTipItem179.LeftIndent = 6;
-            toolTipItem179.Text = "Select the margin sizes for the entire document.\r\n\r\nTo apply specific margin sizes to the document, click Custom Margins.";
-            superToolTip179.Items.Add(toolTipTitleItem179);
-            superToolTip179.Items.Add(toolTipItem179);
-            superToolTip179.MaxWidth = 210;
-            printPreviewBarItem30.SuperTip = superToolTip179;
+            superToolTip178.FixedTooltipWidth = true;
+            toolTipTitleItem178.Text = "Page Margins";
+            toolTipItem178.LeftIndent = 6;
+            toolTipItem178.Text = "Select the margin sizes for the entire document.\r\n\r\nTo apply specific margin sizes to the document, click Custom Margins.";
+            superToolTip178.Items.Add(toolTipTitleItem178);
+            superToolTip178.Items.Add(toolTipItem178);
+            superToolTip178.MaxWidth = 210;
+            printPreviewBarItem30.SuperTip = superToolTip178;
             // 
             // printPreviewBarItem31
             // 
@@ -4509,14 +4492,14 @@
             printPreviewBarItem31.Enabled = false;
             printPreviewBarItem31.Id = 203;
             printPreviewBarItem31.Name = "printPreviewBarItem31";
-            superToolTip180.FixedTooltipWidth = true;
-            toolTipTitleItem180.Text = "E-Mail As PDF";
-            toolTipItem180.LeftIndent = 6;
-            toolTipItem180.Text = "Export the document to PDF and attach it to the e-mail.";
-            superToolTip180.Items.Add(toolTipTitleItem180);
-            superToolTip180.Items.Add(toolTipItem180);
-            superToolTip180.MaxWidth = 210;
-            printPreviewBarItem31.SuperTip = superToolTip180;
+            superToolTip179.FixedTooltipWidth = true;
+            toolTipTitleItem179.Text = "E-Mail As PDF";
+            toolTipItem179.LeftIndent = 6;
+            toolTipItem179.Text = "Export the document to PDF and attach it to the e-mail.";
+            superToolTip179.Items.Add(toolTipTitleItem179);
+            superToolTip179.Items.Add(toolTipItem179);
+            superToolTip179.MaxWidth = 210;
+            printPreviewBarItem31.SuperTip = superToolTip179;
             // 
             // printPreviewBarItem32
             // 
@@ -4526,14 +4509,14 @@
             printPreviewBarItem32.Enabled = false;
             printPreviewBarItem32.Id = 204;
             printPreviewBarItem32.Name = "printPreviewBarItem32";
-            superToolTip181.FixedTooltipWidth = true;
-            toolTipTitleItem181.Text = "E-Mail As Text";
-            toolTipItem181.LeftIndent = 6;
-            toolTipItem181.Text = "Export the document to Text and attach it to the e-mail.";
-            superToolTip181.Items.Add(toolTipTitleItem181);
-            superToolTip181.Items.Add(toolTipItem181);
-            superToolTip181.MaxWidth = 210;
-            printPreviewBarItem32.SuperTip = superToolTip181;
+            superToolTip180.FixedTooltipWidth = true;
+            toolTipTitleItem180.Text = "E-Mail As Text";
+            toolTipItem180.LeftIndent = 6;
+            toolTipItem180.Text = "Export the document to Text and attach it to the e-mail.";
+            superToolTip180.Items.Add(toolTipTitleItem180);
+            superToolTip180.Items.Add(toolTipItem180);
+            superToolTip180.MaxWidth = 210;
+            printPreviewBarItem32.SuperTip = superToolTip180;
             // 
             // printPreviewBarItem33
             // 
@@ -4543,14 +4526,14 @@
             printPreviewBarItem33.Enabled = false;
             printPreviewBarItem33.Id = 205;
             printPreviewBarItem33.Name = "printPreviewBarItem33";
-            superToolTip182.FixedTooltipWidth = true;
-            toolTipTitleItem182.Text = "E-Mail As CSV";
-            toolTipItem182.LeftIndent = 6;
-            toolTipItem182.Text = "Export the document to CSV and attach it to the e-mail.";
-            superToolTip182.Items.Add(toolTipTitleItem182);
-            superToolTip182.Items.Add(toolTipItem182);
-            superToolTip182.MaxWidth = 210;
-            printPreviewBarItem33.SuperTip = superToolTip182;
+            superToolTip181.FixedTooltipWidth = true;
+            toolTipTitleItem181.Text = "E-Mail As CSV";
+            toolTipItem181.LeftIndent = 6;
+            toolTipItem181.Text = "Export the document to CSV and attach it to the e-mail.";
+            superToolTip181.Items.Add(toolTipTitleItem181);
+            superToolTip181.Items.Add(toolTipItem181);
+            superToolTip181.MaxWidth = 210;
+            printPreviewBarItem33.SuperTip = superToolTip181;
             // 
             // printPreviewBarItem34
             // 
@@ -4560,14 +4543,14 @@
             printPreviewBarItem34.Enabled = false;
             printPreviewBarItem34.Id = 206;
             printPreviewBarItem34.Name = "printPreviewBarItem34";
-            superToolTip183.FixedTooltipWidth = true;
-            toolTipTitleItem183.Text = "E-Mail As MHT";
-            toolTipItem183.LeftIndent = 6;
-            toolTipItem183.Text = "Export the document to MHT and attach it to the e-mail.";
-            superToolTip183.Items.Add(toolTipTitleItem183);
-            superToolTip183.Items.Add(toolTipItem183);
-            superToolTip183.MaxWidth = 210;
-            printPreviewBarItem34.SuperTip = superToolTip183;
+            superToolTip182.FixedTooltipWidth = true;
+            toolTipTitleItem182.Text = "E-Mail As MHT";
+            toolTipItem182.LeftIndent = 6;
+            toolTipItem182.Text = "Export the document to MHT and attach it to the e-mail.";
+            superToolTip182.Items.Add(toolTipTitleItem182);
+            superToolTip182.Items.Add(toolTipItem182);
+            superToolTip182.MaxWidth = 210;
+            printPreviewBarItem34.SuperTip = superToolTip182;
             // 
             // printPreviewBarItem35
             // 
@@ -4577,14 +4560,14 @@
             printPreviewBarItem35.Enabled = false;
             printPreviewBarItem35.Id = 207;
             printPreviewBarItem35.Name = "printPreviewBarItem35";
-            superToolTip184.FixedTooltipWidth = true;
-            toolTipTitleItem184.Text = "E-Mail As XLS";
-            toolTipItem184.LeftIndent = 6;
-            toolTipItem184.Text = "Export the document to XLS and attach it to the e-mail.";
-            superToolTip184.Items.Add(toolTipTitleItem184);
-            superToolTip184.Items.Add(toolTipItem184);
-            superToolTip184.MaxWidth = 210;
-            printPreviewBarItem35.SuperTip = superToolTip184;
+            superToolTip183.FixedTooltipWidth = true;
+            toolTipTitleItem183.Text = "E-Mail As XLS";
+            toolTipItem183.LeftIndent = 6;
+            toolTipItem183.Text = "Export the document to XLS and attach it to the e-mail.";
+            superToolTip183.Items.Add(toolTipTitleItem183);
+            superToolTip183.Items.Add(toolTipItem183);
+            superToolTip183.MaxWidth = 210;
+            printPreviewBarItem35.SuperTip = superToolTip183;
             // 
             // printPreviewBarItem36
             // 
@@ -4594,14 +4577,14 @@
             printPreviewBarItem36.Enabled = false;
             printPreviewBarItem36.Id = 208;
             printPreviewBarItem36.Name = "printPreviewBarItem36";
-            superToolTip185.FixedTooltipWidth = true;
-            toolTipTitleItem185.Text = "E-Mail As XLSX";
-            toolTipItem185.LeftIndent = 6;
-            toolTipItem185.Text = "Export the document to XLSX and attach it to the e-mail.";
-            superToolTip185.Items.Add(toolTipTitleItem185);
-            superToolTip185.Items.Add(toolTipItem185);
-            superToolTip185.MaxWidth = 210;
-            printPreviewBarItem36.SuperTip = superToolTip185;
+            superToolTip184.FixedTooltipWidth = true;
+            toolTipTitleItem184.Text = "E-Mail As XLSX";
+            toolTipItem184.LeftIndent = 6;
+            toolTipItem184.Text = "Export the document to XLSX and attach it to the e-mail.";
+            superToolTip184.Items.Add(toolTipTitleItem184);
+            superToolTip184.Items.Add(toolTipItem184);
+            superToolTip184.MaxWidth = 210;
+            printPreviewBarItem36.SuperTip = superToolTip184;
             // 
             // printPreviewBarItem37
             // 
@@ -4611,14 +4594,14 @@
             printPreviewBarItem37.Enabled = false;
             printPreviewBarItem37.Id = 209;
             printPreviewBarItem37.Name = "printPreviewBarItem37";
-            superToolTip186.FixedTooltipWidth = true;
-            toolTipTitleItem186.Text = "E-Mail As RTF";
-            toolTipItem186.LeftIndent = 6;
-            toolTipItem186.Text = "Export the document to RTF and attach it to the e-mail.";
-            superToolTip186.Items.Add(toolTipTitleItem186);
-            superToolTip186.Items.Add(toolTipItem186);
-            superToolTip186.MaxWidth = 210;
-            printPreviewBarItem37.SuperTip = superToolTip186;
+            superToolTip185.FixedTooltipWidth = true;
+            toolTipTitleItem185.Text = "E-Mail As RTF";
+            toolTipItem185.LeftIndent = 6;
+            toolTipItem185.Text = "Export the document to RTF and attach it to the e-mail.";
+            superToolTip185.Items.Add(toolTipTitleItem185);
+            superToolTip185.Items.Add(toolTipItem185);
+            superToolTip185.MaxWidth = 210;
+            printPreviewBarItem37.SuperTip = superToolTip185;
             // 
             // printPreviewBarItem38
             // 
@@ -4628,14 +4611,14 @@
             printPreviewBarItem38.Enabled = false;
             printPreviewBarItem38.Id = 210;
             printPreviewBarItem38.Name = "printPreviewBarItem38";
-            superToolTip187.FixedTooltipWidth = true;
-            toolTipTitleItem187.Text = "E-Mail As DOCX";
-            toolTipItem187.LeftIndent = 6;
-            toolTipItem187.Text = "Export the document to DOCX and attach it to the e-mail.";
-            superToolTip187.Items.Add(toolTipTitleItem187);
-            superToolTip187.Items.Add(toolTipItem187);
-            superToolTip187.MaxWidth = 210;
-            printPreviewBarItem38.SuperTip = superToolTip187;
+            superToolTip186.FixedTooltipWidth = true;
+            toolTipTitleItem186.Text = "E-Mail As DOCX";
+            toolTipItem186.LeftIndent = 6;
+            toolTipItem186.Text = "Export the document to DOCX and attach it to the e-mail.";
+            superToolTip186.Items.Add(toolTipTitleItem186);
+            superToolTip186.Items.Add(toolTipItem186);
+            superToolTip186.MaxWidth = 210;
+            printPreviewBarItem38.SuperTip = superToolTip186;
             // 
             // printPreviewBarItem39
             // 
@@ -4645,14 +4628,14 @@
             printPreviewBarItem39.Enabled = false;
             printPreviewBarItem39.Id = 211;
             printPreviewBarItem39.Name = "printPreviewBarItem39";
-            superToolTip188.FixedTooltipWidth = true;
-            toolTipTitleItem188.Text = "E-Mail As Image";
-            toolTipItem188.LeftIndent = 6;
-            toolTipItem188.Text = "Export the document to Image and attach it to the e-mail.";
-            superToolTip188.Items.Add(toolTipTitleItem188);
-            superToolTip188.Items.Add(toolTipItem188);
-            superToolTip188.MaxWidth = 210;
-            printPreviewBarItem39.SuperTip = superToolTip188;
+            superToolTip187.FixedTooltipWidth = true;
+            toolTipTitleItem187.Text = "E-Mail As Image";
+            toolTipItem187.LeftIndent = 6;
+            toolTipItem187.Text = "Export the document to Image and attach it to the e-mail.";
+            superToolTip187.Items.Add(toolTipTitleItem187);
+            superToolTip187.Items.Add(toolTipItem187);
+            superToolTip187.MaxWidth = 210;
+            printPreviewBarItem39.SuperTip = superToolTip187;
             // 
             // printPreviewBarItem40
             // 
@@ -4662,14 +4645,14 @@
             printPreviewBarItem40.Enabled = false;
             printPreviewBarItem40.Id = 212;
             printPreviewBarItem40.Name = "printPreviewBarItem40";
-            superToolTip189.FixedTooltipWidth = true;
-            toolTipTitleItem189.Text = "Export to PDF";
-            toolTipItem189.LeftIndent = 6;
-            toolTipItem189.Text = "Export the document to PDF and save it to the file on a disk.";
-            superToolTip189.Items.Add(toolTipTitleItem189);
-            superToolTip189.Items.Add(toolTipItem189);
-            superToolTip189.MaxWidth = 210;
-            printPreviewBarItem40.SuperTip = superToolTip189;
+            superToolTip188.FixedTooltipWidth = true;
+            toolTipTitleItem188.Text = "Export to PDF";
+            toolTipItem188.LeftIndent = 6;
+            toolTipItem188.Text = "Export the document to PDF and save it to the file on a disk.";
+            superToolTip188.Items.Add(toolTipTitleItem188);
+            superToolTip188.Items.Add(toolTipItem188);
+            superToolTip188.MaxWidth = 210;
+            printPreviewBarItem40.SuperTip = superToolTip188;
             // 
             // printPreviewBarItem41
             // 
@@ -4679,14 +4662,14 @@
             printPreviewBarItem41.Enabled = false;
             printPreviewBarItem41.Id = 213;
             printPreviewBarItem41.Name = "printPreviewBarItem41";
-            superToolTip190.FixedTooltipWidth = true;
-            toolTipTitleItem190.Text = "Export to HTML";
-            toolTipItem190.LeftIndent = 6;
-            toolTipItem190.Text = "Export the document to HTML and save it to the file on a disk.";
-            superToolTip190.Items.Add(toolTipTitleItem190);
-            superToolTip190.Items.Add(toolTipItem190);
-            superToolTip190.MaxWidth = 210;
-            printPreviewBarItem41.SuperTip = superToolTip190;
+            superToolTip189.FixedTooltipWidth = true;
+            toolTipTitleItem189.Text = "Export to HTML";
+            toolTipItem189.LeftIndent = 6;
+            toolTipItem189.Text = "Export the document to HTML and save it to the file on a disk.";
+            superToolTip189.Items.Add(toolTipTitleItem189);
+            superToolTip189.Items.Add(toolTipItem189);
+            superToolTip189.MaxWidth = 210;
+            printPreviewBarItem41.SuperTip = superToolTip189;
             // 
             // printPreviewBarItem42
             // 
@@ -4696,14 +4679,14 @@
             printPreviewBarItem42.Enabled = false;
             printPreviewBarItem42.Id = 214;
             printPreviewBarItem42.Name = "printPreviewBarItem42";
-            superToolTip191.FixedTooltipWidth = true;
-            toolTipTitleItem191.Text = "Export to Text";
-            toolTipItem191.LeftIndent = 6;
-            toolTipItem191.Text = "Export the document to Text and save it to the file on a disk.";
-            superToolTip191.Items.Add(toolTipTitleItem191);
-            superToolTip191.Items.Add(toolTipItem191);
-            superToolTip191.MaxWidth = 210;
-            printPreviewBarItem42.SuperTip = superToolTip191;
+            superToolTip190.FixedTooltipWidth = true;
+            toolTipTitleItem190.Text = "Export to Text";
+            toolTipItem190.LeftIndent = 6;
+            toolTipItem190.Text = "Export the document to Text and save it to the file on a disk.";
+            superToolTip190.Items.Add(toolTipTitleItem190);
+            superToolTip190.Items.Add(toolTipItem190);
+            superToolTip190.MaxWidth = 210;
+            printPreviewBarItem42.SuperTip = superToolTip190;
             // 
             // printPreviewBarItem43
             // 
@@ -4713,14 +4696,14 @@
             printPreviewBarItem43.Enabled = false;
             printPreviewBarItem43.Id = 215;
             printPreviewBarItem43.Name = "printPreviewBarItem43";
-            superToolTip192.FixedTooltipWidth = true;
-            toolTipTitleItem192.Text = "Export to CSV";
-            toolTipItem192.LeftIndent = 6;
-            toolTipItem192.Text = "Export the document to CSV and save it to the file on a disk.";
-            superToolTip192.Items.Add(toolTipTitleItem192);
-            superToolTip192.Items.Add(toolTipItem192);
-            superToolTip192.MaxWidth = 210;
-            printPreviewBarItem43.SuperTip = superToolTip192;
+            superToolTip191.FixedTooltipWidth = true;
+            toolTipTitleItem191.Text = "Export to CSV";
+            toolTipItem191.LeftIndent = 6;
+            toolTipItem191.Text = "Export the document to CSV and save it to the file on a disk.";
+            superToolTip191.Items.Add(toolTipTitleItem191);
+            superToolTip191.Items.Add(toolTipItem191);
+            superToolTip191.MaxWidth = 210;
+            printPreviewBarItem43.SuperTip = superToolTip191;
             // 
             // printPreviewBarItem44
             // 
@@ -4730,14 +4713,14 @@
             printPreviewBarItem44.Enabled = false;
             printPreviewBarItem44.Id = 216;
             printPreviewBarItem44.Name = "printPreviewBarItem44";
-            superToolTip193.FixedTooltipWidth = true;
-            toolTipTitleItem193.Text = "Export to MHT";
-            toolTipItem193.LeftIndent = 6;
-            toolTipItem193.Text = "Export the document to MHT and save it to the file on a disk.";
-            superToolTip193.Items.Add(toolTipTitleItem193);
-            superToolTip193.Items.Add(toolTipItem193);
-            superToolTip193.MaxWidth = 210;
-            printPreviewBarItem44.SuperTip = superToolTip193;
+            superToolTip192.FixedTooltipWidth = true;
+            toolTipTitleItem192.Text = "Export to MHT";
+            toolTipItem192.LeftIndent = 6;
+            toolTipItem192.Text = "Export the document to MHT and save it to the file on a disk.";
+            superToolTip192.Items.Add(toolTipTitleItem192);
+            superToolTip192.Items.Add(toolTipItem192);
+            superToolTip192.MaxWidth = 210;
+            printPreviewBarItem44.SuperTip = superToolTip192;
             // 
             // printPreviewBarItem45
             // 
@@ -4747,14 +4730,14 @@
             printPreviewBarItem45.Enabled = false;
             printPreviewBarItem45.Id = 217;
             printPreviewBarItem45.Name = "printPreviewBarItem45";
-            superToolTip194.FixedTooltipWidth = true;
-            toolTipTitleItem194.Text = "Export to XLS";
-            toolTipItem194.LeftIndent = 6;
-            toolTipItem194.Text = "Export the document to XLS and save it to the file on a disk.";
-            superToolTip194.Items.Add(toolTipTitleItem194);
-            superToolTip194.Items.Add(toolTipItem194);
-            superToolTip194.MaxWidth = 210;
-            printPreviewBarItem45.SuperTip = superToolTip194;
+            superToolTip193.FixedTooltipWidth = true;
+            toolTipTitleItem193.Text = "Export to XLS";
+            toolTipItem193.LeftIndent = 6;
+            toolTipItem193.Text = "Export the document to XLS and save it to the file on a disk.";
+            superToolTip193.Items.Add(toolTipTitleItem193);
+            superToolTip193.Items.Add(toolTipItem193);
+            superToolTip193.MaxWidth = 210;
+            printPreviewBarItem45.SuperTip = superToolTip193;
             // 
             // printPreviewBarItem46
             // 
@@ -4764,14 +4747,14 @@
             printPreviewBarItem46.Enabled = false;
             printPreviewBarItem46.Id = 218;
             printPreviewBarItem46.Name = "printPreviewBarItem46";
-            superToolTip195.FixedTooltipWidth = true;
-            toolTipTitleItem195.Text = "Export to XLSX";
-            toolTipItem195.LeftIndent = 6;
-            toolTipItem195.Text = "Export the document to XLSX and save it to the file on a disk.";
-            superToolTip195.Items.Add(toolTipTitleItem195);
-            superToolTip195.Items.Add(toolTipItem195);
-            superToolTip195.MaxWidth = 210;
-            printPreviewBarItem46.SuperTip = superToolTip195;
+            superToolTip194.FixedTooltipWidth = true;
+            toolTipTitleItem194.Text = "Export to XLSX";
+            toolTipItem194.LeftIndent = 6;
+            toolTipItem194.Text = "Export the document to XLSX and save it to the file on a disk.";
+            superToolTip194.Items.Add(toolTipTitleItem194);
+            superToolTip194.Items.Add(toolTipItem194);
+            superToolTip194.MaxWidth = 210;
+            printPreviewBarItem46.SuperTip = superToolTip194;
             // 
             // printPreviewBarItem47
             // 
@@ -4781,14 +4764,14 @@
             printPreviewBarItem47.Enabled = false;
             printPreviewBarItem47.Id = 219;
             printPreviewBarItem47.Name = "printPreviewBarItem47";
-            superToolTip196.FixedTooltipWidth = true;
-            toolTipTitleItem196.Text = "Export to RTF";
-            toolTipItem196.LeftIndent = 6;
-            toolTipItem196.Text = "Export the document to RTF and save it to the file on a disk.";
-            superToolTip196.Items.Add(toolTipTitleItem196);
-            superToolTip196.Items.Add(toolTipItem196);
-            superToolTip196.MaxWidth = 210;
-            printPreviewBarItem47.SuperTip = superToolTip196;
+            superToolTip195.FixedTooltipWidth = true;
+            toolTipTitleItem195.Text = "Export to RTF";
+            toolTipItem195.LeftIndent = 6;
+            toolTipItem195.Text = "Export the document to RTF and save it to the file on a disk.";
+            superToolTip195.Items.Add(toolTipTitleItem195);
+            superToolTip195.Items.Add(toolTipItem195);
+            superToolTip195.MaxWidth = 210;
+            printPreviewBarItem47.SuperTip = superToolTip195;
             // 
             // printPreviewBarItem48
             // 
@@ -4798,14 +4781,14 @@
             printPreviewBarItem48.Enabled = false;
             printPreviewBarItem48.Id = 220;
             printPreviewBarItem48.Name = "printPreviewBarItem48";
-            superToolTip197.FixedTooltipWidth = true;
-            toolTipTitleItem197.Text = "Export to DOCX";
-            toolTipItem197.LeftIndent = 6;
-            toolTipItem197.Text = "Export the document to DOCX and save it to the file on a disk.";
-            superToolTip197.Items.Add(toolTipTitleItem197);
-            superToolTip197.Items.Add(toolTipItem197);
-            superToolTip197.MaxWidth = 210;
-            printPreviewBarItem48.SuperTip = superToolTip197;
+            superToolTip196.FixedTooltipWidth = true;
+            toolTipTitleItem196.Text = "Export to DOCX";
+            toolTipItem196.LeftIndent = 6;
+            toolTipItem196.Text = "Export the document to DOCX and save it to the file on a disk.";
+            superToolTip196.Items.Add(toolTipTitleItem196);
+            superToolTip196.Items.Add(toolTipItem196);
+            superToolTip196.MaxWidth = 210;
+            printPreviewBarItem48.SuperTip = superToolTip196;
             // 
             // printPreviewBarItem49
             // 
@@ -4815,14 +4798,14 @@
             printPreviewBarItem49.Enabled = false;
             printPreviewBarItem49.Id = 221;
             printPreviewBarItem49.Name = "printPreviewBarItem49";
-            superToolTip198.FixedTooltipWidth = true;
-            toolTipTitleItem198.Text = "Export to Image";
-            toolTipItem198.LeftIndent = 6;
-            toolTipItem198.Text = "Export the document to Image and save it to the file on a disk.";
-            superToolTip198.Items.Add(toolTipTitleItem198);
-            superToolTip198.Items.Add(toolTipItem198);
-            superToolTip198.MaxWidth = 210;
-            printPreviewBarItem49.SuperTip = superToolTip198;
+            superToolTip197.FixedTooltipWidth = true;
+            toolTipTitleItem197.Text = "Export to Image";
+            toolTipItem197.LeftIndent = 6;
+            toolTipItem197.Text = "Export the document to Image and save it to the file on a disk.";
+            superToolTip197.Items.Add(toolTipTitleItem197);
+            superToolTip197.Items.Add(toolTipItem197);
+            superToolTip197.MaxWidth = 210;
+            printPreviewBarItem49.SuperTip = superToolTip197;
             // 
             // printPreviewBarItem50
             // 
@@ -4832,14 +4815,14 @@
             printPreviewBarItem50.Enabled = false;
             printPreviewBarItem50.Id = 222;
             printPreviewBarItem50.Name = "printPreviewBarItem50";
-            superToolTip199.FixedTooltipWidth = true;
-            toolTipTitleItem199.Text = "Open (Ctrl + O)";
-            toolTipItem199.LeftIndent = 6;
-            toolTipItem199.Text = "Open a document.";
-            superToolTip199.Items.Add(toolTipTitleItem199);
-            superToolTip199.Items.Add(toolTipItem199);
-            superToolTip199.MaxWidth = 210;
-            printPreviewBarItem50.SuperTip = superToolTip199;
+            superToolTip198.FixedTooltipWidth = true;
+            toolTipTitleItem198.Text = "Open (Ctrl + O)";
+            toolTipItem198.LeftIndent = 6;
+            toolTipItem198.Text = "Open a document.";
+            superToolTip198.Items.Add(toolTipTitleItem198);
+            superToolTip198.Items.Add(toolTipItem198);
+            superToolTip198.MaxWidth = 210;
+            printPreviewBarItem50.SuperTip = superToolTip198;
             // 
             // printPreviewBarItem51
             // 
@@ -4849,14 +4832,14 @@
             printPreviewBarItem51.Enabled = false;
             printPreviewBarItem51.Id = 223;
             printPreviewBarItem51.Name = "printPreviewBarItem51";
-            superToolTip200.FixedTooltipWidth = true;
-            toolTipTitleItem200.Text = "Save (Ctrl + S)";
-            toolTipItem200.LeftIndent = 6;
-            toolTipItem200.Text = "Save the document.";
-            superToolTip200.Items.Add(toolTipTitleItem200);
-            superToolTip200.Items.Add(toolTipItem200);
-            superToolTip200.MaxWidth = 210;
-            printPreviewBarItem51.SuperTip = superToolTip200;
+            superToolTip199.FixedTooltipWidth = true;
+            toolTipTitleItem199.Text = "Save (Ctrl + S)";
+            toolTipItem199.LeftIndent = 6;
+            toolTipItem199.Text = "Save the document.";
+            superToolTip199.Items.Add(toolTipTitleItem199);
+            superToolTip199.Items.Add(toolTipItem199);
+            superToolTip199.MaxWidth = 210;
+            printPreviewBarItem51.SuperTip = superToolTip199;
             // 
             // printPreviewStaticItem1
             // 
@@ -4943,6 +4926,41 @@
             btnPCode.Id = 225;
             btnPCode.Name = "btnPCode";
             btnPCode.ItemClick += btnPCode_ItemClick;
+            // 
+            // barButtonItem1
+            // 
+            barButtonItem1.Caption = "UL标签";
+            barButtonItem1.Id = 229;
+            barButtonItem1.Name = "barButtonItem1";
+            barButtonItem1.ItemClick += NullMessage;
+            // 
+            // barButtonItem2
+            // 
+            barButtonItem2.Caption = "RoHS标签";
+            barButtonItem2.Id = 230;
+            barButtonItem2.Name = "barButtonItem2";
+            barButtonItem2.ItemClick += NullMessage;
+            // 
+            // barButtonItem3
+            // 
+            barButtonItem3.Caption = "月份标签";
+            barButtonItem3.Id = 231;
+            barButtonItem3.Name = "barButtonItem3";
+            barButtonItem3.ItemClick += NullMessage;
+            // 
+            // barButtonItem4
+            // 
+            barButtonItem4.Caption = "客户物料编码标签";
+            barButtonItem4.Id = 232;
+            barButtonItem4.Name = "barButtonItem4";
+            barButtonItem4.ItemClick += NullMessage;
+            // 
+            // barButtonItem5
+            // 
+            barButtonItem5.Caption = "客户系统标签";
+            barButtonItem5.Id = 233;
+            barButtonItem5.Name = "barButtonItem5";
+            barButtonItem5.ItemClick += NullMessage;
             // 
             // ribbonPageCategory1
             // 
@@ -5356,7 +5374,7 @@
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { xrDesignRibbonPageGroup1, xrDesignRibbonPageGroup2, xrDesignRibbonPageGroup3, xrDesignRibbonPageGroup4, xrDesignRibbonPageGroup5, xrDesignRibbonPageGroup6, xrDesignRibbonPageGroup7, ribbonPageGroup1 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { xrDesignRibbonPageGroup1, ribbonPageGroup1, xrDesignRibbonPageGroup2, xrDesignRibbonPageGroup3, xrDesignRibbonPageGroup4, xrDesignRibbonPageGroup5, xrDesignRibbonPageGroup6, xrDesignRibbonPageGroup7 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "Home";
             // 
@@ -5367,7 +5385,6 @@
             xrDesignRibbonPageGroup1.ItemLinks.Add(commandBarItem6);
             xrDesignRibbonPageGroup1.ItemLinks.Add(commandBarItem9);
             xrDesignRibbonPageGroup1.ItemLinks.Add(btnSave);
-            xrDesignRibbonPageGroup1.ItemLinks.Add(btnSaveAll);
             xrDesignRibbonPageGroup1.Kind = DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroupKind.Report;
             xrDesignRibbonPageGroup1.Name = "xrDesignRibbonPageGroup1";
             xrDesignRibbonPageGroup1.Text = "Report";
@@ -5439,6 +5456,11 @@
             // 
             ribbonPageGroup1.ItemLinks.Add(btnBoxCode);
             ribbonPageGroup1.ItemLinks.Add(btnPCode);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem1);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem2);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem3);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem4);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem5);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "模板";
             // 
@@ -5638,14 +5660,14 @@
             printPreviewRibbonPageGroup3.ItemLinks.Add(printPreviewBarItem29);
             printPreviewRibbonPageGroup3.Kind = DevExpress.XtraPrinting.Preview.PrintPreviewRibbonPageGroupKind.PageSetup;
             printPreviewRibbonPageGroup3.Name = "printPreviewRibbonPageGroup3";
-            superToolTip201.FixedTooltipWidth = true;
-            toolTipTitleItem201.Text = "Page Setup";
-            toolTipItem201.LeftIndent = 6;
-            toolTipItem201.Text = "Show the Page Setup dialog.";
-            superToolTip201.Items.Add(toolTipTitleItem201);
-            superToolTip201.Items.Add(toolTipItem201);
-            superToolTip201.MaxWidth = 210;
-            printPreviewRibbonPageGroup3.SuperTip = superToolTip201;
+            superToolTip200.FixedTooltipWidth = true;
+            toolTipTitleItem200.Text = "Page Setup";
+            toolTipItem200.LeftIndent = 6;
+            toolTipItem200.Text = "Show the Page Setup dialog.";
+            superToolTip200.Items.Add(toolTipTitleItem200);
+            superToolTip200.Items.Add(toolTipItem200);
+            superToolTip200.MaxWidth = 210;
+            printPreviewRibbonPageGroup3.SuperTip = superToolTip200;
             printPreviewRibbonPageGroup3.Text = "Page Setup";
             // 
             // printPreviewRibbonPageGroup4
@@ -5795,7 +5817,6 @@
         private DevExpress.XtraReports.UserDesigner.CommandBarItem commandBarItem6;
         private DevExpress.XtraReports.UserDesigner.CommandBarItem commandBarItem9;
         private DevExpress.XtraReports.UserDesigner.CommandBarItem btnSave;
-        private DevExpress.XtraReports.UserDesigner.CommandBarItem btnSaveAll;
         private DevExpress.XtraReports.UserDesigner.CommandBarItem commandBarItem127;
         private DevExpress.XtraReports.UserDesigner.CommandBarItem commandBarItem128;
         private DevExpress.XtraReports.UserDesigner.CommandBarItem commandBarItem1;
@@ -6126,5 +6147,10 @@
         private DevExpress.XtraReports.UserDesigner.DesignControlContainer propertyGridDockPanel1_Container;
         private DevExpress.XtraReports.UserDesigner.ReportGalleryDockPanel reportGalleryDockPanel1;
         private DevExpress.XtraReports.UserDesigner.DesignControlContainer reportGalleryDockPanel1_Container;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem4;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem5;
     }
 }

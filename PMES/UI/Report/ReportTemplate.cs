@@ -24,6 +24,7 @@ using Path = System.IO.Path;
 using PMES.Core.Managers;
 using DevExpress.XtraReports.Wizards.Templates;
 using DevExpress.XtraRichEdit.Import.Doc;
+using PMES.UC.reports;
 
 namespace PMES.UI.Report
 {
@@ -95,14 +96,19 @@ namespace PMES.UI.Report
 
         private void btnBoxCode_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            var report = new ReportPackingList();
+            var report = new TemplateXianPan();
             reportDesigner1.OpenReport(report);
         }
 
         private void btnPCode_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            var report = new ReportCertificateXD();
+            var report = new TemplateBox();
             reportDesigner1.OpenReport(report);
+        }
+
+        private void NullMessage(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            XtraMessageBox.Show("暂时未添加该标签模板！");
         }
     }
 }

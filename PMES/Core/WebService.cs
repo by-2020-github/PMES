@@ -1,6 +1,8 @@
-﻿using System.Net.Http;
+﻿using System.Net;
+using System.Net.Http;
 using DevExpress.DataAccess.Native.Web;
 using DevExpress.Skins;
+using DevExpress.XtraEditors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
@@ -64,7 +66,7 @@ public class WebService
         }
     }
 
-    public async Task<JObject> GetJObjectValidate(string url)
+    public async Task<Tuple<bool,string?>> GetJObjectValidate(string url)
     {
         try
         {
@@ -72,10 +74,15 @@ public class WebService
             request.Headers.Add("Cookie",
                 "csrftoken=4GjfFB1WhRHfI30HeenFN6CEyYSarg0R; sl-session=l/jXE8c+KGZOFwujhtgpVg==");
             var response = await _httpClient.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return new Tuple<bool, string>(true,"");
+            }
             //response.EnsureSuccessStatusCode();
             var res = await response.Content.ReadAsStringAsync();
             var jobject = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(res);
-            return jobject;
+            var detail = jobject?["detail"].First.ToString().Replace('[', ' ').Replace(']',' ');
+            return new Tuple<bool, string>(false, detail);
         }
         catch (Exception exception)
         {
@@ -143,7 +150,7 @@ public class WebService
         }
         catch (Exception exception)
         {
-            Logger.Error(exception.Message);
+            Logger?.Error(exception.Message);
             return null;
         }
     }

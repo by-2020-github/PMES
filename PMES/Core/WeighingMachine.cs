@@ -22,9 +22,9 @@ public class WeighingMachine
         _logger?.Verbose("WeighingMachine 对象已加载...");
     }
 
-    public void Open(
+    public bool Open(
         string portName,
-        int baudRate = 9600,
+        int baudRate = 19200,
         Parity parity = Parity.None,
         int dataBits = 8,
         StopBits stopBits = StopBits.One)
@@ -39,30 +39,44 @@ public class WeighingMachine
             {
                 _serialPort.Open();
             }
+            return true;
         }
         catch (Exception e)
         {
             _logger?.Error($"电子秤串口打开失败！{e}");
+            return false;
         }
     }
 
 
-    public void Close()
+    public bool Close()
     {
-        if (_serialPort.IsOpen)
+        if (_serialPort == null)
+        {
+            return true;
+        }
+
+        if (!_serialPort.IsOpen) return true;
+        try
         {
             _serialPort.Close();
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger?.Error($"电子秤串口关闭失败！{e}");
+            return false;
         }
     }
 
     public void AddEvent()
     {
-        _serialPort.DataReceived += SerialPortOnDataReceived;
+        if (_serialPort != null) _serialPort.DataReceived += SerialPortOnDataReceived;
     }
 
     public void RemoveEvent()
     {
-        _serialPort.DataReceived -= SerialPortOnDataReceived;
+        if (_serialPort != null) _serialPort.DataReceived -= SerialPortOnDataReceived;
     }
 
     public async Task<double> GetWeight()
@@ -106,6 +120,7 @@ public class WeighingMachine
             //查询稳态重量 如果超过三秒没有稳定则放弃
             try
             {
+                if (_serialPort == null) return 0;
                 _serialPort.WriteLine("S ");
                 var readLine = _serialPort.ReadLine();
                 if (string.IsNullOrEmpty(readLine))

@@ -44,6 +44,22 @@
   <ItemGroup>
     <ProjectReference Include="..\PMES-Common\PMES-Common.csproj" />
     <ProjectReference Include="..\PMES-Respository\PMES-Respository.csproj" />
+    <ProjectReference Include="..\PMES.UC\PMES.UC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\PMES_Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PMES_Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\PMES_Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>PMES_Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

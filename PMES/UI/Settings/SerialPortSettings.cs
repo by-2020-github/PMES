@@ -3,6 +3,7 @@ using DevExpress.XtraEditors;
 using PMES.Core;
 using PMES.Core.Managers;
 using PMES.Model.settings;
+using PMES.Properties;
 using Serilog;
 using SICD_Automatic.Core;
 
@@ -11,7 +12,6 @@ namespace PMES.UI.Settings;
 public partial class SerialPortSettings : XtraForm
 {
     private readonly ILogger _logger;
-    private readonly IFreeSql _freeSql = FreeSqlManager.FSql;
 
     public SerialPortSettings()
     {
@@ -27,8 +27,13 @@ public partial class SerialPortSettings : XtraForm
 
     private void btnRefresh_Click(object sender, EventArgs e)
     {
-        var portNames = SerialPort.GetPortNames();
-        if (portNames == null) return;
+        RefreshSerialPorts();
+    }
+
+    private void RefreshSerialPorts()
+    {
+        var portNames = SerialPort.GetPortNames().Where(s => !string.IsNullOrEmpty(s)).ToList();
+        if (portNames.Count == 0) return;
         cbxCom.Properties.Items.Clear();
         cbxCom.Properties.Items.AddRange(portNames);
     }
@@ -45,15 +50,23 @@ public partial class SerialPortSettings : XtraForm
         {
             GlobalVar.WeighingMachine?.Close();
             GlobalVar.WeighingMachine = new WeighingMachine(_logger);
-            GlobalVar.WeighingMachine.Open(cbxCom.Text, int.Parse(cbxBa.Text));
-            _freeSql.InsertOrUpdate<SystemSettings>().SetSource(new SystemSettings
+
+            if (GlobalVar.WeighingMachine.Open(cbxCom.Text, int.Parse(cbxBa.Text)))
             {
-                Id = 1,
-                SerialPort = cbxCom.Text,
-                BaudRate = int.Parse(cbxBa.Text)
-            }).ExecuteAffrows();
-            XtraMessageBox.Show("称初始化成功！", "Info:", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+                PMES_Settings.Default.COM = cbxCom.Text;
+                PMES_Settings.Default.BaudRate = int.Parse(cbxBa.Text);
+                PMES_Settings.Default.Save();
+
+                XtraMessageBox.Show("称初始化成功！", "Info:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            else
+            {
+                _logger.Error($"称初始化失败!");
+                XtraMessageBox.Show("称初始化失败！", "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+           
         }
         catch (Exception exception)
         {
@@ -65,9 +78,8 @@ public partial class SerialPortSettings : XtraForm
 
     private void SerialPortSettings_Load(object sender, EventArgs e)
     {
-        var portNames = SerialPort.GetPortNames().Where(s=>!string.IsNullOrEmpty(s)).ToList();
-        if (portNames.Count == 0) return;
-        cbxCom.Properties.Items.Clear();
-        cbxCom.Properties.Items.AddRange(portNames);
+        RefreshSerialPorts();
     }
+
+
 }
