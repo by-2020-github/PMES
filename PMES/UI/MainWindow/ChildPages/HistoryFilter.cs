@@ -9,10 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PMES.Model.report;
-using SICD_Automatic.Core;
 using PMES.Core.Managers;
-using PMES.Model.tbs;
 using Serilog;
+using PMES.Core;
+using PMES_Respository.tbs;
 
 namespace PMES.UI.MainWindow.ChildPages
 {

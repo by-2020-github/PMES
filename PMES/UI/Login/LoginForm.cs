@@ -2,11 +2,9 @@
 using Newtonsoft.Json;
 using PMES.Core;
 using PMES.Core.Managers;
-using PMES.Model.tbs;
 using PMES.Model.users;
 using PMES.UI.MainWindow;
 using Serilog;
-using SICD_Automatic.Core;
 
 namespace PMES.UI.Login;
 
@@ -61,6 +59,7 @@ public partial class LoginForm : XtraForm
             }
 
             GlobalVar.CurrentUserInfo = userInfo;
+
         }
         catch (Exception exception)
         {

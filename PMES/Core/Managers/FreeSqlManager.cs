@@ -1,4 +1,4 @@
-﻿using PMES.Model.tbs;
+﻿using PMES_Respository.tbs;
 using Serilog;
 
 namespace PMES.Core.Managers;

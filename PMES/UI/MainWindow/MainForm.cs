@@ -20,15 +20,14 @@ using PMES.Core.Managers;
 using PMES.Model;
 using PMES.Model.report;
 using PMES.Model.settings;
-using PMES.Model.tbs;
 using PMES.Properties;
 using PMES.UC.reports;
 using PMES.UI.MainWindow.ChildPages;
 using PMES.UI.Report;
 using PMES.UI.Settings;
 using PMES_Respository.reportModel;
+using PMES_Respository.tbs;
 using Serilog;
-using SICD_Automatic.Core;
 
 namespace PMES.UI.MainWindow;
 

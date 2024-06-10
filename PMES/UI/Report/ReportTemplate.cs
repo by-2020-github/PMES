@@ -18,8 +18,6 @@ using System.Windows.Shapes;
 using DevExpress.Mvvm.POCO;
 using DevExpress.XtraReports.UI;
 using Serilog;
-using PMES.Model.tbs;
-using SICD_Automatic.Core;
 using Path = System.IO.Path;
 using PMES.Core.Managers;
 using DevExpress.XtraReports.Wizards.Templates;

@@ -11,11 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES-WPF-Automatic", "PMES-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES-WPF-Automatic-Slide", "PMES-WPF-Automatic-Slide\PMES-WPF-Automatic-Slide.csproj", "{A25FE82B-4220-47FB-A7CE-04F5F969C863}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES-Respository", "PMES-Respository\PMES-Respository.csproj", "{C879EDF1-24A5-4EF0-B41E-891C5F8750EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMES-Respository", "PMES-Respository\PMES-Respository.csproj", "{C879EDF1-24A5-4EF0-B41E-891C5F8750EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES-Common", "PMES-Common\PMES-Common.csproj", "{75AAC553-AC2F-4D46-8456-76AFB807B2C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMES-Common", "PMES-Common\PMES-Common.csproj", "{75AAC553-AC2F-4D46-8456-76AFB807B2C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES.UC", "PMES.UC\PMES.UC.csproj", "{FF0E17E7-DA5A-44AB-8052-C58C9E91380B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES-Automatic-Net6", "PMES-Automatic-Net6\PMES-Automatic-Net6.csproj", "{94133595-3626-4E8D-BEA3-DCAB6DD339D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{FF0E17E7-DA5A-44AB-8052-C58C9E91380B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF0E17E7-DA5A-44AB-8052-C58C9E91380B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF0E17E7-DA5A-44AB-8052-C58C9E91380B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94133595-3626-4E8D-BEA3-DCAB6DD339D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94133595-3626-4E8D-BEA3-DCAB6DD339D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94133595-3626-4E8D-BEA3-DCAB6DD339D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94133595-3626-4E8D-BEA3-DCAB6DD339D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

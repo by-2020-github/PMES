@@ -11,8 +11,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.Input;
 using DevExpress.Data.XtraReports.ReportGeneration;
 using DevExpress.Xpf.Printing;
+using PMES_WPF.ViewModels;
 
 namespace PMES_WPF.Views
 {
@@ -24,18 +26,20 @@ namespace PMES_WPF.Views
         public MainView()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
+
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var report = new XtraReport1();
-            report.DataSource = new List<object>()
-            {
+            //var report = new XtraReport1();
+            //report.DataSource = new List<object>()
+            //{
               
-            };
-            PrintHelper.ShowPrintPreview(this,report);
+            //};
+            //PrintHelper.ShowPrintPreview(this,report);
 
-
+            Application.Current.Shutdown();
         }
     }
 }

@@ -10,8 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using PMES.Model.tbs;
-using SICD_Automatic.Core;
+using PMES.Core;
+using PMES_Respository.tbs;
 
 namespace PMES.UI.Report
 {

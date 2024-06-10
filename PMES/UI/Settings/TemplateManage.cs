@@ -11,10 +11,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Serilog;
-using SICD_Automatic.Core;
 using PMES.Model.report;
-using PMES.Model.tbs;
 using PMES.Core.Managers;
+using PMES.Core;
+using PMES_Respository.tbs;
 
 namespace PMES.UI.Settings
 {

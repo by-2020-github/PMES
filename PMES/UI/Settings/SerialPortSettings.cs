@@ -5,7 +5,6 @@ using PMES.Core.Managers;
 using PMES.Model.settings;
 using PMES.Properties;
 using Serilog;
-using SICD_Automatic.Core;
 
 namespace PMES.UI.Settings;
 
