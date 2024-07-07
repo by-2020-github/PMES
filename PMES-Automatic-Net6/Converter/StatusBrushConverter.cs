@@ -25,17 +25,67 @@ namespace PMES_Automatic_Net6.Converter
             switch (status)
             {
                 case Status.Unknown:
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xff,0xff,0xf9),
+                        Offset = 0
+                    });
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xDA, 0xD4, 0xC8),
+                        Offset = 1
+                    });
                     break;
                 case Status.Running:
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xff, 0xff, 0xf9),
+                        Offset = 0
+                    });
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0x00, 0xFF, 0x00),
+                        Offset = 1
+                    });
                     break;
                 case Status.Pause:
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xff, 0xff, 0xf9),
+                        Offset = 0
+                    });
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xFF, 0xFF, 0x00),
+                        Offset = 1
+                    });
                     break;
                 case Status.Stop:
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xff, 0xff, 0xf9),
+                        Offset = 0
+                    });
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xFF, 0x00, 0x00),
+                        Offset = 1
+                    });
                     break;
                 case Status.Error:
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xff, 0xff, 0xf9),
+                        Offset = 0
+                    });
+                    radialBrush.GradientStops.Add(new GradientStop
+                    {
+                        Color = Color.FromRgb(0xFF, 0x00, 0x00),
+                        Offset = 1
+                    });
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();0
+                    throw new ArgumentOutOfRangeException();
             }
 
             return radialBrush;
