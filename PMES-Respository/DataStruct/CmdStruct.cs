@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using S7.Net;
 using S7.Net.Types;
@@ -14,7 +15,7 @@ namespace PMES_Respository.DataStruct
     #region 拆垛机器人
 
     /// <summary>
-    ///     DB501
+    ///     DB500
     /// </summary>
     public class PmesCmdUnStacking
     {
@@ -38,16 +39,15 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte ReelSpecification { get; set; }
 
-
         /// <summary>
         ///     线盘数量
         /// </summary>
         public byte ReelNum { get; set; }
 
         public byte UnStackSpeed { get; set; }
-        public short ReelHeight { get; set; }
-        public short Reserve1 { get; set; }
-        public short Reserve2 { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
 
         /// <summary>
         ///     相等，则认为已处理过；否则，未处理;  判定下次是否可以（上位机）写入的标志
@@ -57,7 +57,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     上位机写入为0，plc处理后值为1.
         /// </summary>
-        public short PlcProcessFlag { get; set; }
+        public byte PlcProcessFlag { get; set; }
     }
 
     /// <summary>
@@ -83,9 +83,9 @@ namespace PMES_Respository.DataStruct
         public byte ReelNum { get; set; }
 
         public byte UnStackSpeed { get; set; }
-        public short ReelHeight { get; set; }
-        public short Reserve1 { get; set; }
-        public short Reserve2 { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
 
         /// <summary>
         /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
@@ -102,62 +102,62 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     DB510
         /// </summary>
-        public static List<DataItem> PmesWeightAndBarCode { get; } = new List<DataItem>()
+        public static ObservableCollection<DataItem> PmesWeightAndBarCode { get; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
-                DB = 10,
+                DB = 510,
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
-                Value = 1//暂时未知
+                Value = 218,
             },
             //code 条码数据，PMES直接读取
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
-                DB = 10,
-                StartByteAdr = 2,
+                DB = 510,
+                StartByteAdr = 1,
                 BitAdr = 0,
-                Count = 1,
-                Value = new object()
+                Count = 50,
+                Value = 0
             },
             //weight 1 重量：4个byte,1个双字，如：120023（代表1200.23KG，两位小数点）；
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.DWord,
-                DB = 10,
-                StartByteAdr = 0,
+                DB = 510,
+                StartByteAdr = 52,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             // weight 2 重量：4个byte,1个双字，如：120023（代表1200.23KG，两位小数点）；
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.DWord,
-                DB = 10,
-                StartByteAdr = 0,
+                DB = 510,
+                StartByteAdr = 56,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             // read flag 1.上位机未读；2.上位机已读
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
-                DB = 10,
-                StartByteAdr = 0,
+                DB = 510,
+                StartByteAdr = 60,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
    
             //预留位
@@ -165,29 +165,29 @@ namespace PMES_Respository.DataStruct
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
-                DB = 10,
-                StartByteAdr = 0,
+                DB = 510,
+                StartByteAdr = 61,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //预留位
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
-                DB = 10,
-                StartByteAdr = 0,
+                DB = 510,
+                StartByteAdr = 63,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
         };
 
         /// <summary>
         ///     线盘barcode check
         /// </summary>
-        public static List<DataItem> PmesReelCodeCheck { get; } = new List<DataItem>()
+        public static ObservableCollection<DataItem> PmesReelCodeCheck { get; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
@@ -198,7 +198,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
-                Value = 1//暂时未知
+                Value = 221//暂时未知,为平面图上的设备号,PLC需要，用于确定是那个设备，进而监控设备状态
             },
             //code1 条码数据，PMES直接读取
             new DataItem
@@ -206,10 +206,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 1,
                 BitAdr = 0,
                 Count = 50,
-                Value = new object()
+                Value = 0
             },
             //code2 条码数据，PMES直接读取
             new DataItem
@@ -217,10 +217,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 52,
                 BitAdr = 0,
                 Count = 50,
-                Value = new object()
+                Value = 0
             },
             //1.上位机未读；2.上位机已读
             new DataItem
@@ -228,46 +228,46 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 103,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //1.reserve1
             new DataItem
             {
                 DataType = DataType.DataBlock,
-                VarType = VarType.Byte,
+                VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 104,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //1.reserve2
             new DataItem
             {
                 DataType = DataType.DataBlock,
-                VarType = VarType.Byte,
+                VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 106,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
         };
 
         /// <summary>
         ///     装箱
         /// </summary>
-        public static List<DataItem> PmesPackingBox { get; } = new List<DataItem>()
+        public static ObservableCollection<DataItem> PmesPackingBox { get; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Int,
-                DB = 520,
+                DB = 530,
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
@@ -279,10 +279,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 1,
                 BitAdr = 0,
                 Count = 50,
-                Value = new object()
+                Value = 0
             },
             //code2 条码数据，PMES直接读取
             new DataItem
@@ -290,10 +290,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 52,
                 BitAdr = 0,
                 Count = 50,
-                Value = new object()
+                Value = 0
             },
             //1.上位机未读；2.上位机已读
             new DataItem
@@ -301,32 +301,32 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 103,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //1.reserve1
             new DataItem
             {
                 DataType = DataType.DataBlock,
-                VarType = VarType.Byte,
+                VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 104,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //1.reserve2
             new DataItem
             {
                 DataType = DataType.DataBlock,
-                VarType = VarType.Byte,
+                VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 2,
+                StartByteAdr = 106,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
         };
     }
@@ -360,11 +360,23 @@ namespace PMES_Respository.DataStruct
 
         /// <summary>
         ///     垛型对应数值：1-；2-；3-
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///    1. PT25裸装-2层
+        ///    2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///    4. PT25箱装-3层
+        ///    5. PT45
+        ///    6.PT60
+        ///    7.PT90
+        ///    8.PT200
+        ///    9.PT270
+        ///    10.355*180木盘
+        ///    11. 500*210木盘
         /// </summary>
         public byte StackModel { get; set; }
 
-        public short Reserve1 { get; set; }
-        public short Reserve2 { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
         /// <summary>
         ///     相等，则认为已处理过；否则，未处理;  判定下次是否可以（上位机）写入的标志
         /// </summary>
@@ -373,11 +385,155 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     上位机写入为0，plc处理后值为1.
         /// </summary>
-        public short PlcProcessFlag { get; set; }
+        public byte PlcProcessFlag { get; set; }
     }
 
+    public class PlcCmdStacking
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
     #endregion
 
+    #region 组合子母托盘
+    public class PmesCmdCombinationMotherChildTray
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
 
+        /// <summary>
+        ///     母托盘工位号
+        /// </summary>
+        public byte MotherStayWorkPositionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格类型
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘.
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     子托盘工位号
+        /// </summary>
+        public byte ChildStayWorkPositionId { get; set; }
+
+        /// <summary>
+        ///     子托盘个数
+        /// </summary>
+        public byte ChildStayNum { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public byte ChildMontherStayWorkPositionId { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        ///     相等，则认为已处理过；否则，未处理;  判定下次是否可以（上位机）写入的标志
+        /// </summary>
+        public byte WriteFlag { get; set; }
+
+        /// <summary>
+        ///     上位机写入为0，plc处理后值为1.
+        /// </summary>
+        public byte PlcProcessFlag { get; set; }
+
+    }
+
+    public class PlcCmdCombinationMotherChildTray
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        /// <summary>
+        ///     母托盘工位号
+        /// </summary>
+        public byte MotherStayWorkPositionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     子托盘工位号
+        /// </summary>
+        public byte ChildStayWorkPositionId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public byte ChildMontherStayWorkPositionId { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+
+    }
+    #endregion
 
 }

@@ -38,15 +38,19 @@ namespace PMES_Automatic_Net6.Views
             {
                 case "PmesCmdUnStacking":
                     PropCmdSend.SelectedObject = new PmesCmdUnStacking();
+                    PropCmdRead.SelectedObject = new PmesCmdUnStacking();
                     break;
                 case "PlcCmdUnStacking":
                     PropCmdSend.SelectedObject = new PlcCmdUnStacking();
+                    PropCmdRead.SelectedObject = new PlcCmdUnStacking();
                     break;
                 case "PmesStacking":
                     PropCmdSend.SelectedObject = new PmesStacking();
+                    PropCmdRead.SelectedObject = new PmesStacking();
                     break;
                 default:
                     PropCmdSend.SelectedObject = new object();
+                    PropCmdRead.SelectedObject = new object();
                     break;
             }
         }
