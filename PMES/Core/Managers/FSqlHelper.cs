@@ -6,7 +6,6 @@ namespace PMES.Core.Managers;
 
 public class FSqlHelper
 {
-    //private readonly string _connStr = @"Data Source=139.196.120.197;Port=3306;User ID=root;Password=Qq123.456; Initial Catalog=avant_sice_v1.1;Charset=utf8; SslMode=none;Min pool size=1";
     private readonly string _connStr =
         @"Data Source=127.0.0.1;Port=3308;User ID=root;Password=123456; Initial Catalog=avant_sicd_automatic;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true";
 
@@ -21,7 +20,7 @@ public class FSqlHelper
         FSql = new FreeSqlBuilder()
             //.UseMonitorCommand(cmd => Trace.WriteLine($"Sql：{cmd.CommandText}")) //监听SQL语句,Trace在输出选项卡中查看
             //.UseMonitorCommand(cmd => _logger.Information($"Sql：{cmd.CommandText}")) //监听SQL语句,在日志中输出
-            .UseConnectionString(DataType.MySql, _connStr)
+            .UseConnectionString(DataType.SqlServer, _connStr)
             .UseAutoSyncStructure(true) //自动同步实体结构到数据库，FreeSql不会扫描程序集，只有CRUD时才会生成表。
             .Build();
         FSql.CodeFirst.IsSyncStructureToLower = true; //设置表名为小写

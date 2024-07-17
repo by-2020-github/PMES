@@ -49,13 +49,15 @@ namespace PMES.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ConnStr {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=127.0.0.1;Port=3308;User ID=root;Password=123456; Initial Catalog=ava" +
+            "nt_sicd_automatic;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetri" +
+            "eval=true")]
+        public string ConnStrMySql {
             get {
-                return ((string)(this["ConnStr"]));
+                return ((string)(this["ConnStrMySql"]));
             }
             set {
-                this["ConnStr"] = value;
+                this["ConnStrMySql"] = value;
             }
         }
         
@@ -80,6 +82,19 @@ namespace PMES.Properties {
             }
             set {
                 this["LastTemplate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.;User Id=sa;Password=Aa123.321;Initial Catalog=test;Encrypt=True;Tru" +
+            "stServerCertificate=True;Pooling=true;Min Pool Size=1")]
+        public string SqlServerConnStr {
+            get {
+                return ((string)(this["SqlServerConnStr"]));
+            }
+            set {
+                this["SqlServerConnStr"] = value;
             }
         }
     }

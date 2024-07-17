@@ -5,19 +5,26 @@ namespace PMES.Core.Managers;
 
 public class FreeSqlManager
 {
-    private static readonly Lazy<FSqlHelper>
-        Holder = new(() => new FSqlHelper(DbLogger, ConnStr));
-
-
-    //private static string _connStr = @"Data Source=127.0.0.1;Port=3308;User ID=root;Password=Qq123.456; Initial Catalog=avant_sicd_automatic.1;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true";
-
-     public static string ConnStr { get; } =
-         @"Data Source=139.196.120.197;Port=3306;User ID=root;Password=Qq123.456; Initial Catalog=my_test;Charset=utf8; SslMode=none;Min pool size=1";
-
-    //public static string ConnStr { get; } =
-    //    @"Data Source=8.142.72.79;Port=3306;User ID=pmes;Password=12345678; Initial Catalog=my_test;Charset=utf8; SslMode=none;Min pool size=1";
-
     public static ILogger DbLogger { get; set; }
+    public static string ConnStrMySql { get; set; } = @"Data Source=139.196.120.197;Port=3306;User ID=root;Password=Qq123.456; Initial Catalog=my_test;Charset=utf8; SslMode=none;Min pool size=1";
+    public static string ConnStrSqlServer { get; set; } = @"Data Source=.;User Id=sa;Password=Aa123.321;Initial Catalog=test;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1";
+
+    #region sql server
+
+    private static readonly Lazy<FSqlServer>
+        HolderSqlServer = new(() => new FSqlServer(DbLogger, ConnStrSqlServer));
+
+    public static IFreeSql FSqlServer => HolderSqlServer.Value.FSql;
+
+    #endregion
+
+    #region mysql 
+
+    private static readonly Lazy<FSqlHelper>
+        Holder = new(() => new FSqlHelper(DbLogger, ConnStrMySql));
+
+
+
 
     public static FSqlHelper FSqlHelper => Holder.Value;
 
@@ -28,6 +35,10 @@ public class FreeSqlManager
         FSql.CodeFirst.SyncStructure<T_label>();
         FSql.CodeFirst.SyncStructure<T_label_template>();
     }
+
+    #endregion
+
+
 
     public static void ConfigNavigate()
     {

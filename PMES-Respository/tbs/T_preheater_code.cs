@@ -24,6 +24,9 @@ namespace PMES_Respository.tbs
         [JsonProperty, Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
         public uint Id { get; set; }
 
+        [Column(Name = "boxId")]
+        public int BoxId { get; set; }
+
         /// <summary>
         /// 自动线 称重2
         /// </summary>

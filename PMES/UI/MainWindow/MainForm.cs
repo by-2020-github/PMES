@@ -6,6 +6,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms.Integration;
 using DevExpress.DataAccess.Native.Json;
+using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraReports.Design;
@@ -27,6 +28,7 @@ using PMES.UI.Report;
 using PMES.UI.Settings;
 using PMES_Respository.reportModel;
 using PMES_Respository.tbs;
+using PMES_Respository.tbs_sqlServer;
 using Serilog;
 
 namespace PMES.UI.MainWindow;
@@ -35,6 +37,7 @@ public partial class MainForm : XtraForm
 {
     private readonly ILogger _logger;
     private readonly IFreeSql _freeSql = FreeSqlManager.FSql;
+    private readonly IFreeSql _freeSqlServer = FreeSqlManager.FSqlServer;
     private ProductInfo _productInfo = new();
 
 
@@ -220,9 +223,11 @@ public partial class MainForm : XtraForm
 
         #endregion
 
-        if (string.IsNullOrEmpty(txtScanCode.Text)) return;
+        if (string.IsNullOrEmpty(txtScanCode.Text))
+            return;
 
-        if (txtScanCode.Text.Length < 5) return;
+        if (txtScanCode.Text.Length < 5)
+            return;
 
         if (txtScanCode.Text.StartsWith("TP"))
         {
@@ -469,20 +474,12 @@ public partial class MainForm : XtraForm
                 tBox.Id = (uint)boxId;
                 _tBoxes.Add(tBox);
                 _tBoxesManual.Add(tBox);
+
+                tPreheaterCode.BoxId = (int)boxId;
                 var preId = await _freeSql.Insert<T_preheater_code>(tPreheaterCode).ExecuteIdentityAsync();
-                var rel = new T_box_releated_preheater
-                {
-                    BoxCodeId = (int)boxId,
-                    CreateTime = DateTime.Now,
-                    IsDel = 0,
-                    PreheaterCodeId = (int)preId,
-                    UpdateTime = DateTime.Now
-                };
-                if (await _freeSql.Insert<T_box_releated_preheater>(rel).ExecuteAffrowsAsync() <= 0)
-                {
-                    ShowErrorMsg("插入关系表失败！");
-                    return;
-                }
+                //更新老数据库
+                UpdateOldDbSqlServer(tPreheaterCode, tBox);
+
 
                 var xps = _tPreheaterCodes.Select(s => new XianPanReportModel
                 {
@@ -535,7 +532,6 @@ public partial class MainForm : XtraForm
 
                 if (_tPreheaterCodes.Count == product.package_info.packing_quantity)
                 {
-                    _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
                     var tBox = new T_box
                     {
                         CreateTime = DateTime.Now,
@@ -557,20 +553,14 @@ public partial class MainForm : XtraForm
                     tBox.Id = (uint)boxId;
                     _tBoxes.Add(tBox);
                     _tBoxesManual.Add(tBox);
-                    var relList = _tPreheaterCodes.Select(s => new T_box_releated_preheater
-                    {
-                        BoxCodeId = (int)boxId,
-                        CreateTime = DateTime.Now,
-                        IsDel = 0,
-                        PreheaterCodeId = (int)s.Id,
-                        UpdateTime = DateTime.Now
-                    }).ToList();
-                    if (await _freeSql.Insert<T_box_releated_preheater>(relList).ExecuteAffrowsAsync() <= 0)
-                    {
-                        ShowErrorMsg("插入关系表失败！");
-                        return;
-                    }
 
+                    _tPreheaterCodes.ForEach(s => { s.BoxId = (int)boxId; });
+                    _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
+                    _tPreheaterCodes.ForEach(s =>
+                    {
+                        //更新老数据库
+                        UpdateOldDbSqlServer(tPreheaterCode, tBox);
+                    });
 
                     var xps = _tPreheaterCodes.Select(s => new XianPanReportModel
                     {
@@ -647,6 +637,91 @@ public partial class MainForm : XtraForm
         }
 
         #endregion
+    }
+
+    /// <summary>
+    ///     更新到老数据库
+    /// </summary>
+    /// <param name="product"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    private void UpdateOldDbSqlServer(T_preheater_code preheaterCode, T_box boxCode)
+    {
+        try
+        {
+            var view = _freeSql.Select<U_VW_DBCP>().First();
+            if (view == null)
+            {
+                ShowErrorMsg("视图查询为空！");
+                return;
+            }
+
+            var old = new OldTest
+            {
+                FItemID = preheaterCode.ProductId,
+                FNumber = preheaterCode.ProductCode,
+                FCZM = preheaterCode.ProductMnemonicCode,
+                FGJTYXH = preheaterCode.ProductGBName,
+                FType = preheaterCode.ProductName,
+                FTypeID = view.产品型号ID,
+                FTypeNO = view.产品型号代号,
+                FQMDJID = view.产成品漆膜等级ID,
+                FQMDJNO = view.产成品漆膜等级代号,
+                FQMDJ = view.产成品漆膜等级,
+                FCPGGID = view.产品规格ID,
+                FCPGGNO = view.产品规格代号,
+                FCZID = view.产品材质ID,
+                FCZNO = view.产品材质代号,
+                FCZName = view.产品材质,
+                FXTID = view.产成品形态ID,
+                FXTNO = view.产成品形态代号,
+                FXTName = view.产成品形态,
+                FCPGG = preheaterCode.ProductSpec,
+                FXPItemID = preheaterCode.PreheaterId,
+                FXPNumber = preheaterCode.PreheaterCode,
+                FXPName = preheaterCode.PreheaterName,
+                FXPGG = preheaterCode.PreheaterSpec,
+                FXPQty = (decimal)preheaterCode.NetWeight,
+                FBZZPZQty = (decimal)preheaterCode.PreheaterWeight,
+                FJTH = preheaterCode.MachineCode,
+                FBH = boxCode.PackagingSN,
+                FBHMX = preheaterCode.PSN,
+                FPCH = preheaterCode.BatchNO,
+                FDate = boxCode.CreateTime,
+                FSXH = 0,
+                FHGZQty = boxCode.PackingQty,
+                FJYR = preheaterCode.OperatorName,
+                FCZRID = preheaterCode.WeightUserId,
+                FCZR = boxCode.PackagingWorker,
+                FZXBZID = 0,
+                FZXBZ = preheaterCode.ProductStandardName,
+                FMZQty = (decimal)boxCode.PackingGrossWeight,
+                FPZQty = (decimal)preheaterCode.PreheaterWeight,
+                FJZQty = (decimal)preheaterCode.NetWeight,
+                FStrip = boxCode.PackingBarCode,
+                FComputerName = boxCode.PackagingCode,
+
+                FZQty = (decimal)boxCode.PackingWeight,
+                FBQID = boxCode.LabelTemplateId,
+                FBQJS = int.Parse(boxCode.PackingQty),
+                FTypeTemp = preheaterCode.ProductName,
+                FICMOID = 0, //这里没有
+                FICMOBillNO = preheaterCode.ICMOBillNO,
+
+                FStrip2 = preheaterCode.ProductionBarcode,
+                FDate2 = preheaterCode.CreateTime,
+                FJSBZID = preheaterCode.UserStandardId,
+                FJSBZNumber = preheaterCode.UserStandardCode,
+                FSCorgno = preheaterCode.ProductionOrgNO,
+                FStockID = preheaterCode.StockId,
+                FCustomer = preheaterCode.CustomerId,
+                FLinkStacklabel = boxCode.TrayBarcode,
+            };
+            _freeSqlServer.Insert(old).ExecuteAffrows();
+        }
+        catch (Exception e)
+        {
+            ShowErrorMsg($"插入老数据库失败！\n{e.Message}");
+        }
     }
 
     public void CheckIfNeedMerger()
@@ -820,7 +895,6 @@ public partial class MainForm : XtraForm
             return;
         }
 
-        _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
         var tBox = new T_box
         {
             CreateTime = DateTime.Now,
@@ -842,20 +916,14 @@ public partial class MainForm : XtraForm
         tBox.Id = (uint)boxId;
         _tBoxes.Add(tBox);
         _tBoxesManual.Add(tBox);
-        var relList = _tPreheaterCodes.Select(s => new T_box_releated_preheater
-        {
-            BoxCodeId = (int)boxId,
-            CreateTime = DateTime.Now,
-            IsDel = 0,
-            PreheaterCodeId = (int)s.Id,
-            UpdateTime = DateTime.Now
-        }).ToList();
-        if (await _freeSql.Insert<T_box_releated_preheater>(relList).ExecuteAffrowsAsync() <= 0)
-        {
-            ShowErrorMsg("插入关系表失败！");
-            return;
-        }
 
+        _tPreheaterCodes.ForEach(p => { p.BoxId = (int)boxId; });
+        _tPreheaterCodes = await _freeSql.Insert(_tPreheaterCodes).ExecuteInsertedAsync();
+        _tPreheaterCodes.ForEach(s =>
+        {
+            //更新老数据库
+            UpdateOldDbSqlServer(s, tBox);
+        });
         ClearData();
         _totalBoxNum++;
 
@@ -1238,12 +1306,20 @@ public partial class MainForm : XtraForm
         txtScanCode.Text = list[next % 10];
     }
 
-    private void cbxMigration_CheckedChanged(object sender, EventArgs e)
+    private void cbxMigrationClick(object sender, EventArgs e)
     {
         //lbNew.Visible = cbxMigration.Checked;
         //lbOld.Visible = cbxMigration.Checked;
         lbNew.Visible = false;
         lbOld.Visible = false;
+        cbxMigration.Checked = true;
+        cbxAutoMode.Checked = false;
+    }
+
+    private void cbxAutoModeClick(object sender, EventArgs e)
+    {
+        cbxMigration.Checked = false;
+        cbxAutoMode.Checked = true;
     }
 
     #endregion

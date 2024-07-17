@@ -8,14 +8,17 @@
     <Setting Name="BaudRate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">19200</Value>
     </Setting>
-    <Setting Name="ConnStr" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ConnStrMySql" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=127.0.0.1;Port=3308;User ID=root;Password=123456; Initial Catalog=avant_sicd_automatic;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true</Value>
     </Setting>
     <Setting Name="TemplatePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\\ProgramData\\PMES_Templates</Value>
     </Setting>
     <Setting Name="LastTemplate" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SqlServerConnStr" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=.;User Id=sa;Password=Aa123.321;Initial Catalog=test;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

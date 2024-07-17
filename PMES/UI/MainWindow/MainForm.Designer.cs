@@ -117,11 +117,12 @@
             lb_currentInfo = new DevExpress.XtraEditors.LabelControl();
             lb_leftNum = new DevExpress.XtraEditors.LabelControl();
             tableLayoutPanel7 = new TableLayoutPanel();
-            cbxAutoMode = new CheckBox();
             cbxBoxPrint = new CheckBox();
             cbxMigration = new CheckBox();
             lbOld = new DevExpress.XtraEditors.LabelControl();
             lbNew = new DevExpress.XtraEditors.LabelControl();
+            cbxAutoMode = new CheckBox();
+            btn_ManualMeger = new DevExpress.XtraEditors.SimpleButton();
             tableLayoutPanelFoot = new TableLayoutPanel();
             labelControl3 = new DevExpress.XtraEditors.LabelControl();
             lb_user = new DevExpress.XtraEditors.LabelControl();
@@ -1497,38 +1498,25 @@
             // 
             tableLayoutPanel7.ColumnCount = 1;
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel7.Controls.Add(cbxAutoMode, 0, 0);
-            tableLayoutPanel7.Controls.Add(cbxBoxPrint, 0, 5);
-            tableLayoutPanel7.Controls.Add(cbxMigration, 0, 2);
-            tableLayoutPanel7.Controls.Add(lbOld, 0, 3);
-            tableLayoutPanel7.Controls.Add(lbNew, 0, 4);
+            tableLayoutPanel7.Controls.Add(cbxBoxPrint, 0, 6);
+            tableLayoutPanel7.Controls.Add(cbxMigration, 0, 3);
+            tableLayoutPanel7.Controls.Add(lbOld, 0, 4);
+            tableLayoutPanel7.Controls.Add(lbNew, 0, 5);
+            tableLayoutPanel7.Controls.Add(cbxAutoMode, 0, 2);
+            tableLayoutPanel7.Controls.Add(btn_ManualMeger, 0, 1);
             tableLayoutPanel7.Dock = DockStyle.Fill;
             tableLayoutPanel7.Location = new Point(5, 401);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
-            tableLayoutPanel7.RowCount = 6;
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel7.RowCount = 7;
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel7.Size = new Size(184, 258);
             tableLayoutPanel7.TabIndex = 2;
-            // 
-            // cbxAutoMode
-            // 
-            cbxAutoMode.Anchor = AnchorStyles.Left;
-            cbxAutoMode.AutoSize = true;
-            cbxAutoMode.Checked = true;
-            cbxAutoMode.CheckState = CheckState.Checked;
-            cbxAutoMode.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            cbxAutoMode.Location = new Point(10, 17);
-            cbxAutoMode.Margin = new Padding(10, 3, 3, 3);
-            cbxAutoMode.Name = "cbxAutoMode";
-            cbxAutoMode.Size = new Size(93, 25);
-            cbxAutoMode.TabIndex = 0;
-            cbxAutoMode.Text = "自动模式";
-            cbxAutoMode.UseVisualStyleBackColor = true;
             // 
             // cbxBoxPrint
             // 
@@ -1555,7 +1543,7 @@
             cbxMigration.TabIndex = 0;
             cbxMigration.Text = "改线入库";
             cbxMigration.UseVisualStyleBackColor = true;
-            cbxMigration.CheckedChanged += cbxMigration_CheckedChanged;
+            cbxMigration.Click += cbxMigrationClick;
             // 
             // lbOld
             // 
@@ -1567,7 +1555,7 @@
             lbOld.Location = new Point(5, 158);
             lbOld.Margin = new Padding(5);
             lbOld.Name = "lbOld";
-            lbOld.Size = new Size(174, 26);
+            lbOld.Size = new Size(174, 25);
             lbOld.TabIndex = 1;
             lbOld.Text = "oldCode";
             lbOld.Visible = false;
@@ -1579,13 +1567,41 @@
             lbNew.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             lbNew.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             lbNew.Dock = DockStyle.Fill;
-            lbNew.Location = new Point(5, 194);
+            lbNew.Location = new Point(5, 193);
             lbNew.Margin = new Padding(5);
             lbNew.Name = "lbNew";
-            lbNew.Size = new Size(174, 24);
+            lbNew.Size = new Size(174, 25);
             lbNew.TabIndex = 1;
             lbNew.Text = "newCode";
             lbNew.Visible = false;
+            // 
+            // cbxAutoMode
+            // 
+            cbxAutoMode.Anchor = AnchorStyles.Left;
+            cbxAutoMode.AutoSize = true;
+            cbxAutoMode.Checked = true;
+            cbxAutoMode.CheckState = CheckState.Checked;
+            cbxAutoMode.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            cbxAutoMode.Location = new Point(10, 88);
+            cbxAutoMode.Margin = new Padding(10, 3, 3, 3);
+            cbxAutoMode.Name = "cbxAutoMode";
+            cbxAutoMode.Size = new Size(93, 25);
+            cbxAutoMode.TabIndex = 0;
+            cbxAutoMode.Text = "自动模式";
+            cbxAutoMode.UseVisualStyleBackColor = true;
+            cbxAutoMode.Click += cbxAutoModeClick;
+            // 
+            // btn_ManualMeger
+            // 
+            btn_ManualMeger.Anchor = AnchorStyles.None;
+            btn_ManualMeger.Appearance.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_ManualMeger.Appearance.Options.UseFont = true;
+            btn_ManualMeger.Location = new Point(15, 32);
+            btn_ManualMeger.Name = "btn_ManualMeger";
+            btn_ManualMeger.Size = new Size(154, 39);
+            btn_ManualMeger.TabIndex = 2;
+            btn_ManualMeger.Text = "人工合托";
+            btn_ManualMeger.Click += Save;
             // 
             // tableLayoutPanelFoot
             // 
@@ -1826,5 +1842,6 @@
         private DevExpress.XtraEditors.LabelControl labelControl7;
         private DevExpress.XtraEditors.LabelControl lbOld;
         private DevExpress.XtraEditors.LabelControl lbNew;
+        private DevExpress.XtraEditors.SimpleButton btn_ManualMeger;
     }
 }

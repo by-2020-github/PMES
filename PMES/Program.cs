@@ -10,12 +10,14 @@ using System.IO;
 using PMES.Model;
 using RichTextBox = System.Windows.Controls.RichTextBox;
 using PMES.Properties;
+using PMES_Respository.tbs_sqlServer;
 namespace PMES;
 
 internal static class Program
 {
     private static ILogger _logger;
     private static IFreeSql _freeSql;
+    private static IFreeSql _freeSqlServer;
 
     /// <summary>
     ///     全局日志输出窗口
@@ -46,15 +48,32 @@ internal static class Program
         SerilogManager.InitDefaultLogger();
         _logger = SerilogManager.GetOrCreateLogger();
         //2 初始化freeSqlHelper并加载数据
-        FreeSqlManager.DbLogger = _logger;
-        _freeSql = FreeSqlManager.FSql;
-        FreeSqlManager.SyncDbStructure();
+        InitDb();
+
 
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         Application.Run(new MainForm());
         Application.Run(new LoginForm());
+    }
+
+    private static void InitDb()
+    {
+        if (!string.IsNullOrEmpty(PMES_Settings.Default.ConnStrMySql))
+        {
+            FreeSqlManager.ConnStrMySql = PMES_Settings.Default.ConnStrMySql;
+        }
+        if (!string.IsNullOrEmpty(PMES_Settings.Default.SqlServerConnStr))
+        {
+            FreeSqlManager.ConnStrSqlServer = PMES_Settings.Default.SqlServerConnStr;
+        }
+
+        FreeSqlManager.DbLogger = _logger;
+        _freeSql = FreeSqlManager.FSql;
+        _freeSqlServer = FreeSqlManager.FSqlServer;
+        FreeSqlManager.SyncDbStructure();
+        //var ret = _freeSqlServer.Insert(new OldTest()).ExecuteAffrows();
     }
 
     private static void NUiExceptionHandler(object sender, UnhandledExceptionEventArgs e)
