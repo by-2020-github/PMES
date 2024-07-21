@@ -55,6 +55,10 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
+                        <Label Width="80" Height="30" Margin="20" Content="DbBlock:" VerticalContentAlignment="Center"></Label>
+                        <TextBox Width="80" Height="30" Margin="20" VerticalAlignment="Center"
+                                 HorizontalAlignment="Left" Text="{Binding DbBlock}">
+                        </TextBox>
                         <Button Width="80" Height="30" Margin="20" Content="Send" Command="{Binding SendCmdCommand}"></Button>
                         <Button Width="80" Height="30" Margin="20" Content="Read" Command="{Binding ReadCmdCommand}"></Button>
                     </StackPanel>
@@ -95,7 +99,9 @@
                     </Button>
                 </StackPanel>
 
-                <DataGrid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding StrCmdDataItems}"></DataGrid>
+                <DataGrid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding StrCmdDataItems}"
+                          CanUserAddRows="False">
+                </DataGrid>
             </Grid>
         </TabItem>
 

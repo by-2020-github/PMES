@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using PMES_Common;
 using S7.Net;
 using S7.Net.Types;
 
@@ -17,6 +18,7 @@ namespace PMES_Respository.DataStruct
     /// <summary>
     ///     DB500
     /// </summary>
+    [PlcCmdAttribute(501)]
     public class PmesCmdUnStacking
     {
         /// <summary>
@@ -63,7 +65,144 @@ namespace PMES_Respository.DataStruct
     /// <summary>
     ///  DB502----DB506 202---206
     /// </summary>
-    public class PlcCmdUnStacking
+    [PlcCmdAttribute(502)]
+    public class PlcCmdUnStacking1
+    {
+        /// <summary>
+        /// 00001 - 拆垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        ///     线盘规格
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+        /// <summary>
+        ///     线盘数量
+        /// </summary>
+        public byte ReelNum { get; set; }
+
+        public byte UnStackSpeed { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte UnStackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///  DB502----DB506 202---206
+    /// </summary>
+    [PlcCmdAttribute(503)]
+    public class PlcCmdUnStacking2
+    {
+        /// <summary>
+        /// 00001 - 拆垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        ///     线盘规格
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+        /// <summary>
+        ///     线盘数量
+        /// </summary>
+        public byte ReelNum { get; set; }
+
+        public byte UnStackSpeed { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte UnStackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///  DB502----DB506 202---206
+    /// </summary>
+    [PlcCmdAttribute(504)]
+    public class PlcCmdUnStacking4
+    {
+        /// <summary>
+        /// 00001 - 拆垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        ///     线盘规格
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+        /// <summary>
+        ///     线盘数量
+        /// </summary>
+        public byte ReelNum { get; set; }
+
+        public byte UnStackSpeed { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte UnStackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///  DB502----DB506 202---206
+    /// </summary>
+    [PlcCmdAttribute(505)]
+    public class PlcCmdUnStacking5
+    {
+        /// <summary>
+        /// 00001 - 拆垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        ///     线盘规格
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+        /// <summary>
+        ///     线盘数量
+        /// </summary>
+        public byte ReelNum { get; set; }
+
+        public byte UnStackSpeed { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte UnStackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///  DB502----DB506 202---206
+    /// </summary>
+    [PlcCmdAttribute(506)]
+    public class PlcCmdUnStacking6
     {
         /// <summary>
         /// 00001 - 拆垛机器人
@@ -335,6 +474,7 @@ namespace PMES_Respository.DataStruct
 
     #region 码垛
 
+    [PlcCmdAttribute(540)]
     public class PmesStacking
     {
         /// <summary>
@@ -389,7 +529,339 @@ namespace PMES_Respository.DataStruct
         public byte PlcProcessFlag { get; set; }
     }
 
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(541)]
     public class PlcCmdStacking
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(541)]
+    public class PlcCmdStacking1
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(542)]
+    public class PlcCmdStacking2
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(543)]
+    public class PlcCmdStacking3
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(544)]
+    public class PlcCmdStacking4
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(545)]
+    public class PlcCmdStacking5
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(546)]
+    public class PlcCmdStacking6
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(547)]
+    public class PlcCmdStacking7
+    {
+        /// <summary>
+        /// 码垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        /// 线盘规格 物料规格类型对应1-8，分别如下：
+        ///1. PT25
+        ///2. PT45
+        ///3.PT60
+        ///4.PT90
+        ///5.PT200
+        ///6.PT270
+        ///7.355*180木盘
+        ///8. 500*210木盘
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+
+        /// <summary>
+        ///     垛型对应数值：1-；2-；3-
+        /// </summary>
+        public byte StackModel { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte StackingFinished { get; set; }
+    }
+
+    /// <summary>
+    ///     DB541~DB548
+    /// </summary>
+    [PlcCmdAttribute(548)]
+    public class PlcCmdStacking8
     {
         /// <summary>
         /// 码垛机器人
@@ -430,6 +902,7 @@ namespace PMES_Respository.DataStruct
 
     #region 组合子母托盘
 
+    [PlcCmdAttribute(550)]
     public class PmesCmdCombinationMotherChildTray
     {
         /// <summary>
@@ -488,6 +961,7 @@ namespace PMES_Respository.DataStruct
         public byte PlcProcessFlag { get; set; }
     }
 
+    [PlcCmdAttribute(551)]
     public class PlcCmdCombinationMotherChildTray
     {
         /// <summary>
@@ -540,6 +1014,7 @@ namespace PMES_Respository.DataStruct
 
     #region 整条线物料信息交互区
 
+    [PlcCmdAttribute(560)]
     public class ValidateInfo
     {
         public byte DeviceId { get; set; }
@@ -559,8 +1034,8 @@ namespace PMES_Respository.DataStruct
         public byte PSN { get; set; }
 
         public byte IsOk { get; set; }
-        public byte Reverse1 { get; set; }
-        public byte Reverse2 { get; set; }
+        public ushort Reverse1 { get; set; }
+        public ushort Reverse2 { get; set; }
     }
 
     #endregion

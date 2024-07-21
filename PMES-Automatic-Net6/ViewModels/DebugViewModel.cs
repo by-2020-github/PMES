@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
 using System.Reflection;
+using PMES_Common;
 
 namespace PMES_Automatic_Net6.ViewModels
 {
@@ -30,6 +31,7 @@ namespace PMES_Automatic_Net6.ViewModels
         [ObservableProperty] private object? _writeObject;
         [ObservableProperty] private object? _readObject;
         [ObservableProperty] private string? _selectedCmdItem;
+        [ObservableProperty] private int? _dbBlock;
 
         #endregion
 
@@ -134,8 +136,7 @@ namespace PMES_Automatic_Net6.ViewModels
                 return;
             if (ReadObject == null)
                 return;
-            var db = 0;
-            plc.ReadClass(ReadObject, db, 0);
+            plc.ReadClass(ReadObject, DbBlock ?? 0, 0);
         }
 
         /// <summary>
@@ -159,8 +160,8 @@ namespace PMES_Automatic_Net6.ViewModels
                 return;
             if (WriteObject == null)
                 return;
-            var db = 0;
-            plc.WriteClass(WriteObject, db, 0);
+
+            plc.WriteClass(WriteObject, DbBlock ?? 0, 0);
         }
 
         /// <summary>
@@ -173,7 +174,6 @@ namespace PMES_Automatic_Net6.ViewModels
                 return;
             if (StrCmdDataItems.Count == 0)
                 return;
-            var db = 0;
             plc.Write(StrCmdDataItems.ToArray());
         }
 
@@ -191,6 +191,9 @@ namespace PMES_Automatic_Net6.ViewModels
             if (type == null)
                 return;
             WriteObject = Activator.CreateInstance(type);
+            var plcCmdAttribute = WriteObject!.GetType().GetCustomAttribute<PlcCmdAttribute>();
+            if (plcCmdAttribute != null)
+                DbBlock = plcCmdAttribute.DbBlock;
             ReadObject = Activator.CreateInstance(type);
         }
 
