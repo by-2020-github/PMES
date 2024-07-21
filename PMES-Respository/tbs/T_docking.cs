@@ -11,11 +11,11 @@ using FreeSql.DataAnnotations;
 namespace PMES_Respository.tbs
 {
 
-    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_docking", DisableSyncStructure = true)]
+    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_docking" )]
     public partial class T_docking
     {
 
-        [JsonProperty, Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
+        [JsonProperty, Column(Name = "id" , IsPrimary = true, IsIdentity = true)]
         public uint Id { get; set; }
 
         /// <summary>
@@ -27,19 +27,19 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 停驳位编号
         /// </summary>
-        [JsonProperty, Column(Name = "dockingPositionCode", StringLength = 20)]
+        [JsonProperty, Column(Name = "dockingPositionCode" )]
         public string DockingPositionCode { get; set; }
 
         /// <summary>
         /// 产线号
         /// </summary>
-        [JsonProperty, Column(Name = "lineNo", DbType = "int")]
+        [JsonProperty, Column(Name = "lineNo" )]
         public int? LineNo { get; set; }
 
         /// <summary>
         /// 机台编号
         /// </summary>
-        [JsonProperty, Column(Name = "name", StringLength = 10)]
+        [JsonProperty, Column(Name = "name" )]
         public string Name { get; set; }
 
     }

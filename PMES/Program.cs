@@ -71,7 +71,7 @@ internal static class Program
 
         FreeSqlManager.DbLogger = _logger;
         _freeSql = FreeSqlManager.FSql;
-        _freeSqlServer = FreeSqlManager.FSqlServer;
+        _freeSqlServer = FreeSqlManager.FSql;
         FreeSqlManager.SyncDbStructure();
         //var ret = _freeSqlServer.Insert(new OldTest()).ExecuteAffrows();
     }

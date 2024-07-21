@@ -14,32 +14,32 @@ namespace PMES_Respository.tbs
     /// <summary>
     /// 包装组关联产线表
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_package_group_releated_line", DisableSyncStructure = true)]
+    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_package_group_releated_line" )]
     public partial class T_package_group_releated_line
     {
 
         /// <summary>
         /// 主键ID
         /// </summary>
-        [JsonProperty, Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
+        [JsonProperty, Column(Name = "id" , IsPrimary = true, IsIdentity = true)]
         public uint Id { get; set; }
 
         /// <summary>
         /// 记录建立时间
         /// </summary>
-        [JsonProperty, Column(Name = "createTime", DbType = "datetime")]
+        [JsonProperty, Column(Name = "createTime" )]
         public DateTime? CreateTime { get; set; }
 
         /// <summary>
         /// 包装组ID
         /// </summary>
-        [JsonProperty, Column(Name = "package_group_id", StringLength = 20)]
+        [JsonProperty, Column(Name = "package_group_id" )]
         public string Package_group_id { get; set; }
 
         /// <summary>
         /// 产线表ID
         /// </summary>
-        [JsonProperty, Column(Name = "production_line_id", StringLength = 20)]
+        [JsonProperty, Column(Name = "production_line_id" )]
         public string Production_line_id { get; set; }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 记录更新时间
         /// </summary>
-        [JsonProperty, Column(Name = "updateTime", DbType = "datetime")]
+        [JsonProperty, Column(Name = "updateTime" )]
         public DateTime? UpdateTime { get; set; }
 
     }

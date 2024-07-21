@@ -14,32 +14,32 @@ namespace PMES_Respository.tbs
     /// <summary>
     /// 包装要求表
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_package_group", DisableSyncStructure = true)]
+    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_package_group" )]
     public partial class T_package_group
     {
 
         /// <summary>
         /// 标签定义表主键ID
         /// </summary>
-        [JsonProperty, Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
+        [JsonProperty, Column(Name = "id" , IsPrimary = true, IsIdentity = true)]
         public uint Id { get; set; }
 
         /// <summary>
         /// 包装组编码
         /// </summary>
-        [JsonProperty, Column(Name = "code", StringLength = 20)]
+        [JsonProperty, Column(Name = "code" )]
         public string Code { get; set; }
 
         /// <summary>
         /// 建立时间
         /// </summary>
-        [JsonProperty, Column(Name = "createTime", DbType = "datetime")]
+        [JsonProperty, Column(Name = "createTime" )]
         public DateTime? CreateTime { get; set; }
 
         /// <summary>
         /// 包装组-名称
         /// </summary>
-        [JsonProperty, Column(Name = "name", StringLength = 60)]
+        [JsonProperty, Column(Name = "name" )]
         public string Name { get; set; }
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 状态：0.删除；1.未删除
         /// </summary>
-        [JsonProperty, Column(Name = "status", DbType = "int")]
+        [JsonProperty, Column(Name = "status" )]
         public int? Status { get; set; } = 1;
 
         /// <summary>
         /// 更新时间
         /// </summary>
-        [JsonProperty, Column(Name = "updateTime", DbType = "datetime")]
+        [JsonProperty, Column(Name = "updateTime" )]
         public DateTime? UpdateTime { get; set; }
 
     }

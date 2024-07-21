@@ -23,7 +23,7 @@ public class FSqlServer
             .UseConnectionString(DataType.SqlServer, _connStr, typeof(FreeSql.SqlServer.SqlServerProvider<>))
             .UseAutoSyncStructure(true) //自动同步实体结构到数据库，FreeSql不会扫描程序集，只有CRUD时才会生成表。
             .Build();
-        FSql.CodeFirst.IsSyncStructureToLower = true; //设置表名为小写
+        //FSql.CodeFirst.IsSyncStructureToLower = true; //设置表名为小写
         logger?.Debug("fSql已加载!");
     }
 

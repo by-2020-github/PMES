@@ -14,14 +14,14 @@ namespace PMES_Respository.tbs
     /// <summary>
     /// 管理员信息表
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_admin", DisableSyncStructure = true)]
+    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_admin" )]
     public partial class T_admin
     {
 
         /// <summary>
         /// 管理员表-主键ID
         /// </summary>
-        [JsonProperty, Column(Name = "id", DbType = "int unsigned", IsPrimary = true, IsIdentity = true)]
+        [JsonProperty, Column(Name = "id" , IsPrimary = true, IsIdentity = true)]
         public uint Id { get; set; }
 
         /// <summary>
@@ -33,13 +33,13 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 后台管理员添加时间
         /// </summary>
-        [JsonProperty, Column(Name = "createTime", DbType = "datetime")]
+        [JsonProperty, Column(Name = "createTime" )]
         public DateTime? CreateTime { get; set; }
 
         /// <summary>
         /// 是否删除 1是0否
         /// </summary>
-        [JsonProperty, Column(Name = "isDel", DbType = "int")]
+        [JsonProperty, Column(Name = "isDel" )]
         public int? IsDel { get; set; } = 0;
 
         /// <summary>
@@ -57,19 +57,19 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 后台管理员姓名
         /// </summary>
-        [JsonProperty, Column(Name = "realName", StringLength = 10)]
+        [JsonProperty, Column(Name = "realName" )]
         public string RealName { get; set; }
 
         /// <summary>
         /// 后台管理员状态：1有效；0无效
         /// </summary>
-        [JsonProperty, Column(Name = "status", DbType = "int")]
+        [JsonProperty, Column(Name = "status" )]
         public int? Status { get; set; }
 
         /// <summary>
         /// 后台管理员最后一次登录时间
         /// </summary>
-        [JsonProperty, Column(Name = "updateTime", DbType = "datetime")]
+        [JsonProperty, Column(Name = "updateTime" )]
         public DateTime? UpdateTime { get; set; }
 
     }

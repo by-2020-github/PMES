@@ -10,24 +10,95 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\font\iconfont.ttf" />
+    <None Remove="Resources\icon\cebianlan.png" />
+    <None Remove="Resources\icon\cebianshensuo_1.png" />
+    <None Remove="Resources\icon\manual.png" />
+    <None Remove="Resources\icon\right.png" />
+    <None Remove="Resources\icon\right2.png" />
+    <None Remove="Resources\icon\settings.png" />
+    <None Remove="Resources\icon\to-top.png" />
+    <None Remove="Resources\icon\top.png" />
+    <None Remove="Resources\icon\top2.png" />
+    <None Remove="Resources\icon\zhankai.png" />
+    <None Remove="Resources\icon\zhankaice2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\font\iconfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="Resources\icon\cebianlan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\cebianshensuo_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\manual.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\right2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\to-top.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\top.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\top2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\zhankai.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\icon\zhankaice2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
     <PackageReference Include="FluentModbus" Version="5.2.0" />
+    <PackageReference Include="FreeSql.Provider.SqlServer" Version="3.2.833" />
+    <PackageReference Include="FreeSql.Repository" Version="3.2.833" />
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.122" />
     <PackageReference Include="S7netplus" Version="0.20.0" />
     <PackageReference Include="Serilog" Version="4.0.0" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+    <PackageReference Include="Trans.System.Windows.Interactivity" Version="3.0.40218.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PMES-Common\PMES-Common.csproj" />
     <ProjectReference Include="..\PMES-Respository\PMES-Respository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="PMESConfig.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PMESConfig.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PMESConfig.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>PMESConfig.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

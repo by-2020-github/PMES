@@ -469,7 +469,17 @@ public partial class MainForm : XtraForm
                     TrayBarcode = txtScanCode.Text,
                     UpdateTime = DateTime.Now
                 };
-                var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
+                var boxId = 0l;
+                try
+                {
+                    boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+                // var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
                 _boxIdList.Add((int)boxId);
                 tBox.Id = (uint)boxId;
                 _tBoxes.Add(tBox);
@@ -648,7 +658,7 @@ public partial class MainForm : XtraForm
     {
         try
         {
-            var view = _freeSql.Select<U_VW_DBCP>().First();
+            var view = _freeSql.Select<U_VW_DBCP>().Where(s=>s.FItemID == preheaterCode.ProductId.ToString()).First();
             if (view == null)
             {
                 ShowErrorMsg("视图查询为空！");

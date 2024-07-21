@@ -10,24 +10,22 @@ using FreeSql.DataAnnotations;
 
 namespace PMES_Respository.tbs
 {
-
     /// <summary>
     /// 改线入库表
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_order_exchange", DisableSyncStructure = true)]
+    [JsonObject(MemberSerialization.OptIn), Table(Name = "t_order_exchange" )]
     public partial class T_order_exchange
     {
-
         /// <summary>
         /// 主键
         /// </summary>
-        [JsonProperty, Column(Name = "id", DbType = "int", IsPrimary = true, IsIdentity = true)]
+        [JsonProperty, Column(Name = "id" , IsPrimary = true, IsIdentity = true)]
         public int Id { get; set; }
 
         /// <summary>
         /// 记录创建时间
         /// </summary>
-        [JsonProperty, Column(Name = "createTime", DbType = "datetime")]
+        [JsonProperty, Column(Name = "createTime" )]
         public DateTime? CreateTime { get; set; }
 
         /// <summary>
@@ -45,9 +43,7 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 登录用户ID
         /// </summary>
-        [JsonProperty, Column(Name = "weightUserId", DbType = "int")]
+        [JsonProperty, Column(Name = "weightUserId")]
         public int? WeightUserId { get; set; }
-
     }
-
 }

@@ -102,7 +102,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     DB510
         /// </summary>
-        public static ObservableCollection<DataItem> PmesWeightAndBarCode { get; } = new ObservableCollection<DataItem>()
+        public ObservableCollection<DataItem> PmesWeightAndBarCode { get; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
@@ -124,7 +124,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 1,
                 BitAdr = 0,
                 Count = 50,
-                Value = 0
+                Value = new object()
             },
             //weight 1 重量：4个byte,1个双字，如：120023（代表1200.23KG，两位小数点）；
             new DataItem
@@ -135,7 +135,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 52,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
             // weight 2 重量：4个byte,1个双字，如：120023（代表1200.23KG，两位小数点）；
             new DataItem
@@ -146,7 +146,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 56,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
             // read flag 1.上位机未读；2.上位机已读
             new DataItem
@@ -157,9 +157,9 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 60,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
-   
+
             //预留位
             new DataItem
             {
@@ -169,7 +169,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 61,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
             //预留位
             new DataItem
@@ -180,14 +180,14 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 63,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
         };
 
         /// <summary>
         ///     线盘barcode check
         /// </summary>
-        public static ObservableCollection<DataItem> PmesReelCodeCheck { get; } = new ObservableCollection<DataItem>()
+        public ObservableCollection<DataItem> PmesReelCodeCheck { get; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
@@ -198,7 +198,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
-                Value = 221//暂时未知,为平面图上的设备号,PLC需要，用于确定是那个设备，进而监控设备状态
+                Value = 221 //暂时未知,为平面图上的设备号,PLC需要，用于确定是那个设备，进而监控设备状态
             },
             //code1 条码数据，PMES直接读取
             new DataItem
@@ -209,7 +209,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 1,
                 BitAdr = 0,
                 Count = 50,
-                Value = 0
+                Value = new object()
             },
             //code2 条码数据，PMES直接读取
             new DataItem
@@ -220,7 +220,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 52,
                 BitAdr = 0,
                 Count = 50,
-                Value = 0
+                Value = new object()
             },
             //1.上位机未读；2.上位机已读
             new DataItem
@@ -231,7 +231,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 103,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
             //1.reserve1
             new DataItem
@@ -242,7 +242,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 104,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
             //1.reserve2
             new DataItem
@@ -253,14 +253,14 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 106,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
         };
 
         /// <summary>
         ///     装箱
         /// </summary>
-        public static ObservableCollection<DataItem> PmesPackingBox { get; } = new ObservableCollection<DataItem>()
+        public ObservableCollection<DataItem> PmesPackingBox { get; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
@@ -271,7 +271,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
-                Value = 1//暂时未知
+                Value = 1 //暂时未知
             },
             //code1 条码数据，PMES直接读取
             new DataItem
@@ -282,7 +282,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 1,
                 BitAdr = 0,
                 Count = 50,
-                Value = 0
+                Value = new object()
             },
             //code2 条码数据，PMES直接读取
             new DataItem
@@ -293,7 +293,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 52,
                 BitAdr = 0,
                 Count = 50,
-                Value = 0
+                Value = new object()
             },
             //1.上位机未读；2.上位机已读
             new DataItem
@@ -304,7 +304,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 103,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
             //1.reserve1
             new DataItem
@@ -315,7 +315,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 104,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
             //1.reserve2
             new DataItem
@@ -326,7 +326,7 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 106,
                 BitAdr = 0,
                 Count = 1,
-                Value = 0
+                Value = new object()
             },
         };
     }
@@ -377,6 +377,7 @@ namespace PMES_Respository.DataStruct
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
+
         /// <summary>
         ///     相等，则认为已处理过；否则，未处理;  判定下次是否可以（上位机）写入的标志
         /// </summary>
@@ -424,9 +425,11 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte StackingFinished { get; set; }
     }
+
     #endregion
 
     #region 组合子母托盘
+
     public class PmesCmdCombinationMotherChildTray
     {
         /// <summary>
@@ -483,7 +486,6 @@ namespace PMES_Respository.DataStruct
         ///     上位机写入为0，plc处理后值为1.
         /// </summary>
         public byte PlcProcessFlag { get; set; }
-
     }
 
     public class PlcCmdCombinationMotherChildTray
@@ -532,8 +534,34 @@ namespace PMES_Respository.DataStruct
         /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
         public byte StackingFinished { get; set; }
-
     }
+
     #endregion
 
+    #region 整条线物料信息交互区
+
+    public class ValidateInfo
+    {
+        public byte DeviceId { get; set; }
+
+        /// <summary>
+        /// 物料规格类型对应1-8，
+        /// 分别如下：
+        /// 1. PT25
+        /// 2. PT45
+        /// 3.PT60
+        /// 4.PT90
+        /// 5.PT200
+        /// 6.PT270
+        /// 7.355*180木盘
+        /// 8. 500*210木盘
+        /// </summary>
+        public byte PSN { get; set; }
+
+        public byte IsOk { get; set; }
+        public byte Reverse1 { get; set; }
+        public byte Reverse2 { get; set; }
+    }
+
+    #endregion
 }

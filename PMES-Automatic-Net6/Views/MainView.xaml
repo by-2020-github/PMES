@@ -9,247 +9,82 @@
         xmlns:viewModels="clr-namespace:PMES_Automatic_Net6.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:views="clr-namespace:PMES_Automatic_Net6.Views"
+        Style="{DynamicResource MaterialDesignWindow}"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        TextElement.FontFamily="Microsoft YaHei UI"
         Title="MainWindow" Height="1080" Width="1920">
-    <Window.Resources>
-        <converter:StatusBrushConverter x:Key="StatusBrushConverter"></converter:StatusBrushConverter>
-        <Style TargetType="Label">
-            <Setter Property="FontSize" Value="20"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-        </Style>
-        <!--DataGrid样式-->
-        <Style TargetType="DataGrid">
-            <!--网格线颜色-->
-            <Setter Property="CanUserResizeColumns" Value="false" />
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="Gray" />
-            <Setter Property="HorizontalGridLinesBrush">
-                <Setter.Value>
-                    <SolidColorBrush Color="Gray" />
-                </Setter.Value>
-            </Setter>
-            <Setter Property="VerticalGridLinesBrush">
-                <Setter.Value>
-                    <SolidColorBrush Color="Gray" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <!--标题栏样式-->
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="MinWidth" Value="0" />
-            <Setter Property="MinHeight" Value="28" />
-            <Setter Property="Foreground" Value="#323433" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="DataGridColumnHeader">
-                        <Border x:Name="BackgroundBorder" BorderThickness="0,1,0,1"
-                                BorderBrush="#e6dbba"
-                                Width="Auto">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <ContentPresenter Margin="0,0,0,0" VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center" />
-                                <Path x:Name="SortArrow" Visibility="Collapsed" Data="M0,0 L1,0 0.5,1 z" Stretch="Fill"
-                                      Grid.Column="2" Width="8" Height="6" Fill="White" Margin="0,0,50,0"
-                                      VerticalAlignment="Center" RenderTransformOrigin="1,1" />
-                                <Rectangle Width="1" Fill="#d6c79b" HorizontalAlignment="Right" Grid.ColumnSpan="1" />
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Height" Value="25" />
-        </Style>
-
-        <Style TargetType="Label" x:Key="TitleLabel">
-            <Setter Property="FontSize" Value="36"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="FontWeight" Value="Bold"></Setter>
-            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
-            <Setter Property="Padding" Value="15,15,0,0"></Setter>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="FontSize" Value="24"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-            <Setter Property="Width" Value="160"></Setter>
-            <Setter Property="Height" Value="60"></Setter>
-            <Setter Property="Background" Value="#F4F4F4"></Setter>
-        </Style>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
-            <Setter Property="Width" Value="160"></Setter>
-            <Setter Property="Height" Value="60"></Setter>
-            <Setter Property="Background" Value="#F4F4F4"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-        </Style>
-
-        <Style TargetType="Label" x:Key="LabelInput">
-            <Setter Property="FontSize" Value="14"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
-            <Setter Property="Height" Value="45"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        </Style>
-
-        <Style TargetType="Label" x:Key="LabelTitle">
-            <Setter Property="FontSize" Value="20"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="FontFamily" Value="Microsoft YaHei UI"></Setter>
-            <Setter Property="Height" Value="45"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        </Style>
-        <Style TargetType="Ellipse" x:Key="Led">
-            <Setter Property="Width" Value="40"></Setter>
-            <Setter Property="Height" Value="40"></Setter>
-        </Style>
-    </Window.Resources>
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="110"></RowDefinition>
-            <RowDefinition Height="150"></RowDefinition>
-            <RowDefinition Height="80"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="80"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
-        </Grid.RowDefinitions>
-        <!--header-->
-        <Grid Grid.Row="0" Background="#81D3F8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition Width="20"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Margin="15" Content="PMES - 欢迎使用成品智能包装系统" Grid.Column="0" Style="{StaticResource TitleLabel}"></Label>
-
-            <Button Grid.Column="1" Content="清空"></Button>
-            <Button Grid.Column="2" Content="停止"></Button>
-            <Button Grid.Column="3" Content="退出" Command="{Binding CloseCommand}"></Button>
-        </Grid>
-        <!--状态-->
-        <UniformGrid Grid.Row="1" Rows="1" Columns="6" Margin="10">
-            <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource LabelTitle}" Content="预扫码"></Label>
-                <Ellipse Margin="0,5,0,5" Style="{StaticResource Led}"
-                         Fill="{Binding Path=BarCodeScannerStatus1 ,   Converter={StaticResource StatusBrushConverter}}" />
-                <Label Style="{StaticResource LabelInput}" Content="{Binding Path= PreScanCode1}"></Label>
-            </StackPanel>
-
-            <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource LabelTitle}" Content="称重1"></Label>
-                <Ellipse Margin="0,5,0,5" Style="{StaticResource Led}"
-                         Fill="{Binding Path=WeighingStatus1 ,   Converter={StaticResource StatusBrushConverter}}" />
-                <Label Style="{StaticResource LabelInput}" Content="{Binding Path= Weight1}"></Label>
-            </StackPanel>
-
-            <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource LabelTitle}" Content="称重2"></Label>
-                <Ellipse Margin="0,5,0,5" Style="{StaticResource Led}"
-                         Fill="{Binding Path=WeighingStatus2 ,   Converter={StaticResource StatusBrushConverter}}" />
-                <Label Style="{StaticResource LabelInput}" Content="{Binding Path= Weight2}"></Label>
-            </StackPanel>
 
 
-            <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource LabelTitle}" Content="扫码校验"></Label>
-                <Ellipse Margin="0,5,0,5" Style="{StaticResource Led}"
-                         Fill="{Binding Path=BarCodeScannerStatus2 ,   Converter={StaticResource StatusBrushConverter}}" />
-                <Label Style="{StaticResource LabelInput}" Content="{Binding Path= PreScanCode2}"></Label>
-            </StackPanel>
+    <md:Card>
+        <TabControl
+            HorizontalContentAlignment="Center"
+            materialDesign:ColorZoneAssist.Mode="PrimaryLight"
+            materialDesign:NavigationRailAssist.SelectionCornerRadius="50"
+            materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+            Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+            TabStripPlacement="Bottom">
+            <!-- 自动线顶贴主窗口 -->
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel
+                        Width="auto"
+                        Height="auto">
+                        <Image Source="../Resources/icon/top.png" Height="20" Width="20" Stretch="Fill"></Image>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Top2" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:TopPage x:Name="TopPage"></views:TopPage>
+            </TabItem>
+            <!-- 自动线侧贴主窗口 -->
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel
+                        Width="auto"
+                        Height="auto">
+                        <Image Source="../Resources/icon/top.png" Height="20" Width="20"></Image>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Edge" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:SlidePage x:Name="SlidePage"></views:SlidePage>
+            </TabItem>
+            <!-- 工程页面 -->
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel
+                        Width="auto"
+                        Height="auto">
+                        <Image Source="../Resources/icon/manual.png" Height="20" Width="20"></Image>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Debug" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:DebugView x:Name="DebugView"></views:DebugView>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel
+                        Width="auto"
+                        Height="auto">
+                        <Image Source="../Resources/icon/settings.png" Height="20" Width="20"></Image>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Settings" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
 
-            <Button Content="历史"></Button>
-            <Button Content="打印暂停"></Button>
+        </TabControl>
+    </md:Card>
 
-        </UniformGrid>
 
-        <Grid Grid.Row="2" Background="LightGray">
-            <Label Content="实时现场作业" FontSize="24" Margin="20" FontWeight="Bold" HorizontalAlignment="Left"
-                   HorizontalContentAlignment="Left">
-            </Label>
-        </Grid>
-        <DataGrid Grid.Row="3">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="编号" Width="1*"></DataGridTextColumn>
-                <DataGridTextColumn Header="生产编号" Width="2*"></DataGridTextColumn>
-                <DataGridTextColumn Header="称重1毛重" Width="1*"></DataGridTextColumn>
-                <DataGridTextColumn Header="称重2毛重" Width="1*"></DataGridTextColumn>
-                <DataGridTextColumn Header="最终产品重量" Width="1*"></DataGridTextColumn>
-                <DataGridTextColumn Header="时间" Width="1.5*"></DataGridTextColumn>
-                <DataGridTextColumn Header="结果" Width="1*"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Grid Grid.Row="4" Background="LightGray">
-            <Label Content="历史数据" FontSize="24" Margin="20" FontWeight="Bold" HorizontalAlignment="Left"
-                   HorizontalContentAlignment="Left">
-            </Label>
-        </Grid>
-        <Grid Grid.Row="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="240"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="编号" Width="1*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="生产编号" Width="2*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="称重1毛重" Width="1*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="称重2毛重" Width="1*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="最终产品重量" Width="1*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="时间" Width="1.5*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="结果" Width="1*"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button Grid.Column="1" Content="打印选中标签" Width="220"></Button>
-        </Grid>
-        <Grid Grid.Row="6">
-            <TextBlock Text="系统日志" FontSize="18" Padding="15"></TextBlock>
-
-        </Grid>
-
-        <Border Grid.Row="7" BorderThickness="1" BorderBrush="Gray">
-            <StackPanel Orientation="Horizontal">
-                <Label HorizontalContentAlignment="Right" FontSize="12" Width="80" VerticalAlignment="Center"
-                       HorizontalAlignment="Right" Content="PLC:">
-                </Label>
-                <Ellipse Margin="5" VerticalAlignment="Center" Height="20" Width="20"
-                         Fill="{Binding Path=PlcStatus ,   Converter={StaticResource StatusBrushConverter}}" />
-                <Label HorizontalContentAlignment="Right" FontSize="12" Width="80" VerticalAlignment="Center"
-                       HorizontalAlignment="Right" Content="服务器:">
-                </Label>
-                <Ellipse Margin="5" VerticalAlignment="Center" Height="20" Width="20"
-                         Fill="{Binding Path=ServiceStatus ,   Converter={StaticResource StatusBrushConverter}}" />
-                <Label HorizontalContentAlignment="Right" FontSize="12" Width="80" VerticalAlignment="Center"
-                       HorizontalAlignment="Right" Content="工作指示灯:">
-                </Label>
-                <Ellipse Margin="5" VerticalAlignment="Center" Height="20" Width="20"
-                         Fill="{Binding Path=AllStatus ,   Converter={StaticResource StatusBrushConverter}}" />
-            </StackPanel>
-
-        </Border>
-
-    </Grid>
 </Window>
