@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FreeSql.DataAnnotations;
 
 namespace PMES_Respository.tbs_sqlServer
 {
     /// <summary>
     /// 视图名称：[PMES].[dbo].[U_VW_DBCP]
     /// </summary>
+    [Table(DisableSyncStructure = true)]
     public class U_VW_DBCP
     {
         public string FItemID { get; set; }//产品ID
         public string FNumber { get; set; }//产品代码
         public string FName { get; set; }//产品名称
-        public string FSPECIFICATION { get; set; }//产品规格
+        public string FModel { get; set; }//产品规格
         public string 产品操作代码 { get; set; }//产品操作代码
         public string 国际通用型号 { get; set; }//国际通用型号
         public int 产品型号ID { get; set; }//产品型号ID

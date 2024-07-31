@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.Net;
 using System.Reflection;
 using PMES_Common;
+using System.Printing;
+using System.IO;
 
 namespace PMES_Automatic_Net6.ViewModels
 {
@@ -20,6 +22,39 @@ namespace PMES_Automatic_Net6.ViewModels
 
         public string IpJieDa { get; set; } = PMESConfig.Default.PlcXinJieIp;
         public int Port { get; set; } = PMESConfig.Default.PlcXinJiePort;
+
+        #region 打印机
+
+        [ObservableProperty] private ObservableCollection<string> _printIps = new ObservableCollection<string>()
+        {
+            PMESConfig.Default.Printer1,
+            PMESConfig.Default.Printer2,
+            PMESConfig.Default.Printer3,
+            PMESConfig.Default.Printer4,
+            PMESConfig.Default.Printer5,
+            PMESConfig.Default.Printer6,
+        };
+
+        [ObservableProperty] private ObservableCollection<string> _templateLabels = new ObservableCollection<string>()
+        {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+        };
+
+        [RelayCommand]
+        private void PrintLabel(object[] parameters)
+        {
+            var label = parameters[0].ToString();
+ 
+            var sharedPrinterName = parameters[1].ToString() ?? ""; // 替换为实际打印机的共享名
+            //var queue = new PrintQueue(sharedPrinterName);
+        }
+
+        #endregion
 
 
         [ObservableProperty] private bool _isOpen;
@@ -340,5 +375,23 @@ namespace PMES_Automatic_Net6.ViewModels
         ReadCoils,
         ReadHoldingRegisters,
         ReadInputRegisters,
+    }
+
+    public class PrintService
+    {
+        private PrintQueue _queue;
+
+        public PrintService(string printerName)
+        {
+            _queue = new PrintQueue(new PrintServer(),printerName);
+        }
+
+        public async Task PrintDocumentAsync(byte[] documentData, string documentName)
+        {
+            using (FileStream printStream = new FileStream(documentName, FileMode.Create))
+            {
+                //await _queue.ClientPrintSchemaVersion(new MemoryStream(documentData), documentName);
+            }
+        }
     }
 }

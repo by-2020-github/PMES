@@ -104,7 +104,26 @@
                 </DataGrid>
             </Grid>
         </TabItem>
+        <TabItem Header="打印标签">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal"
+                            Margin="20">
+                    <TextBlock Width="30" Height="25" Text="标签" HorizontalAlignment="Right" Margin="15,15,0,0"></TextBlock>
+                    <ComboBox Width="260" Height="25" ItemsSource="{Binding TemplateLabels }" Margin="15,15,0,0"></ComboBox>
+                    <TextBlock Width="120" Height="25" Text="打印机IP" HorizontalAlignment="Right" Margin="15,15,0,0"></TextBlock>
+                    <ComboBox Width="120" Height="25" ItemsSource="{Binding   PrintIps }" Margin="15,15,0,0"></ComboBox>
+                    <Button Width="100" Height="25" Content="Print" Margin="15,15,0,0"
+                            Command="{Binding PrintLabelCommand}">
+                    </Button>
+                    <Image></Image>
+                </StackPanel>
+            </Grid>
 
+        </TabItem>
         <TabItem Header="信捷PLC">
             <Grid>
                 <Grid.RowDefinitions>
@@ -131,6 +150,5 @@
             </Grid>
 
         </TabItem>
-
     </TabControl>
 </UserControl>

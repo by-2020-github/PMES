@@ -151,7 +151,7 @@ public partial class MainForm : XtraForm
     public MainForm()
     {
         InitializeComponent();
-        this.WindowState = FormWindowState.Maximized;
+        //this.WindowState = FormWindowState.Maximized;
         var element = new ElementHost() { Dock = DockStyle.Fill };
         tableLayoutPanelHeader.Controls.Add(element, 1, 0);
         Program.LogViewTextBox.FontSize = 12;
@@ -161,7 +161,8 @@ public partial class MainForm : XtraForm
         _logger = SerilogManager.GetOrCreateLogger();
         // _weighingMachine = new WeighingMachine(_logger);
         // _weighingMachine.Open("COM3", 115200);
-        UpdateProductInfo(new ProductInfo());
+        // UpdateProductInfo(new ProductInfo());
+        txtScanCode.Focus();
     }
 
     private int _change = 1;
@@ -202,12 +203,12 @@ public partial class MainForm : XtraForm
             {
                 lbNew.Text = txtScanCode.Text;
                 if (await _freeSql.Insert<T_order_exchange>(new T_order_exchange
-                    {
-                        CreateTime = DateTime.Now,
-                        NewCode = lbNew.Text,
-                        OldCode = lbOld.Text,
-                        WeightUserId = GlobalVar.CurrentUserInfo.userId
-                    }).ExecuteAffrowsAsync() > 0)
+                {
+                    CreateTime = DateTime.Now,
+                    NewCode = lbNew.Text,
+                    OldCode = lbOld.Text,
+                    WeightUserId = GlobalVar.CurrentUserInfo.userId
+                }).ExecuteAffrowsAsync() > 0)
                 {
                     ShowInfoMsg("改线入库成功!");
 
@@ -263,6 +264,8 @@ public partial class MainForm : XtraForm
                 _logger.Error(exception.Message);
             }
         }
+
+        txtScanCode.Text = "";
     }
 
     private async Task<Tuple<bool, string>> ValidateOrder(double weight, string order)
@@ -325,7 +328,7 @@ public partial class MainForm : XtraForm
 
         //1 称重->更新毛重
         lbGrossWeight.AllowHtmlString = true;
-        lbTotalWeight.AllowHtmlString = true;
+        //lbTotalWeight.AllowHtmlString = true;
         lbSkinWeight.AllowHtmlString = true;
         lbNetWeight.AllowHtmlString = true;
         lb_xpzl_weight.AllowHtmlString = true;
@@ -335,7 +338,8 @@ public partial class MainForm : XtraForm
         {
             var code = _preheaterCodesReview[order];
             lbGrossWeight.Text = @$"<color=red>{code.GrossWeight}</color>";
-            lbTotalWeight.Text = @$"<color=red><b>{code.GrossWeight}</b></color>";
+            //lbTotalWeight.Text = @$"<color=red><b>{code.GrossWeight}</b></color>";
+            lbTotalWeight.Text = @$"{code.GrossWeight}";
 
             //2 更新皮重 --> 净重 和 总重需要在称的代码里实现
             if (double.TryParse(product.package_info.tare_weight, out double sw))
@@ -353,7 +357,8 @@ public partial class MainForm : XtraForm
         {
             _currentTotalWeight = await _weighingMachine!.GetWeight();
             lbGrossWeight.Text = @$"<color=red>{_currentTotalWeight:F2}</color>";
-            lbTotalWeight.Text = @$"<color=red><b>{_currentTotalWeight:F2}</b></color>";
+            //lbTotalWeight.Text = @$"<color=red><b>{_currentTotalWeight:F2}</b></color>";
+            lbTotalWeight.Text = @$"{_currentTotalWeight:F2}";
 
             //2 更新皮重 --> 净重 和 总重需要在称的代码里实现
             if (double.TryParse(product.package_info.tare_weight, out double sw))
@@ -658,7 +663,7 @@ public partial class MainForm : XtraForm
     {
         try
         {
-            var view = _freeSql.Select<U_VW_DBCP>().Where(s=>s.FItemID == preheaterCode.ProductId.ToString()).First();
+            var view = _freeSql.Select<U_VW_DBCP>().WithSql("SELECT * FROM U_VW_DBCP").ToList().First(s => s.FItemID == preheaterCode.ProductId.ToString());
             if (view == null)
             {
                 ShowErrorMsg("视图查询为空！");
@@ -832,9 +837,7 @@ public partial class MainForm : XtraForm
 
         //2 更新盘码
         var boxId = boxIds[^1];
-        var rel = _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxId).ToList();
-        var preIdList = rel.Select(s => s.PreheaterCodeId).ToList();
-        var tPreList = _freeSql.Select<T_preheater_code>().Where(s => preIdList.Contains((int)s.Id)).ToList();
+        var tPreList = _freeSql.Select<T_preheater_code>().Where(s => s.BoxId == tBoxes.First().Id).ToList();
         gridControlBoxChild.DataSource = null;
         gridControlBoxChild.DataSource = tPreList;
 
@@ -1178,9 +1181,8 @@ public partial class MainForm : XtraForm
         }
         var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
-        var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == preheaterMode.Id)
-            .FirstAsync();
-        var boxId = rel.BoxCodeId;
+      
+        var boxId = preheaterMode.BoxId;
         var boxRow = boxInfos.FindIndex(s => s.Id == boxId);
         if (boxRow == -1) return;
         gridViewBox.FocusedRowHandle = boxRow;
@@ -1200,11 +1202,10 @@ public partial class MainForm : XtraForm
         var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
         var boxInfo = boxInfos[e.FocusedRowHandle];
-        var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxInfo.Id)
-            .ToListAsync();
-        var tPIds = rel.Select(s => s.PreheaterCodeId).ToList();
+ 
+   
 
-        var pCodes = await _freeSql.Select<T_preheater_code>().Where(s => tPIds.Contains((int)s.Id)).ToListAsync();
+        var pCodes = await _freeSql.Select<T_preheater_code>().Where(s => boxInfo.Id == s.BoxId).ToListAsync();
         gridControlBoxChild.DataSource = null;
         gridControlBoxChild.DataSource = pCodes;
         //重新加载界面
@@ -1275,6 +1276,8 @@ public partial class MainForm : XtraForm
                 {
                     var labelTemplate = _freeSql.Select<T_label_template>().Where(s => s.TemplateFileName == file)
                         .First(s => s.TemplateFile);
+                    if (labelTemplate == null)
+                        continue;
                     if (labelTemplate.Length > 0)
                     {
                         using var fw = new FileStream(file, FileMode.Create);
@@ -1324,13 +1327,25 @@ public partial class MainForm : XtraForm
         lbOld.Visible = false;
         cbxMigration.Checked = true;
         cbxAutoMode.Checked = false;
+
     }
 
     private void cbxAutoModeClick(object sender, EventArgs e)
     {
+        cbxManul.Checked = false;
         cbxMigration.Checked = false;
         cbxAutoMode.Checked = true;
+        lbTotalWeight.Enabled = false;
+    }
+
+    private void cbxManualClick(object sender, EventArgs e)
+    {
+        cbxManul.Checked = true;
+        cbxMigration.Checked = false;
+        cbxAutoMode.Checked = false;
+        lbTotalWeight.Enabled = true;
     }
 
     #endregion
+
 }

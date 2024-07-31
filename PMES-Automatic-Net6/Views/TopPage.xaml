@@ -45,13 +45,7 @@
         </Grid>
         <!--状态-->
         <UniformGrid Grid.Row="1" Rows="1" Columns="6" Margin="10">
-            <StackPanel Orientation="Vertical">
-                <Label Style="{DynamicResource LabelTitle }" Content="预扫码"></Label>
-                <Ellipse Margin="0,5,0,5" Style="{DynamicResource Led}"
-                         Fill="{Binding Path=BarCodeScannerStatus1 ,   Converter={StaticResource StatusBrushConverter}}" />
-                <Label Style="{DynamicResource LabelInput}" Content="{Binding Path= PreScanCode1}"></Label>
-            </StackPanel>
-
+         
             <StackPanel Orientation="Vertical">
                 <Label Style="{DynamicResource LabelTitle}" Content="称重1"></Label>
                 <Ellipse Margin="0,5,0,5" Style="{DynamicResource Led}"
@@ -66,6 +60,12 @@
                 <Label Style="{DynamicResource LabelInput}" Content="{Binding Path= Weight2}"></Label>
             </StackPanel>
 
+            <StackPanel Orientation="Vertical">
+                <Label Style="{DynamicResource LabelTitle }" Content="预扫码"></Label>
+                <Ellipse Margin="0,5,0,5" Style="{DynamicResource Led}"
+                         Fill="{Binding Path=BarCodeScannerStatus1 ,   Converter={StaticResource StatusBrushConverter}}" />
+                <Label Style="{DynamicResource LabelInput}" Content="{Binding Path= PreScanCode1}"></Label>
+            </StackPanel>
 
             <StackPanel Orientation="Vertical">
                 <Label Style="{DynamicResource LabelTitle}" Content="扫码校验"></Label>

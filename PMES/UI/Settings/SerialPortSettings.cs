@@ -78,6 +78,8 @@ public partial class SerialPortSettings : XtraForm
     private void SerialPortSettings_Load(object sender, EventArgs e)
     {
         RefreshSerialPorts();
+        cbxCom.Text = PMES_Settings.Default.COM;
+        cbxBa.Text = PMES_Settings.Default.BaudRate.ToString();
     }
 
 

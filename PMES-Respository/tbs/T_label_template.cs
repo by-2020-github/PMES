@@ -25,25 +25,25 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 记录建立时间
         /// </summary>
-        [JsonProperty, Column(Name = "createTime" )]
+        [JsonProperty, Column(Name = "createTime")]
         public DateTime? CreateTime { get; set; }
 
         /// <summary>
         /// 客户代码
         /// </summary>
-        [JsonProperty, Column(Name = "custormerCode" )]
+        [JsonProperty, Column(Name = "custormerCode")]
         public string CustormerCode { get; set; }
 
         /// <summary>
         /// 是否系统默认：1.系统默认；2.客户指定
         /// </summary>
-        [JsonProperty, Column(Name = "defaultType" )]
+        [JsonProperty, Column(Name = "defaultType")]
         public int? DefaultType { get; set; } = 1;
 
         /// <summary>
         /// 0有效；1删除
         /// </summary>
-        [JsonProperty, Column(Name = "isDel" )]
+        [JsonProperty, Column(Name = "isDel")]
         public int? IsDel { get; set; }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 标签打印文件
         /// </summary>
-        [JsonProperty, Column(Name = "templateFile")]
+        [JsonProperty, Column(Name = "templateFile", DbType = "varbinary(max)")]
         public byte[] TemplateFile { get; set; }
 
         [JsonProperty, Column(Name = "templateFileName")]
@@ -88,7 +88,7 @@ namespace PMES_Respository.tbs
         /// <summary>
         /// 标签预览图片
         /// </summary>
-        [JsonProperty, Column(Name = "templatePicture")]
+        [JsonProperty, Column(Name = "templatePicture", DbType = "varbinary(max)")]
         public byte[] TemplatePicture { get; set; }
 
         /// <summary>

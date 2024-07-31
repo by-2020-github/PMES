@@ -11,6 +11,7 @@ using PMES.Model;
 using RichTextBox = System.Windows.Controls.RichTextBox;
 using PMES.Properties;
 using PMES_Respository.tbs_sqlServer;
+using PMES_Respository.reportModel;
 namespace PMES;
 
 internal static class Program
@@ -37,6 +38,9 @@ internal static class Program
 
         DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(PackingList));
         DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(Certificate));
+        DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(BoxReportModel));
+        DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(XianPanReportModel));
+        DevExpress.Utils.DeserializationSettings.RegisterTrustedAssembly(typeof(Certificate).Assembly);
         DevExpress.XtraReports.Configuration.Settings.Default.StorageOptions.RootDirectory = "C:\\ProgramData\\PMES_Templates";
         //前初始化事件，处理全局未处理异常
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);

@@ -37,7 +37,7 @@
                         <Image Source="../Resources/icon/top.png" Height="20" Width="20" Stretch="Fill"></Image>
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Text="Top2" />
+                            Text="Top" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:TopPage x:Name="TopPage"></views:TopPage>

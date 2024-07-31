@@ -1038,5 +1038,30 @@ namespace PMES_Respository.DataStruct
         public ushort Reverse2 { get; set; }
     }
 
+
+    [PlcCmdAttribute(561)]
+    public class ValidateInfo2
+    {
+        public byte DeviceId { get; set; }
+
+        /// <summary>
+        /// 物料规格类型对应1-8，
+        /// 分别如下：
+        /// 1. PT25
+        /// 2. PT45
+        /// 3.PT60
+        /// 4.PT90
+        /// 5.PT200
+        /// 6.PT270
+        /// 7.355*180木盘
+        /// 8. 500*210木盘
+        /// </summary>
+        public byte PSN { get; set; }
+
+        public byte IsOk { get; set; }
+        public ushort Reverse1 { get; set; }
+        public ushort Reverse2 { get; set; }
+    }
+
     #endregion
 }
