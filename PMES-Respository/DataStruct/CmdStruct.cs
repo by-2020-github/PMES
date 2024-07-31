@@ -52,14 +52,109 @@ namespace PMES_Respository.DataStruct
         public ushort Reserve2 { get; set; }
 
         /// <summary>
-        ///     相等，则认为已处理过；否则，未处理;  判定下次是否可以（上位机）写入的标志
+        ///     上位机写，入；置2; PLC写入，置1.
         /// </summary>
-        public byte WriteFlag { get; set; }
+        public byte PmesAndPlcReadWriteFlag { get; set; }
+
+        protected bool Equals(PmesCmdUnStacking other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && PmesAndPlcReadWriteFlag == other.PmesAndPlcReadWriteFlag;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PmesCmdUnStacking)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ PmesAndPlcReadWriteFlag.GetHashCode();
+                return hashCode;
+            }
+        }
+    }
+
+    /// <summary>
+    ///  DB502----DB506 202---206
+    /// </summary>
+    [PlcCmdAttribute(502)]
+    public class PlcCmdUnStacking
+    {
+        /// <summary>
+        /// 00001 - 拆垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
 
         /// <summary>
-        ///     上位机写入为0，plc处理后值为1.
+        ///     线盘规格
         /// </summary>
-        public byte PlcProcessFlag { get; set; }
+        public byte ReelSpecification { get; set; }
+
+        /// <summary>
+        ///     线盘数量
+        /// </summary>
+        public byte ReelNum { get; set; }
+
+        public byte UnStackSpeed { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte UnStackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdUnStacking other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && UnStackingFinished == other.UnStackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdUnStacking)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     /// <summary>
@@ -94,6 +189,39 @@ namespace PMES_Respository.DataStruct
         /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
         public byte UnStackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdUnStacking1 other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && UnStackingFinished == other.UnStackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdUnStacking1)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     /// <summary>
@@ -128,12 +256,112 @@ namespace PMES_Respository.DataStruct
         /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
         public byte UnStackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdUnStacking1 other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && UnStackingFinished == other.UnStackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdUnStacking1)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     /// <summary>
     ///  DB502----DB506 202---206
     /// </summary>
     [PlcCmdAttribute(504)]
+    public class PlcCmdUnStacking3
+    {
+        /// <summary>
+        /// 00001 - 拆垛机器人
+        /// </summary>
+        public byte DeviceId { get; set; }
+
+        public byte WorkPositionId { get; set; }
+
+        /// <summary>
+        ///     线盘规格
+        /// </summary>
+        public byte ReelSpecification { get; set; }
+
+        /// <summary>
+        ///     线盘数量
+        /// </summary>
+        public byte ReelNum { get; set; }
+
+        public byte UnStackSpeed { get; set; }
+        public ushort ReelHeight { get; set; }
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte UnStackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdUnStacking1 other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && UnStackingFinished == other.UnStackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdUnStacking1)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
+    }
+
+    /// <summary>
+    ///  DB502----DB506 202---206
+    /// </summary>
+    [PlcCmdAttribute(505)]
     public class PlcCmdUnStacking4
     {
         /// <summary>
@@ -162,12 +390,45 @@ namespace PMES_Respository.DataStruct
         /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
         public byte UnStackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdUnStacking1 other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && UnStackingFinished == other.UnStackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdUnStacking1)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     /// <summary>
     ///  DB502----DB506 202---206
     /// </summary>
-    [PlcCmdAttribute(505)]
+    [PlcCmdAttribute(506)]
     public class PlcCmdUnStacking5
     {
         /// <summary>
@@ -196,12 +457,45 @@ namespace PMES_Respository.DataStruct
         /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
         public byte UnStackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdUnStacking1 other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && UnStackingFinished == other.UnStackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdUnStacking1)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     /// <summary>
     ///  DB502----DB506 202---206
     /// </summary>
-    [PlcCmdAttribute(506)]
+    [PlcCmdAttribute(507)]
     public class PlcCmdUnStacking6
     {
         /// <summary>
@@ -230,6 +524,39 @@ namespace PMES_Respository.DataStruct
         /// 若【是否拆垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
         public byte UnStackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdUnStacking1 other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && ReelNum == other.ReelNum &&
+                   UnStackSpeed == other.UnStackSpeed && ReelHeight == other.ReelHeight && Reserve1 == other.Reserve1 &&
+                   Reserve2 == other.Reserve2 && UnStackingFinished == other.UnStackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdUnStacking1)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelNum.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelHeight.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     #endregion
@@ -241,7 +568,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     DB510
         /// </summary>
-        public ObservableCollection<DataItem> PmesWeightAndBarCode { get; } = new ObservableCollection<DataItem>()
+        public ObservableCollection<DataItem> PmesWeightAndBarCode { get; set; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
@@ -326,7 +653,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     线盘barcode check
         /// </summary>
-        public ObservableCollection<DataItem> PmesReelCodeCheck { get; } = new ObservableCollection<DataItem>()
+        public ObservableCollection<DataItem> PmesReelCodeCheck { get; set; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
@@ -399,7 +726,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     装箱
         /// </summary>
-        public ObservableCollection<DataItem> PmesPackingBox { get; } = new ObservableCollection<DataItem>()
+        public ObservableCollection<DataItem> PmesPackingBox { get; set; } = new ObservableCollection<DataItem>()
         {
             //id
             new DataItem
@@ -468,6 +795,31 @@ namespace PMES_Respository.DataStruct
                 Value = new object()
             },
         };
+
+        protected bool Equals(PmesDataItemList other)
+        {
+            return Equals(PmesWeightAndBarCode, other.PmesWeightAndBarCode) &&
+                   Equals(PmesReelCodeCheck, other.PmesReelCodeCheck) && Equals(PmesPackingBox, other.PmesPackingBox);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PmesDataItemList)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (PmesWeightAndBarCode != null ? PmesWeightAndBarCode.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (PmesReelCodeCheck != null ? PmesReelCodeCheck.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (PmesPackingBox != null ? PmesPackingBox.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 
     #endregion
@@ -482,7 +834,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -515,18 +867,29 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte StackModel { get; set; }
 
+
+        //
+        //码垛速度
+        /*1. P25/PT45为60%
+
+            2. PT60/PT90为50%
+
+            3. PT200/PT270为40%
+
+            4. 木托盘为355：50%
+
+            5. 木托盘500： 为40%*/
+        public ushort StackingSpeed { get; set; }
+
+
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
 
-        /// <summary>
-        ///     相等，则认为已处理过；否则，未处理;  判定下次是否可以（上位机）写入的标志
-        /// </summary>
-        public byte WriteFlag { get; set; }
 
         /// <summary>
-        ///     上位机写入为0，plc处理后值为1.
+        ///     上位机写，入；置2; PLC写入，置1.
         /// </summary>
-        public byte PlcProcessFlag { get; set; }
+        public byte PmesAndPlcReadWriteFlag { get; set; }
     }
 
     /// <summary>
@@ -540,7 +903,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -568,6 +931,37 @@ namespace PMES_Respository.DataStruct
         /// 若【是否码垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
         public byte StackingFinished { get; set; }
+
+        protected bool Equals(PlcCmdStacking other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && StackModel == other.StackModel &&
+                   Reserve1 == other.Reserve1 && Reserve2 == other.Reserve2 &&
+                   StackingFinished == other.StackingFinished;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlcCmdStacking)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ StackModel.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ StackingFinished.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     /// <summary>
@@ -581,7 +975,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -622,7 +1016,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -663,7 +1057,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -704,7 +1098,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -745,7 +1139,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -786,7 +1180,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -827,7 +1221,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -868,7 +1262,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte DeviceId { get; set; }
 
-        public byte WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; }
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -913,7 +1307,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     母托盘工位号
         /// </summary>
-        public byte MotherStayWorkPositionId { get; set; }
+        public ushort MotherStayWorkPositionId { get; set; }
 
         /// <summary>
         ///  子托盘规格类型
@@ -935,7 +1329,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     子托盘工位号
         /// </summary>
-        public byte ChildStayWorkPositionId { get; set; }
+        public ushort ChildStayWorkPositionId { get; set; }
 
         /// <summary>
         ///     子托盘个数
@@ -945,7 +1339,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     子母托盘工位号
         /// </summary>
-        public byte ChildMontherStayWorkPositionId { get; set; }
+        public ushort ChildMontherStayWorkPositionId { get; set; }
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
@@ -972,7 +1366,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     母托盘工位号
         /// </summary>
-        public byte MotherStayWorkPositionId { get; set; }
+        public ushort MotherStayWorkPositionId { get; set; }
 
         /// <summary>
         ///  子托盘规格
@@ -994,12 +1388,12 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     子托盘工位号
         /// </summary>
-        public byte ChildStayWorkPositionId { get; set; }
+        public ushort ChildStayWorkPositionId { get; set; }
 
         /// <summary>
         ///     子母托盘工位号
         /// </summary>
-        public byte ChildMontherStayWorkPositionId { get; set; }
+        public ushort ChildMontherStayWorkPositionId { get; set; }
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
@@ -1016,31 +1410,6 @@ namespace PMES_Respository.DataStruct
 
     [PlcCmdAttribute(560)]
     public class ValidateInfo
-    {
-        public byte DeviceId { get; set; }
-
-        /// <summary>
-        /// 物料规格类型对应1-8，
-        /// 分别如下：
-        /// 1. PT25
-        /// 2. PT45
-        /// 3.PT60
-        /// 4.PT90
-        /// 5.PT200
-        /// 6.PT270
-        /// 7.355*180木盘
-        /// 8. 500*210木盘
-        /// </summary>
-        public byte PSN { get; set; }
-
-        public byte IsOk { get; set; }
-        public ushort Reverse1 { get; set; }
-        public ushort Reverse2 { get; set; }
-    }
-
-
-    [PlcCmdAttribute(561)]
-    public class ValidateInfo2
     {
         public byte DeviceId { get; set; }
 

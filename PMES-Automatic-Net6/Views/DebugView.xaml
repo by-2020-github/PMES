@@ -10,13 +10,16 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1080"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converter="clr-namespace:PMES_Automatic_Net6.Converter"
              TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
              Background="{DynamicResource MaterialDesign.Brush.Background}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              d:DataContext="{d:DesignInstance viewModels:DebugViewModel}">
-
+    <UserControl.Resources>
+        <converter:MultiBindingConverter x:Key="MultiBindingConverter"></converter:MultiBindingConverter>
+    </UserControl.Resources>
     <TabControl>
         <TabItem Header="PLC一般指令">
             <Grid>
@@ -113,11 +116,21 @@
                 <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal"
                             Margin="20">
                     <TextBlock Width="30" Height="25" Text="标签" HorizontalAlignment="Right" Margin="15,15,0,0"></TextBlock>
-                    <ComboBox Width="260" Height="25" ItemsSource="{Binding TemplateLabels }" Margin="15,15,0,0"></ComboBox>
-                    <TextBlock Width="120" Height="25" Text="打印机IP" HorizontalAlignment="Right" Margin="15,15,0,0"></TextBlock>
-                    <ComboBox Width="120" Height="25" ItemsSource="{Binding   PrintIps }" Margin="15,15,0,0"></ComboBox>
+                    <ComboBox Name="CbxLabel" Width="260" Height="25" ItemsSource="{Binding TemplateLabels }"
+                              Margin="15,15,0,0">
+                    </ComboBox>
+                    <TextBlock Width="120" Height="25" Text="打印机" HorizontalAlignment="Right" Margin="15,15,0,0"></TextBlock>
+                    <ComboBox Name="CbxPrinter" Width="120" Height="25" ItemsSource="{Binding   PrintIps }"
+                              Margin="15,15,0,0">
+                    </ComboBox>
                     <Button Width="100" Height="25" Content="Print" Margin="15,15,0,0"
                             Command="{Binding PrintLabelCommand}">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MultiBindingConverter}">
+                                <Binding ElementName="CbxPrinter" Path="Text"></Binding>
+                                <Binding ElementName="CbxLabel" Path="Text"></Binding>
+                            </MultiBinding>
+                        </Button.CommandParameter>
                     </Button>
                     <Image></Image>
                 </StackPanel>

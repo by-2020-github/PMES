@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.CodeDom.Compiler;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentModbus;
 using PMES_Respository.DataStruct;
@@ -6,11 +7,14 @@ using S7.Net.Types;
 using S7.Net;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing.Printing;
 using System.Net;
 using System.Reflection;
 using PMES_Common;
 using System.Printing;
 using System.IO;
+using PMES.UC.reports;
+
 
 namespace PMES_Automatic_Net6.ViewModels
 {
@@ -27,12 +31,12 @@ namespace PMES_Automatic_Net6.ViewModels
 
         [ObservableProperty] private ObservableCollection<string> _printIps = new ObservableCollection<string>()
         {
-            PMESConfig.Default.Printer1,
-            PMESConfig.Default.Printer2,
-            PMESConfig.Default.Printer3,
-            PMESConfig.Default.Printer4,
-            PMESConfig.Default.Printer5,
-            PMESConfig.Default.Printer6,
+            PMESConfig.Default.PrinterName1,
+            PMESConfig.Default.PrinterName2,
+            PMESConfig.Default.PrinterName3,
+            PMESConfig.Default.PrinterName4,
+            PMESConfig.Default.PrinterName5,
+            PMESConfig.Default.PrinterName6,
         };
 
         [ObservableProperty] private ObservableCollection<string> _templateLabels = new ObservableCollection<string>()
@@ -46,12 +50,19 @@ namespace PMES_Automatic_Net6.ViewModels
         };
 
         [RelayCommand]
-        private void PrintLabel(object[] parameters)
+        private void PrintLabel(object parameters)
         {
-            var label = parameters[0].ToString();
- 
-            var sharedPrinterName = parameters[1].ToString() ?? ""; // 替换为实际打印机的共享名
-            //var queue = new PrintQueue(sharedPrinterName);
+            var param = (object[])parameters;
+            var printers = System.Drawing.Printing.PrinterSettings.InstalledPrinters.Cast<string>().ToList();
+            var sharedPrinterName = param[0].ToString() ?? ""; // 替换为实际打印机的共享名
+            if (!printers.Contains(sharedPrinterName))
+            {
+                return;
+            }
+
+            var label = param[0].ToString();
+            var templateBox = new TemplateBox();
+            templateBox.Print(sharedPrinterName);
         }
 
         #endregion
@@ -91,6 +102,12 @@ namespace PMES_Automatic_Net6.ViewModels
             CmdStruct = types.Where(s => s.Namespace == "PMES_Respository.DataStruct" && s.Name != "PmesDataItemList")
                 .Select(s => s.Name).ToList();
             CmdStrStruct = typeof(PmesDataItemList).GetProperties().Select(s => s.Name).ToList();
+            var printers = System.Drawing.Printing.PrinterSettings.InstalledPrinters.Cast<string>().ToList();
+            PrintIps.Clear();
+            printers.ForEach(s =>
+            {
+                PrintIps.Add(s);
+            });
         }
 
         public Plc GetPlc => plc;
@@ -383,15 +400,11 @@ namespace PMES_Automatic_Net6.ViewModels
 
         public PrintService(string printerName)
         {
-            _queue = new PrintQueue(new PrintServer(),printerName);
+            _queue = new PrintQueue(new PrintServer(), printerName);
         }
 
         public async Task PrintDocumentAsync(byte[] documentData, string documentName)
         {
-            using (FileStream printStream = new FileStream(documentName, FileMode.Create))
-            {
-                //await _queue.ClientPrintSchemaVersion(new MemoryStream(documentData), documentName);
-            }
         }
     }
 }

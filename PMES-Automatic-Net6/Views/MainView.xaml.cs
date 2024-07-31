@@ -1,10 +1,12 @@
 ﻿using System.Windows;
+using PMES_Automatic_Net6.Core.Managers;
 using PMES_Automatic_Net6.ViewModels;
 
 namespace PMES_Automatic_Net6.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
     /// </summary>
     public partial class MainView : Window
     {
@@ -16,6 +18,16 @@ namespace PMES_Automatic_Net6.Views
         public MainView()
         {
             InitializeComponent();
+            if (!HardwareManager.Instance.InitPlc())
+            {
+                MessageBox.Show("打开PLC失败，请检查配置文件中的PLC配置，即将退出！", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                MessageBox.Show("打开PLC成功！", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
             viewModel = new MainViewModel();
             _debugViewModel = new DebugViewModel();
             _topPageViewModel = new TopPageViewModel();

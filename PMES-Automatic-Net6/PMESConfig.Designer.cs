@@ -126,72 +126,72 @@ namespace PMES_Automatic_Net6 {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.151")]
-        public string Printer1 {
+        public string PrinterName1 {
             get {
-                return ((string)(this["Printer1"]));
+                return ((string)(this["PrinterName1"]));
             }
             set {
-                this["Printer1"] = value;
+                this["PrinterName1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.152")]
-        public string Printer2 {
+        public string PrinterName2 {
             get {
-                return ((string)(this["Printer2"]));
+                return ((string)(this["PrinterName2"]));
             }
             set {
-                this["Printer2"] = value;
+                this["PrinterName2"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.153")]
-        public string Printer3 {
+        public string PrinterName3 {
             get {
-                return ((string)(this["Printer3"]));
+                return ((string)(this["PrinterName3"]));
             }
             set {
-                this["Printer3"] = value;
+                this["PrinterName3"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.154")]
-        public string Printer4 {
+        public string PrinterName4 {
             get {
-                return ((string)(this["Printer4"]));
+                return ((string)(this["PrinterName4"]));
             }
             set {
-                this["Printer4"] = value;
+                this["PrinterName4"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.155")]
-        public string Printer5 {
+        public string PrinterName5 {
             get {
-                return ((string)(this["Printer5"]));
+                return ((string)(this["PrinterName5"]));
             }
             set {
-                this["Printer5"] = value;
+                this["PrinterName5"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.156")]
-        public string Printer6 {
+        public string PrinterName6 {
             get {
-                return ((string)(this["Printer6"]));
+                return ((string)(this["PrinterName6"]));
             }
             set {
-                this["Printer6"] = value;
+                this["PrinterName6"] = value;
             }
         }
     }

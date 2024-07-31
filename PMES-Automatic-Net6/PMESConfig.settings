@@ -26,22 +26,22 @@
     <Setting Name="ConnLocalMysql" Type="System.String" Scope="User">
       <Value Profile="(Default)">Data Source=127.0.0.1;Port=3308;User ID=root;Password=123456; Initial Catalog=avant_sicd_automatic;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true</Value>
     </Setting>
-    <Setting Name="Printer1" Type="System.String" Scope="User">
+    <Setting Name="PrinterName1" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.151</Value>
     </Setting>
-    <Setting Name="Printer2" Type="System.String" Scope="User">
+    <Setting Name="PrinterName2" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.152</Value>
     </Setting>
-    <Setting Name="Printer3" Type="System.String" Scope="User">
+    <Setting Name="PrinterName3" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.153</Value>
     </Setting>
-    <Setting Name="Printer4" Type="System.String" Scope="User">
+    <Setting Name="PrinterName4" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.154</Value>
     </Setting>
-    <Setting Name="Printer5" Type="System.String" Scope="User">
+    <Setting Name="PrinterName5" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.155</Value>
     </Setting>
-    <Setting Name="Printer6" Type="System.String" Scope="User">
+    <Setting Name="PrinterName6" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.156</Value>
     </Setting>
   </Settings>
