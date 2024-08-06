@@ -154,8 +154,8 @@
                     <CheckBox Width="100" Height="25" Content="IsOpen" Margin="15,15,0,0"
                               IsChecked="{Binding IsOpenJieDa}" VerticalContentAlignment="Center">
                     </CheckBox>
-                    <Button Width="100" Height="25" Content="Send" Margin="15,15,0,0"></Button>
-                    <Button Width="100" Height="25" Content="Read" Margin="15,15,0,0"></Button>
+                    <Button Width="100" Height="25" Content="Send" Margin="15,15,0,0" Command="{Binding SendXinJieCmdCommand}"></Button>
+                    <Button Width="100" Height="25" Content="Read" Margin="15,15,0,0" Command="{Binding ReadXinJieCmdCommand}"></Button>
                 </StackPanel>
 
                 <DataGrid Grid.Column="0" Grid.Row="1" ItemsSource="{Binding ModbusCmds}" CanUserAddRows="False"></DataGrid>

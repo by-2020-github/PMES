@@ -1,15 +1,31 @@
-﻿using Serilog;
+﻿using System.Windows.Controls;
+using System.Windows.Media;
+using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Serilog.Sinks.RichTextBox.Themes;
+using Serilog.Sinks.RichTextBoxForms.Themes;
+using Serilog.Sinks.RichTextBoxForms;
 
 namespace PMES_Automatic_Net6.Core.Managers;
 
 public class SerilogManager
 {
+    /// <summary>
+    ///     全局日志输出窗口
+    /// </summary>
+    public static System.Windows.Controls.RichTextBox LogViewTextBox = new RichTextBox()
+    {
+        VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto, FontSize = 12,
+        Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0))
+    }; //日志输出窗口
+
     private static readonly string Template1 =
         "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}][{ThreadId}] {Message:lj}{NewLine}{Exception}";
+
     private static readonly string Template2 =
-        "系统日志：{Timestamp:yyyyMMdd HH:mm:ss}{Message:lj}{NewLine}{Exception}";
+        "系统日志：{Timestamp:yyyyMMdd HH:mm:ss}  [{Level:u3}] {Message:lj}{NewLine}{Exception}";
+
     public static ILogger DataLogger;
     private static readonly Dictionary<string, ILogger> LoggersDic = new();
 
@@ -45,10 +61,12 @@ public class SerilogManager
             .MinimumLevel.Verbose()
             .Enrich.With(new ThreadIdEnricher())
             //.WriteTo.MySQL(FreeSqlManager.ConnStr, nameof(LogInfo), LogEventLevel.Error)
-            //.WriteTo.RichTextBox(Program.LogViewTextBox, LogEventLevel.Warning)
+            .WriteTo.RichTextBox(LogViewTextBox, LogEventLevel.Information, outputTemplate: Template2,
+                theme: RichTextBoxConsoleTheme.Colored)
             .WriteTo.Console(outputTemplate: Template1)
-            .WriteTo.File($"log\\{loggerName}\\{fileName}.txt", rollingInterval: RollingInterval.Day,
-                rollOnFileSizeLimit: true, outputTemplate: Template1)
+            .WriteTo.File($"log\\{loggerName}\\{fileName}.txt", LogEventLevel.Verbose,
+                rollingInterval: RollingInterval.Day,
+                rollOnFileSizeLimit: true, outputTemplate: Template2)
             .CreateLogger();
         LoggersDic[loggerName] = logger;
         return logger;

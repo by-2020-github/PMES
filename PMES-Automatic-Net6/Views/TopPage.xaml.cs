@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PMES_Automatic_Net6.Core.Managers;
 
 namespace PMES_Automatic_Net6.Views
 {
@@ -23,6 +24,7 @@ namespace PMES_Automatic_Net6.Views
         public TopPage()
         {
             InitializeComponent();
+            LogGrid.Children.Add(SerilogManager.LogViewTextBox);
         }
     }
 }

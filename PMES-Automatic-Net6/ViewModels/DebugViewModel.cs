@@ -13,13 +13,16 @@ using System.Reflection;
 using PMES_Common;
 using System.Printing;
 using System.IO;
+using HslCommunication.ModBus;
 using PMES.UC.reports;
+using PMES_Automatic_Net6.Core.Managers;
 
 
 namespace PMES_Automatic_Net6.ViewModels
 {
     public partial class DebugViewModel : ObservableObject
     {
+        public Serilog.ILogger Logger => SerilogManager.GetOrCreateLogger();
         public string Ip { get; set; } = PMESConfig.Default.PlcIp;
         public short Rack { get; set; } = (short)PMESConfig.Default.PlcRack;
         public short Slot { get; set; } = (short)PMESConfig.Default.PlcSlot;
@@ -93,7 +96,7 @@ namespace PMES_Automatic_Net6.ViewModels
 
 
         //以下代码创建了一个连接到本地主机（IP地址为127.0.0.1）上机架0插槽2的S7-1200 PLC的实例
-        private S7.Net.Plc plc;
+        private S7.Net.Plc plc => HardwareManager.Instance.Plc;
 
 
         public DebugViewModel()
@@ -104,10 +107,7 @@ namespace PMES_Automatic_Net6.ViewModels
             CmdStrStruct = typeof(PmesDataItemList).GetProperties().Select(s => s.Name).ToList();
             var printers = System.Drawing.Printing.PrinterSettings.InstalledPrinters.Cast<string>().ToList();
             PrintIps.Clear();
-            printers.ForEach(s =>
-            {
-                PrintIps.Add(s);
-            });
+            printers.ForEach(s => { PrintIps.Add(s); });
         }
 
         public Plc GetPlc => plc;
@@ -115,42 +115,17 @@ namespace PMES_Automatic_Net6.ViewModels
         [RelayCommand]
         private void OpenModbus()
         {
-            _modbusTcpClient ??= new ModbusTcpClient();
-            if (_modbusTcpClient.IsConnected)
-            {
-                return;
-            }
-
-            try
-            {
-                _modbusTcpClient.Connect(new IPEndPoint(IPAddress.Parse(IpJieDa), int.Parse(Port.ToString())));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                IsOpenJieDa = false;
-            }
         }
 
         [RelayCommand]
         private void CloseModbus()
         {
-            try
-            {
-                _modbusTcpClient?.Disconnect();
-                IsOpenJieDa = false;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                IsOpenJieDa = false;
-            }
         }
 
         [RelayCommand]
         private void Open()
         {
-            plc = new Plc(S7.Net.CpuType.S71200, Ip, Rack, Slot);
+            return;
             try
             {
                 plc.Open();
@@ -200,6 +175,7 @@ namespace PMES_Automatic_Net6.ViewModels
             if (!plc.IsConnected)
                 return;
             plc.ReadMultipleVars(StrCmdDataItems.ToList());
+            Logger?.Information($"读取到内容\n:{HardwareManager.PrintDataItems(StrCmdDataItems.ToList())}");
         }
 
         /// <summary>
@@ -226,7 +202,21 @@ namespace PMES_Automatic_Net6.ViewModels
                 return;
             if (StrCmdDataItems.Count == 0)
                 return;
-            plc.Write(StrCmdDataItems.ToArray());
+            try
+            {
+                StrCmdDataItems[^3].Value = byte.Parse(StrCmdDataItems[^3].Value.ToString());
+                StrCmdDataItems[^1].Value = ushort.Parse(StrCmdDataItems[^1].Value.ToString());
+                StrCmdDataItems[^2].Value = ushort.Parse(StrCmdDataItems[^2].Value.ToString());
+
+                plc.Write(StrCmdDataItems.TakeLast(3).ToArray());
+                Logger?.Information($"发送指令\n:{HardwareManager.PrintDataItems(StrCmdDataItems.ToList())}");
+            }
+            catch (Exception e)
+            {
+                Logger?.Error($"发送指令错误:\n{e}");
+            }
+
+          
         }
 
 
@@ -315,35 +305,28 @@ namespace PMES_Automatic_Net6.ViewModels
             },
         };
 
-        private ModbusTcpClient _modbusTcpClient;
+        private ModbusTcpNet _modbusTcpClient => HardwareManager.Instance.PlcXj;
 
         [RelayCommand]
         private void SendXinJieCmd()
         {
+            Logger?.Information($"信捷PLC写指令，长度：{ModbusCmds.Count}");
             foreach (var modbusCmd in ModbusCmds)
             {
-                switch (modbusCmd.Method)
+                try
                 {
-                    case ModbusMethods.ReadCoils:
-                        _modbusTcpClient.WriteSingleCoil(modbusCmd.DeviceId, modbusCmd.Address,
-                            modbusCmd.Value == 0);
+                    var isSuccess = _modbusTcpClient.WriteOneRegister(modbusCmd.Address.ToString(), modbusCmd.Value)
+                        .IsSuccess;
+                    Logger?.Information(
+                        $"信捷PLC写指令,address = {modbusCmd.Address},value = {modbusCmd.Value}执行结果:{isSuccess}");
 
-                        break;
-                    case ModbusMethods.ReadHoldingRegisters:
-                        _modbusTcpClient.WriteSingleRegister(modbusCmd.DeviceId, modbusCmd.Address,
-                            (short)modbusCmd.Value);
 
-                        break;
-                    case ModbusMethods.ReadInputRegisters:
-                        _modbusTcpClient.WriteSingleRegister(modbusCmd.DeviceId, modbusCmd.Address,
-                            (short)modbusCmd.Value);
-
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    Thread.Sleep(50);
                 }
-
-                Thread.Sleep(50);
+                catch (Exception e)
+                {
+                    Logger?.Error($"信捷写入错误:{e.Message}");
+                }
             }
         }
 
@@ -355,17 +338,15 @@ namespace PMES_Automatic_Net6.ViewModels
                 switch (modbusCmd.Method)
                 {
                     case ModbusMethods.ReadCoils:
-                        var ret1 = _modbusTcpClient.ReadCoils(modbusCmd.DeviceId, modbusCmd.Address, 1).ToArray();
-                        modbusCmd.Value = ret1[0];
+                        var ret1 = _modbusTcpClient.ReadCoil(modbusCmd.Address.ToString(), 1).Content.ToArray();
+                        modbusCmd.Value = (short)(ret1[0] ? 1 : 0);
                         break;
                     case ModbusMethods.ReadHoldingRegisters:
-                        var ret2 = _modbusTcpClient.ReadHoldingRegisters<short>(modbusCmd.DeviceId, modbusCmd.Address,
-                            1).ToArray();
+                        var ret2 = _modbusTcpClient.Read(modbusCmd.Address.ToString(), 1).Content.ToArray();
                         modbusCmd.Value = ret2[0];
                         break;
                     case ModbusMethods.ReadInputRegisters:
-                        var ret3 = _modbusTcpClient.ReadInputRegisters<short>(modbusCmd.DeviceId, modbusCmd.Address,
-                            1).ToArray();
+                        var ret3 = _modbusTcpClient.Read(modbusCmd.Address.ToString(), 1).Content.ToArray();
                         modbusCmd.Value = ret3[0];
                         break;
                     default:
@@ -382,9 +363,9 @@ namespace PMES_Automatic_Net6.ViewModels
     public class ModbusCmd
     {
         public int DeviceId { get; set; }
-        public int Address { get; set; }
+        public short Address { get; set; }
         public ModbusMethods Method { get; set; }
-        public int Value { get; set; }
+        public short Value { get; set; }
     }
 
     public enum ModbusMethods

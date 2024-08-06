@@ -23,7 +23,7 @@ internal static class Program
     /// <summary>
     ///     全局日志输出窗口
     /// </summary>
-    public static System.Windows.Controls.RichTextBox LogViewTextBox = new RichTextBox() { VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto }; //日志输出窗口
+    public static System.Windows.Controls.RichTextBox LogViewTextBox = new RichTextBox() { VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto ,FontSize = 12}; //日志输出窗口
 
     /// <summary>
     ///     The main entry point for the application.

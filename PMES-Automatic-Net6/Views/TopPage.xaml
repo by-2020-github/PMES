@@ -130,7 +130,7 @@
                    HorizontalAlignment="Left"
                    HorizontalContentAlignment="Left">
             </Label>
-            <TextBox Grid.Row="1"></TextBox>
+            <Grid x:Name="LogGrid" Grid.Row="1"></Grid>
         </Grid>
 
         <Border Grid.Row="7" BorderThickness="1" BorderBrush="Gray">

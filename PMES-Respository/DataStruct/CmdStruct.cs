@@ -88,6 +88,12 @@ namespace PMES_Respository.DataStruct
                 return hashCode;
             }
         }
+
+        public override string ToString()
+        {
+            return
+                $"{nameof(DeviceId)}: {DeviceId}, {nameof(WorkPositionId)}: {WorkPositionId}, {nameof(ReelSpecification)}: {ReelSpecification}, {nameof(ReelNum)}: {ReelNum}, {nameof(UnStackSpeed)}: {UnStackSpeed}, {nameof(ReelHeight)}: {ReelHeight}, {nameof(Reserve1)}: {Reserve1}, {nameof(Reserve2)}: {Reserve2}, {nameof(PmesAndPlcReadWriteFlag)}: {PmesAndPlcReadWriteFlag}";
+        }
     }
 
     /// <summary>
@@ -154,6 +160,12 @@ namespace PMES_Respository.DataStruct
                 hashCode = (hashCode * 397) ^ UnStackingFinished.GetHashCode();
                 return hashCode;
             }
+        }
+
+        public override string ToString()
+        {
+            return
+                $"{nameof(DeviceId)}: {DeviceId}, {nameof(WorkPositionId)}: {WorkPositionId}, {nameof(ReelSpecification)}: {ReelSpecification}, {nameof(ReelNum)}: {ReelNum}, {nameof(UnStackSpeed)}: {UnStackSpeed}, {nameof(ReelHeight)}: {ReelHeight}, {nameof(Reserve1)}: {Reserve1}, {nameof(Reserve2)}: {Reserve2}, {nameof(UnStackingFinished)}: {UnStackingFinished}";
         }
     }
 
@@ -579,15 +591,15 @@ namespace PMES_Respository.DataStruct
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
-                Value = 218,
+                Value = 0, //218
             },
             //code 条码数据，PMES直接读取
             new DataItem
             {
                 DataType = DataType.DataBlock,
-                VarType = VarType.Byte,
+                VarType = VarType.S7String,
                 DB = 510,
-                StartByteAdr = 1,
+                StartByteAdr = 2,
                 BitAdr = 0,
                 Count = 50,
                 Value = new object()
@@ -598,10 +610,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.DWord,
                 DB = 510,
-                StartByteAdr = 52,
+                StartByteAdr = 54,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             // weight 2 重量：4个byte,1个双字，如：120023（代表1200.23KG，两位小数点）；
             new DataItem
@@ -609,10 +621,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.DWord,
                 DB = 510,
-                StartByteAdr = 56,
+                StartByteAdr = 58,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             // read flag 1.上位机未读；2.上位机已读
             new DataItem
@@ -620,10 +632,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
                 DB = 510,
-                StartByteAdr = 60,
+                StartByteAdr = 62,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
 
             //预留位
@@ -632,10 +644,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
                 DB = 510,
-                StartByteAdr = 61,
+                StartByteAdr = 64,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //预留位
             new DataItem
@@ -643,10 +655,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
                 DB = 510,
-                StartByteAdr = 63,
+                StartByteAdr = 66,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
         };
 
@@ -659,12 +671,12 @@ namespace PMES_Respository.DataStruct
             new DataItem
             {
                 DataType = DataType.DataBlock,
-                VarType = VarType.Int,
+                VarType = VarType.Byte,
                 DB = 520,
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
-                Value = 221 //暂时未知,为平面图上的设备号,PLC需要，用于确定是那个设备，进而监控设备状态
+                Value = 0 //221 暂时未知,为平面图上的设备号,PLC需要，用于确定是那个设备，进而监控设备状态
             },
             //code1 条码数据，PMES直接读取
             new DataItem
@@ -672,9 +684,9 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
                 DB = 520,
-                StartByteAdr = 1,
+                StartByteAdr = 2,
                 BitAdr = 0,
-                Count = 50,
+                Count = 70,
                 Value = new object()
             },
             //code2 条码数据，PMES直接读取
@@ -683,9 +695,9 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
                 DB = 520,
-                StartByteAdr = 52,
+                StartByteAdr = 74,
                 BitAdr = 0,
-                Count = 50,
+                Count = 70,
                 Value = new object()
             },
             //1.上位机未读；2.上位机已读
@@ -694,10 +706,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
                 DB = 520,
-                StartByteAdr = 103,
+                StartByteAdr = 146,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //1.reserve1
             new DataItem
@@ -705,10 +717,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 104,
+                StartByteAdr = 148,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //1.reserve2
             new DataItem
@@ -716,10 +728,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 106,
+                StartByteAdr = 150,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
         };
 
@@ -732,22 +744,22 @@ namespace PMES_Respository.DataStruct
             new DataItem
             {
                 DataType = DataType.DataBlock,
-                VarType = VarType.Int,
+                VarType = VarType.Byte,
                 DB = 530,
                 StartByteAdr = 0,
                 BitAdr = 0,
                 Count = 1,
-                Value = 1 //暂时未知
+                Value = 0 //暂时未知
             },
             //code1 条码数据，PMES直接读取
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
-                DB = 520,
-                StartByteAdr = 1,
+                DB = 530,
+                StartByteAdr = 2,
                 BitAdr = 0,
-                Count = 50,
+                Count = 70,
                 Value = new object()
             },
             //code2 条码数据，PMES直接读取
@@ -755,10 +767,10 @@ namespace PMES_Respository.DataStruct
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.S7String,
-                DB = 520,
-                StartByteAdr = 52,
+                DB = 530,
+                StartByteAdr = 74,
                 BitAdr = 0,
-                Count = 50,
+                Count = 70,
                 Value = new object()
             },
             //1.上位机未读；2.上位机已读
@@ -766,22 +778,74 @@ namespace PMES_Respository.DataStruct
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
-                DB = 520,
-                StartByteAdr = 103,
+                DB = 530,
+                StartByteAdr = 146,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
             //1.reserve1
             new DataItem
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
-                DB = 520,
-                StartByteAdr = 104,
+                DB = 530,
+                StartByteAdr = 148,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
+            },
+            //1.reserve2
+            new DataItem
+            {
+                DataType = DataType.DataBlock,
+                VarType = VarType.Word,
+                DB = 530,
+                StartByteAdr = 150,
+                BitAdr = 0,
+                Count = 1,
+                Value = 0
+            },
+        };
+
+        /// <summary>
+        ///     母托盘条码扫码数据交互区
+        /// </summary>
+        public ObservableCollection<DataItem> PmesMotherTrayBarcode { get; set; } = new ObservableCollection<DataItem>()
+        {
+            //母托盘条码数据
+            new DataItem
+            {
+                DataType = DataType.DataBlock,
+                VarType = VarType.S7String,
+                DB = 552,
+                StartByteAdr = 0,
+                BitAdr = 0,
+                Count = 20,
+                Value = 0 //暂时未知
+            },
+            //读写标志: pmes，判断为1，则则可以写入；同时置此字段为2；同理，plc判断是否为2，是，则读取，可写入，并置为为1
+            new DataItem
+            {
+                DataType = DataType.DataBlock,
+                VarType = VarType.Byte,
+                DB = 552,
+                StartByteAdr = 574,
+                BitAdr = 0,
+                Count = 1,
+                Value = 0
+            },
+
+            //1.reserve1
+            new DataItem
+            {
+                DataType = DataType.DataBlock,
+                VarType = VarType.Word,
+                DB = 552,
+                StartByteAdr = 576,
+                BitAdr = 0,
+                Count = 1,
+                Value = 0
             },
             //1.reserve2
             new DataItem
@@ -789,10 +853,10 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 106,
+                StartByteAdr = 578,
                 BitAdr = 0,
                 Count = 1,
-                Value = new object()
+                Value = 0
             },
         };
 
@@ -890,6 +954,44 @@ namespace PMES_Respository.DataStruct
         ///     上位机写，入；置2; PLC写入，置1.
         /// </summary>
         public byte PmesAndPlcReadWriteFlag { get; set; }
+
+        protected bool Equals(PmesStacking other)
+        {
+            return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
+                   ReelSpecification == other.ReelSpecification && StackModel == other.StackModel &&
+                   StackingSpeed == other.StackingSpeed && Reserve1 == other.Reserve1 && Reserve2 == other.Reserve2 &&
+                   PmesAndPlcReadWriteFlag == other.PmesAndPlcReadWriteFlag;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PmesStacking)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = DeviceId.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorkPositionId.GetHashCode();
+                hashCode = (hashCode * 397) ^ ReelSpecification.GetHashCode();
+                hashCode = (hashCode * 397) ^ StackModel.GetHashCode();
+                hashCode = (hashCode * 397) ^ StackingSpeed.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Reserve2.GetHashCode();
+                hashCode = (hashCode * 397) ^ PmesAndPlcReadWriteFlag.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        public override string ToString()
+        {
+            return
+                $"{nameof(DeviceId)}: {DeviceId}, {nameof(WorkPositionId)}: {WorkPositionId}, {nameof(ReelSpecification)}: {ReelSpecification}, {nameof(StackModel)}: {StackModel}, {nameof(StackingSpeed)}: {StackingSpeed}, {nameof(Reserve1)}: {Reserve1}, {nameof(Reserve2)}: {Reserve2}, {nameof(PmesAndPlcReadWriteFlag)}: {PmesAndPlcReadWriteFlag}";
+        }
     }
 
     /// <summary>
@@ -961,6 +1063,12 @@ namespace PMES_Respository.DataStruct
                 hashCode = (hashCode * 397) ^ StackingFinished.GetHashCode();
                 return hashCode;
             }
+        }
+
+        public override string ToString()
+        {
+            return
+                $"{nameof(DeviceId)}: {DeviceId}, {nameof(WorkPositionId)}: {WorkPositionId}, {nameof(ReelSpecification)}: {ReelSpecification}, {nameof(StackModel)}: {StackModel}, {nameof(Reserve1)}: {Reserve1}, {nameof(Reserve2)}: {Reserve2}, {nameof(StackingFinished)}: {StackingFinished}";
         }
     }
 
