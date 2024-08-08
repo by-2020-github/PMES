@@ -67,6 +67,8 @@ public class GlobalVar
 
     public static PmesDataItemList PmesDataItems = new PmesDataItemList();
 
+    public static string IsBoxOnPos = "0";
+
     #endregion
 
     #region 码垛

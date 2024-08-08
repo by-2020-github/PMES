@@ -95,6 +95,12 @@ namespace PMES_Automatic_Net6.Core.Managers
         /// </summary>
         public Func<List<DataItem>, Task> OnBoxBarCodeChanged { get; set; }
 
+
+        /// <summary>
+        ///     Box到达
+        /// </summary>
+        public Func<List<DataItem>, Task> OnBoxArrived { get; set; }
+
         public const int IntervalTime = 50;
 
         public void StartReading()
@@ -235,25 +241,36 @@ namespace PMES_Automatic_Net6.Core.Managers
 
                         //读到重量和条码--->访问后台接口
                         await Task.Delay(IntervalTime);
-                        Plc.ReadMultipleVars(pmesDataItemList.PmesWeightAndBarCode.ToList());
+
+                        Plc.ReadMultipleVars(pmesDataItemList.PmesWeightAndBarCode);
                         Logger?.Verbose(
-                            $"读取重量成功,PmesWeightAndBarCode:{PrintDataItems(pmesDataItemList.PmesWeightAndBarCode.ToList())}");
+                            $"读取重量成功,PmesWeightAndBarCode:{PrintDataItems(pmesDataItemList.PmesWeightAndBarCode)}");
                         if (pmesDataItemList.PmesWeightAndBarCode[4].Value.ToString() == "1")
                         {
-                            if (!ComparerDataList(pmesDataItemList.PmesWeightAndBarCode.ToList(),
-                                    GlobalVar.PmesDataItems.PmesWeightAndBarCode.ToList()))
+                            if (!ComparerDataList(pmesDataItemList.PmesWeightAndBarCode,
+                                    GlobalVar.PmesDataItems.PmesWeightAndBarCode))
                             {
                                 GlobalVar.PmesDataItems.PmesWeightAndBarCode = pmesDataItemList.PmesWeightAndBarCode;
                                 if (second)
-                                    OnWeightAndCodeChanged?.Invoke(
-                                        GlobalVar.PmesDataItems.PmesWeightAndBarCode.ToList());
+                                {
+                                    if (int.Parse(pmesDataItemList.PmesWeightAndBarCode[3].Value.ToString()) != 0
+                                        && int.Parse(pmesDataItemList.PmesWeightAndBarCode[4].Value.ToString()) != 0
+                                        && !string.IsNullOrEmpty(pmesDataItemList.PmesWeightAndBarCode[2].Value
+                                            .ToString()))
+                                    {
+                                        OnWeightAndCodeChanged?.Invoke(
+                                            GlobalVar.PmesDataItems.PmesWeightAndBarCode.ToList());
+                                        Response(pmesDataItemList.PmesWeightAndBarCode);
+                                    }
+                                }
                             }
                         }
 
 
                         //条码复核
                         await Task.Delay(IntervalTime);
-                        Plc.ReadMultipleVars(pmesDataItemList.PmesReelCodeCheck.ToList());
+
+                        Plc.ReadMultipleVars(pmesDataItemList.PmesReelCodeCheck);
                         Logger?.Verbose(
                             $"读取条码成功,PmesReelCodeCheck:{PrintDataItems(pmesDataItemList.PmesReelCodeCheck.ToList())}");
 
@@ -263,8 +280,13 @@ namespace PMES_Automatic_Net6.Core.Managers
                                     GlobalVar.PmesDataItems.PmesReelCodeCheck.ToList()))
                             {
                                 GlobalVar.PmesDataItems.PmesReelCodeCheck = pmesDataItemList.PmesReelCodeCheck;
+
                                 if (second)
-                                    OnReelCodeChanged?.Invoke(GlobalVar.PmesDataItems.PmesReelCodeCheck.ToList());
+                                {
+                                    OnReelCodeChanged?.Invoke(
+                                        GlobalVar.PmesDataItems.PmesReelCodeCheck.ToList());
+                                    Response(pmesDataItemList.PmesReelCodeCheck);
+                                }
                             }
                         }
 
@@ -280,8 +302,18 @@ namespace PMES_Automatic_Net6.Core.Managers
                             {
                                 GlobalVar.PmesDataItems.PmesPackingBox = pmesDataItemList.PmesPackingBox;
                                 if (second)
+                                {
                                     OnBoxBarCodeChanged?.Invoke(GlobalVar.PmesDataItems.PmesPackingBox.ToList());
+                                    Response(pmesDataItemList.PmesPackingBox);
+                                }
                             }
+                        }
+
+                        if (!pmesDataItemList.PmesPackingBox[^2].Value.ToString().Equals(GlobalVar.IsBoxOnPos))
+                        {
+                            GlobalVar.IsBoxOnPos = pmesDataItemList.PmesPackingBox[^2].Value.ToString();
+                            if (GlobalVar.IsBoxOnPos.Equals("1"))
+                                OnBoxArrived?.Invoke(pmesDataItemList.PmesPackingBox);
                         }
 
                         #endregion
@@ -436,6 +468,26 @@ namespace PMES_Automatic_Net6.Core.Managers
             //}
 
             return true;
+        }
+
+        public void Response(List<DataItem> dataItems)
+        {
+            var items = dataItems.Select(s => new DataItem
+            {
+                DataType = s.DataType,
+                VarType = s.VarType,
+                DB = s.DB,
+                StartByteAdr = s.StartByteAdr,
+                BitAdr = s.BitAdr,
+                Count = s.Count,
+                Value = s.Value
+            }).ToList();
+            items[^3].Value = byte.Parse("2");
+            Plc.Write(items.TakeLast(3).ToArray());
+            Logger?.Information($"DB{items[^3].DB}.{items[^3].StartByteAdr} 标志位置2！");
+            Plc.ReadMultipleVarsAsync(items);
+            Logger?.Information(
+                ($"DB{items[^3].DB}.{items[^3].StartByteAdr} 标志位置2读取结果：\n{HardwareManager.PrintDataItems(items.TakeLast(3).ToList())}"));
         }
     }
 }

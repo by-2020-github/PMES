@@ -52,7 +52,7 @@ internal static class Program
         SerilogManager.InitDefaultLogger();
         _logger = SerilogManager.GetOrCreateLogger();
         //2 初始化freeSqlHelper并加载数据
-        InitDb();
+        //InitDb();
 
 
         // To customize application configuration such as set high DPI settings or default font,

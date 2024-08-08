@@ -31,17 +31,26 @@
                 <ColumnDefinition Width="180"></ColumnDefinition>
                 <ColumnDefinition Width="180"></ColumnDefinition>
                 <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
                 <ColumnDefinition Width="20"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Margin="15" Content="PMES - 欢迎使用成品智能包装系统" Grid.Column="0"
                    FontSize="24" VerticalContentAlignment="Center" FontFamily="Microsoft YaHei UI">
             </Label>
 
-            <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="清空"></Button>
-            <Button Grid.Column="2" Width="160" Height="60" FontSize="18" Content="停止"></Button>
-            <Button Grid.Column="3" Width="160" Height="60" FontSize="18" Content="退出"
+            <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="打印盘码"
+                    Command="{Binding PrintReelCodeCommand}">
+            </Button>
+            <Button Grid.Column="2" Width="160" Height="60" FontSize="18" Content="打印箱码"
+                    Command="{Binding PrintBoxCodeCommand}">
+            </Button>
+            <Button Grid.Column="3" Width="160" Height="60" FontSize="18" Content="清空"></Button>
+            <Button Grid.Column="4" Width="160" Height="60" FontSize="18" Content="停止"></Button>
+            <Button Grid.Column="5" Width="160" Height="60" FontSize="18" Content="退出"
                     Command="{Binding CloseCommand}">
             </Button>
+
         </Grid>
         <!--状态-->
         <UniformGrid Grid.Row="1" Rows="1" Columns="6" Margin="10">

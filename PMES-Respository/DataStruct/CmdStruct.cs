@@ -24,9 +24,9 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         /// 00001 - 拆垛机器人
         /// </summary>
-        public byte DeviceId { get; set; }
+        public byte DeviceId { get; set; } = 1;
 
-        public byte WorkPositionId { get; set; }
+        public byte WorkPositionId { get; set; } = 202;
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -39,14 +39,14 @@ namespace PMES_Respository.DataStruct
         ///7.355*180木盘
         ///8. 500*210木盘
         /// </summary>
-        public byte ReelSpecification { get; set; }
+        public byte ReelSpecification { get; set; } = 1;
 
         /// <summary>
         ///     线盘数量
         /// </summary>
-        public byte ReelNum { get; set; }
+        public byte ReelNum { get; set; } = 1;
 
-        public byte UnStackSpeed { get; set; }
+        public byte UnStackSpeed { get; set; } = 10;
         public ushort ReelHeight { get; set; }
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
@@ -54,7 +54,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     上位机写，入；置2; PLC写入，置1.
         /// </summary>
-        public byte PmesAndPlcReadWriteFlag { get; set; }
+        public byte PmesAndPlcReadWriteFlag { get; set; } = 2;
 
         protected bool Equals(PmesCmdUnStacking other)
         {
@@ -580,7 +580,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     DB510
         /// </summary>
-        public ObservableCollection<DataItem> PmesWeightAndBarCode { get; set; } = new ObservableCollection<DataItem>()
+        public List<DataItem> PmesWeightAndBarCode { get; set; } = new List<DataItem>()
         {
             //id
             new DataItem
@@ -665,7 +665,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     线盘barcode check
         /// </summary>
-        public ObservableCollection<DataItem> PmesReelCodeCheck { get; set; } = new ObservableCollection<DataItem>()
+        public List<DataItem> PmesReelCodeCheck { get; set; } = new List<DataItem>()
         {
             //id
             new DataItem
@@ -738,7 +738,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     装箱
         /// </summary>
-        public ObservableCollection<DataItem> PmesPackingBox { get; set; } = new ObservableCollection<DataItem>()
+        public List<DataItem> PmesPackingBox { get; set; } = new List<DataItem>()
         {
             //id
             new DataItem
@@ -811,7 +811,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     母托盘条码扫码数据交互区
         /// </summary>
-        public ObservableCollection<DataItem> PmesMotherTrayBarcode { get; set; } = new ObservableCollection<DataItem>()
+        public List<DataItem> PmesMotherTrayBarcode { get; set; } = new List<DataItem>()
         {
             //母托盘条码数据
             new DataItem
@@ -896,9 +896,9 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         /// 码垛机器人
         /// </summary>
-        public byte DeviceId { get; set; }
+        public byte DeviceId { get; set; } = 2;
 
-        public ushort WorkPositionId { get; set; }
+        public ushort WorkPositionId { get; set; } = 254;
 
         /// <summary>
         /// 线盘规格 物料规格类型对应1-8，分别如下：
@@ -911,7 +911,7 @@ namespace PMES_Respository.DataStruct
         ///7.355*180木盘
         ///8. 500*210木盘
         /// </summary>
-        public byte ReelSpecification { get; set; }
+        public byte ReelSpecification { get; set; } = 1;
 
 
         /// <summary>
@@ -929,7 +929,7 @@ namespace PMES_Respository.DataStruct
         ///    10.355*180木盘
         ///    11. 500*210木盘
         /// </summary>
-        public byte StackModel { get; set; }
+        public byte StackModel { get; set; } = 1;
 
 
         //
@@ -943,7 +943,7 @@ namespace PMES_Respository.DataStruct
             4. 木托盘为355：50%
 
             5. 木托盘500： 为40%*/
-        public ushort StackingSpeed { get; set; }
+        public ushort StackingSpeed { get; set; } = 10;
 
 
         public ushort Reserve1 { get; set; }
@@ -953,7 +953,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     上位机写，入；置2; PLC写入，置1.
         /// </summary>
-        public byte PmesAndPlcReadWriteFlag { get; set; }
+        public byte PmesAndPlcReadWriteFlag { get; set; } = 2;
 
         protected bool Equals(PmesStacking other)
         {

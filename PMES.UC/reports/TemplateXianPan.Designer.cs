@@ -76,7 +76,7 @@
             // BottomMargin
             // 
             this.BottomMargin.Dpi = 254F;
-            this.BottomMargin.HeightF = 0F;
+            this.BottomMargin.HeightF = 15.94799F;
             this.BottomMargin.Name = "BottomMargin";
             // 
             // Detail
@@ -90,7 +90,7 @@
             this.xrPanel1});
             this.Detail.Dpi = 254F;
             this.Detail.Font = new System.Drawing.Font("Microsoft YaHei UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Detail.HeightF = 400F;
+            this.Detail.HeightF = 617.25F;
             this.Detail.HierarchyPrintOptions.Indent = 50.8F;
             this.Detail.Name = "Detail";
             this.Detail.StylePriority.UseBackColor = false;
@@ -113,9 +113,9 @@
             this.xrTable2,
             this.xrTable3});
             this.xrPanel1.Dpi = 254F;
-            this.xrPanel1.LocationFloat = new DevExpress.Utils.PointFloat(5F, 5F);
+            this.xrPanel1.LocationFloat = new DevExpress.Utils.PointFloat(4.999998F, 5.000018F);
             this.xrPanel1.Name = "xrPanel1";
-            this.xrPanel1.SizeF = new System.Drawing.SizeF(590F, 390F);
+            this.xrPanel1.SizeF = new System.Drawing.SizeF(590F, 612.25F);
             this.xrPanel1.StylePriority.UseBorderColor = false;
             this.xrPanel1.StylePriority.UseBorders = false;
             // 
@@ -432,7 +432,7 @@
             this.DataSource = this.objectDataSource1;
             this.Dpi = 254F;
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
+            this.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 16);
             this.PageHeight = 399;
             this.PageWidth = 599;
             this.PaperKind = System.Drawing.Printing.PaperKind.Custom;

@@ -203,12 +203,12 @@ public partial class MainForm : XtraForm
             {
                 lbNew.Text = txtScanCode.Text;
                 if (await _freeSql.Insert<T_order_exchange>(new T_order_exchange
-                {
-                    CreateTime = DateTime.Now,
-                    NewCode = lbNew.Text,
-                    OldCode = lbOld.Text,
-                    WeightUserId = GlobalVar.CurrentUserInfo.userId
-                }).ExecuteAffrowsAsync() > 0)
+                    {
+                        CreateTime = DateTime.Now,
+                        NewCode = lbNew.Text,
+                        OldCode = lbOld.Text,
+                        WeightUserId = GlobalVar.CurrentUserInfo.userId
+                    }).ExecuteAffrowsAsync() > 0)
                 {
                     ShowInfoMsg("改线入库成功!");
 
@@ -225,6 +225,9 @@ public partial class MainForm : XtraForm
         #endregion
 
         if (string.IsNullOrEmpty(txtScanCode.Text))
+            return;
+
+        if (txtScanCode.Text.EndsWith("\n"))
             return;
 
         if (txtScanCode.Text.Length < 5)
@@ -663,7 +666,8 @@ public partial class MainForm : XtraForm
     {
         try
         {
-            var view = _freeSql.Select<U_VW_DBCP>().WithSql("SELECT * FROM U_VW_DBCP").ToList().First(s => s.FItemID == preheaterCode.ProductId.ToString());
+            var view = _freeSql.Select<U_VW_DBCP>().WithSql("SELECT * FROM U_VW_DBCP").ToList()
+                .First(s => s.FItemID == preheaterCode.ProductId.ToString());
             if (view == null)
             {
                 ShowErrorMsg("视图查询为空！");
@@ -1181,7 +1185,7 @@ public partial class MainForm : XtraForm
         }
         var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
-      
+
         var boxId = preheaterMode.BoxId;
         var boxRow = boxInfos.FindIndex(s => s.Id == boxId);
         if (boxRow == -1) return;
@@ -1202,8 +1206,7 @@ public partial class MainForm : XtraForm
         var boxInfos = gridControlBox.DataSource as List<T_box>;
         if (boxInfos == null) return;
         var boxInfo = boxInfos[e.FocusedRowHandle];
- 
-   
+
 
         var pCodes = await _freeSql.Select<T_preheater_code>().Where(s => boxInfo.Id == s.BoxId).ToListAsync();
         gridControlBoxChild.DataSource = null;
@@ -1327,7 +1330,6 @@ public partial class MainForm : XtraForm
         lbOld.Visible = false;
         cbxMigration.Checked = true;
         cbxAutoMode.Checked = false;
-
     }
 
     private void cbxAutoModeClick(object sender, EventArgs e)
@@ -1347,5 +1349,4 @@ public partial class MainForm : XtraForm
     }
 
     #endregion
-
 }

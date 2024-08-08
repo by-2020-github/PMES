@@ -451,7 +451,7 @@
             cbx_userStandardCode.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cbx_userStandardCode.Properties.Appearance.Options.UseFont = true;
             cbx_userStandardCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_userStandardCode.Size = new Size(193, 26);
+            cbx_userStandardCode.Size = new Size(193, 50);
             cbx_userStandardCode.TabIndex = 2;
             // 
             // cbx_productBatchNo
@@ -462,7 +462,7 @@
             cbx_productBatchNo.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cbx_productBatchNo.Properties.Appearance.Options.UseFont = true;
             cbx_productBatchNo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_productBatchNo.Size = new Size(193, 26);
+            cbx_productBatchNo.Size = new Size(193, 50);
             cbx_productBatchNo.TabIndex = 2;
             // 
             // cbx_productSpec
@@ -473,7 +473,7 @@
             cbx_productSpec.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cbx_productSpec.Properties.Appearance.Options.UseFont = true;
             cbx_productSpec.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_productSpec.Size = new Size(193, 26);
+            cbx_productSpec.Size = new Size(193, 50);
             cbx_productSpec.TabIndex = 2;
             // 
             // cbx_productCode
@@ -484,7 +484,7 @@
             cbx_productCode.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cbx_productCode.Properties.Appearance.Options.UseFont = true;
             cbx_productCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_productCode.Size = new Size(193, 26);
+            cbx_productCode.Size = new Size(193, 50);
             cbx_productCode.TabIndex = 2;
             // 
             // cbx_preheaterSpec
@@ -495,7 +495,7 @@
             cbx_preheaterSpec.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cbx_preheaterSpec.Properties.Appearance.Options.UseFont = true;
             cbx_preheaterSpec.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_preheaterSpec.Size = new Size(193, 26);
+            cbx_preheaterSpec.Size = new Size(193, 50);
             cbx_preheaterSpec.TabIndex = 2;
             // 
             // cbx_preheaterCode
@@ -506,7 +506,7 @@
             cbx_preheaterCode.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cbx_preheaterCode.Properties.Appearance.Options.UseFont = true;
             cbx_preheaterCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_preheaterCode.Size = new Size(193, 26);
+            cbx_preheaterCode.Size = new Size(193, 50);
             cbx_preheaterCode.TabIndex = 2;
             // 
             // cbx_packingBoxCode
@@ -517,7 +517,7 @@
             cbx_packingBoxCode.Properties.Appearance.Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point);
             cbx_packingBoxCode.Properties.Appearance.Options.UseFont = true;
             cbx_packingBoxCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            cbx_packingBoxCode.Size = new Size(193, 26);
+            cbx_packingBoxCode.Size = new Size(193, 50);
             cbx_packingBoxCode.TabIndex = 2;
             // 
             // btnQuery
@@ -569,7 +569,7 @@
             // HistoryFilter
             // 
             Appearance.Options.UseFont = true;
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(14F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(598, 418);
             Controls.Add(tableLayoutPanel1);

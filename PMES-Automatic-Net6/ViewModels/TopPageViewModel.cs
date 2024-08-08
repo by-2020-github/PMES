@@ -19,9 +19,11 @@ using DateTime = System.DateTime;
 using PMES_Respository.reportModel;
 using PMES.UC.reports;
 using System.Drawing;
+using DevExpress.XtraReports.UI;
 using HslCommunication.ModBus;
 using FluentModbus;
 using Newtonsoft.Json;
+using DevExpress.XtraReports;
 
 
 namespace PMES_Automatic_Net6.ViewModels
@@ -31,6 +33,7 @@ namespace PMES_Automatic_Net6.ViewModels
         private Plc Plc => HardwareManager.Instance.Plc;
         private ModbusTcpNet PlcXj => HardwareManager.Instance.PlcXj;
         public Serilog.ILogger Logger => SerilogManager.GetOrCreateLogger();
+        private Queue<XtraReport> _reports = new Queue<XtraReport>();
 
         [ObservableProperty] private string? _productCode = "";
         [ObservableProperty] private string? _preScanCode1 = "s1";
@@ -52,6 +55,19 @@ namespace PMES_Automatic_Net6.ViewModels
             HardwareManager.Instance.OnWeightAndCodeChanged += WeightAndCodeChanged;
             HardwareManager.Instance.OnReelCodeChanged += ReelCodeChanged;
             HardwareManager.Instance.OnBoxBarCodeChanged += BoxBarCodeChanged;
+            HardwareManager.Instance.OnBoxArrived += BoxArrived;
+        }
+
+        private Task BoxArrived(List<DataItem> arg)
+        {
+            if (_reports.Count > 0)
+            {
+                var reportP = _reports.Dequeue();
+                reportP.Print("161");
+                reportP.Print("160");
+            }
+
+            return Task.FromResult(true);
         }
 
         #region PLC状态改变处理事件
@@ -100,25 +116,28 @@ namespace PMES_Automatic_Net6.ViewModels
                 }
 
                 //处理完毕把标志位置1
-                var items = new List<DataItem>();
-                obj.ForEach(s =>
-                {
-                    items.Add(new DataItem
-                    {
-                        DataType = s.DataType,
-                        VarType = s.VarType,
-                        DB = s.DB,
-                        StartByteAdr = s.StartByteAdr,
-                        BitAdr = s.BitAdr,
-                        Count = s.Count,
-                        Value = s.Value
-                    });
-                });
-                items[4].Value = byte.Parse("2");
+                //var items = new List<DataItem>();
+                //obj.ForEach(s =>
+                //{
+                //    items.Add(new DataItem
+                //    {
+                //        DataType = s.DataType,
+                //        VarType = s.VarType,
+                //        DB = s.DB,
+                //        StartByteAdr = s.StartByteAdr,
+                //        BitAdr = s.BitAdr,
+                //        Count = s.Count,
+                //        Value = s.Value
+                //    });
+                //});
+                //items[4].Value = byte.Parse("2");
+                ////obj[5].Value = 0;
+                //Logger?.Information($"WeightAndCodeChanged 把标志位置2：\n{HardwareManager.PrintDataItems(items)}");
+                //await Plc.WriteAsync(items.TakeLast(3).ToArray());
+                //await Task.Delay(50);
+                //await Plc.ReadMultipleVarsAsync(items.ToList());
+                //Logger?.Information($"WeightAndCodeChanged 把标志位置2读取结果：\n{HardwareManager.PrintDataItems(items)}");
                 //错误码人工置0
-                //obj[5].Value = 0;
-                Logger?.Information($"WeightAndCodeChanged 把标志位置2：\n{HardwareManager.PrintDataItems(items)}");
-                await Plc.WriteAsync(items.TakeLast(3).ToArray());
 
                 Weight1 = ((double.Parse(obj[2].Value.ToString())) / 100d).ToString("f2");
                 Weight2 = ((double.Parse(obj[3].Value.ToString())) / 100d).ToString("f2");
@@ -215,12 +234,12 @@ namespace PMES_Automatic_Net6.ViewModels
             };
 
             //这里判断是否合格
-            var validateOrder = await ValidateOrder(double.Parse(Weight1 ?? "0"), ProductCode);
-            if (!validateOrder.Item1)
-            {
-                tPreheaterCode.NoQualifiedReason = validateOrder.Item2;
-                tPreheaterCode.IsQualified = 0;
-            }
+            //var validateOrder = await ValidateOrder(double.Parse(Weight1 ?? "0"), ProductCode);
+            //if (!validateOrder.Item1)
+            //{
+            //    tPreheaterCode.NoQualifiedReason = validateOrder.Item2;
+            //    tPreheaterCode.IsQualified = 0;
+            //}
 
             //打印标签
             var xianPanReportModel = new XianPanReportModel
@@ -249,24 +268,27 @@ namespace PMES_Automatic_Net6.ViewModels
             //reportP.Print("160");
             //Logger?.Information($"调用默认打印机打印!");
             //SendXinJieCmd();
+            var boxCode =
+                @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{1:D4}-{Weight1}";
 
             var boxReportModels = new List<BoxReportModel>()
             {
                 new BoxReportModel
                 {
-                    MaterialNo = "22222222222",
-                    Model = "22222222222",
-                    Specifications = "22222222222",
-                    NetWeight = null,
-                    BatchNum = "22222222222",
-                    No = "22222222222",
-                    Standard = "22222222222",
-                    ProductNo = "22222222222",
-                    BoxCode = "22222222222",
-                    DateTime = "22222222222",
-                    GrossWeight = "22222222222",
-                    WaterMark = "22222222222"
-                }
+                    MaterialNo = tPreheaterCode.CustomerMaterialCode,
+                    Model = tPreheaterCode.ProductSpec,
+                    Specifications = tPreheaterCode.PreheaterSpec,
+                    NetWeight = Weight1,
+                    BatchNum = "1",
+                    No = tPreheaterCode.PSN,
+                    Standard = tPreheaterCode.ProductStandardName,
+                    ProductNo = tPreheaterCode.ProductCode,
+                    DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                    GrossWeight = Weight1,
+                    //BoxCode = boxCode
+                    BoxCode = (new Random().Next(100_000_000, 200_000_000)).ToString(),
+                },
+               
             };
             var reportP = new TemplateBox();
             reportP.DataSource = boxReportModels;
@@ -275,12 +297,12 @@ namespace PMES_Automatic_Net6.ViewModels
             reportP.ExportToImage($"D:\\box.png");
             Logger?.Information($"导出模板:D:\\box.png");
             //TODO:先打印一个标签，后续根据客户需求 可以对应多个标签 2024年8月3日 
-            reportP.Print("152");
-            reportP.Print("161");
-            reportP.Print("160");
+
+            reportP.Print("Honeywell PX240 (300 dpi)");
+
             Logger?.Information($"调用默认打印机打印!");
             SendXinJieCmd();
-
+            _reports.Enqueue(reportP);
 
             #region 更新到界面表格
 
@@ -342,24 +364,24 @@ namespace PMES_Automatic_Net6.ViewModels
                 return;
             }
 
-            //处理完毕把标志位置1
-            var items = new List<DataItem>();
-            obj.ForEach(s =>
-            {
-                items.Add(new DataItem
-                {
-                    DataType = s.DataType,
-                    VarType = s.VarType,
-                    DB = s.DB,
-                    StartByteAdr = s.StartByteAdr,
-                    BitAdr = s.BitAdr,
-                    Count = s.Count,
-                    Value = s.Value
-                });
-            });
-            items[3].Value = byte.Parse("2");
-            Logger?.Information($"BoxBarCodeChanged 把标志位置2：\n{HardwareManager.PrintDataItems(items)}");
-            await Plc.WriteAsync(items.TakeLast(3).ToArray());
+            ////处理完毕把标志位置1
+            //var items = new List<DataItem>();
+            //obj.ForEach(s =>
+            //{
+            //    items.Add(new DataItem
+            //    {
+            //        DataType = s.DataType,
+            //        VarType = s.VarType,
+            //        DB = s.DB,
+            //        StartByteAdr = s.StartByteAdr,
+            //        BitAdr = s.BitAdr,
+            //        Count = s.Count,
+            //        Value = s.Value
+            //    });
+            //});
+            //items[3].Value = byte.Parse("2");
+            //Logger?.Information($"BoxBarCodeChanged 把标志位置2：\n{HardwareManager.PrintDataItems(items)}");
+            //await Plc.WriteAsync(items.TakeLast(3).ToArray());
 
             BoxCode1 = obj[1].Value.ToString();
             BoxCode2 = obj[2].Value.ToString();
@@ -383,23 +405,23 @@ namespace PMES_Automatic_Net6.ViewModels
             }
 
             //处理完毕把标志位置1
-            var items = new List<DataItem>();
-            obj.ForEach(s =>
-            {
-                items.Add(new DataItem
-                {
-                    DataType = s.DataType,
-                    VarType = s.VarType,
-                    DB = s.DB,
-                    StartByteAdr = s.StartByteAdr,
-                    BitAdr = s.BitAdr,
-                    Count = s.Count,
-                    Value = s.Value
-                });
-            });
-            items[3].Value = byte.Parse("2");
-            Logger?.Information($"ReelCodeChanged 把标志位置2：\n{HardwareManager.PrintDataItems(items)}");
-            await Plc.WriteAsync(items.TakeLast(3).ToArray());
+            //var items = new List<DataItem>();
+            //obj.ForEach(s =>
+            //{
+            //    items.Add(new DataItem
+            //    {
+            //        DataType = s.DataType,
+            //        VarType = s.VarType,
+            //        DB = s.DB,
+            //        StartByteAdr = s.StartByteAdr,
+            //        BitAdr = s.BitAdr,
+            //        Count = s.Count,
+            //        Value = s.Value
+            //    });
+            //});
+            //items[3].Value = byte.Parse("2");
+            //Logger?.Information($"ReelCodeChanged 把标志位置2：\n{HardwareManager.PrintDataItems(items)}");
+            //await Plc.WriteAsync(items.TakeLast(3).ToArray());
 
             PreScanCode1 = obj[1].Value.ToString();
             PreScanCode2 = obj[2].Value.ToString();
@@ -574,6 +596,82 @@ namespace PMES_Automatic_Net6.ViewModels
 
                 Thread.Sleep(50);
             }
+        }
+
+        #endregion
+
+        #region Debug
+
+        [RelayCommand]
+        private void PrintReelCode()
+        {
+            var boxReportModels = new List<BoxReportModel>()
+            {
+                new BoxReportModel
+                {
+                    MaterialNo = "22222222222",
+                    Model = "22222222222",
+                    Specifications = "22222222222",
+                    NetWeight = null,
+                    BatchNum = "22222222222",
+                    No = "22222222222",
+                    Standard = "22222222222",
+                    ProductNo = "22222222222",
+                    BoxCode = (new Random().Next(100_000_000, 200_000_000)).ToString(),
+                    DateTime = "22222222222",
+                    GrossWeight = "22222222222",
+                    WaterMark = "22222222222"
+                }
+            };
+            var reportP = new TemplateBox();
+            reportP.DataSource = boxReportModels;
+            reportP.Watermark.Text = boxReportModels.Last().WaterMark;
+            reportP.Watermark.ShowBehind = false;
+            _reports.Enqueue(reportP);
+
+            reportP.ExportToImage($"D:\\box.png");
+            Logger?.Information($"导出模板:D:\\box.png");
+            //TODO:先打印一个标签，后续根据客户需求 可以对应多个标签 2024年8月3日 
+
+            reportP.Print("Honeywell PX240 (300 dpi)");
+
+            Logger?.Information($"调用默认打印机打印!");
+            SendXinJieCmd();
+        }
+
+        [RelayCommand]
+        private void PrintBoxCode()
+        {
+            if (_reports.Count == 0)
+            {
+                var boxReportModels = new List<BoxReportModel>()
+                {
+                    new BoxReportModel
+                    {
+                        MaterialNo = "22222222222",
+                        Model = "22222222222",
+                        Specifications = "22222222222",
+                        NetWeight = null,
+                        BatchNum = "22222222222",
+                        No = "22222222222",
+                        Standard = "22222222222",
+                        ProductNo = "22222222222",
+                        BoxCode = (new Random().Next(100_000_000, 200_000_000)).ToString(),
+                        DateTime = "22222222222",
+                        GrossWeight = "22222222222",
+                        WaterMark = "22222222222"
+                    }
+                };
+                var reportP = new TemplateBox();
+                reportP.DataSource = boxReportModels;
+                reportP.Watermark.Text = boxReportModels.Last().WaterMark;
+                reportP.Watermark.ShowBehind = false;
+                _reports.Enqueue(reportP);
+            }
+
+            var reportP1 = _reports.Dequeue();
+            reportP1.Print("161");
+            reportP1.Print("160");
         }
 
         #endregion
