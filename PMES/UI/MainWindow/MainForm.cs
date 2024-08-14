@@ -631,7 +631,7 @@ public partial class MainForm : XtraForm
             layers = layers <= 0 ? 1 : layers;
             var perNum = product.package_info.stacking_per_layer;
             perNum = perNum <= 0 ? 2 : perNum;
-            lb_currentInfo.Text = @$"已码{Math.Ceiling(_preheaterNum * 1f / perNum):F0}层,共{_preheaterNum}个";
+            lb_currentInfo.Text = @$"已码{Math.Ceiling((decimal)(_preheaterNum * 1f / perNum)):F0}层,共{_preheaterNum}个";
             lb_leftNum.Text = @$"剩余个数：{layers * perNum - _preheaterNum}";
 
             if (_preheaterNum == layers * perNum)

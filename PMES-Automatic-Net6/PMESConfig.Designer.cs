@@ -111,9 +111,8 @@ namespace PMES_Automatic_Net6 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=127.0.0.1;Port=3308;User ID=root;Password=123456; Initial Catalog=ava" +
-            "nt_sicd_automatic;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetri" +
-            "eval=true")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=127.0.0.1;Port=3306;User ID=root;Password=123456; Initial Catalog=pme" +
+            "s;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true")]
         public string ConnLocalMysql {
             get {
                 return ((string)(this["ConnLocalMysql"]));

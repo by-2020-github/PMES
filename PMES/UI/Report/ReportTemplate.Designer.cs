@@ -946,13 +946,13 @@
             xrDesignRibbonPageGroup43 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
             ribbonPage1 = new DevExpress.XtraReports.UserDesigner.XRHomeRibbonPage();
             xrDesignRibbonPageGroup1 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
+            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             xrDesignRibbonPageGroup2 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
             xrDesignRibbonPageGroup3 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
             xrDesignRibbonPageGroup4 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
             xrDesignRibbonPageGroup5 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
             xrDesignRibbonPageGroup6 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
             xrDesignRibbonPageGroup7 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
-            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraReports.UserDesigner.XRLayoutRibbonPage();
             xrDesignRibbonPageGroup8 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
             xrDesignRibbonPageGroup9 = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroup();
@@ -5389,6 +5389,18 @@
             xrDesignRibbonPageGroup1.Name = "xrDesignRibbonPageGroup1";
             xrDesignRibbonPageGroup1.Text = "Report";
             // 
+            // ribbonPageGroup1
+            // 
+            ribbonPageGroup1.ItemLinks.Add(btnBoxCode);
+            ribbonPageGroup1.ItemLinks.Add(btnPCode);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem1);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem2);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem3);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem4);
+            ribbonPageGroup1.ItemLinks.Add(barButtonItem5);
+            ribbonPageGroup1.Name = "ribbonPageGroup1";
+            ribbonPageGroup1.Text = "模板";
+            // 
             // xrDesignRibbonPageGroup2
             // 
             xrDesignRibbonPageGroup2.AllowTextClipping = false;
@@ -5451,18 +5463,6 @@
             xrDesignRibbonPageGroup7.Kind = DevExpress.XtraReports.UserDesigner.XRDesignRibbonPageGroupKind.Styles;
             xrDesignRibbonPageGroup7.Name = "xrDesignRibbonPageGroup7";
             xrDesignRibbonPageGroup7.Text = "Styles";
-            // 
-            // ribbonPageGroup1
-            // 
-            ribbonPageGroup1.ItemLinks.Add(btnBoxCode);
-            ribbonPageGroup1.ItemLinks.Add(btnPCode);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem1);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem2);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem3);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem4);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem5);
-            ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "模板";
             // 
             // ribbonPage2
             // 
@@ -5776,6 +5776,7 @@
             Ribbon = ribbonControl1;
             StatusBar = ribbonStatusBar1;
             Text = "ReportTemplate";
+            Load += ReportTemplate_Load;
             ((System.ComponentModel.ISupportInitialize)xrDesignRibbonController1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)applicationMenu1).EndInit();

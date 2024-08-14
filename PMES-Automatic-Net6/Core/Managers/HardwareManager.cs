@@ -101,6 +101,11 @@ namespace PMES_Automatic_Net6.Core.Managers
         /// </summary>
         public Func<List<DataItem>, Task> OnBoxArrived { get; set; }
 
+        /// <summary>
+        ///     码完了
+        /// </summary>
+        public Func<List<DataItem>, Task> OnBoxStacked { get; set; }
+
         public const int IntervalTime = 50;
 
         public void StartReading()
@@ -254,13 +259,12 @@ namespace PMES_Automatic_Net6.Core.Managers
                                 if (second)
                                 {
                                     if (int.Parse(pmesDataItemList.PmesWeightAndBarCode[3].Value.ToString()) != 0
-                                        && int.Parse(pmesDataItemList.PmesWeightAndBarCode[4].Value.ToString()) != 0
-                                        && !string.IsNullOrEmpty(pmesDataItemList.PmesWeightAndBarCode[2].Value
-                                            .ToString()))
+                                        && int.Parse(pmesDataItemList.PmesWeightAndBarCode[4].Value.ToString()) != 0)
                                     {
                                         OnWeightAndCodeChanged?.Invoke(
                                             GlobalVar.PmesDataItems.PmesWeightAndBarCode.ToList());
-                                        Response(pmesDataItemList.PmesWeightAndBarCode);
+                                        //这里不能直接回复了，需要在前端判断标签类型
+                                        //Response(pmesDataItemList.PmesWeightAndBarCode);
                                     }
                                 }
                             }
@@ -285,7 +289,7 @@ namespace PMES_Automatic_Net6.Core.Managers
                                 {
                                     OnReelCodeChanged?.Invoke(
                                         GlobalVar.PmesDataItems.PmesReelCodeCheck.ToList());
-                                    Response(pmesDataItemList.PmesReelCodeCheck);
+                                    //Response(pmesDataItemList.PmesReelCodeCheck);
                                 }
                             }
                         }
@@ -304,16 +308,29 @@ namespace PMES_Automatic_Net6.Core.Managers
                                 if (second)
                                 {
                                     OnBoxBarCodeChanged?.Invoke(GlobalVar.PmesDataItems.PmesPackingBox.ToList());
-                                    Response(pmesDataItemList.PmesPackingBox);
+                                    //这里不能直接回复了，需要在前端判断标签类型
+                                    //Response(pmesDataItemList.PmesPackingBox);
                                 }
                             }
                         }
 
+
+                        //箱子到达这里的判断标志位
                         if (!pmesDataItemList.PmesPackingBox[^2].Value.ToString().Equals(GlobalVar.IsBoxOnPos))
                         {
                             GlobalVar.IsBoxOnPos = pmesDataItemList.PmesPackingBox[^2].Value.ToString();
                             if (GlobalVar.IsBoxOnPos.Equals("1"))
                                 OnBoxArrived?.Invoke(pmesDataItemList.PmesPackingBox);
+                        }
+
+                        //箱子码完了的判断标志位
+                        if (ushort.TryParse(pmesDataItemList.PmesPackingBox[^2].Value.ToString(), out var value))
+                        {
+                            if (value > 20)
+                            {
+                                OnBoxStacked?.Invoke(pmesDataItemList.PmesPackingBox);
+                                ResetReverse(pmesDataItemList.PmesPackingBox); //最后标志位置零
+                            }
                         }
 
                         #endregion
@@ -488,6 +505,25 @@ namespace PMES_Automatic_Net6.Core.Managers
             Plc.ReadMultipleVarsAsync(items);
             Logger?.Information(
                 ($"DB{items[^3].DB}.{items[^3].StartByteAdr} 标志位置2读取结果：\n{HardwareManager.PrintDataItems(items.TakeLast(3).ToList())}"));
+        }
+
+        public void ResetReverse(List<DataItem> dataItems)
+        {
+            var items = dataItems.Select(s => new DataItem
+            {
+                DataType = s.DataType,
+                VarType = s.VarType,
+                DB = s.DB,
+                StartByteAdr = s.StartByteAdr,
+                BitAdr = s.BitAdr,
+                Count = s.Count,
+                Value = s.Value
+            }).ToList();
+            items[^1].Value = byte.Parse("0");
+            Plc.Write(items.TakeLast(3).ToArray());
+            Plc.ReadMultipleVarsAsync(items);
+            Logger?.Information(
+                ($"DB{items[^1].DB}.{items[^1].StartByteAdr} 最后一个预留位读取结果：\n{HardwareManager.PrintDataItems(items.TakeLast(1).ToList())}"));
         }
     }
 }

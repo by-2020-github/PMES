@@ -74,6 +74,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reports\ReelReportAuto.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="reports\ReelReportAuto.Designer.cs">
+      <DependentUpon>ReelReportAuto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reports\BoxReportAuto.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="reports\BoxReportAuto.Designer.cs">
+      <DependentUpon>BoxReportAuto.cs</DependentUpon>
+    </Compile>
     <Compile Include="reports\TemplateBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -90,6 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="reports\ReelReportAuto.resx">
+      <DependentUpon>ReelReportAuto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reports\BoxReportAuto.resx">
+      <DependentUpon>BoxReportAuto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="reports\TemplateBox.resx">
       <DependentUpon>TemplateBox.cs</DependentUpon>
     </EmbeddedResource>

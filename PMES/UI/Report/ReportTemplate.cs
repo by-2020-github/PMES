@@ -108,5 +108,10 @@ namespace PMES.UI.Report
         {
             XtraMessageBox.Show("暂时未添加该标签模板！");
         }
+
+        private void ReportTemplate_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

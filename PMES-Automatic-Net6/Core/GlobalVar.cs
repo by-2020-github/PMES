@@ -7,7 +7,7 @@ namespace PMES_Automatic_Net6.Core;
 
 public class GlobalVar
 {
-    private static IFreeSql FreeSql => FreeSqlManager.FSql;
+    private static IFreeSql FreeSql => FreeSqlManager.FSqlMysql;
 
     public static string TemplatePath = "C:\\ProgramData\\PMES_Templates";
 

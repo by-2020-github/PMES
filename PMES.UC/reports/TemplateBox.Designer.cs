@@ -110,6 +110,7 @@
             this.xrBarCode1.Padding = new DevExpress.XtraPrinting.PaddingInfo(26, 26, 0, 0, 254F);
             this.xrBarCode1.ShowText = false;
             this.xrBarCode1.SizeF = new System.Drawing.SizeF(218.9019F, 165.4999F);
+            qrCodeGenerator1.CompactionMode = DevExpress.XtraPrinting.BarCode.QRCodeCompactionMode.Byte;
             this.xrBarCode1.Symbology = qrCodeGenerator1;
             // 
             // 东元

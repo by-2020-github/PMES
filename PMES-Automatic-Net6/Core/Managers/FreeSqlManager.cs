@@ -25,22 +25,22 @@ public class FreeSqlManager
     #region mysql
 
     private static readonly Lazy<FSqlMysqlHelper>
-        Holder = new(() => new FSqlMysqlHelper(DbLogger, ConnStrMySql));
+        HolderMysql = new(() => new FSqlMysqlHelper(DbLogger, ConnStrMySql));
 
 
-    public static FSqlMysqlHelper FSqlMysqlHelper => Holder.Value;
+    public static FSqlMysqlHelper FSqlMysqlHelper => HolderMysql.Value;
 
-    public static IFreeSql FSql => Holder.Value.FSql;
+    public static IFreeSql FSqlMysql => HolderMysql.Value.FSql;
 
-    public static void SyncDbStructure()
+    public static void SyncDbStructure(IFreeSql freeSql)
     {
-        FSql.CodeFirst.SyncStructure<T_label>();
-        FSql.CodeFirst.SyncStructure<T_label_template>();
-        FSql.CodeFirst.SyncStructure<T_admin>();
-        FSql.CodeFirst.SyncStructure<T_box>();
-        FSql.CodeFirst.SyncStructure<T_preheater_code>();
-        FSql.CodeFirst.SyncStructure<T_order_exchange>();
-        FSql.CodeFirst.SyncStructure<T_order_package>();
+        freeSql.CodeFirst.SyncStructure<T_label>();
+        freeSql.CodeFirst.SyncStructure<T_label_template>();
+        freeSql.CodeFirst.SyncStructure<T_admin>();
+        freeSql.CodeFirst.SyncStructure<T_box>();
+        freeSql.CodeFirst.SyncStructure<T_preheater_code>();
+        freeSql.CodeFirst.SyncStructure<T_order_exchange>();
+        freeSql.CodeFirst.SyncStructure<T_order_package>();
     }
 
     #endregion

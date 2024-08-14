@@ -35,6 +35,9 @@ namespace PMES_Respository.reportModel
         public string WaterMark { get; set; } = "";
 
         public string No { get; set; } = "11-57001";
+        public string BoxCode { get; set; } = "123456";
         public string DateTime { get; set; } = System.DateTime.Now.ToString("YY-MM-dd");
+
+
     }
 }
