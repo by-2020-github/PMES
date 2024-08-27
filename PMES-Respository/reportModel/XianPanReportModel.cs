@@ -38,6 +38,6 @@ namespace PMES_Respository.reportModel
         public string BoxCode { get; set; } = "123456";
         public string DateTime { get; set; } = System.DateTime.Now.ToString("YY-MM-dd");
 
-
+        public string Reji { get; set; } = "180";
     }
 }

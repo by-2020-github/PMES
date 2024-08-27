@@ -250,24 +250,19 @@ namespace PMES_Automatic_Net6.Core.Managers
                         Plc.ReadMultipleVars(pmesDataItemList.PmesWeightAndBarCode);
                         Logger?.Verbose(
                             $"读取重量成功,PmesWeightAndBarCode:{PrintDataItems(pmesDataItemList.PmesWeightAndBarCode)}");
-                        if (pmesDataItemList.PmesWeightAndBarCode[4].Value.ToString() == "1")
+                        if (pmesDataItemList.PmesWeightAndBarCode[4]!.Value!.ToString() == "1")
                         {
-                            if (!ComparerDataList(pmesDataItemList.PmesWeightAndBarCode,
-                                    GlobalVar.PmesDataItems.PmesWeightAndBarCode))
-                            {
-                                GlobalVar.PmesDataItems.PmesWeightAndBarCode = pmesDataItemList.PmesWeightAndBarCode;
-                                if (second)
+                            //防呆 清空数据的时候不处理
+                            if (!string.IsNullOrEmpty(pmesDataItemList.PmesWeightAndBarCode[1]!.Value!.ToString()))
+                                if (!ComparerWeightAndProductOrder(pmesDataItemList.PmesWeightAndBarCode,
+                                        GlobalVar.PmesDataItems.PmesWeightAndBarCode))
                                 {
-                                    if (int.Parse(pmesDataItemList.PmesWeightAndBarCode[3].Value.ToString()) != 0
-                                        && int.Parse(pmesDataItemList.PmesWeightAndBarCode[4].Value.ToString()) != 0)
+                                    GlobalVar.PmesDataItems.PmesWeightAndBarCode = pmesDataItemList.PmesWeightAndBarCode;
+                                    if (second)
                                     {
-                                        OnWeightAndCodeChanged?.Invoke(
-                                            GlobalVar.PmesDataItems.PmesWeightAndBarCode.ToList());
-                                        //这里不能直接回复了，需要在前端判断标签类型
-                                        //Response(pmesDataItemList.PmesWeightAndBarCode);
+                                        OnWeightAndCodeChanged?.Invoke(pmesDataItemList.PmesWeightAndBarCode);
                                     }
                                 }
-                            }
                         }
 
 
@@ -276,55 +271,56 @@ namespace PMES_Automatic_Net6.Core.Managers
 
                         Plc.ReadMultipleVars(pmesDataItemList.PmesReelCodeCheck);
                         Logger?.Verbose(
-                            $"读取条码成功,PmesReelCodeCheck:{PrintDataItems(pmesDataItemList.PmesReelCodeCheck.ToList())}");
+                            $"读取条码成功,PmesReelCode:{PrintDataItems(pmesDataItemList.PmesReelCodeCheck)}");
 
-                        if (pmesDataItemList.PmesReelCodeCheck[3].Value.ToString() == "1")
+                        if (pmesDataItemList.PmesReelCodeCheck[3].Value!.ToString() == "1")
                         {
-                            if (!ComparerDataList(pmesDataItemList.PmesReelCodeCheck.ToList(),
-                                    GlobalVar.PmesDataItems.PmesReelCodeCheck.ToList()))
-                            {
-                                GlobalVar.PmesDataItems.PmesReelCodeCheck = pmesDataItemList.PmesReelCodeCheck;
-
-                                if (second)
+                            //防呆 清空数据的时候不处理
+                            if (!string.IsNullOrEmpty(pmesDataItemList.PmesReelCodeCheck[1]!.Value!.ToString()) || !string.IsNullOrEmpty(pmesDataItemList.PmesReelCodeCheck[2]!.Value!.ToString()))
+                                if (!ComparerReelCodeCheck(pmesDataItemList.PmesReelCodeCheck,
+                                        GlobalVar.PmesDataItems.PmesReelCodeCheck))
                                 {
-                                    OnReelCodeChanged?.Invoke(
-                                        GlobalVar.PmesDataItems.PmesReelCodeCheck.ToList());
-                                    //Response(pmesDataItemList.PmesReelCodeCheck);
+                                    GlobalVar.PmesDataItems.PmesReelCodeCheck = pmesDataItemList.PmesReelCodeCheck;
+                                    if (second)
+                                    {
+                                        OnReelCodeChanged?.Invoke(pmesDataItemList.PmesReelCodeCheck);
+                                    }
                                 }
-                            }
                         }
 
                         //箱外标签校验
                         await Task.Delay(IntervalTime);
-                        Plc.ReadMultipleVars(pmesDataItemList.PmesPackingBox.ToList());
+                        Plc.ReadMultipleVars(pmesDataItemList.PmesPackingBox);
                         Logger?.Verbose(
-                            $"读取箱码成功,PmesPackingBox:{PrintDataItems(pmesDataItemList.PmesPackingBox.ToList())}");
-                        if (pmesDataItemList.PmesPackingBox[3].Value.ToString() == "1")
+                            $"读取箱码成功,PmesBoxCode:{PrintDataItems(pmesDataItemList.PmesPackingBox)}");
+                        if (pmesDataItemList.PmesPackingBox[3].Value!.ToString() == "1")
                         {
-                            if (!ComparerDataList(pmesDataItemList.PmesPackingBox.ToList(),
-                                    GlobalVar.PmesDataItems.PmesPackingBox.ToList()))
-                            {
-                                GlobalVar.PmesDataItems.PmesPackingBox = pmesDataItemList.PmesPackingBox;
-                                if (second)
+                            //防呆 清空数据的时候不处理
+                            if (!string.IsNullOrEmpty(pmesDataItemList.PmesPackingBox[1]!.Value!.ToString()) ||
+                                !string.IsNullOrEmpty(pmesDataItemList.PmesPackingBox[2]!.Value!.ToString()))
+
+                                if (!ComparerBoxCodeCheck(pmesDataItemList.PmesPackingBox,
+                                        GlobalVar.PmesDataItems.PmesPackingBox))
                                 {
-                                    OnBoxBarCodeChanged?.Invoke(GlobalVar.PmesDataItems.PmesPackingBox.ToList());
-                                    //这里不能直接回复了，需要在前端判断标签类型
-                                    //Response(pmesDataItemList.PmesPackingBox);
+                                    GlobalVar.PmesDataItems.PmesPackingBox = pmesDataItemList.PmesPackingBox;
+                                    if (second)
+                                    {
+                                        OnBoxBarCodeChanged?.Invoke(pmesDataItemList.PmesPackingBox);
+                                    }
                                 }
-                            }
                         }
 
 
                         //箱子到达这里的判断标志位
-                        if (!pmesDataItemList.PmesPackingBox[^2].Value.ToString().Equals(GlobalVar.IsBoxOnPos))
+                        if (!pmesDataItemList.PmesPackingBox[^2].Value!.ToString()!.Equals(GlobalVar.IsBoxOnPos))
                         {
-                            GlobalVar.IsBoxOnPos = pmesDataItemList.PmesPackingBox[^2].Value.ToString();
+                            GlobalVar.IsBoxOnPos = pmesDataItemList.PmesPackingBox[^2].Value!.ToString()!;
                             if (GlobalVar.IsBoxOnPos.Equals("1"))
                                 OnBoxArrived?.Invoke(pmesDataItemList.PmesPackingBox);
                         }
 
                         //箱子码完了的判断标志位
-                        if (ushort.TryParse(pmesDataItemList.PmesPackingBox[^2].Value.ToString(), out var value))
+                        if (ushort.TryParse(pmesDataItemList.PmesPackingBox[^1].Value!.ToString()!, out var value))
                         {
                             if (value > 20)
                             {
@@ -335,7 +331,7 @@ namespace PMES_Automatic_Net6.Core.Managers
 
                         #endregion
 
-
+                        #region 码垛
                         //1 码垛
                         await Task.Delay(IntervalTime);
                         var pmesStacking = new PmesStacking
@@ -437,6 +433,134 @@ namespace PMES_Automatic_Net6.Core.Managers
                                 OnReceive?.Invoke(plcCmdStacking7);
                         }
 
+                        #endregion
+
+                        #region 组合机器人
+                        /*  var pmesCmdCombinationMotherChildTray = new PmesCmdCombinationMotherChildTray
+                          {
+                              DeviceId = 2,
+                              ChildMontherStayWorkPositionId = 406,
+                              MotherTrayWorkPositionId = 409,
+                              ChildStayWorkPositionId = 413,
+                              Reserve1 = 0,
+                              Reserve2 = 0,
+                              PmesAndPlcReadWriteFlag = 2,
+                          };*/
+
+                        ///下组盘任务
+                        /* var pmesCmdCombinationMotherChildTray1 = new PmesCmdCombinationMotherChildTray();
+                         Plc.ReadClass(pmesCmdCombinationMotherChildTray1, 550);
+                         Logger?.Verbose($"pmesCmdCombinationMotherChildTray1:{pmesCmdCombinationMotherChildTray1}");
+                         if (!pmesCmdCombinationMotherChildTray1.Equals(GlobalVar.pmesCmdCombinationMotherChildTray1))
+                         {
+                             GlobalVar.pmesCmdCombinationMotherChildTray1 = pmesCmdCombinationMotherChildTray1;
+                             if (second)
+                               OnReceive?.Invoke(pmesCmdCombinationMotherChildTray1);
+                         } */
+
+                        //1. 组合子母托盘任务
+                        await Task.Delay(IntervalTime);
+                        var pmesCmdCombinationMotherChildTray = new PmesCmdCombinationMotherChildTray();
+                        Plc.ReadClass(pmesCmdCombinationMotherChildTray, 550);
+                        Logger?.Verbose($"pmesCmdCombinationMotherChildTray:{pmesCmdCombinationMotherChildTray}");
+                        if (!pmesCmdCombinationMotherChildTray.Equals(GlobalVar.pmesCmdCombinationMotherChildTray))
+                        {
+                            GlobalVar.pmesCmdCombinationMotherChildTray = pmesCmdCombinationMotherChildTray;
+                            if (second)
+                                OnReceive?.Invoke(pmesCmdCombinationMotherChildTray);
+                        }
+
+                        //组合子母托工位1
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray1 = new PlcCmdCombinationMotherChildTray1();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray1, 571);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray1:{plcCmdCombinationMotherChildTray1}");
+                        if (!plcCmdCombinationMotherChildTray1.Equals(GlobalVar.plcCmdCombinationMotherChildTray1))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray1 = plcCmdCombinationMotherChildTray1;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray1);
+                        }
+                        //组合子母托工位1
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray2 = new PlcCmdCombinationMotherChildTray2();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray2, 572);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray2:{plcCmdCombinationMotherChildTray2}");
+                        if (!plcCmdCombinationMotherChildTray2.Equals(GlobalVar.plcCmdCombinationMotherChildTray2))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray2 = plcCmdCombinationMotherChildTray2;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray2);
+                        }
+
+                        //其他子工位
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray3 = new PlcCmdCombinationMotherChildTray3();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray3, 573);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray3:{plcCmdCombinationMotherChildTray3}");
+                        if (!plcCmdCombinationMotherChildTray3.Equals(GlobalVar.plcCmdCombinationMotherChildTray3))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray3 = plcCmdCombinationMotherChildTray3;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray3);
+                        }
+
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray4 = new PlcCmdCombinationMotherChildTray4();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray4, 574);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray4:{plcCmdCombinationMotherChildTray4}");
+                        if (!plcCmdCombinationMotherChildTray4.Equals(GlobalVar.plcCmdCombinationMotherChildTray4))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray4 = plcCmdCombinationMotherChildTray4;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray4);
+                        }
+
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray5 = new PlcCmdCombinationMotherChildTray5();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray5, 575);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray5:{plcCmdCombinationMotherChildTray3}");
+                        if (!plcCmdCombinationMotherChildTray5.Equals(GlobalVar.plcCmdCombinationMotherChildTray5))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray5 = plcCmdCombinationMotherChildTray5;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray5);
+                        }
+
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray6 = new PlcCmdCombinationMotherChildTray6();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray6, 576);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray6:{plcCmdCombinationMotherChildTray6}");
+                        if (!plcCmdCombinationMotherChildTray6.Equals(GlobalVar.plcCmdCombinationMotherChildTray6))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray6 = plcCmdCombinationMotherChildTray6;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray6);
+                        }
+
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray7 = new PlcCmdCombinationMotherChildTray7();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray7, 577);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray7:{plcCmdCombinationMotherChildTray7}");
+                        if (!plcCmdCombinationMotherChildTray7.Equals(GlobalVar.plcCmdCombinationMotherChildTray7))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray7 = plcCmdCombinationMotherChildTray7;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray7);
+                        }
+
+                        await Task.Delay(IntervalTime);
+                        var plcCmdCombinationMotherChildTray8 = new PlcCmdCombinationMotherChildTray8();
+                        Plc.ReadClass(plcCmdCombinationMotherChildTray8, 578);
+                        Logger?.Verbose($"plcCmdCombinationMotherChildTray8:{plcCmdCombinationMotherChildTray8}");
+                        if (!plcCmdCombinationMotherChildTray3.Equals(GlobalVar.plcCmdCombinationMotherChildTray8))
+                        {
+                            GlobalVar.plcCmdCombinationMotherChildTray8 = plcCmdCombinationMotherChildTray8;
+                            if (second)
+                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray8);
+                        }
+
+                        #endregion
                         second = true;
                     }
                     catch (Exception e)
@@ -456,6 +580,45 @@ namespace PMES_Automatic_Net6.Core.Managers
                     $"\nDataType = {s.DataType},\tVarType = {s.VarType},\tDB = {s.DB},\tStartByteAdr = {s.StartByteAdr},\tBitAdr = {s.BitAdr},\tCount = 1,\tValue = {s.Value}");
             });
             return sb.ToString();
+        }
+
+        public bool ComparerWeightAndProductOrder(List<DataItem> ls1, List<DataItem> ls2)
+        {
+            if (ls1.Count != ls2.Count)
+                return false;
+            //只比较重量1/2 条码 标志位
+            var lsItem1 = JsonConvert.SerializeObject(ls1.Skip(1).Take(3).ToList());
+            var lsItem2 = JsonConvert.SerializeObject(ls2.Skip(1).Take(3).ToList());
+            Logger.Verbose($"比较两个对象的值(1)：\n{lsItem1}");
+            Logger.Verbose($"比较两个对象的值(2)：\n{lsItem2}");
+            Logger.Verbose($"比较两个对象的结果：{lsItem1 == lsItem2}");
+            return lsItem1 == lsItem2;
+        }
+
+        public bool ComparerReelCodeCheck(List<DataItem> ls1, List<DataItem> ls2)
+        {
+            if (ls1.Count != ls2.Count)
+                return false;
+            //只比较重量1/2 条码 标志位
+            var lsItem1 = JsonConvert.SerializeObject(ls1.Skip(1).Take(2).ToList());
+            var lsItem2 = JsonConvert.SerializeObject(ls2.Skip(1).Take(2).ToList());
+            Logger.Verbose($"比较两个对象的值(1)：\n{lsItem1}");
+            Logger.Verbose($"比较两个对象的值(2)：\n{lsItem2}");
+            Logger.Verbose($"比较两个对象的结果：{lsItem1 == lsItem2}");
+            return lsItem1 == lsItem2;
+        }
+
+        public bool ComparerBoxCodeCheck(List<DataItem> ls1, List<DataItem> ls2)
+        {
+            if (ls1.Count != ls2.Count)
+                return false;
+            //只比较重量1/2 条码 标志位
+            var lsItem1 = JsonConvert.SerializeObject(ls1.Skip(1).Take(2).ToList());
+            var lsItem2 = JsonConvert.SerializeObject(ls2.Skip(1).Take(2).ToList());
+            Logger.Verbose($"比较两个对象的值(1)：\n{lsItem1}");
+            Logger.Verbose($"比较两个对象的值(2)：\n{lsItem2}");
+            Logger.Verbose($"比较两个对象的结果：{lsItem1 == lsItem2}");
+            return lsItem1 == lsItem2;
         }
 
         public bool ComparerDataList(List<DataItem> ls1, List<DataItem> ls2)
@@ -519,7 +682,7 @@ namespace PMES_Automatic_Net6.Core.Managers
                 Count = s.Count,
                 Value = s.Value
             }).ToList();
-            items[^1].Value = byte.Parse("0");
+            items[^1].Value = short.Parse("0");
             Plc.Write(items.TakeLast(3).ToArray());
             Plc.ReadMultipleVarsAsync(items);
             Logger?.Information(

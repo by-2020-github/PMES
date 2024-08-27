@@ -93,7 +93,8 @@
                    HorizontalContentAlignment="Left">
             </Label>
         </Grid>
-        <DataGrid Grid.Row="3" ItemsSource="{Binding ListProcess }">
+        <DataGrid Grid.Row="3" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  ItemsSource="{Binding ListProcess }">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="编号" Width="1*" Binding="{Binding BarCode}"></DataGridTextColumn>
                 <DataGridTextColumn Header="生产编号" Width="2*" Binding="{Binding ProductCode}"></DataGridTextColumn>
@@ -115,7 +116,8 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="200"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" ItemsSource="{Binding ListHistory }">
+            <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                      ItemsSource="{Binding ListHistory }">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="编号" Width="1*" Binding="{Binding BarCode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="生产编号" Width="2*" Binding="{Binding ProductCode}"></DataGridTextColumn>

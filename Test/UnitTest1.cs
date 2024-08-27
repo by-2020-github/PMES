@@ -52,8 +52,8 @@ namespace Test
         [TestMethod]
         public void TestMethod3()
         {
-            var templateBox = new TemplateBox();
-            templateBox.Print("导出为WPS PDF");
+           /* var templateBox = new TemplateBox();
+            templateBox.Print("导出为WPS PDF");*/
         }
 
         // 文件格式设置

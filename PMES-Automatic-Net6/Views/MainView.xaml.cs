@@ -42,9 +42,12 @@ namespace PMES_Automatic_Net6.Views
             _slidePageViewModel = new SlidePageViewModel();
             this.DataContext = viewModel;
             this.TopPage.DataContext = _topPageViewModel;
-            SlidePage.DataContext = _slidePageViewModel;
-            DebugView.DataContext = _debugViewModel;
+            this.TaskPage.DataContext = _topPageViewModel;
+            this.SlidePage.DataContext = _slidePageViewModel;
+            this.DebugView.DataContext = _debugViewModel;
             Logger.Information("启动成功！");
+
+            GlobalVar.MainView = this;
         }
 
         private static void InitPlc()
@@ -68,9 +71,9 @@ namespace PMES_Automatic_Net6.Views
                 FreeSqlManager.DbLogger = Logger;
                 FreeSqlManager.ConnStrMySql = PMESConfig.Default.ConnLocalMysql;
                 var fSqlMysql = FreeSqlManager.FSqlMysql;
-                if (fSqlMysql.Select<T_station>().Count() == 0)
+                if (fSqlMysql.Select<T_station_status>().Count() == 0)
                 {
-                    ShowError("工位位置为空，请先添加工位位置管理表[T_station]，退出！", true);
+                    ShowError("工位位置为空，请先添加工位位置管理表[T_station_status]，退出！", true);
                 }
 
                 if (fSqlMysql.Select<T_plc_command>().Count() == 0)
@@ -104,7 +107,7 @@ namespace PMES_Automatic_Net6.Views
             }
             catch (Exception e)
             {
-                ShowError("数据库初始化失败。", true);
+                ShowError($"数据库初始化失败。{e.Message}", true);
             }
 
             Logger?.Information("数据库检查正常。");

@@ -23,7 +23,7 @@ public class WebService
     public static ILogger? Logger { get; set; }
     public static WebService Instance => Holder.Value;
 
-    public async Task<T> Get<T>(string url) where T : class
+    public async Task<T?> Get<T>(string url) where T : class
     {
         try
         {
@@ -38,12 +38,12 @@ public class WebService
         }
         catch (Exception exception)
         {
-            Logger.Error(exception.Message);
+            Logger?.Error(exception.Message);
             return null;
         }
     }
 
-    public async Task<JObject> GetJObject(string url)  
+    public async Task<JObject> GetJObject(string url)
     {
         try
         {
@@ -63,7 +63,7 @@ public class WebService
         }
     }
 
-    public async Task<Tuple<bool,string?>> GetJObjectValidate(string url)
+    public async Task<Tuple<bool, string>> GetJObjectValidate(string url)
     {
         try
         {
@@ -73,18 +73,19 @@ public class WebService
             var response = await _httpClient.SendAsync(request);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                return new Tuple<bool, string>(true,"");
+                return new Tuple<bool, string>(true, "");
             }
+
             //response.EnsureSuccessStatusCode();
             var res = await response.Content.ReadAsStringAsync();
             var jobject = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(res);
-            var detail = jobject?["detail"].First.ToString().Replace('[', ' ').Replace(']',' ');
+            var detail = jobject?["detail"].First.ToString().Replace('[', ' ').Replace(']', ' ');
             return new Tuple<bool, string>(false, detail);
         }
         catch (Exception exception)
         {
             Logger?.Error(exception.Message);
-            return null;
+            return new Tuple<bool, string?>(false, "ApiError");
         }
     }
 
@@ -245,7 +246,7 @@ public class WebService
             return null;
         }
     }
-    
+
     /// <summary>
     ///     发送post请求
     ///     body:x-www-form-urlencoded 
@@ -264,7 +265,7 @@ public class WebService
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var responseStr = await response.Content.ReadAsStringAsync();
-            dynamic responseT=  JsonConvert.DeserializeObject<T>(responseStr) ?? throw new InvalidOperationException();
+            dynamic responseT = JsonConvert.DeserializeObject<T>(responseStr) ?? throw new InvalidOperationException();
             return responseT.status.code != 200 ? null : (T?)responseT;
         }
         catch (Exception exception)
@@ -275,7 +276,6 @@ public class WebService
     }
 
     #endregion
-
 }
 
 #region post 请求体
@@ -326,12 +326,18 @@ public static class ApiUrls
 {
     #region erp 查询订单
 
-    public static string QueryOrder =
-        "https://test.chengzhong-api.site.xiandeng.com:3443/api/product-info?semi_finished=";
-    
-    public static string ValidateOrder =
-        "https://test.chengzhong-api.site.xiandeng.com:3443/api/product-validate?";
+    ///public static string QueryOrder =
+     ///   "https://test-chengzhong-api.site.xiandeng.com:3443/api/product-info?semi_finished=";
+   /// public static string ValidateOrder =
+   /// <summary>
+    /// public static string QueryOrder =
+    /// </summary>.xiandeng.com:3443/api/product-validate?";
 
+    public static string QueryOrder =
+        "https://test-chengzhong-api.xiandeng.com:3443/api/product-info?semi_finished=";
+
+    public static string ValidateOrder =
+        "https://test-chengzhong-api.xiandeng.com:3443/api/product-validate?";
     #endregion
 
     #region 人工线管理

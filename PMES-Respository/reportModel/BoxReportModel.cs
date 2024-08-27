@@ -13,6 +13,8 @@ namespace PMES_Respository.reportModel
         /// </summary>
         public string Model { get; set; } = "1PEW/155";
 
+
+        public string GBNo { get; set; }
         /// <summary>
         ///     规格
         /// </summary>
@@ -52,5 +54,15 @@ namespace PMES_Respository.reportModel
         public string GrossWeight { get; set; }
 
         public string WaterMark { get; set; }
+
+        /// <summary>
+        /// 热极
+        /// </summary>
+        public string ReJi { get; set; } = "200";
+
+        /// <summary>
+        /// 客户简称
+        /// </summary>
+        public string JsbzShortName { get; set; } = "东元";
     }
 }

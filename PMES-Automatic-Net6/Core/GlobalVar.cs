@@ -1,5 +1,6 @@
 ﻿using PMES_Automatic_Net6.Core.Managers;
 using PMES_Automatic_Net6.Model.users;
+using PMES_Automatic_Net6.Views;
 using PMES_Respository.DataStruct;
 using PMES_Respository.tbs;
 
@@ -98,6 +99,25 @@ public class GlobalVar
         PlcCmdStacking6,
         PlcCmdStacking7
     };
+
+
+    //DB571
+    public static PmesCmdCombinationMotherChildTray pmesCmdCombinationMotherChildTray { get; set; } = new PmesCmdCombinationMotherChildTray();
+
+    public static PlcCmdCombinationMotherChildTray1 plcCmdCombinationMotherChildTray1 { get; set; } = new PlcCmdCombinationMotherChildTray1();
+    public static PlcCmdCombinationMotherChildTray2 plcCmdCombinationMotherChildTray2 { get; set; } = new PlcCmdCombinationMotherChildTray2();
+
+    public static PlcCmdCombinationMotherChildTray3 plcCmdCombinationMotherChildTray3 { get; set; } = new PlcCmdCombinationMotherChildTray3();
+    public static PlcCmdCombinationMotherChildTray4 plcCmdCombinationMotherChildTray4 { get; set; } = new PlcCmdCombinationMotherChildTray4();
+
+
+    public static PlcCmdCombinationMotherChildTray5 plcCmdCombinationMotherChildTray5 { get; set; } = new PlcCmdCombinationMotherChildTray5();
+    public static PlcCmdCombinationMotherChildTray6 plcCmdCombinationMotherChildTray6 { get; set; } = new PlcCmdCombinationMotherChildTray6();
+
+
+    public static PlcCmdCombinationMotherChildTray7 plcCmdCombinationMotherChildTray7 { get; set; } = new PlcCmdCombinationMotherChildTray7();
+    public static PlcCmdCombinationMotherChildTray8 plcCmdCombinationMotherChildTray8 { get; set; } = new PlcCmdCombinationMotherChildTray8();
+    public static MainView MainView { get; set; }
 
     #endregion
 }

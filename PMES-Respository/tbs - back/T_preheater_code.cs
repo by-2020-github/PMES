@@ -97,10 +97,10 @@ namespace PMES_Respository.tbs
         public int? IsDel { get; set; } = 0;
 
         /// <summary>
-        /// isQualified是否合格：0.不合格；1.合格
+        /// isQualified是否合格：false.不合格；true.合格
         /// </summary>
         [JsonProperty, Column(Name = "isQualified")]
-        public int? IsQualified { get; set; } = 1;
+        public bool IsQualified { get; set; } = true;
 
         /// <summary>
         /// 打印标签模板Id
@@ -130,67 +130,67 @@ namespace PMES_Respository.tbs
         /// [填写]产品盘净重: 计算所得（grossWeight产品盘毛重） - preheaterWeight(线盘重量) - tareWeight（皮重）
         /// </summary>
         [JsonProperty, Column(Name = "netWeight")]
-        public double? NetWeight { get; set; }
+        public double NetWeight { get; set; } = 0;
 
         /// <summary>
         /// 不合格原因
         /// </summary>
         [JsonProperty, Column(Name = "noQualifiedReason")]
-        public string NoQualifiedReason { get; set; }
+        public string NoQualifiedReason { get; set; } = "";
 
         /// <summary>
         /// 操作工编号
         /// </summary>
         [JsonProperty, Column(Name = "operatorCode")]
-        public string OperatorCode { get; set; }
+        public string OperatorCode { get; set; } = "";
 
         /// <summary>
         /// 操作工姓名
         /// </summary>
         [JsonProperty, Column(Name = "operatorName")]
-        public string OperatorName { get; set; }
+        public string OperatorName { get; set; } = "";
 
         /// <summary>
         /// 线盘代码
         /// </summary>
         [JsonProperty, Column(Name = "preheaterCode")]
-        public string PreheaterCode { get; set; }
+        public string PreheaterCode { get; set; } = "";
 
         /// <summary>
         /// 线盘ID
         /// </summary>
         [JsonProperty, Column(Name = "preheaterId")]
-        public int? PreheaterId { get; set; }
+        public int PreheaterId { get; set; } = 0;
 
         /// <summary>
         /// 线盘名称
         /// </summary>
         [JsonProperty, Column(Name = "preheaterName")]
-        public string PreheaterName { get; set; }
+        public string PreheaterName { get; set; } = "";
 
         /// <summary>
         /// 线盘规格
         /// </summary>
         [JsonProperty, Column(Name = "preheaterSpec")]
-        public string PreheaterSpec { get; set; }
+        public string PreheaterSpec { get; set; } = "";
 
         /// <summary>
         /// 线盘皮重
         /// </summary>
         [JsonProperty, Column(Name = "preheaterWeight")]
-        public double? PreheaterWeight { get; set; }
+        public double PreheaterWeight { get; set; } = 0;
 
         /// <summary>
         /// 产品代码
         /// </summary>
         [JsonProperty, Column(Name = "productCode")]
-        public string ProductCode { get; set; }
+        public string ProductCode { get; set; } = "";
 
         /// <summary>
         /// 生产日期
         /// </summary>
         [JsonProperty, Column(Name = "productDate")]
-        public DateTime? ProductDate { get; set; }
+        public DateTime ProductDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 国际标准
@@ -298,12 +298,34 @@ namespace PMES_Respository.tbs
         /// 自动线 称重1
         /// </summary>
         [JsonProperty, Column(Name = "weight1")]
-        public double? Weight1 { get; set; }
+        public double Weight1 { get; set; } = 0;
 
         /// <summary>
         /// 称重员ID
         /// </summary>
         [JsonProperty, Column(Name = "weightUserId")]
         public int? WeightUserId { get; set; }
+        /// <summary>
+        /// 热极
+        /// </summary>
+        [JsonProperty, Column(Name = "material_themal_grade", StringLength = 10)]
+        public string material_themal_grade { get; set; } = "";
+
+
+
+        /// <summary>
+        /// 物料规格
+        /// </summary>
+        [JsonProperty, Column(Name = "material_spec", StringLength = 50)]
+        public string material_spec { get; set; } = "";
+
+
+
+        /// <summary>
+        /// 技术标准简称
+        /// </summary>
+        [JsonProperty, Column(Name = "jsbz_short_name", StringLength = 10)]
+        public string jsbz_short_name { get; set; } = "";
+
     }
 }

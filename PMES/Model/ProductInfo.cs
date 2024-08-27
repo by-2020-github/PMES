@@ -58,6 +58,14 @@ public class ProductInfo
     public string customer_material_name { get; set; } = null;
     public string customer_material_spec { get; set; } = null;
 
+    public string material_thermal_grade { get; set; } = null;
+
+    public string material_spec { get; set; } = null;
+
+    public string jsbz_short_name { get; set; } = null;
+
+
+
     protected bool Equals(ProductInfo other)
     {
         return material_number == other.material_number && jsbz_number == other.jsbz_number &&
@@ -124,9 +132,22 @@ public class PackageInfo
     public string? wire_reel_external_package_name { get; set; } = null;
 
     /// <summary>
+    ///     发货子托盘编码
+    /// </summary>
+    public string? delivery_sub_tray_number { get; set; } = null;
+
+
+    /// <summary>
     ///     发货子托盘名称
     /// </summary>
     public string? delivery_sub_tray_name { get; set; } = null;
+
+
+    /// <summary>
+    ///     发货子托盘规格
+    /// </summary>
+    public string? delivery_sub_tray_spec { get; set; } = null;
+
 
     /// <summary>
     ///     装箱件数

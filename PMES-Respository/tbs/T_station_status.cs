@@ -61,7 +61,7 @@ namespace PMES.Model.tbs {
 		/// 工位状态：0. 可用; 1.物料占用；2.空闲; 3.锁定；4.维护；5.暂停关闭
 		/// </summary>
 		[JsonProperty, Column(Name = "status", DbType = "int")]
-		public int? Status { get; set; } = 1;
+		public int Status { get; set; } = 1;
 
 		/// <summary>
 		/// 记录更新时间

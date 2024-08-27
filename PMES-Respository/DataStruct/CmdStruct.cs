@@ -830,7 +830,7 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Byte,
                 DB = 552,
-                StartByteAdr = 574,
+                StartByteAdr = 22,
                 BitAdr = 0,
                 Count = 1,
                 Value = 0
@@ -842,7 +842,7 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
                 DB = 552,
-                StartByteAdr = 576,
+                StartByteAdr = 24,
                 BitAdr = 0,
                 Count = 1,
                 Value = 0
@@ -853,7 +853,7 @@ namespace PMES_Respository.DataStruct
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
                 DB = 520,
-                StartByteAdr = 578,
+                StartByteAdr = 26,
                 BitAdr = 0,
                 Count = 1,
                 Value = 0
@@ -931,8 +931,6 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte StackModel { get; set; } = 1;
 
-
-        //
         //码垛速度
         /*1. P25/PT45为60%
 
@@ -954,6 +952,11 @@ namespace PMES_Respository.DataStruct
         ///     上位机写，入；置2; PLC写入，置1.
         /// </summary>
         public byte PmesAndPlcReadWriteFlag { get; set; } = 2;
+
+        /// <summary>
+        ///     需要清垛时写入工位,PLC执行完毕后置1
+        /// </summary>
+        public ushort ClearStack { get; set; }
 
         protected bool Equals(PmesStacking other)
         {
@@ -1410,71 +1413,95 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         /// 00001 - 组合子母托盘 机器人
         /// </summary>
-        public byte DeviceId { get; set; }
+        public ushort DeviceId { get; set; }
 
         /// <summary>
         ///     母托盘工位号
         /// </summary>
-        public ushort MotherStayWorkPositionId { get; set; }
+        public ushort MotherTrayWorkShopId { get; set; }
 
-        /// <summary>
-        ///  子托盘规格类型
-        ///     备注：横竖码垛方向。垛型，代表那种子托盘.
-        ///     1. PT25裸装-2层
-        ///     2. PT25裸装-3层
-        ///     3. PT25箱装-2层
-        ///     4. PT25箱装-3层
-        ///     5. PT45
-        ///     6.PT60
-        ///     7.PT90
-        ///     8.PT200
-        ///     9.PT270
-        ///     10.355*180木盘
-        ///     11. 500*210木盘
-        /// </summary>
-        public byte ChildStaySpecification { get; set; }
 
         /// <summary>
         ///     子托盘工位号
         /// </summary>
-        public ushort ChildStayWorkPositionId { get; set; }
-
-        /// <summary>
-        ///     子托盘个数
-        /// </summary>
-        public byte ChildStayNum { get; set; }
+        public ushort ChildTrayWorkPositionId { get; set; }
 
         /// <summary>
         ///     子母托盘工位号
         /// </summary>
-        public ushort ChildMontherStayWorkPositionId { get; set; }
+        public ushort ChildMontherTrayWorkPositionId { get; set; }
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
 
         /// <summary>
-        ///     相等，则认为已处理过；否则，未处理;  判定下次是否可以（上位机）写入的标志
+        ///     
         /// </summary>
-        public byte WriteFlag { get; set; }
+        public byte PmesAndPlcReadWriteFlag { get; set; }
 
         /// <summary>
-        ///     上位机写入为0，plc处理后值为1.
+        ///     需要清垛时写入工位,PLC执行完毕后置1
         /// </summary>
-        public byte PlcProcessFlag { get; set; }
+        public ushort ClearStack { get; set; }
     }
 
     [PlcCmdAttribute(551)]
-    public class PlcCmdCombinationMotherChildTray
+    public class PmesCmdTrayFeeding
     {
         /// <summary>
         /// 00001 - 组合子母托盘 机器人
         /// </summary>
-        public byte DeviceId { get; set; }
+        public ushort DeviceId { get; set; }
 
         /// <summary>
         ///     母托盘工位号
         /// </summary>
-        public ushort MotherStayWorkPositionId { get; set; }
+        public ushort MotherTrayWorkShopId { get; set; }
+
+
+        /// <summary>
+        ///     母托盘个数
+        /// </summary>
+        public byte MotherTrayNum { get; set; }
+
+        /// <summary>
+        ///     子托盘类型
+        /// </summary>
+        public byte ChildTrayModel { get; set; }
+
+
+        /// <summary>
+        ///     子托盘工位号
+        /// </summary>
+        public ushort ChildTrayWorkShopId { get; set; }
+
+
+        /// <summary>
+        ///     子托盘个数
+        /// </summary>
+        public byte ChildTrayNum { get; set; }
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        ///     读写标志
+        /// </summary>
+        public byte PmesAndPlcReadWriteFlag { get; set; }
+    }
+
+    [PlcCmdAttribute(571)]
+    public class PlcCmdCombinationMotherChildTray1
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
 
         /// <summary>
         ///  子托盘规格
@@ -1494,14 +1521,20 @@ namespace PMES_Respository.DataStruct
         public byte ChildStaySpecification { get; set; }
 
         /// <summary>
-        ///     子托盘工位号
+        ///     数量
         /// </summary>
-        public ushort ChildStayWorkPositionId { get; set; }
+        public byte Num { get; set; }
 
         /// <summary>
-        ///     子母托盘工位号
+        ///     组托速度
         /// </summary>
-        public ushort ChildMontherStayWorkPositionId { get; set; }
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public ushort Height { get; set; }
+
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
@@ -1509,7 +1542,394 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
         /// </summary>
-        public byte StackingFinished { get; set; }
+        public byte PlcFlag { get; set; }
+    }
+
+    [PlcCmdAttribute(572)]
+    public class PlcCmdCombinationMotherChildTray2
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public byte Num { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public ushort Height { get; set; }
+
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte PlcFlag { get; set; }
+    }
+
+    [PlcCmdAttribute(573)]
+    public class PlcCmdCombinationMotherChildTray3
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public byte Num { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public ushort Height { get; set; }
+
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte PlcFlag { get; set; }
+    }
+
+    [PlcCmdAttribute(574)]
+    public class PlcCmdCombinationMotherChildTray4
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public byte Num { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte Height { get; set; }
+
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte PlcFlag { get; set; }
+    }
+
+    [PlcCmdAttribute(575)]
+    public class PlcCmdCombinationMotherChildTray5
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public byte Num { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public ushort Height { get; set; }
+
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte PlcFlag { get; set; }
+    }
+
+
+    [PlcCmdAttribute(576)]
+    public class PlcCmdCombinationMotherChildTray6
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public byte Num { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public ushort Height { get; set; }
+
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte PlcFlag { get; set; }
+    }
+
+
+    [PlcCmdAttribute(577)]
+    public class PlcCmdCombinationMotherChildTray7
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public byte Num { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public ushort Height { get; set; }
+
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte PlcFlag { get; set; }
+    }
+
+    [PlcCmdAttribute(578)]
+    public class PlcCmdCombinationMotherChildTray8
+    {
+        /// <summary>
+        /// 00001 - 组合子母托盘 机器人
+        /// </summary>
+        public ushort DeviceId { get; set; }
+
+        /// <summary>
+        ///     子母托盘工位号
+        /// </summary>
+        public ushort ChildMotherWorkPostionId { get; set; }
+
+        /// <summary>
+        ///  子托盘规格
+        ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
+        ///     1. PT25裸装-2层
+        ///     2. PT25裸装-3层
+        ///     3. PT25箱装-2层
+        ///     4. PT25箱装-3层
+        ///     5. PT45
+        ///     6.PT60
+        ///     7.PT90
+        ///     8.PT200
+        ///     9.PT270
+        ///     10.355*180木盘
+        ///     11. 500*210木盘
+        /// </summary>
+        public byte ChildStaySpecification { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public byte Num { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public byte CombinateSpeed { get; set; }
+
+        /// <summary>
+        ///     组托速度
+        /// </summary>
+        public ushort Height { get; set; }
+
+
+        public ushort Reserve1 { get; set; }
+        public ushort Reserve2 { get; set; }
+
+        /// <summary>
+        /// 若【是否组垛完成】字段为2. 则上位机读取此块数据，并清零（设备号不清零）。
+        /// </summary>
+        public byte PlcFlag { get; set; }
     }
 
     #endregion

@@ -8,7 +8,6 @@
         xmlns:converter="clr-namespace:PMES_Automatic_Net6.Converter"
         xmlns:viewModels="clr-namespace:PMES_Automatic_Net6.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:PMES_Automatic_Net6.Views"
         Style="{DynamicResource MaterialDesignWindow}"
@@ -41,6 +40,20 @@
                     </StackPanel>
                 </TabItem.Header>
                 <views:TopPage x:Name="TopPage"></views:TopPage>
+            </TabItem>
+            <!-- 自动线顶贴主窗口任务信息 -->
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel
+                        Width="auto"
+                        Height="auto">
+                        <Image Source="../Resources/icon/top.png" Height="20" Width="20" Stretch="Fill"></Image>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Task" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:TopPageCurrent x:Name="TaskPage"></views:TopPageCurrent>
             </TabItem>
             <!-- 自动线侧贴主窗口 -->
             <TabItem>

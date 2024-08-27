@@ -401,7 +401,7 @@ public partial class MainForm : XtraForm
                 GrossWeight = _currentTotalWeight,
                 ICMOBillNO = product.product_order_no, //生产工单 之前是null，todo:确认是否需要
                 IsDel = 0,
-                IsQualified = 0, //是否合格
+                IsQualified = true, //是否合格
                 MachineCode = product.machine_number,
                 MachineId = product.machine_id,
                 MachineName = product.machine_name,
@@ -433,7 +433,7 @@ public partial class MainForm : XtraForm
                 UserStandardCode = product.jsbz_number,
                 UserStandardId = product.jsbz_id,
                 UserStandardName = product.jsbz_name,
-                Weight1 = null,
+                Weight1 = 0,
                 WeightUserId = GlobalVar.CurrentUserInfo.userId
             };
 
@@ -442,7 +442,7 @@ public partial class MainForm : XtraForm
             if (!validateOrder.Item1)
             {
                 tPreheaterCode.NoQualifiedReason = validateOrder.Item2;
-                tPreheaterCode.IsQualified = 0;
+                tPreheaterCode.IsQualified = false;
             }
 
             //记录方便回看
