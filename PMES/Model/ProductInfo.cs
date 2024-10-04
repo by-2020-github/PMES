@@ -64,12 +64,35 @@ public class ProductInfo
 
     public string jsbz_short_name { get; set; } = null;
 
+    public string GetSpec => $"{customer_number},{material_number},{xpzl_spec},{jsbz_number}";
 
+    public bool NeedChange(ProductInfo other)
+    {
+        return customer_number != other.customer_number || material_number != other.material_number ||
+               xpzl_spec != other.xpzl_spec ||
+               jsbz_number != other.jsbz_number;
+    }
 
     protected bool Equals(ProductInfo other)
     {
-        return material_number == other.material_number && jsbz_number == other.jsbz_number &&
-               customer_material_number == other.customer_material_number && package_info.code.Equals(other.package_info.code);
+        return product_date == other.product_date && product_org_number == other.product_org_number &&
+               product_order_no == other.product_order_no && customer_id == other.customer_id &&
+               customer_number == other.customer_number && customer_name == other.customer_name &&
+               material_id == other.material_id && material_number == other.material_number &&
+               material_name == other.material_name && material_mnemonic_code == other.material_mnemonic_code &&
+               material_execution_standard == other.material_execution_standard &&
+               material_ns_model == other.material_ns_model && jsbz_id == other.jsbz_id &&
+               jsbz_number == other.jsbz_number && jsbz_name == other.jsbz_name && xpzl_id == other.xpzl_id &&
+               xpzl_number == other.xpzl_number && xpzl_name == other.xpzl_name && xpzl_spec == other.xpzl_spec &&
+               xpzl_weight == other.xpzl_weight && machine_id == other.machine_id &&
+               machine_number == other.machine_number && machine_name == other.machine_name &&
+               stock_id == other.stock_id && stock_number == other.stock_number && stock_name == other.stock_name &&
+               package_info.Equals(other.package_info) && operator_code == other.operator_code &&
+               operator_name == other.operator_name && customer_material_number == other.customer_material_number &&
+               customer_material_name == other.customer_material_name &&
+               customer_material_spec == other.customer_material_spec &&
+               material_thermal_grade == other.material_thermal_grade && material_spec == other.material_spec &&
+               jsbz_short_name == other.jsbz_short_name;
     }
 
     public override bool Equals(object? obj)
@@ -82,7 +105,43 @@ public class ProductInfo
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(material_number, jsbz_number, customer_material_number, package_info.code);
+        var hashCode = new HashCode();
+        hashCode.Add(product_date);
+        hashCode.Add(product_org_number);
+        hashCode.Add(product_order_no);
+        hashCode.Add(customer_id);
+        hashCode.Add(customer_number);
+        hashCode.Add(customer_name);
+        hashCode.Add(material_id);
+        hashCode.Add(material_number);
+        hashCode.Add(material_name);
+        hashCode.Add(material_mnemonic_code);
+        hashCode.Add(material_execution_standard);
+        hashCode.Add(material_ns_model);
+        hashCode.Add(jsbz_id);
+        hashCode.Add(jsbz_number);
+        hashCode.Add(jsbz_name);
+        hashCode.Add(xpzl_id);
+        hashCode.Add(xpzl_number);
+        hashCode.Add(xpzl_name);
+        hashCode.Add(xpzl_spec);
+        hashCode.Add(xpzl_weight);
+        hashCode.Add(machine_id);
+        hashCode.Add(machine_number);
+        hashCode.Add(machine_name);
+        hashCode.Add(stock_id);
+        hashCode.Add(stock_number);
+        hashCode.Add(stock_name);
+        hashCode.Add(package_info);
+        hashCode.Add(operator_code);
+        hashCode.Add(operator_name);
+        hashCode.Add(customer_material_number);
+        hashCode.Add(customer_material_name);
+        hashCode.Add(customer_material_spec);
+        hashCode.Add(material_thermal_grade);
+        hashCode.Add(material_spec);
+        hashCode.Add(jsbz_short_name);
+        return hashCode.ToHashCode();
     }
 }
 

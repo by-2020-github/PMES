@@ -97,8 +97,7 @@ namespace PMES.Model.tbs {
 		/// 字母合托 0未合托 1已合托
 		/// </summary>
 		[JsonProperty, Column(Name = "status", DbType = "int")]
-		public int? Status { get; set; }
-
+		public int Status { get; set; } = 1;
 		/// <summary>
 		/// 母托盘条码
 		/// </summary>

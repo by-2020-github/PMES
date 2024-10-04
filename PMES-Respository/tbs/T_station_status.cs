@@ -24,7 +24,7 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// 附加消息json格式：1.码垛消息：码垛层数，每层最大数量；当前数量
 		/// </summary>
-		[JsonProperty, Column(Name = "attachInfo", StringLength = -1)]
+		[JsonProperty, Column(Name = "attachInfo")]
 		public string AttachInfo { get; set; }
 
 		/// <summary>
@@ -38,6 +38,12 @@ namespace PMES.Model.tbs {
 		/// </summary>
 		[JsonProperty, Column(Name = "createTime", DbType = "datetime")]
 		public DateTime? CreateTime { get; set; }
+
+		/// <summary>
+		/// 高效位：true;false
+		/// </summary>
+		[JsonProperty, Column(Name = "isEfficient", DbType = "tinyint(1)")]
+		public sbyte? IsEfficient { get; set; }
 
 		/// <summary>
 		/// 推送是否成功：1.成功；0.失败
@@ -61,7 +67,7 @@ namespace PMES.Model.tbs {
 		/// 工位状态：0. 可用; 1.物料占用；2.空闲; 3.锁定；4.维护；5.暂停关闭
 		/// </summary>
 		[JsonProperty, Column(Name = "status", DbType = "int")]
-		public int Status { get; set; } = 1;
+		public int? Status { get; set; } = 1;
 
 		/// <summary>
 		/// 记录更新时间
@@ -78,8 +84,8 @@ namespace PMES.Model.tbs {
 		/// <summary>
 		/// 工位编号
 		/// </summary>
-		[JsonProperty, Column(Name = "workshopId", StringLength = 50)]
-		public string WorkshopId { get; set; }
+		[JsonProperty, Column(Name = "workshopId", DbType = "int")]
+		public int WorkshopId { get; set; }
 
 	}
 

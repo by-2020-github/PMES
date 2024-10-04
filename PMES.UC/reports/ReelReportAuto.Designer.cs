@@ -33,6 +33,7 @@
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.xrLabelDate = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel11 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel10 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel9 = new DevExpress.XtraReports.UI.XRLabel();
@@ -45,7 +46,7 @@
             this.xrLine2 = new DevExpress.XtraReports.UI.XRLine();
             this.xrBarCode1 = new DevExpress.XtraReports.UI.XRBarCode();
             this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
+            this.xrTableInfo = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -56,7 +57,7 @@
             this.xrLabel2 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xrTableInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -75,6 +76,7 @@
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabelDate,
             this.xrLabel11,
             this.xrLabel10,
             this.xrLabel9,
@@ -87,7 +89,7 @@
             this.xrLine2,
             this.xrBarCode1,
             this.xrLabel1,
-            this.xrTable1,
+            this.xrTableInfo,
             this.xrLabel3,
             this.xrLabel2,
             this.xrLine1});
@@ -95,6 +97,18 @@
             this.Detail.HeightF = 390F;
             this.Detail.HierarchyPrintOptions.Indent = 50.8F;
             this.Detail.Name = "Detail";
+            // 
+            // xrLabelDate
+            // 
+            this.xrLabelDate.Dpi = 254F;
+            this.xrLabelDate.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[DateTime]")});
+            this.xrLabelDate.LocationFloat = new DevExpress.Utils.PointFloat(17.99987F, 112.4327F);
+            this.xrLabelDate.Multiline = true;
+            this.xrLabelDate.Name = "xrLabelDate";
+            this.xrLabelDate.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.xrLabelDate.SizeF = new System.Drawing.SizeF(331.6965F, 44.39511F);
+            this.xrLabelDate.Text = "xrLabelDate";
             // 
             // xrLabel11
             // 
@@ -239,18 +253,18 @@
             this.xrLabel1.SizeF = new System.Drawing.SizeF(246.3678F, 42.12161F);
             this.xrLabel1.Text = "漆包绕组线合格证";
             // 
-            // xrTable1
+            // xrTableInfo
             // 
-            this.xrTable1.Dpi = 254F;
-            this.xrTable1.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(17.99996F, 156.8278F);
-            this.xrTable1.Name = "xrTable1";
-            this.xrTable1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.xrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
+            this.xrTableInfo.Dpi = 254F;
+            this.xrTableInfo.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xrTableInfo.LocationFloat = new DevExpress.Utils.PointFloat(17.99996F, 156.8278F);
+            this.xrTableInfo.Name = "xrTableInfo";
+            this.xrTableInfo.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.xrTableInfo.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow1,
             this.xrTableRow2});
-            this.xrTable1.SizeF = new System.Drawing.SizeF(356.6964F, 90F);
-            this.xrTable1.StylePriority.UseFont = false;
+            this.xrTableInfo.SizeF = new System.Drawing.SizeF(356.6964F, 90F);
+            this.xrTableInfo.StylePriority.UseFont = false;
             // 
             // xrTableRow1
             // 
@@ -360,8 +374,9 @@
             this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
             this.SnapGridSize = 25F;
             this.Version = "22.1";
-            this.Watermark.Font = new System.Drawing.Font("Verdana", 18F);
-            ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
+            this.Watermark.Font = new System.Drawing.Font("Verdana", 10F);
+            this.Watermark.TextDirection = DevExpress.XtraPrinting.Drawing.DirectionMode.Horizontal;
+            ((System.ComponentModel.ISupportInitialize)(this.xrTableInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
@@ -376,7 +391,7 @@
         private DevExpress.XtraReports.UI.XRLabel xrLabel2;
         private DevExpress.XtraReports.UI.XRLine xrLine1;
         private DevExpress.XtraReports.UI.XRLabel xrLabel3;
-        private DevExpress.XtraReports.UI.XRTable xrTable1;
+        private DevExpress.XtraReports.UI.XRTable xrTableInfo;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow1;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell2;
@@ -395,5 +410,6 @@
         private DevExpress.XtraReports.UI.XRLabel xrLabel8;
         private DevExpress.XtraReports.UI.XRLabel xrLabel7;
         private DevExpress.XtraReports.UI.XRLabel xrLabel6;
+        private DevExpress.XtraReports.UI.XRLabel xrLabelDate;
     }
 }

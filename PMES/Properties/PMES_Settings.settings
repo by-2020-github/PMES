@@ -18,7 +18,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SqlServerConnStr" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=172.16.3.253;User Id=sa;Password=Xianden.1984;Initial Catalog=PMES;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1</Value>
+      <Value Profile="(Default)">Data Source=172.16.3.253;User Id=pmes;Password=N9XRNi9S4R5Kjs7b;Initial Catalog=PMES;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

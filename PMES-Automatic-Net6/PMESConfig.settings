@@ -44,5 +44,11 @@
     <Setting Name="PrinterName6" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.156</Value>
     </Setting>
+    <Setting Name="EmptyUnStacking" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EmptyStacking" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

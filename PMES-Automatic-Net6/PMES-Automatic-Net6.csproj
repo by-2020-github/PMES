@@ -107,6 +107,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="config\count.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="PMESConfig.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>PMESConfig.Designer.cs</LastGenOutput>

@@ -86,8 +86,8 @@ namespace PMES.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=172.16.3.253;User Id=sa;Password=Xianden.1984;Initial Catalog=PMES;En" +
-            "crypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=172.16.3.253;User Id=pmes;Password=N9XRNi9S4R5Kjs7b;Initial Catalog=P" +
+            "MES;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1")]
         public string SqlServerConnStr {
             get {
                 return ((string)(this["SqlServerConnStr"]));

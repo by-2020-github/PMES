@@ -13,5 +13,11 @@ namespace PMES.UC.reports
             InitializeComponent();
         }
 
+        public void SetQCR(bool vis) {
+            xrBarCode1.Visible = vis;
+            xrTableInfo.Visible = vis;
+            xrLabelDate.Visible = !vis;
+        }
+
     }
 }

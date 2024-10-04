@@ -106,6 +106,12 @@ namespace PMES.Model.tbs {
 		public int? IsQualified { get; set; } = 1;
 
 		/// <summary>
+		/// 技术标准简称
+		/// </summary>
+		[JsonProperty, Column(Name = "jsbz_short_name", StringLength = 50)]
+		public string Jsbz_short_name { get; set; }
+
+		/// <summary>
 		/// 打印标签模板Id
 		/// </summary>
 		[JsonProperty, Column(Name = "labelTemplateId", DbType = "int")]
@@ -130,6 +136,24 @@ namespace PMES.Model.tbs {
 		public string MachineName { get; set; }
 
 		/// <summary>
+		/// 机头代码
+		/// </summary>
+		[JsonProperty, Column(Name = "machineNose", StringLength = 20)]
+		public string MachineNose { get; set; }
+
+		/// <summary>
+		/// 物料规格
+		/// </summary>
+		[JsonProperty, Column(Name = "material_spec", StringLength = 50)]
+		public string Material_spec { get; set; }
+
+		/// <summary>
+		/// 热极
+		/// </summary>
+		[JsonProperty, Column(Name = "material_thermal_grade", StringLength = 10)]
+		public string Material_thermal_grade { get; set; }
+
+		/// <summary>
 		/// [填写]产品盘净重: 计算所得（grossWeight产品盘毛重） - preheaterWeight(线盘重量) - tareWeight（皮重）
 		/// </summary>
 		[JsonProperty, Column(Name = "netWeight")]
@@ -152,6 +176,12 @@ namespace PMES.Model.tbs {
 		/// </summary>
 		[JsonProperty, Column(Name = "operatorName", StringLength = 50)]
 		public string OperatorName { get; set; }
+
+		/// <summary>
+		/// 包装代码-对接先登老库的包装要求代码
+		/// </summary>
+		[JsonProperty, Column(Name = "packageCode", StringLength = 10)]
+		public string PackageCode { get; set; }
 
 		/// <summary>
 		/// 线盘代码
@@ -182,6 +212,18 @@ namespace PMES.Model.tbs {
 		/// </summary>
 		[JsonProperty, Column(Name = "preheaterWeight", DbType = "double(18,2)")]
 		public double? PreheaterWeight { get; set; }
+
+		/// <summary>
+		/// 生产订单明细ID
+		/// </summary>
+		[JsonProperty, Column(Name = "product_order_entry_id", StringLength = 10)]
+		public string Product_order_entry_id { get; set; }
+
+		/// <summary>
+		/// 生产订单编号
+		/// </summary>
+		[JsonProperty, Column(Name = "product_order_no", StringLength = 20)]
+		public string Product_order_no { get; set; }
 
 		/// <summary>
 		/// 产品代码

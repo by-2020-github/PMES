@@ -10,7 +10,7 @@ public class GlobalVar
 {
     private static IFreeSql FreeSql => FreeSqlManager.FSql;
 
-    public static string TemplatePath = "C:\\ProgramData\\PMES_Templates";
+    public static string TemplatePath = "D:\\PMES\\PMES_Templates";
 
     public static UserInfo CurrentUserInfo { get; set; } = new UserInfo();
 

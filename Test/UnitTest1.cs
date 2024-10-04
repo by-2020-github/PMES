@@ -5,27 +5,68 @@ using System.Drawing.Printing;
 using System.Text;
 using PMES.UC.reports;
 using System.Linq;
+ 
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+
 
 namespace Test
 {
     [TestClass]
     public class UnitTest1
     {
+      
+
         [TestMethod]
         public void TestMethod1()
         {
-            var pa = new Person1
-            {
-                Id = 1,
-                Name = "zs"
-            };
-            var p2 = JsonConvert.DeserializeObject<Person2>(JsonConvert.SerializeObject(pa));
-            Trace.WriteLine(JsonConvert.SerializeObject(p2));
+           
+            //var client = new HttpClient();
+            //var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.137.75:8089/api/stacking/excludePosition");
+            //var collection = new List<KeyValuePair<string, string>>();
+            //collection.Add(new("emptyTrayWorkshopId", "-1"));
+            //var content = new FormUrlEncodedContent(collection);
+            //request.Content = content;
+            //var response =   client.Send(request);
+            //response.EnsureSuccessStatusCode();
+            //Debug.WriteLine(  response.Content.ReadAsStringAsync().Result);
+        }
 
-            object p = pa;
-            Debug.WriteLine(p is Person1);
-            Debug.WriteLine(p is Person2);
-        }       
+        [TestMethod]
+        public void TestMethod22()
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.101.4:8089/api/stacking/excludePosition");
+            var collection = new List<KeyValuePair<string, string>>();
+            collection.Add(new("emptyTrayWorkshopId", "-1"));
+            var content = new FormUrlEncodedContent(collection);
+            request.Content = content;
+            var response = client.Send(request);
+            response.EnsureSuccessStatusCode();
+            Debug.WriteLine(response.Content.ReadAsStringAsync().Result);
+        }
+
+        public async Task<bool> ClearErrorStack(int workId)
+        {
+            try
+            {
+                HttpClient _httpClient = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.137.75:8089/api/stacking/excludePosition");
+                var collection = new List<KeyValuePair<string, string>>();
+                collection.Add(new("emptyTrayWorkshopld", $"{workId}"));
+                var content = new FormUrlEncodedContent(collection);
+                request.Content = content;
+                var response = await _httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                var responseStr = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(responseStr );
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
         [TestMethod]
         public void TestMethod2()
         {

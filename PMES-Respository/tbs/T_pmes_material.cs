@@ -58,10 +58,22 @@ namespace PMES.Model.tbs {
 		public int? PreheaterNumOfPerStay { get; set; } = 0;
 
 		/// <summary>
+		/// 码垛速度
+		/// </summary>
+		[JsonProperty, Column(Name = "stackingSpeed", DbType = "int")]
+		public int? StackingSpeed { get; set; }
+
+		/// <summary>
 		/// 状态：1.可用；2.不可用
 		/// </summary>
 		[JsonProperty, Column(Name = "status", DbType = "int")]
 		public int? Status { get; set; } = 1;
+
+		/// <summary>
+		/// 拆垛速度
+		/// </summary>
+		[JsonProperty, Column(Name = "unstackingSpeed", DbType = "int")]
+		public int? UnstackingSpeed { get; set; }
 
 		/// <summary>
 		/// 记录更新时间

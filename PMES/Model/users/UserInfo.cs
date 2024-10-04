@@ -16,7 +16,7 @@ namespace PMES.Model.users
         /// <summary>
         ///     包装组编号
         /// </summary>
-        public string packageGroupCode { get; set; } = "BAT";
+        public string packageGroupCode { get; set; } = "B1";
 
         public string packageGroupName { get; set; } = "A1";
         public string productionLineNum { get; set; } = "1号自动线";

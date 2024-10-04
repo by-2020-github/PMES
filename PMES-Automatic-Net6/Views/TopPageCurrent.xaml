@@ -22,22 +22,22 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
 
             <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="打印盘码" Margin="5"
-                    Command="{Binding AddTaskCommand}">
+                    Command="{Binding PrintTaskReelCommand}">
             </Button>
 
 
             <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="打印顶贴" Margin="5"
-                    Command="{Binding AddTaskCommand}">
+                    Command="{Binding PrintTaskTopCommand}">
             </Button>
 
 
             <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="打印测贴" Margin="5"
-                    Command="{Binding AddTaskCommand}">
+                    Command="{Binding PrintTaskEdgeCommand}">
             </Button>
 
 
             <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="删除任务" Margin="5"
-                    Command="{Binding AddTaskCommand}">
+                    Command="{Binding DeleteTaskCommand}">
             </Button>
         </StackPanel>
         <Grid Grid.Row="2">
@@ -45,8 +45,8 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="200"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                      ItemsSource="{Binding TaskQueue }">
+            <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                      ItemsSource="{Binding TaskQueue }" SelectedIndex="{Binding TaskQueueSelectedIndex}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="生产编号" Width="1*" Binding="{Binding ProductOrderBarCode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="位置" Width="1*" Binding="{Binding WorkShop}"></DataGridTextColumn>

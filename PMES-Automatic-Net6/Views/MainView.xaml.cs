@@ -12,6 +12,7 @@ using Serilog;
 using System.Data;
 using System.IO;
 using System.Net.NetworkInformation;
+using PMES.UC.reports;
 
 namespace PMES_Automatic_Net6.Views
 {
@@ -30,8 +31,13 @@ namespace PMES_Automatic_Net6.Views
 
         public MainView()
         {
+            //var top = new BoxReportTop();
+            //top.SetQrCode("1231231231-12312312312-12412412-12412421-12412124");
+            //var ls = new List<BoxReportModel>() { new BoxReportModel() { BoxCode = "222" } };
+            //top.DataSource = ls;
+            //top.Print("160");
+            //top.ExportToImage("d:\\a.png");
             InitializeComponent();
-
             ConfigDev();
             InitDb();
             InitPlc();
@@ -71,6 +77,7 @@ namespace PMES_Automatic_Net6.Views
                 FreeSqlManager.DbLogger = Logger;
                 FreeSqlManager.ConnStrMySql = PMESConfig.Default.ConnLocalMysql;
                 var fSqlMysql = FreeSqlManager.FSqlMysql;
+                _freeSql = fSqlMysql;
                 if (fSqlMysql.Select<T_station_status>().Count() == 0)
                 {
                     ShowError("工位位置为空，请先添加工位位置管理表[T_station_status]，退出！", true);

@@ -82,7 +82,7 @@ namespace PMES_Respository.tbs
         /// [填写]产品盘毛重: 1. 人工线：由电子称设备获取，人工3次称重的平均值；2.自动线，二成称重后【erp称重校验】获得。
         /// </summary>
         [JsonProperty, Column(Name = "grossWeight")]
-        public double? GrossWeight { get; set; }
+        public double GrossWeight { get; set; }
 
         /// <summary>
         /// 生产工单号
@@ -326,6 +326,10 @@ namespace PMES_Respository.tbs
         /// </summary>
         [JsonProperty, Column(Name = "jsbz_short_name", StringLength = 10)]
         public string jsbz_short_name { get; set; } = "";
+
+
+        [JsonProperty, Column(IsIgnore = true)]
+        public string VirtualBoxCode { get; set; } = "";
 
     }
 }

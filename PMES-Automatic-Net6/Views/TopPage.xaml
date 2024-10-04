@@ -26,27 +26,34 @@
         <!--header-->
         <Grid Grid.Row="0" Background="#81D3F8">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="180"></ColumnDefinition>
                 <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition Width="180"></ColumnDefinition>
+
                 <ColumnDefinition Width="20"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Margin="15" Content="PMES - 欢迎使用成品智能包装系统" Grid.Column="0"
                    FontSize="24" VerticalContentAlignment="Center" FontFamily="Microsoft YaHei UI">
             </Label>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Label Width="50" Height="60" FontSize="18" Content="总数：" VerticalContentAlignment="Center"></Label>
+                <Label Width="160" Height="60" FontSize="18" VerticalContentAlignment="Center" Foreground="White"
+                       Content="{Binding TotalCount}">
+                </Label>
+                <Label Width="50" Height="60" FontSize="18" VerticalContentAlignment="Center" Content="Pass:"></Label>
+                <Label Width="160" Height="60" FontSize="18" VerticalContentAlignment="Center"
+                       Content="{Binding TotalOkCount}"  Foreground="Green">
+                </Label>
 
-            <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="打印盘码"
-                    Command="{Binding PrintReelCodeCommand}">
-            </Button>
-            <Button Grid.Column="2" Width="160" Height="60" FontSize="18" Content="打印箱码"
-                    Command="{Binding PrintBoxCodeCommand}">
-            </Button>
-            <Button Grid.Column="3" Width="160" Height="60" FontSize="18" Content="清空"></Button>
-            <Button Grid.Column="4" Width="160" Height="60" FontSize="18" Content="停止"></Button>
-            <Button Grid.Column="5" Width="160" Height="60" FontSize="18" Content="退出"
+                <Label Width="50" Height="60" FontSize="18" VerticalContentAlignment="Center" Content="Ng:"></Label>
+                <Label Width="160" Height="60" FontSize="18" VerticalContentAlignment="Center" Foreground="Red"
+                       Content="{Binding TotalNgCount}">
+                </Label>
+
+            </StackPanel>
+            <Button Grid.Column="2" Width="160" Height="60" FontSize="18" Content="停止"></Button>
+            <Button Grid.Column="3" Width="160" Height="60" FontSize="18" Content="退出"
                     Command="{Binding CloseCommand}">
             </Button>
 
@@ -94,6 +101,7 @@
             </Label>
         </Grid>
         <DataGrid Grid.Row="3" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  IsReadOnly="True"
                   ItemsSource="{Binding ListProcess }">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="编号" Width="1*" Binding="{Binding BarCode}"></DataGridTextColumn>
@@ -117,6 +125,7 @@
                 <ColumnDefinition Width="200"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                      IsReadOnly="True"
                       ItemsSource="{Binding ListHistory }">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="编号" Width="1*" Binding="{Binding BarCode}"></DataGridTextColumn>

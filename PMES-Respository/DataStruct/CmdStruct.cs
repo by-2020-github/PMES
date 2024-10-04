@@ -811,7 +811,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     母托盘条码扫码数据交互区
         /// </summary>
-        public List<DataItem> PmesMotherTrayBarcode { get; set; } = new List<DataItem>()
+        public static List<DataItem> PmesMotherTrayBarcode { get; set; } = new List<DataItem>()
         {
             //母托盘条码数据
             new DataItem
@@ -852,7 +852,7 @@ namespace PMES_Respository.DataStruct
             {
                 DataType = DataType.DataBlock,
                 VarType = VarType.Word,
-                DB = 520,
+                DB = 552,
                 StartByteAdr = 26,
                 BitAdr = 0,
                 Count = 1,
@@ -913,7 +913,6 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte ReelSpecification { get; set; } = 1;
 
-
         /// <summary>
         ///     垛型对应数值：1-；2-；3-
         ///     备注：横竖码垛方向。垛型，代表那种子托盘. 
@@ -941,9 +940,12 @@ namespace PMES_Respository.DataStruct
             4. 木托盘为355：50%
 
             5. 木托盘500： 为40%*/
+
         public ushort StackingSpeed { get; set; } = 10;
 
-
+        /// <summary>
+        ///     码垛数量
+        /// </summary>
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
 
@@ -1023,11 +1025,12 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte ReelSpecification { get; set; }
 
-
         /// <summary>
         ///     垛型对应数值：1-；2-；3-
         /// </summary>
         public byte StackModel { get; set; }
+
+        public byte StackSpeed { get; set; }
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
@@ -1037,6 +1040,7 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public byte StackingFinished { get; set; }
 
+        public byte ClearStackingFinished { get; set; }
         protected bool Equals(PlcCmdStacking other)
         {
             return DeviceId == other.DeviceId && WorkPositionId == other.WorkPositionId &&
@@ -1266,10 +1270,13 @@ namespace PMES_Respository.DataStruct
         public byte ReelSpecification { get; set; }
 
 
+
+
         /// <summary>
         ///     垛型对应数值：1-；2-；3-
         /// </summary>
         public byte StackModel { get; set; }
+        public byte StackingSpeed { get; set; }
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
@@ -1420,7 +1427,6 @@ namespace PMES_Respository.DataStruct
         /// </summary>
         public ushort MotherTrayWorkShopId { get; set; }
 
-
         /// <summary>
         ///     子托盘工位号
         /// </summary>
@@ -1429,7 +1435,7 @@ namespace PMES_Respository.DataStruct
         /// <summary>
         ///     子母托盘工位号
         /// </summary>
-        public ushort ChildMontherTrayWorkPositionId { get; set; }
+        public ushort ChildMotherTrayWorkPositionId { get; set; }
 
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
@@ -1445,6 +1451,9 @@ namespace PMES_Respository.DataStruct
         public ushort ClearStack { get; set; }
     }
 
+    /// <summary>
+    ///     子/母托，纸板上料
+    /// </summary>
     [PlcCmdAttribute(551)]
     public class PmesCmdTrayFeeding
     {
@@ -1484,6 +1493,7 @@ namespace PMES_Respository.DataStruct
         public ushort Reserve1 { get; set; }
         public ushort Reserve2 { get; set; }
 
+        public byte tesm { get; set; }
         /// <summary>
         ///     读写标志
         /// </summary>

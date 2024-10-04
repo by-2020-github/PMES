@@ -7,7 +7,7 @@ namespace PMES.Core.Managers;
 public class FSqlServer
 {
     private readonly string _connStr =
-        @"Data Source=.;User Id=sa;Password=Aa123.321;Initial Catalog=test;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1";
+        @"Data Source=172.16.3.253;User Id=sa;Password=Aa123.321;Initial Catalog=GKStrip;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1";
 
     private readonly ILogger _logger;
 

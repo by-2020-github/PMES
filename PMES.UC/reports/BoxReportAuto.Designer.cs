@@ -518,7 +518,8 @@
             this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
             this.SnapGridSize = 25F;
             this.Version = "22.1";
-            this.Watermark.Font = new System.Drawing.Font("Verdana", 18F);
+            this.Watermark.Font = new System.Drawing.Font("Verdana", 10F);
+            this.Watermark.TextDirection = DevExpress.XtraPrinting.Drawing.DirectionMode.Vertical;
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();

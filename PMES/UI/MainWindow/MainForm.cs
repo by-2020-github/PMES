@@ -166,6 +166,7 @@ public partial class MainForm : XtraForm
     }
 
     private int _change = 1;
+   // private unsafe object* json;
 
     /// <summary>
     ///     扫码枪触发
@@ -249,8 +250,11 @@ public partial class MainForm : XtraForm
             CurrentProductCode = txtScanCode.Text;
             try
             {
-                var product = await WebService.Instance.Get<ProductInfo>(
-                    $"{ApiUrls.QueryOrder}{txtScanCode.Text}");
+                var url = ApiUrls.QueryOrder + txtScanCode.Text + "&format=json";
+                var product = await WebService.Instance.Get<ProductInfo>(url);
+                //var product = await WebService.Instance.Get<ProductInfo>(
+                //  $"{ApiUrls.QueryOrder}{txtScanCode.Text}");
+
                 if (product.Equals(null)) return;
                 if (product.package_info.packing_quantity == 0)
                 {
@@ -275,7 +279,7 @@ public partial class MainForm : XtraForm
     {
         var validate =
             await WebService.Instance.GetJObjectValidate(
-                $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}");
+                $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}&format=json");
 
         return validate;
     }
@@ -422,7 +426,7 @@ public partial class MainForm : XtraForm
                 ProductionOrgNO = product.product_org_number,
                 ProductMnemonicCode = product.material_mnemonic_code,
                 ProductName = product.material_name,
-                ProductSpec = product.customer_material_spec,
+                ProductSpec = product.xpzl_spec,
                 ProductStandardName = product.material_execution_standard,
                 PSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:MMdd}{0001}",
                 Status = 1, //装箱状态
@@ -434,7 +438,12 @@ public partial class MainForm : XtraForm
                 UserStandardId = product.jsbz_id,
                 UserStandardName = product.jsbz_name,
                 Weight1 = 0,
-                WeightUserId = GlobalVar.CurrentUserInfo.userId
+                WeightUserId = GlobalVar.CurrentUserInfo.userId,
+
+                jsbz_short_name = product.jsbz_short_name,
+                material_themal_grade = product.material_thermal_grade,
+                material_spec = product.material_spec
+
             };
 
             //这里判断是否合格
@@ -458,8 +467,19 @@ public partial class MainForm : XtraForm
                 var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
                 var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
                 var w = (int)(totalNet * 100);
+               /* if (w <= 0) {
+                    ShowErrorMsg("净重不能小于0");
+                    return; 
+                }*/
                 lbBoxCode.Text =
-                    @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
+                    @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:yyMM}{_totalBoxNum:D4}-{w:D5}";
+
+
+                var TPBarCode = "";
+                if (txtScanCode.Text.Contains("TP"))
+                {
+                    TPBarCode = txtScanCode.Text;
+                }
 
                 var tBox = new T_box
                 {
@@ -474,7 +494,7 @@ public partial class MainForm : XtraForm
                     PackingQty = product.package_info.packing_quantity.ToString(),
                     PackingWeight = _currentNetWeight,
                     PackingGrossWeight = _currentTotalWeight,
-                    TrayBarcode = txtScanCode.Text,
+                    TrayBarcode = TPBarCode,
                     UpdateTime = DateTime.Now
                 };
                 var boxId = 0l;
@@ -546,7 +566,7 @@ public partial class MainForm : XtraForm
                 var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
                 var w = (int)(totalNet * 100);
                 lbBoxCode.Text =
-                    @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{_totalBoxNum:D4}-{w:D5}";
+                    @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:yyMM}{_totalBoxNum:D4}-{w:D5}";
 
                 if (_tPreheaterCodes.Count == product.package_info.packing_quantity)
                 {
@@ -694,7 +714,7 @@ public partial class MainForm : XtraForm
                 FXTID = view.产成品形态ID,
                 FXTNO = view.产成品形态代号,
                 FXTName = view.产成品形态,
-                FCPGG = preheaterCode.ProductSpec,
+                FCPGG = preheaterCode.material_spec,
                 FXPItemID = preheaterCode.PreheaterId,
                 FXPNumber = preheaterCode.PreheaterCode,
                 FXPName = preheaterCode.PreheaterName,
@@ -734,6 +754,7 @@ public partial class MainForm : XtraForm
                 FStockID = preheaterCode.StockId,
                 FCustomer = preheaterCode.CustomerId,
                 FLinkStacklabel = boxCode.TrayBarcode,
+                FSPTime = DateTime.Now
             };
             _freeSqlServer.Insert(old).ExecuteAffrows();
         }
@@ -912,6 +933,12 @@ public partial class MainForm : XtraForm
             return;
         }
 
+        var TPBarCode = "";
+        if (txtScanCode.Text.Contains("TP")){
+            TPBarCode = txtScanCode.Text;
+        }
+
+
         var tBox = new T_box
         {
             CreateTime = DateTime.Now,
@@ -925,8 +952,9 @@ public partial class MainForm : XtraForm
             PackingQty = _tPreheaterCodes.Count.ToString(),
             PackingWeight = _tPreheaterCodes.Sum(s => s.NetWeight),
             PackingGrossWeight = _tPreheaterCodes.Sum(s => s.GrossWeight),
-            TrayBarcode = txtScanCode.Text,
+            TrayBarcode = TPBarCode,
             UpdateTime = DateTime.Now
+
         };
         var boxId = await _freeSql.Insert<T_box>(tBox).ExecuteIdentityAsync();
         _boxIdList.Add((int)boxId);
@@ -1307,19 +1335,12 @@ public partial class MainForm : XtraForm
     {
         var list = new List<string>()
         {
-            "G24040656G190008",
-            "G24040540G950046",
-            "G24031931G840292",
-            "G24040684G190047",
-            "G24040421G780038",
-            "G24040721G170005",
-            "G24040443G690002",
-            "G24040725G690020",
-            "G24040600G910008",
-            "G24040733G910011"
+            "G240804830995121",
+            "G240804830995120",
+            "G240804830995119"
         };
         var next = new Random().Next(0, 20);
-        txtScanCode.Text = list[next % 10];
+        txtScanCode.Text = list[next % 3];
     }
 
     private void cbxMigrationClick(object sender, EventArgs e)

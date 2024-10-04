@@ -193,5 +193,29 @@ namespace PMES_Automatic_Net6 {
                 this["PrinterName6"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EmptyUnStacking {
+            get {
+                return ((bool)(this["EmptyUnStacking"]));
+            }
+            set {
+                this["EmptyUnStacking"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EmptyStacking {
+            get {
+                return ((bool)(this["EmptyStacking"]));
+            }
+            set {
+                this["EmptyStacking"] = value;
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@ using DateTime = System.DateTime;
 using PMES_Respository.reportModel;
 using PMES.UC.reports;
 using System.Drawing;
+using System.IO;
 using DevExpress.XtraReports.UI;
 using HslCommunication.ModBus;
 using FluentModbus;
@@ -26,22 +27,38 @@ using DevExpress.XtraReports;
 using static DevExpress.XtraEditors.Filtering.DataItemsExtension;
 using DevExpress.Diagram.Core.Shapes;
 using DevExpress.Utils.About;
-using PMES.Model.tbs;
 using ProductInfo = PMES.Model.ProductInfo;
 using T_preheater_code = PMES_Respository.tbs.T_preheater_code;
 using System.Reflection;
 using DevExpress.Mvvm.Native;
+using DevExpress.XtraSplashScreen;
 using PMES_Common;
+using DevExpress.Utils.Extensions;
+using DevExpress.Pdf;
+using PMES.Model.tbs;
+using PMES_Automatic_Net6.Model;
+using Google.Protobuf.WellKnownTypes;
+using System.Net.Http;
+using PMES_Respository;
+using T_box = PMES_Respository.tbs.T_box;
+using DevExpress.XtraRichEdit.Layout.Engine;
+using System.Xml.Xsl;
 
 
 namespace PMES_Automatic_Net6.ViewModels
 {
     public partial class TopPageViewModel : ObservableObject
     {
-        public int Count { get; set; } = 1000;
+        #region taskQueue
+
+        [ObservableProperty] private int _taskQueueSelectedIndex = 0;
+
+        #endregion
+
+        public int Count { get; set; } = 0;
         private Plc Plc => HardwareManager.Instance.Plc;
         private ModbusTcpNet PlcXj => HardwareManager.Instance.PlcXj;
-        public Serilog.ILogger Logger => SerilogManager.GetOrCreateLogger();
+        public Serilog.ILogger Logger => SerilogManager.GetOrCreateLogger("Running");
         private Queue<XtraReport> _reportsBox = new Queue<XtraReport>();
         private FSqlMysqlHelper _fSqlHelper = FreeSqlManager.FSqlMysqlHelper;
         private IFreeSql _fSql = FreeSqlManager.FSqlMysqlHelper.FSql;
@@ -49,23 +66,26 @@ namespace PMES_Automatic_Net6.ViewModels
         private ushort _reverse1 = 0;
         private ushort _reverse2 = 0;
         [ObservableProperty] private int _reelCount = 0;
+        [ObservableProperty] private int _okCount = 0;
+        [ObservableProperty] private int _errorCount = 0;
+        [ObservableProperty] private int _totalCount = 0;
+        [ObservableProperty] private int _totalOkCount = 0;
+        [ObservableProperty] private int _totalNgCount = 0;
+        private string _virtualBoxId = Guid.NewGuid().ToString();
 
-        private PmesStacking _pmesStackingError = new()
-        {
-            DeviceId = 2,
-            WorkPositionId = 251,
-            ReelSpecification = 1,
-            StackModel = 1,
-            StackingSpeed = 20,
-            Reserve1 = 0,
-            Reserve2 = 2,
-            PmesAndPlcReadWriteFlag = 2
-        };
+        [ObservableProperty] private int _reelCountNoChange = 0;
+
+        /// <summary>
+        ///     码垛区域字典 k=workId v=木托盘编号
+        /// </summary>
+        private readonly Dictionary<int, string> _stackingDic = new Dictionary<int, string>();
+
+        private readonly PmesStacking _pmesStackingError;
 
         /// <summary>
         ///     记录当前的任务队列
         /// </summary>
-        private List<T_plc_command> _plcCommandsRunning = new List<T_plc_command>();
+        private readonly List<T_plc_command> _plcCommandsRunning = new List<T_plc_command>();
 
         [ObservableProperty] private string? _productCode = "";
         [ObservableProperty] private string? _preScanCode1 = "";
@@ -75,21 +95,51 @@ namespace PMES_Automatic_Net6.ViewModels
         [ObservableProperty] private string? _weight1 = "0";
         [ObservableProperty] private string? _weight2 = "0";
 
+        /// <summary>
+        ///     当前结果队列
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<TopGridModel> _listProcess = new ObservableCollection<TopGridModel>();
 
+        /// <summary>
+        ///     历史结果队列
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<TopGridModel> _listHistory = new ObservableCollection<TopGridModel>();
 
         public TopPageViewModel()
         {
+            WebService.Logger = Logger;
+            _pmesStackingError = new()
+            {
+                DeviceId = 2,
+                WorkPositionId = 251,
+                ReelSpecification = 1,
+                StackModel = 1,
+                StackingSpeed = 20,
+                Reserve1 = 0,
+                Reserve2 = 2,
+                PmesAndPlcReadWriteFlag = 2
+            };
             HardwareManager.Instance.OnReceive += Handler;
             HardwareManager.Instance.OnWeightAndCodeChanged += WeightAndCodeChanged;
             HardwareManager.Instance.OnReelCodeChanged += ReelCodeChanged;
             HardwareManager.Instance.OnBoxBarCodeChanged += BoxBarCodeChanged;
             HardwareManager.Instance.OnBoxArrived += BoxArrived;
             HardwareManager.Instance.OnBoxStacked += BoxStacked;
+            HardwareManager.Instance.OnNoPageBoard += OnNoPageBoard;
             StartMonitorPlcCommonTb();
+            SerilogManager.LogViewTextBox.TextChanged += ((sender, args) =>
+                    GlobalVar.MainView.Dispatcher.Invoke(() =>
+                    {
+                        SerilogManager.LogViewTextBox.ScrollToEnd();
+                    })
+                );
+        }
+
+        private async Task OnNoPageBoard()
+        {
+            var success = WebService.Instance.ClearAndApplyPageBoard();
         }
 
         /// <summary>
@@ -104,103 +154,274 @@ namespace PMES_Automatic_Net6.ViewModels
                     try
                     {
                         await Task.Delay(2000);
+
+                        var stationStatusList = await _fSql.Select<T_station_status>().ToListAsync();
+                        //if (can540 && stationStatusList[2].Status == 1)
+                        //{
+                        //    try
+                        //    {
+                        //        cmdStack1.Reserve2 = cmdStack1.WorkPositionId;
+                        //        await Plc.WriteClassAsync(cmdStack1, 540);
+                        //        Logger?.Information(
+                        //            $"Plc写入清垛指令，cmdStack:{cmdStack1.WorkPositionId}，cmdStack.Reserve2 ：{cmdStack1.Reserve2}");
+                        //    }
+                        //    catch (Exception e)
+                        //    {
+                        //        Logger?.Error(LogInfo.Error($"PLC写入清垛指令失败：{cmdStack1} \nex:{e}"));
+                        //    }
+                        //}
+
+                        stationStatusList.ForEach(s =>
+                        {
+                            if (s.Status != 1) return;
+                            if (_stackingDic.Keys.Contains(s.WorkshopId))
+                            {
+                                _stackingDic[s.WorkshopId] = s.AttachInfo;
+                            }
+                            else
+                            {
+                                _stackingDic.Add(s.WorkshopId, s.AttachInfo);
+                            }
+                        });
+
+                        //查出来
                         var cmdNeedExec = await _fSql.Select<T_plc_command>().Where(s => s.Status == 0).ToListAsync();
-                        //拆垛[1]
-                        if (_plcCommandsRunning.Count(s => s.PlcComandType == 1) == 0) //添加任务
+                        //拆垛[1]---一个拆完了才能下一个
                         {
-                            var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 1 && s.Status == 0);
-                            if (plcCommand != null)
+                            //执行中的队列
+                            if (_plcCommandsRunning.Count(s => s.PlcComandType == 1) == 0) //添加任务
                             {
-                                _plcCommandsRunning.Add(plcCommand);
-                            }
-                        }
-                        else //执行任务
-                        {
-                            var plcCommand =
-                                _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 1, Status: 0 });
-                            if (plcCommand != null)
-                            {
-                                plcCommand.Status = 2;
-                                await _fSql.Update<T_plc_command>().Set(s => s.Status, 2)
-                                    .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
-                                var writeObject =
-                                    JsonConvert.DeserializeObject<PmesCmdUnStacking>(plcCommand.PlcComandContent);
-                                var plcCmdAttribute = writeObject!.GetType().GetCustomAttribute<PlcCmdAttribute>();
-                                if (plcCmdAttribute != null)
+                                var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 1 && s.Status == 0);
+                                if (plcCommand != null)
                                 {
-                                    var dbBlock = plcCmdAttribute.DbBlock;
-                                    await Plc.WriteClassAsync(writeObject, dbBlock);
+                                    if ((await WaitStation(plcCommand.Cmd<PmesCmdUnStacking>().WorkPositionId, 1,
+                                            2))) //只等2s 如果不行就检查下一个指令
+                                    {
+                                        _plcCommandsRunning.Add(plcCommand);
+                                    }
+                                }
+                            }
+                            else //执行任务
+                            {
+                                //其实拆垛队列只有一个任务
+                                var plcCommand =
+                                    _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 1, Status: 0 });
+                                if (plcCommand != null)
+                                {
+                                    var cmd = plcCommand.Cmd<PmesCmdUnStacking>();
+                                    plcCommand.Status = 2; //执行 状态改为执行中
+                                    await _fSql.Update<T_plc_command>().Set(s => s.Status, 2)
+                                        .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
+                                    await Plc.WriteClassAsync(cmd, 501);
                                 }
                             }
                         }
 
-                        //码垛[2]
-                        if (_plcCommandsRunning.Count(s => s.PlcComandType == 2) == 0)
-                        {
-                            var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 2 && s.Status == 0);
-                            if (plcCommand != null)
-                            {
-                                _plcCommandsRunning.Add(plcCommand);
-                            }
-                        }
 
-                        //子母托[3]
-                        if (_plcCommandsRunning.Count(s => s.PlcComandType == 3) == 0)
+                        //码垛[2]---码完了才能下一个   |   清垛
                         {
-                            var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 3 && s.Status == 0);
-                            if (plcCommand != null)
+                            if (_plcCommandsRunning.Count(s => s.PlcComandType == 2 && s.Status == 0) == 0)
                             {
-                                _plcCommandsRunning.Add(plcCommand);
-                            }
-                        }
-                        else
-                        {
-                            var plcCommand =
-                                _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 3, Status: 0 });
-                            if (plcCommand != null)
-                            {
-                                plcCommand.Status = 2;
-                                await _fSql.Update<T_plc_command>().Set(s => s.Status, 2)
-                                    .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
-                                var writeObject =
-                                    JsonConvert.DeserializeObject<PmesCmdCombinationMotherChildTray>(plcCommand
-                                        .PlcComandContent);
-                                var plcCmdAttribute = writeObject!.GetType().GetCustomAttribute<PlcCmdAttribute>();
-                                if (plcCmdAttribute != null)
+                                var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 2 && s.Status == 0);
+                                if (plcCommand != null)
                                 {
-                                    var dbBlock = plcCmdAttribute.DbBlock;
-                                    await Plc.WriteClassAsync(writeObject, dbBlock);
+                                    if ((await WaitStation(plcCommand.Cmd<PmesStacking>().WorkPositionId, 1, 2))) //只等2s 如果不行就检查下一个指令
+                                    {
+                                        plcCommand.Status = 2; //执行 状态改为执行中
+                                        await _fSql.Update<T_plc_command>().Set(s => s.Status, 2)
+                                            .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
+                                        _plcCommandsRunning.Add(plcCommand);
+                                    }
                                 }
-                                //TODO:执行了之后要检测工位表，看什么时候组托完成，然后通知后台
-                                //QA:在哪个工位组 PmesCmdCombinationMotherChildTray 没有说明
-                                //Task.Run(async () =>
-                                //{
-                                //    var start = DateTime.Now;
-                                //    while ((DateTime.Now - start).TotalMilliseconds < 300_000)
-                                //    {
-                                //        await Task.Delay(3000);
-                                //        //_fSql.Select<T_station_status>().Where(s=>s.WorkshopId == writeObject.ValToBinString())
-                                //    }
-                                //});
+                            }
+
+                            //todo: 2024年9月26日 16点00分 新增
+                            var plcCommondClearStack = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 9 && s.Status == 0);
+                            if (plcCommondClearStack != null)
+                            {
+                                var r = await _fSql.Update<T_plc_command>().Set(s => s.Status, 2).Where(s => s.Id == plcCommondClearStack.Id).ExecuteAffrowsAsync();
+                                if (r <= 0)
+                                {
+                                    MessageBox.Show("发送清垛指令时更新数据库失败，程序终止！");
+                                    return;
+                                }
+                                var cmd = plcCommondClearStack.Cmd<PmesStacking>();
+                                Plc.WriteClass(cmd, 540);
+                                Plc.ReadClass(cmd, 540);
+                                Logger?.Information($"发送清垛指令结果:\n{cmd}");
                             }
                         }
 
-                        //子母托，子母托盘上料[4]
-                        if (_plcCommandsRunning.Count(s => s.PlcComandType == 4) > 0)
+                        //子母托[3]---拆完了才能下一个
                         {
-                            var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 4);
-                            try
+                            if (_plcCommandsRunning.Count(s => s.PlcComandType == 3) == 0)
                             {
-                                var pmesCmdTrayFeeding = JsonConvert.DeserializeObject<PmesCmdTrayFeeding>(plcCommand!
-                                    .PlcComandContent);
-                                await Plc.WriteClassAsync(pmesCmdTrayFeeding!, 551);
-                                var ret = await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
-                                    .Where(s => s.Id == pmesCmdTrayFeeding!.ChildTrayWorkShopId).ExecuteAffrowsAsync();
-                                Logger?.Verbose($"执行指令:{plcCommand.PlcComandContent}，结果：{ret}");
+                                var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 3 && s.Status == 0);
+                                if (plcCommand != null)
+                                {
+                                    var pmesCmdCombinationMotherChildTray =
+                                        plcCommand.Cmd<PmesCmdCombinationMotherChildTray>();
+                                    //TODO:子母托的位置释放了才可以组子母托
+                                    if ((await WaitStation(
+                                            pmesCmdCombinationMotherChildTray.ChildMotherTrayWorkPositionId, 3,
+                                            2))) //只等2s 如果不行就检查下一个指令
+                                    {
+                                        _plcCommandsRunning.Add(plcCommand);
+                                    }
+                                }
                             }
-                            catch (Exception e)
+                            else
                             {
-                                Logger?.Verbose($"执行指令:{plcCommand!.PlcComandContent}，失n败.\n{e}");
+                                var plcCommand =
+                                    _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 3, Status: 0 });
+                                if (plcCommand != null)
+                                {
+                                    var cmd = plcCommand.Cmd<PmesCmdCombinationMotherChildTray>();
+                                    Logger?.Information(LogInfo.Info($"执行组子母托指令:{plcCommand.PlcComandContent}"));
+                                    plcCommand.Status = 2;
+                                    await _fSql.Update<T_plc_command>().Set(s => s.Status, 2)
+                                        .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
+                                    await Plc.WriteClassAsync(cmd, 550);
+
+
+                                    //TODO: 执行了之后要检测工位表，看什么时候组托完成，然后通知后台
+                                    //QA:在哪个工位组 PmesCmdCombinationMotherChildTray 没有说明
+                                    _ = Task.Run(async () =>
+                                    {
+                                        var pos = cmd.ChildMotherTrayWorkPositionId;
+                                        var start = DateTime.Now;
+                                        // while ( (DateTime.Now - start).TotalMinutes < 10 )
+                                        while (true)
+                                        {
+                                            await Task.Delay(3000);
+                                            var pmesMotherTrayBarcode = PmesDataItemList.PmesMotherTrayBarcode.ToList();
+                                            try
+                                            {
+                                                await Plc.ReadMultipleVarsAsync(pmesMotherTrayBarcode);
+                                            }
+                                            catch (Exception)
+                                            {
+                                                Logger?.Error($"读plc失败！pos:{pos}");
+                                            }
+                                            if (int.Parse(pmesMotherTrayBarcode[1].Value.ToString()!) != 1)
+                                            {
+                                                Logger?.Information($"组子母托还未完成，读不到条码！");
+                                                continue;
+                                            }
+                                            //1 申请拉走
+                                            //TODO:这里后台接口暂未实现
+                                            Logger?.Information($"组成功，调用后台接口拉走！pos:{pos}");
+                                            var success =
+                                                await WebService.Instance.PostMotherTrayCode(
+                                                    cmd.ChildTrayWorkPositionId, pos,
+                                                    pmesMotherTrayBarcode[0].Value.ToString()!, cmd.MotherTrayWorkShopId);
+                                            if (!success)
+                                            {
+                                                //TODO:agv异常处理
+                                                Logger?.Error($"调用接口失败，agv拉走子母托失败！pos:{pos}");
+                                                return;
+                                            }
+                                            if (await WaitStation(pos, 0, 900))
+                                            {
+                                                Logger?.Information($"子母托[3]工位{pos}释放！");
+                                            }
+                                            else
+                                            {
+                                                Logger?.Information($"子母托[3]等待工位{pos}释放失败！");
+                                                return;
+                                            }
+                                            //2 更新数据库---组子母托指令执行完成
+                                            await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
+                                                .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
+                                            //3 移除指令
+                                            _plcCommandsRunning.Remove(plcCommand);
+                                            //4 告诉PLC----[娄工会主动等10s赋值0 2024年9月15日 19点39分] 
+                                            pmesMotherTrayBarcode[1].Value = (byte)0;
+                                            await Plc.WriteAsync(pmesMotherTrayBarcode.TakeLast(3).ToArray());
+                                            //5 子母托清垛
+                                            //cmd.ClearStack = pos;
+                                            //await Plc.WriteClassAsync(cmd, 550);
+
+                                            break;//执行成功的话 主动结束循环
+
+                                        }
+                                    });
+                                }
+                            }
+
+
+                            //todo: 2024年9月27日 09:38:59 新增 独立清空组子母拖标志位
+                            var plcCommandClearCom = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 10 && s.Status == 0);
+                            if (plcCommandClearCom != null)
+                            {
+                                var r = await _fSql.Update<T_plc_command>().Set(s => s.Status, 2).Where(s => s.Id == plcCommandClearCom.Id).ExecuteAffrowsAsync();
+                                if (r <= 0)
+                                {
+                                    MessageBox.Show("发送清空组子母拖标志位指令时更新数据库失败，程序终止！");
+                                    return;
+                                }
+                                var cmd = plcCommandClearCom.Cmd<PmesCmdCombinationMotherChildTray>();
+                                Plc.WriteClass(cmd, 550);
+                                Plc.ReadClass(cmd, 550);
+                                Logger?.Information($"发送清空组子母指令结果:\n{cmd}");
+                            }
+                        }
+
+
+                        //[4]子母托，子母托盘上料
+                        {
+                            if (_plcCommandsRunning.Count(s => s.PlcComandType is 4 or 5) == 0)
+                            {
+                                var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType is 4 or 5);
+                                if (plcCommand != null)
+                                {
+                                    try
+                                    {
+                                        var pmesCmdTrayFeeding = plcCommand.Cmd<PmesCmdTrayFeeding>();
+                                        //直接写入PLC上料数据即可
+                                        await Plc.WriteClassAsync(pmesCmdTrayFeeding!, 551);
+                                        var ret = await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
+                                            .Where(s => s.Id == plcCommand.Id)
+                                            .ExecuteAffrowsAsync();
+                                        Logger?.Verbose($"执行指令:{plcCommand.PlcComandContent}，结果：{ret}");
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Logger?.Verbose($"执行指令:{plcCommand!.PlcComandContent}，失n败.\n{e}");
+                                    }
+                                }
+                            }
+                        }
+
+                        //[5]上纸板
+                        {
+                            if (_plcCommandsRunning.Count(s => s.PlcComandType == 6) == 0)
+                            {
+                                var plcCommand = cmdNeedExec.FirstOrDefault(s => s.PlcComandType == 6 && s.Status == 0);
+                                if (plcCommand != null)
+                                {
+                                    try
+                                    {
+                                        var cmd = plcCommand
+                                            .Cmd<PlcCmdStacking5>(); ////这里是不是可以直接把后台读到的类  直接发给plc  而不是先读plc再改变其中一个值
+
+                                        var plcCmdStacking5 = new PlcCmdStacking5();
+                                        Plc.ReadClass(plcCmdStacking5, 545);
+                                        plcCmdStacking5.Reserve1 = plcCommand.Cmd<PlcCmdStacking5>().Reserve1;
+                                        //直接写入PLC上料数据即可
+                                        //await Plc.WriteClassAsync(plcCmdStacking5!, 545);
+                                        await Plc.WriteClassAsync(cmd!, 545);
+
+                                        var ret = await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
+                                            .Where(s => s.Id == plcCommand.Id)
+                                            .ExecuteAffrowsAsync();
+                                        Logger?.Verbose($"执行指令:{plcCommand.PlcComandContent}，结果：{ret}");
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Logger?.Verbose($"执行指令:{plcCommand!.PlcComandContent}，失n败.\n{e}");
+                                    }
+                                }
                             }
                         }
                     }
@@ -210,6 +431,37 @@ namespace PMES_Automatic_Net6.ViewModels
                     }
                 }
             });
+        }
+
+        /// <summary>
+        ///     等待某个位置某个状态
+        /// </summary>
+        /// <param name="pos">目标位置</param>
+        /// <param name="status">工位状态：0. 可用; 1.物料占用；2.空闲; 3.锁定；4.维护；5.暂停关闭</param>
+        /// <param name="seconds">等待时间</param>
+        /// <returns></returns>
+        public async Task<bool> WaitStation(int pos, int status, int seconds = 900)
+        {
+            var start = DateTime.Now;
+            while ((DateTime.Now - start).TotalMinutes < seconds)
+            {
+                await Task.Delay(2000);
+                Logger?.Information($"等待:{pos}状态变为:{status}");
+                var station = await _fSql.Select<T_station_status>().Where(s => s.WorkshopId == pos).FirstAsync();
+                if (station == null)
+                {
+                    Logger?.Error(LogInfo.Error($"station:{pos} 不存在！"));
+                    return false;
+                }
+
+                if (station.Status == status)
+                {
+                    Logger?.Information(LogInfo.Info($"station:{pos},status ok！"));
+                    return true;
+                }
+            }
+            Logger?.Error(LogInfo.Error($"station:{pos},{seconds} 秒内等不到状态:{status}，返回false！"));
+            return false;
         }
 
         #region PLC状态改变处理事件
@@ -224,7 +476,7 @@ namespace PMES_Automatic_Net6.ViewModels
         /// <param name="obj"></param>
         private async Task Handler(object obj)
         {
-            Logger?.Verbose($"状态改变:\n\t{obj}");
+            //Logger?.Verbose($"状态改变:\n\t{obj}");
             try
             {
                 switch (obj)
@@ -267,23 +519,52 @@ namespace PMES_Automatic_Net6.ViewModels
                         break;
                     //组合机器人 -- 组合工位571、572
                     case PlcCmdCombinationMotherChildTray1 plcCmdCombinationMotherChild:
-                        if (plcCmdCombinationMotherChild.Num == 1)
-                        {
-                            //组盘完成, 呼叫agv，拉走【子母托盘组】到缓存位
-                            ////?????,buys
-                            /// ShowAlarm($"{plcCmdCombinationMotherChild.ChildMotherWorkPostionId} 组盘完成, 呼叫agv，拉走【子母托盘组】到缓存位。");
-                        }
+                        //if (plcCmdCombinationMotherChild.Num == 1)
+                        //{
+                        //    var plcCommand =
+                        //   _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 3, Status: 2 });
+                        //    if (plcCommand != null)
+                        //    {
+                        //        var cmd = plcCommand.Cmd<PmesCmdCombinationMotherChildTray>();
+                        //        var pos = cmd.ChildMotherTrayWorkPositionId;
+                        //        var pmesMotherTrayBarcode =
+                        //                    await Plc.ReadMultipleVarsAsync(PmesDataItemList
+                        //                        .PmesMotherTrayBarcode);
+                        //        var success =
+                        //           await WebService.Instance.PostMotherTrayCode(
+                        //               cmd.ChildTrayWorkPositionId, pos,
+                        //               pmesMotherTrayBarcode.ToString()!, cmd.MotherTrayWorkShopId);
+
+
+                        //        if (!success)
+                        //        {
+                        //            //TODO:agv异常处理
+                        //            Logger?.Error($"agv拉走子母托失败！pos:{pos}");
+                        //        }
+
+                        //        //2 更新数据库---组子母托指令执行完成
+                        //        await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
+                        //            .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
+                        //        //3 移除指令
+                        //        _plcCommandsRunning.Remove(plcCommand);
+                        //        //4 告诉PLC
+                        //        pmesMotherTrayBarcode[1].Value = (ushort)2;
+                        //        await Plc.WriteAsync(pmesMotherTrayBarcode.TakeLast(3).ToArray());
+                        //        var pmesCmdCombinationMotherChildTray = new PmesCmdCombinationMotherChildTray();
+                        //        Plc.ReadClass(pmesCmdCombinationMotherChildTray, 550);
+                        //        //5 子母托清垛
+                        //        pmesCmdCombinationMotherChildTray.ClearStack = pos;
+                        //        await Plc.WriteClassAsync(pmesCmdCombinationMotherChildTray, 550);
+                        //    }
+
+                        //组盘完成, 呼叫agv，拉走【子母托盘组】到缓存位
+                        ////?????,buys
+                        /// ShowAlarm($"{plcCmdCombinationMotherChild.ChildMotherWorkPostionId} 组盘完成, 呼叫agv，拉走【子母托盘组】到缓存位。");
+                        //}
 
                         break;
 
                     case PlcCmdCombinationMotherChildTray2 plcCmdCombinationMotherChild:
-                        if (plcCmdCombinationMotherChild.Num == 1)
-                        {
-                            //组盘完成, 呼叫agv，拉走【子母托盘组】到缓存位
-                            ////?????,buys
-                            ///  ShowAlarm($"{plcCmdCombinationMotherChild.ChildMotherWorkPostionId} 组盘完成, 呼叫agv，拉走【子母托盘组】到缓存位。");
-                        }
-
                         break;
                 }
             }
@@ -312,21 +593,19 @@ namespace PMES_Automatic_Net6.ViewModels
                 ProductCode = obj[1].Value!.ToString();
 
                 var product = new ProductInfo();
-                if (ProductCode!.Equals("888"))
+                if (ProductCode!.StartsWith("888"))
                 {
                     ErrorStop((int.Parse(obj[0].Value!.ToString()!)), "称重读取条码失败，采用默认条码888");
-                    product.product_order_no = "888";
+                    product.product_order_no = $"888{(DateTime.Now)}";
                 }
-
-                try
+                else
                 {
                     product = await WebService.Instance.Get<ProductInfo>(
                                   $"{ApiUrls.QueryOrder}{ProductCode}&format=json") ??
-                              new ProductInfo() { product_order_no = "999" };
-                }
-                catch (Exception e)
-                {
-                    Logger?.Error($"获取不到条码！API Error!\n{e}");
+                              new ProductInfo()
+                              {
+                                  product_order_no = $"999{DateTime.Now}"
+                              };
                 }
 
 
@@ -341,7 +620,9 @@ namespace PMES_Automatic_Net6.ViewModels
                         WorkShop = EnumWorkShop.Weighted,
                         ProductOrderInfo = product
                     };
-                    TaskQueue.Add(taskInfo);
+
+                    Application.Current.Dispatcher.Invoke(() => { TaskQueue.Add(taskInfo); });
+
 
                     var topGridModel = await UpdateProductInfo(taskInfo);
                     try
@@ -413,41 +694,94 @@ namespace PMES_Automatic_Net6.ViewModels
             //这里判断是否合格
             var weightValidate = await productTaskInfo.WeightValidate();
 
+            //add 2024年8月29日 校验合格之后检查是否有对应的托盘
+            //add 2024年8月30日 校验合格之后不检查是否有对应的托盘，码垛区会一直码满空托盘，所以码垛的时候等待就可以了
+            //if (weightValidate)
+            //{
+            //    if (_stackingDic.Count == 0)
+            //    {
+            //        //TODO: 呼叫子母托盘的时候只需要发送物料型号
+            //        //按照现在的逻辑
+            //        var applyTray2Storage = await WebService.Instance.ApplyTray2Storage("", product.package_info.delivery_sub_tray_spec!, "");
+            //        Logger?.Information($"码垛工位没有木托盘，申请一个，执行结果：{applyTray2Storage}");
+            //    }
+            //}
+
             #region 打印盘码（合格证）
 
             // 箱码 最后五位是重量 放到插入数据那里更新
             // 52.00 -> [0.05200] ->  05200  #####
             //包装条码；产品助记码 + 线盘分组代码 + 用户标准代码 + 包装组编号 + 年月 + 4位流水号 + 装箱净重，
             //eg1:{product.material_number.Substring(3).Replace(".", "")}-{product.package_info.code}-{product.jsbz_number}-B{DateTime.Now:MMdd}{txtScanCode.Text.Substring(txtScanCode.Text.Length - 4, 4)}-{weight}"
-            Count++;
+
+            var count = GetCountBySpec(productTaskInfo);
+            count = count > 9999 ? 1 : count;
             var wei = (int)(100 * netWeight);
             var boxCode =
-                @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}-B{DateTime.Now:MMdd}{Count:D4}-{wei:D4}";
+                @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:yyMM}{count:D4}-{wei:D5}";
             productTaskInfo.GenerateBoxCode = boxCode;
             productTaskInfo.GenerateReelCode = boxCode;
-            //打印标签
-            var xianPanReportModel = new XianPanReportModel
+
+            productTaskInfo.TbBoxInfo = new T_box
             {
-                Title = "",
-                MaterialNo = product.material_number,
-                Model = product.material_name,
-                Specifications = product.material_spec,
-                GrossWeight = tReelCode.GrossWeight.ToString(),
-                NetWeight = tReelCode.NetWeight.ToString(),
-                BatchNum = tReelCode.BatchNO,
-                No = tReelCode.PSN,
-                BoxCode = boxCode,
-                DateTime = DateTime.Now.ToString("yy-MM-dd"),
-                WaterMark = tReelCode.NoQualifiedReason
+                CreateTime = DateTime.Now,
+                IsDel = 0,
+                LabelId = 1, //标签Id
+                LabelName = "",
+                PackagingCode = GlobalVar.CurrentUserInfo.packageGroupCode,
+                PackagingSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{_okCount:D4}",
+                PackagingWorker = GlobalVar.CurrentUserInfo.username,
+                PackingBarCode = boxCode,
+                PackingQty = product.package_info.packing_quantity.ToString(),
+                PackingWeight = netWeight,
+                PackingGrossWeight = double.Parse(Weight1),
+                UpdateTime = DateTime.Now
             };
+
+            //打印标签
+            //--如果失败，打印空标签  2024年8月29日
+            var xianPanReportModel = productTaskInfo.TbReelInfo.IsQualified
+                ? new XianPanReportModel
+                {
+                    Title = "",
+                    MaterialNo = product.material_number,
+                    Model = product.material_name,
+                    Specifications = product.material_spec,
+                    GrossWeight = tReelCode.GrossWeight.ToString("f2"),
+                    NetWeight = tReelCode.NetWeight.ToString("f2"),
+                    BatchNum = tReelCode.BatchNO,
+                    No = tReelCode.PSN,
+                    BoxCode = boxCode,
+                    DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                    WaterMark = tReelCode.NoQualifiedReason
+                }
+                : new XianPanReportModel
+                {
+                    Title = "",
+                    MaterialNo = "",
+                    Model = "",
+                    Specifications = "",
+                    GrossWeight = "",
+                    NetWeight = "",
+                    BatchNum = "",
+                    WaterMark = tReelCode.NoQualifiedReason,
+                    No = "",
+                    BoxCode = "",
+                    DateTime = DateTime.Now.ToString("yy-MM-dd"),
+                    Reji = ""
+                };
             var xianPanReportModels = new List<XianPanReportModel>() { xianPanReportModel };
             var reportReel = new ReelReportAuto();
+            reportReel.SetQCR(productTaskInfo.TbReelInfo.IsQualified);
             reportReel.DataSource = xianPanReportModels;
             reportReel.Watermark.Text = xianPanReportModel.WaterMark;
             reportReel.Watermark.ShowBehind = false;
             reportReel.DrawWatermark = !tReelCode.IsQualified;
-            reportReel.ExportToImage($"D:\\reel_{ProductCode}.png");
-            Logger?.Information($"导出模板:D:\\xp_{ProductCode}.png");
+
+            productTaskInfo.ReportReel = reportReel;
+            Directory.CreateDirectory($"D:\\ReportView");
+            reportReel.ExportToImage($"D:\\ReportView\\reel_{ProductCode}.png");
+            Logger?.Information($"导出模板:D:\\ReportView\\xp_{ProductCode}.png");
             //TODO:先打印一个标签，后续根据客户需求 可以对应多个标签 2024年8月3日 
 
             try
@@ -463,7 +797,7 @@ namespace PMES_Automatic_Net6.ViewModels
 
             #endregion
 
-            #region boxCode 入队
+            #region boxCode
 
             var boxReportModels = new List<BoxReportModel>()
             {
@@ -494,9 +828,15 @@ namespace PMES_Automatic_Net6.ViewModels
             reportP.Watermark.Text = boxReportModels.Last().WaterMark;
             reportP.Watermark.ShowBehind = false;
             reportP.DrawWatermark = !tReelCode.IsQualified;
-            reportP.ExportToImage($"D:\\box_{ProductCode}.png");
-            Logger?.Information($"导出模板:D:\\box.png");
+            await reportP.ExportToImageAsync($"D:\\ReportView\\box_{ProductCode}.png");
+            Logger?.Information($"导出模板:D:\\ReportView\\box.png");
             _reportsBox.Enqueue(reportP);
+            productTaskInfo.ReportEdge = reportP;
+
+
+            var reportTop = new BoxReportTop();
+            reportTop.SetQrCode(boxCode);
+            productTaskInfo.ReportTop = reportTop;
 
             #endregion
 
@@ -580,7 +920,6 @@ namespace PMES_Automatic_Net6.ViewModels
             return tReelCode;
         }
 
-
         /// <summary>
         ///     所有任务的异常处理
         /// </summary>
@@ -603,10 +942,15 @@ namespace PMES_Automatic_Net6.ViewModels
             {
                 PreScanCode1 = obj[1].Value!.ToString();
                 PreScanCode2 = obj[2].Value!.ToString();
-                var info = _taskQueue.First(s => s.WorkShop == EnumWorkShop.Weighted);
+                var info = _taskQueue?.FirstOrDefault(s => s.WorkShop == EnumWorkShop.Weighted);
+                if (info == null)
+                {
+                    Logger?.Error($"【ReelCodeChanged】error，找不到工位为 weighted 的产品信息！");
+                }
+                info.WorkShop = EnumWorkShop.ReelCodeChecked;
+
                 info.ReelCode1 = PreScanCode1;
                 info.ReelCode2 = PreScanCode2;
-                info.WorkShop = EnumWorkShop.ReelCodeChecked;
 
                 if (PreScanCode2 != info.GenerateReelCode && PreScanCode1 != info.GenerateReelCode)
                 {
@@ -628,6 +972,13 @@ namespace PMES_Automatic_Net6.ViewModels
                     Value = s.Value
                 }).ToList();
                 items[^3].Value = byte.Parse("2");
+                ////items[^2].Value = short.Parse("2");
+                if (info.ProductOrderInfo!.package_info.is_naked)
+                {
+                    Logger?.Error($"{info.ProductOrderBarCode} :不应该出现裸装！");
+                    //todo:实际生产要以ERP为准 2024年9月21日 14点14分
+                    info.ProductOrderInfo!.package_info.is_naked = false;
+                }
                 items[^2].Value = !info.TbReelInfo.IsQualified
                     ? short.Parse("2")
                     : short.Parse(info.ProductOrderInfo!.package_info.is_naked ? "2" : "1");
@@ -637,13 +988,14 @@ namespace PMES_Automatic_Net6.ViewModels
                 Logger?.Information(
                     ($"DB{items[^3].DB}.{items[^3].StartByteAdr} 标志位置2读取结果：\n{HardwareManager.PrintDataItems(items.TakeLast(3).ToList())}"));
 
-                info.WorkShop = EnumWorkShop.ReelCodeChecked;
             }
             catch (Exception e)
             {
                 Logger?.Error($"异常:\n{e}");
             }
         }
+
+        public ManualResetEvent _waitStaking = new ManualResetEvent(true);
 
         /// <summary>
         ///     3 --> 条箱子到达位置，贴箱码
@@ -652,6 +1004,14 @@ namespace PMES_Automatic_Net6.ViewModels
         /// <returns></returns>
         private async Task BoxArrived(List<DataItem> arg)
         {
+            //if (!_waitStaking.WaitOne(180_000))
+            //{
+            //    ErrorStop(250, $"贴箱码位置等待超时，码垛完成没有释放信号量！检查清垛是否有问题或者码垛是否完成！");
+            //    MessageBox.Show("贴箱码位置等待超时，等待超过3分钟都没有码垛完成！检查清垛是否有问题或者码垛是否完成！软件停止，请重启软件！");
+            //    return;
+            //}
+            //_waitStaking.Reset();
+
             try
             {
                 //1 首先把码垛指令清空，等待箱码校验完成之后写入新的指令
@@ -675,14 +1035,17 @@ namespace PMES_Automatic_Net6.ViewModels
                 if (info.TbReelInfo.IsQualified)
                 {
                     //这里判断标签类型（打印几个，然后通知PLC放行）
-                    if ((bool)!info.ProductOrderInfo!.package_info.is_naked) //如果不是裸装 打印侧贴
+                    //if ((bool)!info.ProductOrderInfo!.package_info.is_naked) //如果不是裸装 打印标签
+                    Logger?.Information($"{info.ProductOrderBarCode} 是否裸装：{info.ProductOrderInfo!.package_info.is_naked}");
+                    if (true) //TODO: 测试 PT25都不是裸装的  2024年9月20日 09点56分 
                     {
-                        reportP.Print("161");
-                    }
+                        await info.ReportEdge?.PrintAsync("161")!;
+                        info.ReportTop?.ExportToImage($"D:\\ReportView\\{info.ProductOrderBarCode}_edge.png");
 
-                    //顶贴必须要打印
-                    reportP.Print("160");
-                    Thread.Sleep(5000);
+                        await info.ReportTop?.PrintAsync("160")!;
+                        info.ReportTop?.ExportToImage($"D:\\ReportView\\{info.ProductOrderBarCode}_top.png");
+                        Thread.Sleep(6000);
+                    }
                 }
 
 
@@ -698,7 +1061,7 @@ namespace PMES_Automatic_Net6.ViewModels
                 if (plcCmdAttribute != null)
                 {
                     var dbBlock = plcCmdAttribute.DbBlock;
-                    Plc.WriteClass(pmesStacking, dbBlock);
+                    await Plc.WriteClassAsync(pmesStacking, dbBlock);
                 }
 
                 //2 放行
@@ -748,21 +1111,14 @@ namespace PMES_Automatic_Net6.ViewModels
                     info.TbReelInfo.NoQualifiedReason = "NoBoxCode";
                 }
 
-                if (BoxCode1!.Equals("888") || BoxCode2!.Equals("888"))
+                //TODO: 不校验顶贴
+                if (!BoxCode1!.Equals(info.GenerateBoxCode) && !BoxCode2!.Equals(info.GenerateBoxCode))
                 {
                     info.TbReelInfo.IsQualified = false;
                     info.TbReelInfo.NoQualifiedReason = "ScanError";
                 }
+                info.WorkShop = EnumWorkShop.BoxCodeChecked;
 
-
-                if (await _fSql.Insert(info.TbReelInfo).ExecuteAffrowsAsync() > 0)
-                {
-                    Logger?.Information($"{info.ProductOrderBarCode} 盘码数据写入数据库成功！");
-                }
-                else
-                {
-                    ShowError($"{info.ProductOrderBarCode} 盘码数据写入数据库失败！");
-                }
 
                 //判断是否Ng
                 var items = obj.Select(s => new DataItem
@@ -786,6 +1142,8 @@ namespace PMES_Automatic_Net6.ViewModels
                         if (!ExecuteStack())
                         {
                             Logger?.Error("码垛指令执行失败");
+                            MessageBox.Show("码垛指令执行失败，程序退出！");
+                            return;
                         }
                     }
 
@@ -802,6 +1160,16 @@ namespace PMES_Automatic_Net6.ViewModels
                 }
                 else //不合格
                 {
+                    if (await WaitStation(251, 1, 900))
+                    {
+
+                    }
+                    else
+                    {
+                        Logger?.Error("异常码垛未状态错误！不能码垛，程序终止！");
+                        return;
+                    }
+
                     //2 发送错误的码垛指令
                     await Plc.WriteClassAsync(_pmesStackingError, 540);
                     Logger?.Information($"发送新的码垛指令,码垛到异常工位:\n{_pmesStackingError}");
@@ -816,7 +1184,6 @@ namespace PMES_Automatic_Net6.ViewModels
                         ($"DB{items[^3].DB}.{items[^3].StartByteAdr} 标志位置2读取结果：\n{HardwareManager.PrintDataItems(items.TakeLast(3).ToList())}"));
                 }
 
-                info.WorkShop = EnumWorkShop.BoxCodeChecked;
             }
             catch (Exception e)
             {
@@ -832,29 +1199,110 @@ namespace PMES_Automatic_Net6.ViewModels
         /// <exception cref="NotImplementedException"></exception>
         private async Task BoxStacked(List<DataItem> arg)
         {
+            //return;
+            var info = _taskQueue.FirstOrDefault(s => s.WorkShop == EnumWorkShop.BoxCodeChecked);
+            if (info == null)
+            {
+                Logger?.Error(LogInfo.Error("触发了码垛完成，"));
+                return;
+            }
             try
             {
-                var info = _taskQueue.FirstOrDefault(s => s.WorkShop == EnumWorkShop.BoxCodeChecked);
-                if (info != null)
+                ReelCount++;//拆垛计数加1
+                GlobalVar.MainView.Dispatcher.Invoke(() => { TotalCount++; });
+
+                info.WorkShop = EnumWorkShop.Stacked;
+                Logger?.Information($"{info.ProductOrderBarCode} 码垛完成！码垛位置：{arg[1]?.Value}");
+
+                if (info.TbReelInfo.IsQualified)
                 {
-                    info.WorkShop = EnumWorkShop.Stacked;
-                    Logger?.Information($"{info.ProductOrderBarCode} 码垛完成！码垛位置：{arg[1]?.Value?.ToString()}");
+                    info.TbReelInfo.VirtualBoxCode = _virtualBoxId;
+                    InsertReeTb(info); //插入盘码和装箱单数据到数据库
+                    _okCount++;
+                    GlobalVar.MainView.Dispatcher.Invoke(() => { TotalOkCount++; });
+                }
+                else
+                {
+                    _errorCount++;
+                    GlobalVar.MainView.Dispatcher.Invoke(() => { TotalNgCount++; });
                 }
 
-                ReelCount++;
-                var plcCommand = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 1, Status: 2 });
-                if (plcCommand != null)
-                {
-                    plcCommand.Status = 1;
-                    Logger?.Information($"拆垛指令执行完毕：{plcCommand.PlcComandContent}");
 
-                    var cmd = JsonConvert.DeserializeObject<PmesCmdUnStacking>(plcCommand.PlcComandContent);
+                //1 首先判断是否需要换垛
+                if (_taskQueue.Count > 1)
+                {
+                    //需要换垛
+                    if (info.ProductOrderInfo.NeedChange(_taskQueue[^2].ProductOrderInfo))
+                    {
+                        Logger?.Verbose(LogInfo.Info("触发换垛进入清垛流程"));
+                        await ClearStack();
+                        _okCount = 0;
+                    }
+                }
+
+                //2 清垛 --- 包装满了
+                //TODO: 调试的时候把装箱个数设置为2，2个就触发换垛
+                ///   if (_okCount == info.ProductOrderInfo.package_info.stacking_layers * info.ProductOrderInfo.package_info.stacking_per_layer)
+                if (_okCount == 3)
+                {
+                    Logger?.Verbose(LogInfo.Info("满16个进入清垛流程"));
+                    await ClearStack();
+                    _okCount = 0;
+                }
+
+                //3 判断是否清Error 工位
+                // if (ErrorCount == 2)
+                if (ErrorCount == 8)///1. 满一层剔除；线盘换型；人工触发..
+                {
+                    #region 等待是否码垛完成
+
+                    var cmd = new PmesStacking();
+                    var db = 548;
+                    Plc.ReadClass(cmd, db);
+                    var initNum = cmd.Reserve1;
+                    while (true)
+                    {
+                        Thread.Sleep(1500);
+                        Plc.ReadClass(cmd, db);
+                        if (cmd.Reserve1 > initNum)
+                        {
+                            Logger?.Information($"db:{db}计数器已经加1，异常码垛位置开始申请入库！");
+                            break;
+                        }
+                    }
+
+                    #endregion
+                    var success = WebService.Instance.ClearErrorStack(_pmesStackingError.WorkPositionId);
+                    Logger?.Information($"清空异常位结果;{success}");
+                    if (!success)
+                    {
+                        Logger?.Error("清空异常位失败！程序终止！");
+                    }
+
+                    _errorCount = 0;
+                    _pmesStackingError.ClearStack = _pmesStackingError.WorkPositionId;
+                    await Plc.WriteClassAsync(_pmesStackingError, 540);
+                    _pmesStackingError.ClearStack = 1;
+                }
+
+                var plcCommandUnStacking = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 1 });
+                if (plcCommandUnStacking != null)
+                {
+                    var cmd = plcCommandUnStacking.Cmd<PmesCmdUnStacking>();
+                    //2 判断是否拉走拆垛位置
                     if (cmd?.ReelNum == ReelCount)
                     {
-                        await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
-                            .Where(s => s.Id == plcCommand.Id).ExecuteAffrowsAsync();
-                        _plcCommandsRunning.Remove(plcCommand);
-                        Logger?.Information($"[KEY STEP]移除拆垛指令:{JsonConvert.SerializeObject(plcCommand)}");
+                        await WebService.Instance.EmptyTrayUnStacking((int)cmd?.WorkPositionId);
+                        plcCommandUnStacking.Status = 1;
+                        Logger?.Information($"拆垛指令执行完毕：{plcCommandUnStacking.PlcComandContent}");
+                        //1 修改数据库状态--->拆垛指令执行完毕
+                        var ret = await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
+                            .Where(s => s.Id == plcCommandUnStacking.Id).ExecuteAffrowsAsync();
+                        Logger?.Information($"拆垛指令，数据库更改指令为完成状态，结果:{ret}\t{plcCommandUnStacking.PlcComandContent}");
+
+                        //3 队列移除拆垛指令
+                        _plcCommandsRunning.Remove(plcCommandUnStacking);
+                        Logger?.Information($"[KEY STEP]队列移除拆垛指令:{plcCommandUnStacking.PlcComandContent}");
                         ReelCount = 0;
                     }
                 }
@@ -863,6 +1311,100 @@ namespace PMES_Automatic_Net6.ViewModels
             {
                 Logger?.Error($"异常:\n{e}");
             }
+            finally
+            {
+                _waitStaking.Set();
+                Logger?.Error($"{info.ProductOrderBarCode} 码垛完成!");
+            }
+        }
+        private bool can540 = false;
+        private PmesStacking cmdStack1;
+        /// <summary>
+        ///     执行【申请入库】【PLC清垛】
+        /// </summary>
+        /// <returns></returns>
+        private async Task<bool> ClearStack()
+        {
+            var plcCommandStacking = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 2, Status: 2 });
+            if (plcCommandStacking == null)
+            {
+                ErrorStop(0, $"找不到拆垛指令！");
+                return false;
+            }
+
+            //1 修改数据库状态--->码垛指令执行完毕
+            var ret = await _fSql.Update<T_plc_command>().Set(s => s.Status, 1)
+                .Where(s => s.Id == plcCommandStacking.Id).ExecuteAffrowsAsync();
+            plcCommandStacking.Status = 1;
+            var cmdStack = plcCommandStacking.Cmd<PmesStacking>();
+            Logger?.Information($"数据库更改指令为完成状态，结果:{ret}\t{plcCommandStacking.PlcComandContent}");
+
+            #region 2024年9月27日 09:28:21 新增 拉走前判断是否码垛完成 因为信号是提前发的
+
+            var cmd = new PmesStacking();
+            var db = cmdStack.WorkPositionId - 250 + 540;
+            //读取当前码垛指令
+            if (db < 542 || db > 547)
+            {
+                var msg = $"码垛工位错误:{cmdStack.WorkPositionId}，程序终止！";
+                MessageBox.Show(msg);
+                Logger?.Error(msg);
+                return false;
+            }
+
+            Plc.ReadClass(cmd, db);
+            var initNum = cmd.Reserve1;
+            while (true)
+            {
+                Thread.Sleep(1500);
+                Plc.ReadClass(cmd, db);
+                if (cmd.Reserve1 > initNum)
+                {
+                    Logger?.Information($"db:{db}计数器已经加1，开始申请入库！");
+                    break;
+                }
+            }
+
+            #endregion
+
+            //2 agv拉走入库
+            if (PMESConfig.Default.EmptyStacking)
+            {
+                var r = _fSql.Update<T_station_status>().Set(s => s.Status, 3).Where(s => s.WorkshopId == cmdStack.WorkPositionId).ExecuteAffrows();
+                if (r <= 0)
+                {
+                    Logger?.Error($"锁定工位失败：{cmdStack.WorkPositionId}！");
+                    return false;
+                }
+
+
+                var success = WebService.Instance.ApplyTray2Storage(cmdStack.WorkPositionId);
+                Logger?.Information($"调用后台Api执行清垛指令，结果:{success}，cmdStack:{cmdStack.WorkPositionId}");
+                if (!success)
+                {
+                    Logger?.Error($"调用后台Api执行清垛指令失败！");
+                    return false;
+                }
+                else
+                {
+                    can540 = true;
+                    cmdStack1 = cmdStack;
+                }
+            }
+
+            //3 调度清垛指令  16点17分  2024年9月26日  todo: 付发送清垛指令
+            try
+            {
+                //cmdStack.ClearStack = cmdStack.WorkPositionId;
+                //await Plc.WriteClassAsync(cmdStack, 540);
+                //Logger?.Information($"Plc写入清垛指令，cmdStack:{cmdStack.WorkPositionId}，cmdStack.ClearStack ：{cmdStack.ClearStack}");
+            }
+            catch (Exception e)
+            {
+                Logger?.Error(LogInfo.Error($"PLC写入清垛指令失败：{cmdStack} \nex:{e}"));
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -871,21 +1413,37 @@ namespace PMES_Automatic_Net6.ViewModels
         /// <returns></returns>
         public bool ExecuteStack()
         {
-            //var plcCommand = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 2, Status: 2 });
-            var plcCommand = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 2 });
-            if (plcCommand == null) //如果队列中没有需要的指令，则直接返回
+            T_plc_command plcCommand;
+            while (true)
             {
-                Logger?.Error("队列中没有满足条件的码垛指令。");
-                return false;
+                Thread.Sleep(1000);
+                plcCommand = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 2, Status: 2 });
+                if (plcCommand == null) //如果队列中没有需要的指令，一直等待
+                {
+                    Logger?.Error("队列中没有满足条件的码垛指令,继续等待....");
+                }
+                else
+                {
+                    Logger?.Information($"找到正常码垛指令:{plcCommand.PlcComandContent}");
+                    break;
+                }
             }
 
-            var writeObject =
-                JsonConvert.DeserializeObject<PmesStacking>(plcCommand.PlcComandContent);
-            var plcCmdAttribute = writeObject!.GetType().GetCustomAttribute<PlcCmdAttribute>();
-            if (plcCmdAttribute != null)
+            try
             {
-                var dbBlock = plcCmdAttribute.DbBlock;
-                Plc.WriteClass(writeObject, dbBlock);
+                var pmesStacking = plcCommand.Cmd<PmesStacking>();
+                if (!WaitStation(pmesStacking.WorkPositionId, 1, 900).Result)
+                {
+                    Logger?.Error("工位状态不对，无法码垛！");
+                    return false;
+                }
+                Logger?.Verbose($"WorkPositionId:{pmesStacking.WorkPositionId} 状态为1，发送码垛指令。");
+                //todo: 在这里确认数据库里工位状态是否正确 pmesStacking.WorkPositionId
+                Plc.WriteClass(pmesStacking, 540);
+            }
+            catch (Exception e)
+            {
+                Logger?.Error(LogInfo.Error($"执行PLC执行失败 Cmd：\n{plcCommand.PlcComandContent}"));
             }
 
             return true;
@@ -1229,6 +1787,10 @@ namespace PMES_Automatic_Net6.ViewModels
             ListHistory.Add(topGridModel);
         }
 
+        #endregion
+
+        #region 任务管理界面
+
         [RelayCommand]
         private void AddTask()
         {
@@ -1246,13 +1808,58 @@ namespace PMES_Automatic_Net6.ViewModels
                 GenerateReelCode = "null",
                 GenerateBoxCode = "null",
                 TbReelInfo = new T_preheater_code(),
-                TbBoxInfo = new T_box(),
+                TbBoxInfo = new PMES_Respository.tbs.T_box(),
                 ReportReel = new ReelReportAuto(),
                 ReportTop = new BoxReportAuto(),
                 ReportEdge = new BoxReportAuto(),
                 NeedPack = true
             };
             GlobalVar.MainView.Dispatcher.Invoke(() => { TaskQueue.Add(myProductTaskInfo); });
+        }
+
+        [RelayCommand]
+        private void DeleteTask()
+        {
+            if (TaskQueue.Count < 0)
+                return;
+            if (TaskQueueSelectedIndex < 0)
+                return;
+            TaskQueue.RemoveAt(TaskQueueSelectedIndex);
+        }
+
+        [RelayCommand]
+        private void PrintTaskTop()
+        {
+            if (TaskQueue.Count == 0)
+            {
+                var re = new BoxReportTop();
+                re.Print("160");
+                return;
+            }
+
+            if (TaskQueueSelectedIndex == 0)
+                return;
+            TaskQueue[TaskQueueSelectedIndex].ReportTop?.Print("160");
+        }
+
+        [RelayCommand]
+        private void PrintTaskEdge()
+        {
+            if (TaskQueue.Count < 0)
+                return;
+            if (TaskQueueSelectedIndex < 0)
+                return;
+            TaskQueue[TaskQueueSelectedIndex].ReportEdge?.Print("161");
+        }
+
+        [RelayCommand]
+        private void PrintTaskReel()
+        {
+            if (TaskQueue.Count < 0)
+                return;
+            if (TaskQueueSelectedIndex < 0)
+                return;
+            TaskQueue[TaskQueueSelectedIndex].ReportReel?.Print("152");
         }
 
         #endregion
@@ -1268,169 +1875,113 @@ namespace PMES_Automatic_Net6.ViewModels
             Logger?.Warning(msg);
             MessageBox.Show(msg, "Alarm", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
-    }
 
-    public class MyProductTaskInfo
-    {
-        /// <summary>
-        ///     产品订单编号
-        /// </summary>
-        public string ProductOrderBarCode { get; set; } = "";
-
-        /// <summary>
-        ///     产品所处位置
-        /// </summary>
-        public EnumWorkShop WorkShop { get; set; }
-
-        /// <summary>
-        ///     根据ProductBarCode获取到的产品信息
-        /// </summary>
-        public ProductInfo ProductOrderInfo { get; set; } = new ProductInfo();
-
-        #region 称重条码数据
-
-        /// <summary>
-        ///     称1的原始重量
-        /// </summary>
-        public double Weight1 { get; set; }
-
-        /// <summary>
-        ///     称2的原始重量
-        /// </summary>
-        public double Weight2 { get; set; }
-
-        #endregion
-
-        #region code 复核
-
-        /// <summary>
-        ///     校验时顶部会扫到盘码（合格证）和产品生产码，1/2只要有一个合格就Ok
-        /// </summary>
-        public string? ReelCode1 { get; set; }
-
-        public string? ReelCode2 { get; set; }
-
-
-        public string? BoxCode1 { get; set; }
-        public string? BoxCode2 { get; set; }
-
-        #endregion
-
-        #region 生成的条码
-
-        public string? GenerateReelCode { get; set; }
-        public string? GenerateBoxCode { get; set; }
-
-        #endregion
-
-        #region 盘码和箱码的信息也保存下
-
-        /// <summary>
-        ///     线盘顶部盘码信息（合格证）
-        ///     包括毛重，净重，是否合格，不合格原因
-        /// </summary>
-        public T_preheater_code TbReelInfo { get; set; } = new T_preheater_code();
-
-        public T_box TbBoxInfo { get; set; } = new T_box();
-
-        #endregion
-
-        #region 标签信息
-
-        public XtraReport? ReportReel { get; set; }
-        public XtraReport? ReportTop { get; set; }
-        public XtraReport? ReportEdge { get; set; }
-
-        #endregion
-
-        public bool NeedPack { get; set; }
-
-        /// <summary>
-        ///     盘码校验
-        /// </summary>
-        public bool ReelCodeValidate => (ReelCode1 == GenerateReelCode || ReelCode2 == GenerateReelCode) &&
-                                        (!string.IsNullOrEmpty(GenerateReelCode));
-
-
-        /// <summary>
-        ///     箱码校验
-        /// </summary>
-        public bool BoxCodeValidate => (BoxCode1 == GenerateBoxCode || BoxCode1 == GenerateBoxCode) &&
-                                       (!string.IsNullOrEmpty(GenerateBoxCode));
-
-
-        public async Task<bool> WeightValidate()
+        private void InsertReeTb(MyProductTaskInfo info)
         {
-            Debug.Assert(TbReelInfo != null, nameof(TbReelInfo) + " != null");
-
-            switch (ProductOrderInfo!.product_order_no)
+            try
             {
-                case "777":
-                    TbReelInfo.NoQualifiedReason = "TEST";
-                    TbReelInfo.IsQualified = false;
-                    break;
-                case "888":
-                    TbReelInfo.NoQualifiedReason = "Scan Error";
-                    TbReelInfo.IsQualified = false;
-                    break;
-                case "999":
-                    TbReelInfo.NoQualifiedReason = "API ERROR";
-                    TbReelInfo.IsQualified = false;
-                    break;
-                default:
-                    {
-                        try
-                        {
-                            var validateOrder =
-                                await ValidateOrder(TbReelInfo.NetWeight, ProductOrderBarCode!);
-                            if (validateOrder.Item1) return true;
-                            TbReelInfo.NoQualifiedReason = validateOrder.Item2;
-                            TbReelInfo.IsQualified = false;
-                        }
-                        catch (Exception e)
-                        {
-                            TbReelInfo.NoQualifiedReason = "API ERROR";
-                            TbReelInfo.IsQualified = false;
-                        }
+                Logger?.Verbose(LogInfo.Info($"准备插入数据库,数据：\n{JsonConvert.SerializeObject(info)}"));
+                var boxInfo = info.TbBoxInfo;
+                var plcCommandStack = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 2 });
 
-                        break;
-                    }
+                var cmd = plcCommandStack.Cmd<PmesStacking>();
+                var stationStatus = _fSql.Select<T_station_status>().Where(s => s.WorkshopId == cmd.WorkPositionId)
+                    .First();
+                boxInfo.TrayBarcode = stationStatus?.AttachInfo;
+                boxInfo.Status = 1;//合托进行中
+
+                var id = _fSql.Insert(boxInfo).ExecuteIdentity();
+                boxInfo.Id = (uint)id;
+                Logger?.Verbose(LogInfo.Info($"插入BoxId:{id}"));
+
+                var reelInfo = info.TbReelInfo;
+                reelInfo.BoxId = (int)id;
+                var reelId = (int)_fSql.Insert(reelInfo).ExecuteIdentity();
+                reelInfo.Id = (uint)reelId;
+                Logger?.Verbose(LogInfo.Info($"插入盘码Id:{reelId}"));
+
+                var product = info.ProductOrderInfo;
+                var order = new T_order_package
+                {
+                    CreateTime = DateTime.Now,
+                    DeliverySubTrayName = product.package_info.delivery_sub_tray_name,
+                    FullCoilWeight = product.package_info.cu_full_coil_weight,
+                    MaxWeight = double.Parse(product.package_info.cu_max_weight ?? "0"),
+                    MinWeight = double.Parse(product.package_info.cu_min_weight ?? "0"),
+                    PackagingReqCode = product.package_info.code,
+                    PackagingReqName = product.package_info.name,
+                    PackingQuantity = product.package_info.packing_quantity,
+                    Paperboard_name = product.package_info.delivery_sub_tray_name,
+                    Paperboard_number = "1",
+                    Paperboard_spec = "1",
+                    PreheaterCodeId = reelId,
+                    PreheaterInsidePackageName = product.package_info.wire_reel_inside_package_name,
+                    PreheaterOutsidePackageName = product.package_info.wire_reel_external_package_name,
+                    StackingLayers = product.package_info.stacking_layers,
+                    StackingPerLayer = product.package_info.stacking_per_layer,
+                    Super_wide_sub_tray = 0,
+                    TareWeight = product.package_info.tare_weight,
+                    UpdateTime = DateTime.Now
+                };
+                var orderId = _fSql.Insert(order).ExecuteIdentity();
+                Logger?.Verbose(LogInfo.Info($"插入包装 T_order_package Id:{orderId}"));
             }
-
-            return false;
+            catch (Exception e)
+            {
+                Logger?.Error(LogInfo.Error($"插入盘码到数据库失败！\n{e}"));
+            }
         }
 
-
-        private async Task<Tuple<bool, string>> ValidateOrder(double weight, string order)
+        private void InsertTrayTb(MyProductTaskInfo info)
         {
-            var validate =
-                await WebService.Instance.GetJObjectValidate(
-                    $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}");
+            try
+            {
+                var boxInfo = info.TbBoxInfo;
+                var plcCommandStack = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 2, Status: 2 });
+                var cmd = plcCommandStack.Cmd<PmesStacking>();
+                var stationStatus = _fSql.Select<T_station_status>().Where(s => s.Id == cmd.WorkPositionId).First();
+                boxInfo.TrayBarcode = stationStatus.AttachInfo;
+                var id = _fSql.Insert(boxInfo).ExecuteIdentity();
+                boxInfo.Id = (uint)id;
+                Logger?.Verbose($"插入TrayId:{id}");
+                var infos = _taskQueue.Where(s => s.TbReelInfo.VirtualBoxCode == _virtualBoxId)
+                    .Select(s => s.TbReelInfo)
+                    .ToList();
+                foreach (var item in infos)
+                {
+                    item.BoxId = (int)id;
+                    var ret = _fSql.Update<T_preheater_code>().Set(s => s.BoxId, id).ExecuteAffrows();
+                    Logger?.Information($"更改盘码Id={item.Id}，的BoxId为：{id}，执行结果：{ret}");
+                }
 
-            return validate;
+                _virtualBoxId = Guid.NewGuid().ToString();
+            }
+            catch (Exception e)
+            {
+                Logger?.Error($"插入箱码到数据库失败！{e}");
+            }
         }
-    }
 
-    public enum EnumWorkShop
-    {
-        None = 0,
-        UnStacking,
-        Weighted,
-        ReelCodeChecked,
-        BoxCodeChecked,
-        Stacking,
-        Stacked,
-    }
+        private int GetCountBySpec(MyProductTaskInfo productTaskInfo)
+        {
+            var path = ".//config//count.json";
+            var jsonDic = JsonConvert.DeserializeObject<Dictionary<string, int>>(File.ReadAllText(path));
+            if (jsonDic == null)
+            {
+                File.WriteAllText(path, JsonConvert.SerializeObject(new Dictionary<string, int>() { { "1", 1 } }));
+            }
+            var key = productTaskInfo.ProductOrderInfo.GetSpec;
+            if (jsonDic.ContainsKey(key))
+            {
+                jsonDic[key] = jsonDic[key] + 1;
+            }
+            else
+            {
+                jsonDic.Add(key, 1);
+            }
+            File.WriteAllText(path, JsonConvert.SerializeObject(jsonDic));
+            return jsonDic[key];
 
-    public class TopGridModel : ObservableObject
-    {
-        public string? BarCode { get; set; }
-        public string? ProductCode { get; set; }
-        public double Weight1 { get; set; }
-        public double Weight2 { get; set; }
-        public double NetWeight { get; set; }
-        public DateTime CreateTime { get; set; } = DateTime.Now;
-        public string Result { get; set; } = "";
-        public string Reason { get; set; } = "";
+        }
     }
 }

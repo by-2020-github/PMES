@@ -53,19 +53,35 @@ public class SerilogManager
     public static ILogger GetOrCreateLogger(string loggerName = "default")
     {
         if (LoggersDic.TryGetValue(loggerName, out var logger)) return logger;
-
-        var fileName = $"log-{DateTime.Now.Hour,2}-{DateTime.Now.Minute,2}-";
-        logger = new LoggerConfiguration()
-            .MinimumLevel.Verbose()
-            .Enrich.With(new ThreadIdEnricher())
-            //.WriteTo.MySQL(FreeSqlManager.ConnStr, nameof(LogInfo), LogEventLevel.Error)
-            .WriteTo.RichTextBox(LogViewTextBox, LogEventLevel.Information, outputTemplate: Template2,
-                theme: RichTextBoxConsoleTheme.Colored)
-            .WriteTo.Console(outputTemplate: Template1)
-            .WriteTo.File($"log\\{loggerName}\\{fileName}.txt", LogEventLevel.Verbose,
-                rollingInterval: RollingInterval.Day,
-                rollOnFileSizeLimit: true, outputTemplate: Template2)
-            .CreateLogger();
+        if (loggerName == "default")
+        {
+            var fileName = $"log-{DateTime.Now.Hour,2}-{DateTime.Now.Minute,2}-";
+            logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .Enrich.With(new ThreadIdEnricher())
+                //.WriteTo.MySQL(FreeSqlManager.ConnStr, nameof(LogInfo), LogEventLevel.Error)
+                .WriteTo.Console(outputTemplate: Template1)
+                .WriteTo.File($"log\\{loggerName}\\{fileName}.txt", LogEventLevel.Verbose,
+                    rollingInterval: RollingInterval.Day,
+                    rollOnFileSizeLimit: true, outputTemplate: Template2)
+                .CreateLogger();
+        }
+        else
+        {
+            var fileName = $"log-{DateTime.Now.Hour,2}-{DateTime.Now.Minute,2}-";
+            logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .Enrich.With(new ThreadIdEnricher())
+                //.WriteTo.MySQL(FreeSqlManager.ConnStr, nameof(LogInfo), LogEventLevel.Error)
+                .WriteTo.RichTextBox(LogViewTextBox, LogEventLevel.Information, outputTemplate: Template2,
+                    theme: RichTextBoxConsoleTheme.Colored)
+                .WriteTo.Console(outputTemplate: Template1)
+                .WriteTo.File($"log\\{loggerName}\\{fileName}.txt", LogEventLevel.Verbose,
+                    rollingInterval: RollingInterval.Day,
+                    rollOnFileSizeLimit: true, outputTemplate: Template2)
+                .CreateLogger();
+        }
+      
         LoggersDic[loggerName] = logger;
         return logger;
     }

@@ -10,10 +10,10 @@ using FreeSql.DataAnnotations;
 namespace PMES.Model.tbs {
 
 	/// <summary>
-	/// 子母托盘表， 组盘时，扫码读取母托盘的记录
+	/// 子托盘组表
 	/// </summary>
-	[JsonObject(MemberSerialization.OptIn), Table(Name = "t_child_mother_tray", DisableSyncStructure = true)]
-	public partial class T_child_mother_tray {
+	[JsonObject(MemberSerialization.OptIn), Table(Name = "t_child_tray_group", DisableSyncStructure = true)]
+	public partial class T_child_tray_group {
 
 		/// <summary>
 		/// 子母托盘表 - 主键id
@@ -28,10 +28,16 @@ namespace PMES.Model.tbs {
 		public int? AreaWorkshopId { get; set; }
 
 		/// <summary>
-		/// 子托盘规格，原始数据来自wms
+		/// 子托盘物料代码
 		/// </summary>
-		[JsonProperty, Column(Name = "childTraySpecification", StringLength = 40)]
-		public string ChildTraySpecification { get; set; }
+		[JsonProperty, Column(Name = "childTrayMaterialSpecification", StringLength = 40)]
+		public string ChildTrayMaterialSpecification { get; set; }
+
+		/// <summary>
+		/// 组合机器人-组托工位
+		/// </summary>
+		[JsonProperty, Column(Name = "combinateWorkshopId", DbType = "int")]
+		public int? CombinateWorkshopId { get; set; }
 
 		/// <summary>
 		/// 记录建立时间
@@ -46,16 +52,10 @@ namespace PMES.Model.tbs {
 		public string MotherTrayBarCode { get; set; }
 
 		/// <summary>
-		/// 备注
+		/// 子托盘个数
 		/// </summary>
-		[JsonProperty, Column(Name = "remark", StringLength = 80)]
-		public string Remark { get; set; }
-
-		/// <summary>
-		/// 码垛区工位，实际工作点
-		/// </summary>
-		[JsonProperty, Column(Name = "stackingWorkshopId", DbType = "int")]
-		public int? StackingWorkshopId { get; set; }
+		[JsonProperty, Column(Name = "num", DbType = "int")]
+		public int? Num { get; set; }
 
 		/// <summary>
 		/// 使用状态：0.未使用；1.已使用

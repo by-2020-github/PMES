@@ -106,6 +106,12 @@ namespace PMES_Automatic_Net6.Core.Managers
         /// </summary>
         public Func<List<DataItem>, Task> OnBoxStacked { get; set; }
 
+
+        /// <summary>
+        ///     纸箱不够了 
+        /// </summary>
+        public Func<Task> OnNoPageBoard { get; set; }
+
         public const int IntervalTime = 50;
 
         public void StartReading()
@@ -113,10 +119,15 @@ namespace PMES_Automatic_Net6.Core.Managers
             Task.Run(async () =>
             {
                 var second = false;
-                while (Plc.IsConnected)
+                while (true)
                 {
+
                     try
                     {
+                        if (!Plc.IsConnected)
+                        {
+                            Plc.Open();
+                        }
                         await Task.Delay(IntervalTime);
 
                         #region 拆垛
@@ -151,6 +162,10 @@ namespace PMES_Automatic_Net6.Core.Managers
                             WorkPositionId = 202,
                         };
                         Plc.ReadClass(plcCmdUnStacking, 502);
+                        if (plcCmdUnStacking.ReelNum == 0)
+                        {
+
+                        }
                         Logger?.Verbose($"plcCmdUnStacking1:{plcCmdUnStacking}");
                         if (!plcCmdUnStacking.Equals(GlobalVar.PlcCmdUnStacking1))
                         {
@@ -436,18 +451,18 @@ namespace PMES_Automatic_Net6.Core.Managers
                         #endregion
 
                         #region 组合机器人
-                        /*  var pmesCmdCombinationMotherChildTray = new PmesCmdCombinationMotherChildTray
-                          {
-                              DeviceId = 2,
-                              ChildMontherStayWorkPositionId = 406,
-                              MotherTrayWorkPositionId = 409,
-                              ChildStayWorkPositionId = 413,
-                              Reserve1 = 0,
-                              Reserve2 = 0,
-                              PmesAndPlcReadWriteFlag = 2,
-                          };*/
+                        //var pmesCmdCombinationMotherChildTray = new PmesCmdCombinationMotherChildTray
+                        // {
+                        //     DeviceId = 2,
+                        //     ChildMontherStayWorkPositionId = 406,
+                        //     MotherTrayWorkPositionId = 409,
+                        //     ChildStayWorkPositionId = 413,
+                        //     Reserve1 = 0,
+                        //     Reserve2 = 0,
+                        //     PmesAndPlcReadWriteFlag = 2,
+                        // };
 
-                        ///下组盘任务
+                        ////下组盘任务
                         /* var pmesCmdCombinationMotherChildTray1 = new PmesCmdCombinationMotherChildTray();
                          Plc.ReadClass(pmesCmdCombinationMotherChildTray1, 550);
                          Logger?.Verbose($"pmesCmdCombinationMotherChildTray1:{pmesCmdCombinationMotherChildTray1}");
@@ -458,106 +473,120 @@ namespace PMES_Automatic_Net6.Core.Managers
                                OnReceive?.Invoke(pmesCmdCombinationMotherChildTray1);
                          } */
 
-                        //1. 组合子母托盘任务
-                        await Task.Delay(IntervalTime);
-                        var pmesCmdCombinationMotherChildTray = new PmesCmdCombinationMotherChildTray();
-                        Plc.ReadClass(pmesCmdCombinationMotherChildTray, 550);
-                        Logger?.Verbose($"pmesCmdCombinationMotherChildTray:{pmesCmdCombinationMotherChildTray}");
-                        if (!pmesCmdCombinationMotherChildTray.Equals(GlobalVar.pmesCmdCombinationMotherChildTray))
-                        {
-                            GlobalVar.pmesCmdCombinationMotherChildTray = pmesCmdCombinationMotherChildTray;
-                            if (second)
-                                OnReceive?.Invoke(pmesCmdCombinationMotherChildTray);
-                        }
+                        ////1. 组合子母托盘任务
+                        //await Task.Delay(IntervalTime);
+                        //var pmesCmdCombinationMotherChildTray = new PmesCmdCombinationMotherChildTray();
+                        //Plc.ReadClass(pmesCmdCombinationMotherChildTray, 550);
+                        //Logger?.Verbose($"pmesCmdCombinationMotherChildTray:{pmesCmdCombinationMotherChildTray}");
+                        //if (!pmesCmdCombinationMotherChildTray.Equals(GlobalVar.pmesCmdCombinationMotherChildTray))
+                        //{
+                        //    GlobalVar.pmesCmdCombinationMotherChildTray = pmesCmdCombinationMotherChildTray;
+                        //    if (second)
+                        //        OnReceive?.Invoke(pmesCmdCombinationMotherChildTray);
+                        //}
 
-                        //组合子母托工位1
-                        await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray1 = new PlcCmdCombinationMotherChildTray1();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray1, 571);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray1:{plcCmdCombinationMotherChildTray1}");
-                        if (!plcCmdCombinationMotherChildTray1.Equals(GlobalVar.plcCmdCombinationMotherChildTray1))
-                        {
-                            GlobalVar.plcCmdCombinationMotherChildTray1 = plcCmdCombinationMotherChildTray1;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray1);
-                        }
-                        //组合子母托工位1
-                        await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray2 = new PlcCmdCombinationMotherChildTray2();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray2, 572);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray2:{plcCmdCombinationMotherChildTray2}");
-                        if (!plcCmdCombinationMotherChildTray2.Equals(GlobalVar.plcCmdCombinationMotherChildTray2))
-                        {
-                            GlobalVar.plcCmdCombinationMotherChildTray2 = plcCmdCombinationMotherChildTray2;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray2);
-                        }
+                        ////组合子母托工位1
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray1 = new PlcCmdCombinationMotherChildTray1();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray1, 571);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray1:{plcCmdCombinationMotherChildTray1}");
+                        //if (!plcCmdCombinationMotherChildTray1.Equals(GlobalVar.plcCmdCombinationMotherChildTray1))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray1 = plcCmdCombinationMotherChildTray1;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray1);
+                        //}
+                        ////组合子母托工位1
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray2 = new PlcCmdCombinationMotherChildTray2();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray2, 572);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray2:{plcCmdCombinationMotherChildTray2}");
+                        //if (!plcCmdCombinationMotherChildTray2.Equals(GlobalVar.plcCmdCombinationMotherChildTray2))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray2 = plcCmdCombinationMotherChildTray2;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray2);
+                        //}
 
-                        //其他子工位
-                        await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray3 = new PlcCmdCombinationMotherChildTray3();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray3, 573);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray3:{plcCmdCombinationMotherChildTray3}");
-                        if (!plcCmdCombinationMotherChildTray3.Equals(GlobalVar.plcCmdCombinationMotherChildTray3))
-                        {
-                            GlobalVar.plcCmdCombinationMotherChildTray3 = plcCmdCombinationMotherChildTray3;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray3);
-                        }
+                        ////其他子工位
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray3 = new PlcCmdCombinationMotherChildTray3();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray3, 573);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray3:{plcCmdCombinationMotherChildTray3}");
+                        //if (!plcCmdCombinationMotherChildTray3.Equals(GlobalVar.plcCmdCombinationMotherChildTray3))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray3 = plcCmdCombinationMotherChildTray3;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray3);
+                        //}
 
-                        await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray4 = new PlcCmdCombinationMotherChildTray4();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray4, 574);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray4:{plcCmdCombinationMotherChildTray4}");
-                        if (!plcCmdCombinationMotherChildTray4.Equals(GlobalVar.plcCmdCombinationMotherChildTray4))
-                        {
-                            GlobalVar.plcCmdCombinationMotherChildTray4 = plcCmdCombinationMotherChildTray4;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray4);
-                        }
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray4 = new PlcCmdCombinationMotherChildTray4();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray4, 574);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray4:{plcCmdCombinationMotherChildTray4}");
+                        //if (!plcCmdCombinationMotherChildTray4.Equals(GlobalVar.plcCmdCombinationMotherChildTray4))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray4 = plcCmdCombinationMotherChildTray4;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray4);
+                        //}
 
-                        await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray5 = new PlcCmdCombinationMotherChildTray5();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray5, 575);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray5:{plcCmdCombinationMotherChildTray3}");
-                        if (!plcCmdCombinationMotherChildTray5.Equals(GlobalVar.plcCmdCombinationMotherChildTray5))
-                        {
-                            GlobalVar.plcCmdCombinationMotherChildTray5 = plcCmdCombinationMotherChildTray5;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray5);
-                        }
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray5 = new PlcCmdCombinationMotherChildTray5();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray5, 575);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray5:{plcCmdCombinationMotherChildTray3}");
+                        //if (!plcCmdCombinationMotherChildTray5.Equals(GlobalVar.plcCmdCombinationMotherChildTray5))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray5 = plcCmdCombinationMotherChildTray5;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray5);
+                        //}
 
-                        await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray6 = new PlcCmdCombinationMotherChildTray6();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray6, 576);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray6:{plcCmdCombinationMotherChildTray6}");
-                        if (!plcCmdCombinationMotherChildTray6.Equals(GlobalVar.plcCmdCombinationMotherChildTray6))
-                        {
-                            GlobalVar.plcCmdCombinationMotherChildTray6 = plcCmdCombinationMotherChildTray6;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray6);
-                        }
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray6 = new PlcCmdCombinationMotherChildTray6();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray6, 576);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray6:{plcCmdCombinationMotherChildTray6}");
+                        //if (!plcCmdCombinationMotherChildTray6.Equals(GlobalVar.plcCmdCombinationMotherChildTray6))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray6 = plcCmdCombinationMotherChildTray6;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray6);
+                        //}
 
-                        await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray7 = new PlcCmdCombinationMotherChildTray7();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray7, 577);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray7:{plcCmdCombinationMotherChildTray7}");
-                        if (!plcCmdCombinationMotherChildTray7.Equals(GlobalVar.plcCmdCombinationMotherChildTray7))
-                        {
-                            GlobalVar.plcCmdCombinationMotherChildTray7 = plcCmdCombinationMotherChildTray7;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray7);
-                        }
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray7 = new PlcCmdCombinationMotherChildTray7();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray7, 577);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray7:{plcCmdCombinationMotherChildTray7}");
+                        //if (!plcCmdCombinationMotherChildTray7.Equals(GlobalVar.plcCmdCombinationMotherChildTray7))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray7 = plcCmdCombinationMotherChildTray7;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray7);
+                        //}
 
+                        //await Task.Delay(IntervalTime);
+                        //var plcCmdCombinationMotherChildTray8 = new PlcCmdCombinationMotherChildTray8();
+                        //Plc.ReadClass(plcCmdCombinationMotherChildTray8, 578);
+                        //Logger?.Verbose($"plcCmdCombinationMotherChildTray8:{plcCmdCombinationMotherChildTray8}");
+                        //if (!plcCmdCombinationMotherChildTray3.Equals(GlobalVar.plcCmdCombinationMotherChildTray8))
+                        //{
+                        //    GlobalVar.plcCmdCombinationMotherChildTray8 = plcCmdCombinationMotherChildTray8;
+                        //    if (second)
+                        //        OnReceive?.Invoke(plcCmdCombinationMotherChildTray8);
+                        //}
+
+                        //是否需要上纸箱
                         await Task.Delay(IntervalTime);
-                        var plcCmdCombinationMotherChildTray8 = new PlcCmdCombinationMotherChildTray8();
-                        Plc.ReadClass(plcCmdCombinationMotherChildTray8, 578);
-                        Logger?.Verbose($"plcCmdCombinationMotherChildTray8:{plcCmdCombinationMotherChildTray8}");
-                        if (!plcCmdCombinationMotherChildTray3.Equals(GlobalVar.plcCmdCombinationMotherChildTray8))
+                        var pmesCmdTray = new PmesCmdTrayFeeding();
+                        Plc.ReadClass(pmesCmdTray, 551);
+                        if (int.TryParse(pmesCmdTray.Reserve1.ToString(), out var num))
                         {
-                            GlobalVar.plcCmdCombinationMotherChildTray8 = plcCmdCombinationMotherChildTray8;
-                            if (second)
-                                OnReceive?.Invoke(plcCmdCombinationMotherChildTray8);
+                            if (num == 1)
+                            {
+                                OnNoPageBoard?.Invoke();
+                                pmesCmdTray.Reserve1 = 0;
+                                await Plc.WriteClassAsync(pmesCmdTray, 551);
+                            }
                         }
 
                         #endregion

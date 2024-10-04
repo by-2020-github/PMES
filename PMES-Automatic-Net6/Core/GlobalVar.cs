@@ -1,4 +1,5 @@
-﻿using PMES_Automatic_Net6.Core.Managers;
+﻿using System.Windows;
+using PMES_Automatic_Net6.Core.Managers;
 using PMES_Automatic_Net6.Model.users;
 using PMES_Automatic_Net6.Views;
 using PMES_Respository.DataStruct;
@@ -100,6 +101,8 @@ public class GlobalVar
         PlcCmdStacking7
     };
 
+    //DB551 子母托上料
+    public static PmesCmdTrayFeeding PmesCmdTrayFeeding { get; set; } = new PmesCmdTrayFeeding();
 
     //DB571
     public static PmesCmdCombinationMotherChildTray pmesCmdCombinationMotherChildTray { get; set; } = new PmesCmdCombinationMotherChildTray();
@@ -117,7 +120,7 @@ public class GlobalVar
 
     public static PlcCmdCombinationMotherChildTray7 plcCmdCombinationMotherChildTray7 { get; set; } = new PlcCmdCombinationMotherChildTray7();
     public static PlcCmdCombinationMotherChildTray8 plcCmdCombinationMotherChildTray8 { get; set; } = new PlcCmdCombinationMotherChildTray8();
-    public static MainView MainView { get; set; }
+    public static System.Windows.Window MainView { get; set; }
 
     #endregion
 }
