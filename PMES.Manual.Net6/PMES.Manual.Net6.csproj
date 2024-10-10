@@ -1,0 +1,121 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Resources\font\iconfont.ttf" />
+		<None Remove="Resources\icon\cebianlan.png" />
+		<None Remove="Resources\icon\cebianshensuo_1.png" />
+		<None Remove="Resources\icon\manual.png" />
+		<None Remove="Resources\icon\right.png" />
+		<None Remove="Resources\icon\right2.png" />
+		<None Remove="Resources\icon\settings.png" />
+		<None Remove="Resources\icon\to-top.png" />
+		<None Remove="Resources\icon\top.png" />
+		<None Remove="Resources\icon\top2.png" />
+		<None Remove="Resources\icon\zhankai.png" />
+		<None Remove="Resources\icon\zhankaice2.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\font\iconfont.ttf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<Content Include="Resources\icon\cebianlan.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\cebianshensuo_1.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\manual.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\right.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\right2.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\settings.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\to-top.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\top.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\top2.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\zhankai.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\icon\zhankaice2.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
+		<PackageReference Include="FreeSql" Version="3.2.833" />
+		<PackageReference Include="FreeSql.Provider.SqlServer" Version="3.2.833" />
+		<PackageReference Include="FreeSql.Repository" Version="3.2.833" />
+		<PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+		<PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.122" />
+		<PackageReference Include="Serilog" Version="4.0.0" />
+		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="Serilog.Sinks.RichTextBox.Wpf" Version="1.1.0" />
+		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+		<PackageReference Include="System.IO.Ports" Version="6.0.0" />
+		<PackageReference Include="Trans.System.Windows.Interactivity" Version="3.0.40218.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\PMES-Common\PMES-Common.csproj" />
+		<ProjectReference Include="..\PMES-Respository\PMES-Respository.csproj" />
+		<ProjectReference Include="..\PMES.UC\PMES.UC.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="DevExpress.XtraReports.v22.1">
+			<HintPath>C:\Program Files\DevExpress 22.1\Components\Offline Packages\devexpress.reporting.core\22.1.12\lib\netstandard2.0\DevExpress.XtraReports.v22.1.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="PMES.Designer.cs">
+		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>PMES.settings</DependentUpon>
+		</Compile>
+		<Compile Update="PMESConfig.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>PMESConfig.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Converters\" />
+	  <Folder Include="UserControls\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="PMES.settings">
+	    <Generator>SettingsSingleFileGenerator</Generator>
+	    <LastGenOutput>PMES.Designer.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+
+</Project>

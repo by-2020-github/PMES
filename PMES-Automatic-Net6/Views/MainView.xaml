@@ -16,7 +16,8 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         TextElement.FontFamily="Microsoft YaHei UI"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="1080" Width="1920"
+        >
 
 
     <md:Card>
