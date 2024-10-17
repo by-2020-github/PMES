@@ -1,0 +1,1 @@
+﻿FreeSql.Generator -Razor "__razor.cshtml.txt" -NameOptions 1,0,0,0 -NameSpace PMES.Model.tbs  -DB "SqlServer,Data Source=172.16.3.253;User Id=pmes;Password=N9XRNi9S4R5Kjs7b;Initial Catalog=pmes;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1" -FileName "{name}.cs"

@@ -10,7 +10,6 @@ using System.IO;
 using PMES.Model;
 using RichTextBox = System.Windows.Controls.RichTextBox;
 using PMES.Properties;
-using PMES_Respository.tbs_sqlServer;
 using PMES_Respository.reportModel;
 namespace PMES;
 

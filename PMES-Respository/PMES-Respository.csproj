@@ -6,6 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="tbs - back\**" />
+    <Compile Remove="tbs-mysql\**" />
+    <Compile Remove="tbs\**" />
+    <EmbeddedResource Remove="tbs - back\**" />
+    <EmbeddedResource Remove="tbs-mysql\**" />
+    <EmbeddedResource Remove="tbs\**" />
+    <None Remove="tbs - back\**" />
+    <None Remove="tbs-mysql\**" />
+    <None Remove="tbs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FreeSql" Version="3.2.821" />
     <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.821" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

@@ -1,6 +1,6 @@
 ﻿using PMES.Manual.Net6.Core.Managers;
 using PMES.Manual.Net6.Model.users;
-using PMES_Respository.tbs;
+using PMES_Respository.tbs_sqlserver;
 
 namespace PMES.Manual.Net6.Core;
 

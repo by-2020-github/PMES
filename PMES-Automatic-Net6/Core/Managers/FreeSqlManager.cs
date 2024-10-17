@@ -1,4 +1,4 @@
-﻿using PMES_Respository.tbs;
+﻿using PMES_Respository.tbs_sqlserver;
 using Serilog;
 
 namespace PMES_Automatic_Net6.Core.Managers;
@@ -21,6 +21,7 @@ public class FreeSqlManager
     private static readonly Lazy<FSqlServerHelper>
         HolderSqlServer = new(() => new FSqlServerHelper(DbLogger, ConnStrSqlServer));
 
+    public static FSqlServerHelper FSqlServerHelper => HolderSqlServer.Value;
     public static IFreeSql FSqlServer => HolderSqlServer.Value.FSql;
 
     #endregion

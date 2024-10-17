@@ -13,9 +13,15 @@ using System.Reflection;
 using PMES_Common;
 using System.Printing;
 using System.IO;
+using System.Windows;
+using DevExpress.Mvvm.DataAnnotations;
 using HslCommunication.ModBus;
+using PMES.Core;
+using PMES.Model;
 using PMES.UC.reports;
 using PMES_Automatic_Net6.Core.Managers;
+using ProductInfo = PMES_Automatic_Net6.Model.ProductInfo;
+using WebService = PMES_Automatic_Net6.Core.WebService;
 
 
 namespace PMES_Automatic_Net6.ViewModels
@@ -215,8 +221,6 @@ namespace PMES_Automatic_Net6.ViewModels
             {
                 Logger?.Error($"发送指令错误:\n{e}");
             }
-
-          
         }
 
 
@@ -355,6 +359,20 @@ namespace PMES_Automatic_Net6.ViewModels
 
                 Thread.Sleep(50);
             }
+        }
+
+        #endregion
+
+        #region API测试
+
+        [ObservableProperty] private string _productOrder = "G240804830995121";
+
+        [RelayCommand]
+        private void TestErp()
+        {
+            var product = WebService.Instance.Get1<ProductInfo>(
+                $"{ApiUrls.QueryOrder}{ProductOrder}&format=json");
+            MessageBox.Show(product == null ? "访问失败！" : "访问成功！");
         }
 
         #endregion

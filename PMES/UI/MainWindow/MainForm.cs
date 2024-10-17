@@ -27,8 +27,7 @@ using PMES.UI.MainWindow.ChildPages;
 using PMES.UI.Report;
 using PMES.UI.Settings;
 using PMES_Respository.reportModel;
-using PMES_Respository.tbs;
-using PMES_Respository.tbs_sqlServer;
+using PMES_Respository.tbs_sqlserver;
 using Serilog;
 
 namespace PMES.UI.MainWindow;
@@ -206,8 +205,8 @@ public partial class MainForm : XtraForm
                 if (await _freeSql.Insert<T_order_exchange>(new T_order_exchange
                     {
                         CreateTime = DateTime.Now,
-                        NewCode = lbNew.Text,
-                        OldCode = lbOld.Text,
+                        Newcode = lbNew.Text,
+                        Oldcode = lbOld.Text,
                         WeightUserId = GlobalVar.CurrentUserInfo.userId
                     }).ExecuteAffrowsAsync() > 0)
                 {
@@ -440,9 +439,9 @@ public partial class MainForm : XtraForm
                 Weight1 = 0,
                 WeightUserId = GlobalVar.CurrentUserInfo.userId,
 
-                jsbz_short_name = product.jsbz_short_name,
-                material_themal_grade = product.material_thermal_grade,
-                material_spec = product.material_spec
+                Jsbz_short_name = product.jsbz_short_name,
+                Material_themal_grade = product.material_thermal_grade,
+                Material_spec = product.material_spec
 
             };
 
@@ -687,7 +686,7 @@ public partial class MainForm : XtraForm
         try
         {
             var view = _freeSql.Select<U_VW_DBCP>().WithSql("SELECT * FROM U_VW_DBCP").ToList()
-                .First(s => s.FItemID == preheaterCode.ProductId.ToString());
+                .First(s => s.FItemID.ToString().Equals( preheaterCode.ProductId.ToString()));
             if (view == null)
             {
                 ShowErrorMsg("视图查询为空！");
@@ -706,7 +705,7 @@ public partial class MainForm : XtraForm
                 FQMDJID = view.产成品漆膜等级ID,
                 FQMDJNO = view.产成品漆膜等级代号,
                 FQMDJ = view.产成品漆膜等级,
-                FCPGGID = view.产品规格ID,
+                FCPGGID = view.产品规格ID ,
                 FCPGGNO = view.产品规格代号,
                 FCZID = view.产品材质ID,
                 FCZNO = view.产品材质代号,
@@ -714,7 +713,7 @@ public partial class MainForm : XtraForm
                 FXTID = view.产成品形态ID,
                 FXTNO = view.产成品形态代号,
                 FXTName = view.产成品形态,
-                FCPGG = preheaterCode.material_spec,
+                FCPGG = preheaterCode.Material_spec,
                 FXPItemID = preheaterCode.PreheaterId,
                 FXPNumber = preheaterCode.PreheaterCode,
                 FXPName = preheaterCode.PreheaterName,
@@ -727,7 +726,7 @@ public partial class MainForm : XtraForm
                 FPCH = preheaterCode.BatchNO,
                 FDate = boxCode.CreateTime,
                 FSXH = 0,
-                FHGZQty = boxCode.PackingQty,
+                FHGZQty = double.Parse(boxCode.PackingQty),
                 FJYR = preheaterCode.OperatorName,
                 FCZRID = preheaterCode.WeightUserId,
                 FCZR = boxCode.PackagingWorker,
@@ -743,7 +742,6 @@ public partial class MainForm : XtraForm
                 FBQID = boxCode.LabelTemplateId,
                 FBQJS = int.Parse(boxCode.PackingQty),
                 FTypeTemp = preheaterCode.ProductName,
-                FICMOID = 0, //这里没有
                 FICMOBillNO = preheaterCode.ICMOBillNO,
 
                 FStrip2 = preheaterCode.ProductionBarcode,
@@ -991,32 +989,32 @@ public partial class MainForm : XtraForm
             if (result == DialogResult.OK)
             {
                 //todo:执行真实的删除操作
-                gridViewXp.DeleteSelectedRows();
-                var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == tPCode.Id)
-                    .FirstAsync();
-                var boxId = rel.BoxCodeId;
-                var relBoxList = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxId)
-                    .ToListAsync();
-                if (relBoxList.Count == 1)
-                {
-                    if (await _freeSql.Update<T_box>().Where(s => s.Id == boxId).Set(s => s.IsDel, 1)
-                            .ExecuteAffrowsAsync() <= 0)
-                    {
-                        ShowErrorMsg($"删除箱码{boxId}失败");
-                    }
-                }
+                //gridViewXp.DeleteSelectedRows();
+                //var rel = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.PreheaterCodeId == tPCode.Id)
+                //    .FirstAsync();
+                //var boxId = rel.BoxCodeId;
+                //var relBoxList = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == boxId)
+                //    .ToListAsync();
+                //if (relBoxList.Count == 1)
+                //{
+                //    if (await _freeSql.Update<T_box>().Where(s => s.Id == boxId).Set(s => s.IsDel, 1)
+                //            .ExecuteAffrowsAsync() <= 0)
+                //    {
+                //        ShowErrorMsg($"删除箱码{boxId}失败");
+                //    }
+                //}
 
-                if (await _freeSql.Update<T_preheater_code>().Where(s => s.Id == tPCode.Id).Set(s => s.IsDel, 1)
-                        .ExecuteAffrowsAsync() <= 0)
-                {
-                    ShowErrorMsg($"删除盘码{boxId}失败");
-                }
+                //if (await _freeSql.Update<T_preheater_code>().Where(s => s.Id == tPCode.Id).Set(s => s.IsDel, 1)
+                //        .ExecuteAffrowsAsync() <= 0)
+                //{
+                //    ShowErrorMsg($"删除盘码{boxId}失败");
+                //}
 
-                if (await _freeSql.Update<T_box_releated_preheater>().Where(s => s.Id == rel.Id).Set(s => s.IsDel, 1)
-                        .ExecuteAffrowsAsync() <= 0)
-                {
-                    ShowErrorMsg($"删除关系表{boxId}失败");
-                }
+                //if (await _freeSql.Update<T_box_releated_preheater>().Where(s => s.Id == rel.Id).Set(s => s.IsDel, 1)
+                //        .ExecuteAffrowsAsync() <= 0)
+                //{
+                //    ShowErrorMsg($"删除关系表{boxId}失败");
+                //}
 
                 await SearchExec();
                 ShowInfoMsg("删除成功！");
@@ -1038,28 +1036,28 @@ public partial class MainForm : XtraForm
             {
                 //todo:执行真实的删除操作
                 gridViewBox.DeleteSelectedRows();
-                var relList = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == box.Id)
-                    .ToListAsync();
-                if (await _freeSql.Update<T_box_releated_preheater>().Set(s => s.IsDel, 1).SetSource(relList)
-                        .ExecuteAffrowsAsync() <= 0)
-                {
-                    ShowErrorMsg($"删除关系表失败,{string.Join(",", relList.Select(s => s.Id).ToList())}");
-                }
+                //var relList = await _freeSql.Select<T_box_releated_preheater>().Where(s => s.BoxCodeId == box.Id)
+                //    .ToListAsync();
+                //if (await _freeSql.Update<T_box_releated_preheater>().Set(s => s.IsDel, 1).SetSource(relList)
+                //        .ExecuteAffrowsAsync() <= 0)
+                //{
+                //    ShowErrorMsg($"删除关系表失败,{string.Join(",", relList.Select(s => s.Id).ToList())}");
+                //}
 
-                var pIds = relList.Select(s => s.PreheaterCodeId).ToList();
-                if (await _freeSql.Update<T_preheater_code>().Where(s => pIds.Contains((int)s.Id)).Set(s => s.IsDel, 1)
-                        .ExecuteAffrowsAsync() <= 0)
-                {
-                    ShowErrorMsg($"删除盘码表失败,{string.Join(",", pIds)}");
-                }
+                //var pIds = relList.Select(s => s.PreheaterCodeId).ToList();
+                //if (await _freeSql.Update<T_preheater_code>().Where(s => pIds.Contains((int)s.Id)).Set(s => s.IsDel, 1)
+                //        .ExecuteAffrowsAsync() <= 0)
+                //{
+                //    ShowErrorMsg($"删除盘码表失败,{string.Join(",", pIds)}");
+                //}
 
-                if (await _freeSql.Update<T_box>().Where(s => s.Id == box.Id).Set(s => s.IsDel, 1)
-                        .ExecuteAffrowsAsync() <= 0)
-                {
-                    ShowErrorMsg($"删除箱码表失败,{box.Id}");
-                }
+                //if (await _freeSql.Update<T_box>().Where(s => s.Id == box.Id).Set(s => s.IsDel, 1)
+                //        .ExecuteAffrowsAsync() <= 0)
+                //{
+                //    ShowErrorMsg($"删除箱码表失败,{box.Id}");
+                //}
 
-                await SearchExec();
+                //await SearchExec();
                 ShowInfoMsg("删除成功！");
             }
             else if (result == DialogResult.Cancel)
@@ -1105,11 +1103,11 @@ public partial class MainForm : XtraForm
             var result = XtraMessageBox.Show("是否确认打印？", "QA", MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
-                var relList = await _freeSql.Select<T_box_releated_preheater>()
-                    .Where(s => s.IsDel != 1 && s.BoxCodeId == box.Id).ToListAsync();
-                var pIds = relList.Select(s => s.PreheaterCodeId).ToList();
-                var preList = await _freeSql.Select<T_preheater_code>().Where(s => pIds.Contains((int)s.Id))
-                    .ToListAsync();
+                //var relList = await _freeSql.Select<T_box_releated_preheater>()
+                //    .Where(s => s.IsDel != 1 && s.BoxCodeId == box.Id).ToListAsync();
+                //var pIds = relList.Select(s => s.PreheaterCodeId).ToList();
+                //var preList = await _freeSql.Select<T_preheater_code>().Where(s => pIds.Contains((int)s.Id))
+                //    .ToListAsync();
                 //todo:打印
 
                 // var report = new ReportPackingList();
@@ -1189,10 +1187,10 @@ public partial class MainForm : XtraForm
 
         var tPCodesData = await tPCodes.ToListAsync();
         var pIds = tPCodesData.Select(s => (int)s.Id).ToList();
-        var relLists = await _freeSql.Select<T_box_releated_preheater>()
-            .Where(s => pIds.Contains(s.PreheaterCodeId)).ToListAsync();
-        var boxIds = relLists.Select(s => s.BoxCodeId).Distinct().ToList();
-        UpdateGridControl(boxIds);
+        //var relLists = await _freeSql.Select<T_box_releated_preheater>()
+        //    .Where(s => pIds.Contains(s.PreheaterCodeId)).ToListAsync();
+        //var boxIds = relLists.Select(s => s.BoxCodeId).Distinct().ToList();
+        //UpdateGridControl(boxIds);
     }
 
     private async void gridViewXp_FocusedRowChanged(object sender,

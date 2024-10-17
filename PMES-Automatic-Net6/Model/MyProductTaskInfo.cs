@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PMES_Automatic_Net6.Core;
-using PMES_Respository.tbs;
 using PMES.Model;
+using PMES_Respository.tbs_sqlserver;
 
 namespace PMES_Automatic_Net6.Model
 {
@@ -71,12 +71,12 @@ namespace PMES_Automatic_Net6.Model
         ///     线盘顶部盘码信息（合格证）---一箱一个线盘
         ///     包括毛重，净重，是否合格，不合格原因
         /// </summary>
-        public PMES_Respository.tbs.T_preheater_code TbReelInfo { get; set; } = new T_preheater_code();
+        public PMES_Respository.tbs_sqlserver.T_preheater_code TbReelInfo { get; set; } = new T_preheater_code();
 
         /// <summary>
         ///     一个托盘 放了好多箱线盘
         /// </summary>
-        public PMES_Respository.tbs.T_box TbBoxInfo { get; set; } = new T_box();
+        public PMES_Respository.tbs_sqlserver.T_box TbBoxInfo { get; set; } = new T_box();
 
         #endregion
 
@@ -108,7 +108,7 @@ namespace PMES_Automatic_Net6.Model
         {
             Debug.Assert(TbReelInfo != null, nameof(TbReelInfo) + " != null");
 
-            switch (ProductOrderInfo.product_order_no.Substring(0,3))
+            switch (ProductOrderInfo.product_order_no.Substring(0, 3))
             {
                 case "777":
                     TbReelInfo.NoQualifiedReason = "测试数据";
@@ -153,6 +153,94 @@ namespace PMES_Automatic_Net6.Model
                     $"{ApiUrls.ValidateOrder}net_weight={weight:F2}&semi_finished={order}");
 
             return validate;
+        }
+
+        private sealed class MyProductTaskInfoEqualityComparer : IEqualityComparer<MyProductTaskInfo>
+        {
+            public bool Equals(MyProductTaskInfo x, MyProductTaskInfo y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (ReferenceEquals(x, null)) return false;
+                if (ReferenceEquals(y, null)) return false;
+                if (x.GetType() != y.GetType()) return false;
+                return x.ProductOrderBarCode == y.ProductOrderBarCode && x.WorkShop == y.WorkShop &&
+                       x.ProductOrderInfo.Equals(y.ProductOrderInfo) && x.Weight1.Equals(y.Weight1) &&
+                       x.Weight2.Equals(y.Weight2) && x.ReelCode1 == y.ReelCode1 && x.ReelCode2 == y.ReelCode2 &&
+                       x.BoxCode1 == y.BoxCode1 && x.BoxCode2 == y.BoxCode2 &&
+                       x.GenerateReelCode == y.GenerateReelCode && x.GenerateBoxCode == y.GenerateBoxCode &&
+                       x.TbReelInfo.Equals(y.TbReelInfo) && x.TbBoxInfo.Equals(y.TbBoxInfo) &&
+                       Equals(x.ReportReel, y.ReportReel) && Equals(x.ReportTop, y.ReportTop) &&
+                       Equals(x.ReportEdge, y.ReportEdge) && x.NeedPack == y.NeedPack;
+            }
+
+            public int GetHashCode(MyProductTaskInfo obj)
+            {
+                var hashCode = new HashCode();
+                hashCode.Add(obj.ProductOrderBarCode);
+                hashCode.Add((int)obj.WorkShop);
+                hashCode.Add(obj.ProductOrderInfo);
+                hashCode.Add(obj.Weight1);
+                hashCode.Add(obj.Weight2);
+                hashCode.Add(obj.ReelCode1);
+                hashCode.Add(obj.ReelCode2);
+                hashCode.Add(obj.BoxCode1);
+                hashCode.Add(obj.BoxCode2);
+                hashCode.Add(obj.GenerateReelCode);
+                hashCode.Add(obj.GenerateBoxCode);
+                hashCode.Add(obj.TbReelInfo);
+                hashCode.Add(obj.TbBoxInfo);
+                hashCode.Add(obj.ReportReel);
+                hashCode.Add(obj.ReportTop);
+                hashCode.Add(obj.ReportEdge);
+                hashCode.Add(obj.NeedPack);
+                return hashCode.ToHashCode();
+            }
+        }
+
+        public static IEqualityComparer<MyProductTaskInfo> MyProductTaskInfoComparer { get; } =
+            new MyProductTaskInfoEqualityComparer();
+
+        protected bool Equals(MyProductTaskInfo other)
+        {
+            return ProductOrderBarCode == other.ProductOrderBarCode && WorkShop == other.WorkShop &&
+                   ProductOrderInfo.Equals(other.ProductOrderInfo) && Weight1.Equals(other.Weight1) &&
+                   Weight2.Equals(other.Weight2) && ReelCode1 == other.ReelCode1 && ReelCode2 == other.ReelCode2 &&
+                   BoxCode1 == other.BoxCode1 && BoxCode2 == other.BoxCode2 &&
+                   GenerateReelCode == other.GenerateReelCode && GenerateBoxCode == other.GenerateBoxCode &&
+                   TbReelInfo.Equals(other.TbReelInfo) && TbBoxInfo.Equals(other.TbBoxInfo) &&
+                   Equals(ReportReel, other.ReportReel) && Equals(ReportTop, other.ReportTop) &&
+                   Equals(ReportEdge, other.ReportEdge) && NeedPack == other.NeedPack;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((MyProductTaskInfo)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(ProductOrderBarCode);
+            hashCode.Add((int)WorkShop);
+            hashCode.Add(ProductOrderInfo);
+            hashCode.Add(Weight1);
+            hashCode.Add(Weight2);
+            hashCode.Add(ReelCode1);
+            hashCode.Add(ReelCode2);
+            hashCode.Add(BoxCode1);
+            hashCode.Add(BoxCode2);
+            hashCode.Add(GenerateReelCode);
+            hashCode.Add(GenerateBoxCode);
+            hashCode.Add(TbReelInfo);
+            hashCode.Add(TbBoxInfo);
+            hashCode.Add(ReportReel);
+            hashCode.Add(ReportTop);
+            hashCode.Add(ReportEdge);
+            hashCode.Add(NeedPack);
+            return hashCode.ToHashCode();
         }
     }
 }

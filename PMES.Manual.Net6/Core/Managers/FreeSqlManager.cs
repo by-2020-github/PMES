@@ -1,4 +1,4 @@
-﻿using PMES_Respository.tbs;
+﻿using PMES_Respository.tbs_sqlserver;
 using Serilog;
 
 namespace PMES.Manual.Net6.Core.Managers;

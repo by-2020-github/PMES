@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using PMES.Model;
-using PMES.Model.tbs;
 using PMES_Automatic_Net6.Core;
 using PMES_Automatic_Net6.Core.Managers;
 using PMES_Automatic_Net6.ViewModels;
@@ -13,6 +12,7 @@ using System.Data;
 using System.IO;
 using System.Net.NetworkInformation;
 using PMES.UC.reports;
+using PMES_Respository.tbs_sqlserver;
 
 namespace PMES_Automatic_Net6.Views
 {
@@ -75,8 +75,8 @@ namespace PMES_Automatic_Net6.Views
             try
             {
                 FreeSqlManager.DbLogger = Logger;
-                FreeSqlManager.ConnStrMySql = PMESConfig.Default.ConnLocalMysql;
-                var fSqlMysql = FreeSqlManager.FSqlMysql;
+                //FreeSqlManager.ConnStrSqlServer = PMESConfig.Default.ConnLocalSqlServer;
+                var fSqlMysql = new FSqlServerHelper(Logger, FreeSqlManager.ConnStrSqlServer).FSql;
                 _freeSql = fSqlMysql;
                 if (fSqlMysql.Select<T_station_status>().Count() == 0)
                 {

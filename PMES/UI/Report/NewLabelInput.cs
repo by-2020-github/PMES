@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using PMES.Core;
-using PMES_Respository.tbs;
+using PMES_Respository.tbs_sqlserver;
 
 namespace PMES.UI.Report
 {
@@ -63,11 +63,11 @@ namespace PMES.UI.Report
             {
                 label = new T_label
                 {
-                    CreateTime = DateTime.Now,
+                    Createtime = DateTime.Now,
                     IsCurrent = false,
                     IsDel = 0,
                     Name = cbxLabelName.Text,
-                    NumOfPackedItems = "1",
+                    Numofpackeditems = "1",
                     Remark = "",
                     UpdateTime = DateTime.Now
                 };
@@ -80,15 +80,15 @@ namespace PMES.UI.Report
             GlobalVar.NewLabelTemplate = new T_label_template
             {
                 CreateTime = DateTime.Now,
-                CustormerCode = cbxCustomerCode.Text,
                 DefaultType = cbxIsDefault.SelectedIndex == 1 ? 2 : 1,
                 IsDel = 0,
-                PreheaterCode = cbxPreCode.Text,
-                PrintLabelType = cbxType.SelectedIndex < 0 ? 0 : cbxType.SelectedIndex,
-                ProductCode = cbxProductCode.Text,
                 Remark = cbxRemark.Text,
                 UpdateTime = DateTime.Now,
-                UserStandardCode = cbxStandCode.Text,
+                //CustormerCode = cbxCustomerCode.Text,
+                //PreheaterCode = cbxPreCode.Text,
+                //PrintLabelType = cbxType.SelectedIndex < 0 ? 0 : cbxType.SelectedIndex,
+                //ProductCode = cbxProductCode.Text,
+                //UserStandardCode = cbxStandCode.Text,
                 LabelId = id
             };
             this.DialogResult = DialogResult.OK;

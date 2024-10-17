@@ -16,7 +16,7 @@
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-             d:DataContext="{d:DesignInstance viewModels:DebugViewModel}">
+             d:DataContext="{d:DesignInstance viewModels:DebugViewModel,IsDesignTimeCreatable= True}">
     <UserControl.Resources>
         <converter:MultiBindingConverter x:Key="MultiBindingConverter"></converter:MultiBindingConverter>
     </UserControl.Resources>
@@ -154,14 +154,29 @@
                     <CheckBox Width="100" Height="25" Content="IsOpen" Margin="15,15,0,0"
                               IsChecked="{Binding IsOpenJieDa}" VerticalContentAlignment="Center">
                     </CheckBox>
-                    <Button Width="100" Height="25" Content="Send" Margin="15,15,0,0" Command="{Binding SendXinJieCmdCommand}"></Button>
-                    <Button Width="100" Height="25" Content="Read" Margin="15,15,0,0" Command="{Binding ReadXinJieCmdCommand}"></Button>
+                    <Button Width="100" Height="25" Content="Send" Margin="15,15,0,0"
+                            Command="{Binding SendXinJieCmdCommand}">
+                    </Button>
+                    <Button Width="100" Height="25" Content="Read" Margin="15,15,0,0"
+                            Command="{Binding ReadXinJieCmdCommand}">
+                    </Button>
                 </StackPanel>
 
                 <DataGrid Grid.Column="0" Grid.Row="1" ItemsSource="{Binding ModbusCmds}" CanUserAddRows="False"></DataGrid>
 
             </Grid>
 
+        </TabItem>
+
+        <TabItem Header="测试Api">
+            <UniformGrid Rows="12" Columns="2">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <Button Content="访问ERP" Command="{Binding TestErpCommand }" Margin="5"></Button>
+                    <Label Content="ProductOrder:" VerticalAlignment="Center" Margin="5"></Label>
+                    <TextBox Text="{Binding ProductOrder}" VerticalContentAlignment="Bottom" Width="180" Margin="5"></TextBox>
+                </StackPanel>
+
+            </UniformGrid>
         </TabItem>
     </TabControl>
 </UserControl>

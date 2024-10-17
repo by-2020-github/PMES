@@ -30,6 +30,7 @@ public class WebService
 
     public async Task<T?> Get<T>(string url) where T : class
     {
+        Logger?.Verbose($"访问Api url:{url}");
         try
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -39,6 +40,27 @@ public class WebService
             response.EnsureSuccessStatusCode();
             var res = await response.Content.ReadAsStringAsync();
             var product = JsonConvert.DeserializeObject<T>(res);
+            return product;
+        }
+        catch (Exception exception)
+        {
+            Logger?.Error(exception.Message);
+            return null;
+        }
+    }
+
+    public T? Get1<T>(string url) where T : class
+    {
+        Logger?.Verbose($"访问Api url:{url}");
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("Cookie",
+                "csrftoken=4GjfFB1WhRHfI30HeenFN6CEyYSarg0R; sl-session=l/jXE8c+KGZOFwujhtgpVg==");
+            var response = _httpClient.Send(request);
+            response.EnsureSuccessStatusCode();
+            var res = response.Content.ReadAsStringAsync();
+            var product = JsonConvert.DeserializeObject<T>(res.Result);
             return product;
         }
         catch (Exception exception)
@@ -70,6 +92,7 @@ public class WebService
 
     public async Task<Tuple<bool, string>> GetJObjectValidate(string url)
     {
+        Logger?.Verbose($"访问Api url:{url}");
         try
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -292,8 +315,10 @@ public class WebService
     {
         try
         {
+            Logger?.Verbose($"调用接口[EmptyTrayUnStacking],params:{position}");
             string pos = position.ToString();
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.101.4:8089//api/unstacking/emptyPalletRecycling");
+            //var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089//api/unstacking/emptyPalletRecycling");
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089//api/unstacking/emptyPalletRecycling");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("IsContinuedFeed", "2"));
             collection.Add(new("unstackingWorkshopId", pos));
@@ -343,6 +368,7 @@ public class WebService
     {
         try
         {
+            Logger?.Verbose($"调用接口[PostMotherTrayCode],params:{childWorkshopld}，{combiateWorkshopld}，{motherTrayBarcode}，{motherWorkshopld}");
             var request = new HttpRequestMessage(HttpMethod.Post, ApiUrls.MotherTrayBarCode);
             var collection = new List<KeyValuePair<string, string>>();
 
@@ -386,8 +412,9 @@ public class WebService
     {
         try
         {
+            Logger?.Verbose($"调用接口[ApplyTray2Storage],params:{position}");
             string pos = position.ToString();
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.101.4:8089/api/stacking/boxMaterialOfTrayMatIntoWMS");
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089/api/stacking/boxMaterialOfTrayMatIntoWMS");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("stackingWorkshopId", $"{position}"));
             var content = new FormUrlEncodedContent(collection);
@@ -395,7 +422,7 @@ public class WebService
             var response = _httpClient.Send(request);
             response.EnsureSuccessStatusCode();
 
-            //var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.101.4:8089/api/stacking/boxMaterialOfTrayMatIntoWMS");
+            //var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089/api/stacking/boxMaterialOfTrayMatIntoWMS");
             //var collection = new List<KeyValuePair<string, string>>();
             //collection.Add(new("stackingWorkshopId", $"{position}"));
             //var content = new FormUrlEncodedContent(collection);
@@ -429,6 +456,7 @@ public class WebService
     {
         try
         {
+            Logger?.Verbose($"调用接口[ClearAndApplyPageBoard],params:null");
             var request = new HttpRequestMessage(HttpMethod.Post, ApiUrls.RecycleFeedBackEmptyTray);
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("emptyTrayWorkshopId", "-1"));
@@ -463,8 +491,9 @@ public class WebService
     {
         try
         {
+            Logger?.Verbose($"调用接口[ClearErrorStack],params:{workId}");
             //var request = new HttpRequestMessage(HttpMethod.Post, ApiUrls.ApplyExcludePosition);
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.101.4:8089/api/stacking/excludePosition");
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089/api/stacking/excludePosition");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("emptyTrayWorkshopId", workId.ToString()));
             var content = new FormUrlEncodedContent(collection);
@@ -498,6 +527,7 @@ public class WebService
     {
         try
         {
+            Logger?.Verbose($"调用接口[ChangeStack],params:{delivery_sub_tray_spec},{xpzl_spec}");
             //var request = new HttpRequestMessage(HttpMethod.Post, ApiUrls.ApplyExcludePosition);
             var request = new HttpRequestMessage(HttpMethod.Post, ApiUrls.ChangeStack);
             var collection = new List<KeyValuePair<string, string>>();
@@ -579,13 +609,12 @@ public static class ApiUrls
 {
     #region erp 查询订单
 
-    //public static string QueryOrder = "http://172.16.3.130:30358/api/product-info?semi_finished=";
-    //public static string ValidateOrder = "http://172.16.3.130:30358/api/product-validate?";
+    public static string QueryOrder = "http://172.16.3.130:30358/api/product-info?semi_finished=";
+    public static string ValidateOrder = "http://172.16.3.130:30358/api/product-validate?";
 
-    public static string QueryOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-info?semi_finished=";
-    public static string ValidateOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-validate?";
+    //public static string QueryOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-info?semi_finished=";
+    //public static string ValidateOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-validate?";
 
-    /// 
 
     #endregion
 
@@ -686,7 +715,7 @@ public static class ApiUrls
     /// <summary>
     ///     生产环境：http://8.142.72.79/
     /// </summary>
-    public static string BaseUrl = "http://192.168.101.4:8089";
+    public static string BaseUrl = "http://172.16.3.248:8089";
 
     /// <summary>
     ///     子母托区域--子母托存入缓存区工位

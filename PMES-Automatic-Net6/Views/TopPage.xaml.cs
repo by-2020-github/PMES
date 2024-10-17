@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using DevExpress.XtraReports.Native;
 using PMES_Automatic_Net6.Core.Managers;
 using PMES_Automatic_Net6.ViewModels;
-using PMES_Respository.tbs;
 
 namespace PMES_Automatic_Net6.Views
 {

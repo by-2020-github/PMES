@@ -43,7 +43,7 @@
                 </Label>
                 <Label Width="50" Height="60" FontSize="18" VerticalContentAlignment="Center" Content="Pass:"></Label>
                 <Label Width="160" Height="60" FontSize="18" VerticalContentAlignment="Center"
-                       Content="{Binding TotalOkCount}"  Foreground="Green">
+                       Content="{Binding TotalOkCount}" Foreground="Green">
                 </Label>
 
                 <Label Width="50" Height="60" FontSize="18" VerticalContentAlignment="Center" Content="Ng:"></Label>
@@ -89,9 +89,16 @@
                 <Label Style="{DynamicResource LabelInput}" Content="{Binding Path= PreScanCode2}"></Label>
             </StackPanel>
 
-            <Button Width="160" Height="60" FontSize="18" Content="历史"></Button>
-            <Button Width="160" Height="60" FontSize="18" Content="打印暂停"></Button>
-
+            <!--<Button Width="160" Height="60" FontSize="18" Content="历史"></Button>
+            <Button Width="160" Height="60" FontSize="18" Content="打印暂停"></Button>-->
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource LabelTitle}" VerticalAlignment="Center" Content="正常换跺数量"></Label>
+                <TextBox VerticalAlignment="Center" Width="50" Text="{Binding ExchangeStackNum}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource LabelTitle}" VerticalAlignment="Center" Content="异常换跺数量"></Label>
+                <TextBox VerticalAlignment="Center" Width="50" Text="{Binding ErrorExchangeStackNum}"></TextBox>
+            </StackPanel>
         </UniformGrid>
 
         <Grid Grid.Row="2" Background="LightGray">
@@ -106,9 +113,9 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="编号" Width="1*" Binding="{Binding BarCode}"></DataGridTextColumn>
                 <DataGridTextColumn Header="生产编号" Width="2*" Binding="{Binding ProductCode}"></DataGridTextColumn>
-                <DataGridTextColumn Header="称重1毛重" Width="1*" Binding="{Binding Weight1}"></DataGridTextColumn>
-                <DataGridTextColumn Header="称重2毛重" Width="1*" Binding="{Binding Weight2}"></DataGridTextColumn>
-                <DataGridTextColumn Header="最终产品重量" Width="1*" Binding="{Binding NetWeight}"></DataGridTextColumn>
+                <DataGridTextColumn Header="称重1毛重" Width="1*" Binding="{Binding Weight1,StringFormat=f2}"></DataGridTextColumn>
+                <DataGridTextColumn Header="称重2毛重" Width="1*" Binding="{Binding Weight2,StringFormat=f2}"></DataGridTextColumn>
+                <DataGridTextColumn Header="最终产品重量" Width="1*" Binding="{Binding NetWeight,StringFormat=f2}"></DataGridTextColumn>
                 <DataGridTextColumn Header="时间" Width="1.5*" Binding="{Binding CreateTime}"></DataGridTextColumn>
                 <DataGridTextColumn Header="结果" Width="1*" Binding="{Binding Result}"></DataGridTextColumn>
             </DataGrid.Columns>
@@ -122,7 +129,7 @@
         <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
+                <!--<ColumnDefinition Width="200"></ColumnDefinition>-->
             </Grid.ColumnDefinitions>
             <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
                       IsReadOnly="True"
@@ -130,16 +137,16 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="编号" Width="1*" Binding="{Binding BarCode}"></DataGridTextColumn>
                     <DataGridTextColumn Header="生产编号" Width="2*" Binding="{Binding ProductCode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="称重1毛重" Width="1*" Binding="{Binding Weight1}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="称重2毛重" Width="1*" Binding="{Binding Weight2}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="最终产品重量" Width="1*" Binding="{Binding NetWeight}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="称重1毛重" Width="1*" Binding="{Binding Weight1,StringFormat=f2}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="称重2毛重" Width="1*" Binding="{Binding Weight2,StringFormat=f2}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="最终产品重量" Width="1*" Binding="{Binding NetWeight,StringFormat=f2}"></DataGridTextColumn>
                     <DataGridTextColumn Header="时间" Width="1.5*" Binding="{Binding CreateTime}"></DataGridTextColumn>
                     <DataGridTextColumn Header="结果" Width="1*" Binding="{Binding Result}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="打印选中标签"
+            <!--<Button Grid.Column="1" Width="160" Height="60" FontSize="18" Content="打印选中标签"
                     Command="{Binding AddDataCommand}">
-            </Button>
+            </Button>-->
         </Grid>
         <Grid Grid.Row="6">
             <Grid.RowDefinitions>
