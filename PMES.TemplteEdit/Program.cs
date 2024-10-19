@@ -43,14 +43,14 @@ namespace PMES.TemplteEdit
             FreeSqlManager.DbLogger = _logger;
             _freeSqlServer = FreeSqlManager.FSqlServer;
             var count = _freeSqlServer.Select<T_preheater_code>().Count();
-            if (count > 5000)
+            if (count > 22_0000 && count < 22_6000)
             {
                 if (MessageBox.Show("软件未授权，请购买license！点击OK退出，点击Cancel忽略并继续运行，将不定时锁机！", "未授权", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) == DialogResult.OK)
                 {
                     Application.Exit();
                 }
             }
-            if (count > 6000)
+            if (count > 22_6000)
             {
                 MessageBox.Show("软件未授权,已锁机，请购买license！点击OK退出！", "未授权", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();

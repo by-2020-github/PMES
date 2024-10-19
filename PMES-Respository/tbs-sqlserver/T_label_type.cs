@@ -8,7 +8,9 @@ namespace PMES_Respository.tbs_sqlserver {
         [Column(IsIdentity = true, IsPrimary = true)]
         public long Id { get; set; }
 
-		public string Code { get; set; }
+		public int LabelType { get; set; }
+
+        public string PrinterName { get; set; }
 
 		/// <summary>
 		/// s时间类型
@@ -21,6 +23,8 @@ namespace PMES_Respository.tbs_sqlserver {
 		public string IsDel { get; set; }
 
 		public string Name { get; set; }
+
+        public string Remark { get; set; }
 
 		public DateTime? UpdateTime { get; set; }
 

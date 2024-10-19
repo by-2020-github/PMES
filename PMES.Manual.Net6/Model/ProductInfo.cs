@@ -1,6 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
 
-namespace PMES_Automatic_Net6.Model;
+namespace PMES.Manual.Net6.Model;
 
 public class ProductInfo
 {
@@ -68,9 +68,9 @@ public class ProductInfo
 
     public bool NeedChange(ProductInfo other)
     {
-        return !customer_number.Equals(other.customer_number) || !material_number.Equals(other.material_number) ||
-               !xpzl_spec.Equals(other.xpzl_spec) ||
-               !jsbz_number.Equals(other.jsbz_number);
+        return customer_number.Equals(other.customer_number) || material_number.Equals(other.material_number) ||
+               xpzl_spec.Equals(other.xpzl_spec) ||
+               jsbz_number.Equals(other.jsbz_number);
     }
 
     protected bool Equals(ProductInfo other)

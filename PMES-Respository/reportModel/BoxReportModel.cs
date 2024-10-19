@@ -15,13 +15,14 @@ namespace PMES_Respository.reportModel
 
 
         public string GBNo { get; set; }
+
         /// <summary>
         ///     规格
         /// </summary>
         public string Specifications { get; set; } = "1PEW/155";
 
 
-        public string NetWeight { get; set; } = "49.03 kg";
+        public double NetWeight { get; set; }  
 
         /// <summary>
         ///     批号
@@ -51,7 +52,7 @@ namespace PMES_Respository.reportModel
         public string DateTime { get; set; } = System.DateTime.Now.ToString("YY-MM-dd");
 
 
-        public string GrossWeight { get; set; }
+        public double GrossWeight { get; set; }
 
         public string WaterMark { get; set; }
 

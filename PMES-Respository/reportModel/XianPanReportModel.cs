@@ -24,12 +24,12 @@ namespace PMES_Respository.reportModel
         /// </summary>
         public string Specifications { get; set; } = "1.050";
 
-        public string GrossWeight { get; set; } = "51.28 kg";
+        public double GrossWeight { get; set; }
 
         /// <summary>
         ///     F2
         /// </summary>
-        public string NetWeight { get; set; } = "49.03 kg";
+        public double NetWeight { get; set; }
 
         public string BatchNum { get; set; } = "G231006611 15A";
         public string WaterMark { get; set; } = "";

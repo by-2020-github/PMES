@@ -165,7 +165,7 @@ public partial class MainForm : XtraForm
     }
 
     private int _change = 1;
-   // private unsafe object* json;
+    // private unsafe object* json;
 
     /// <summary>
     ///     扫码枪触发
@@ -203,12 +203,12 @@ public partial class MainForm : XtraForm
             {
                 lbNew.Text = txtScanCode.Text;
                 if (await _freeSql.Insert<T_order_exchange>(new T_order_exchange
-                    {
-                        CreateTime = DateTime.Now,
-                        Newcode = lbNew.Text,
-                        Oldcode = lbOld.Text,
-                        WeightUserId = GlobalVar.CurrentUserInfo.userId
-                    }).ExecuteAffrowsAsync() > 0)
+                {
+                    CreateTime = DateTime.Now,
+                    Newcode = lbNew.Text,
+                    Oldcode = lbOld.Text,
+                    WeightUserId = GlobalVar.CurrentUserInfo.userId
+                }).ExecuteAffrowsAsync() > 0)
                 {
                     ShowInfoMsg("改线入库成功!");
 
@@ -466,10 +466,10 @@ public partial class MainForm : XtraForm
                 var totalNet = _tPreheaterCodes.Sum(s => (s.NetWeight));
                 var totalGross = _tPreheaterCodes.Sum(s => (s.GrossWeight));
                 var w = (int)(totalNet * 100);
-               /* if (w <= 0) {
-                    ShowErrorMsg("净重不能小于0");
-                    return; 
-                }*/
+                /* if (w <= 0) {
+                     ShowErrorMsg("净重不能小于0");
+                     return; 
+                 }*/
                 lbBoxCode.Text =
                     @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:yyMM}{_totalBoxNum:D4}-{w:D5}";
 
@@ -524,8 +524,8 @@ public partial class MainForm : XtraForm
                     MaterialNo = product.material_number,
                     Model = product.xpzl_spec,
                     Specifications = s.PreheaterSpec,
-                    GrossWeight = s.GrossWeight.ToString(),
-                    NetWeight = s.NetWeight.ToString(),
+                    GrossWeight = s.GrossWeight,
+                    NetWeight = s.NetWeight,
                     BatchNum = s.BatchNO,
                     No = s.PSN,
                     DateTime = DateTime.Now.ToString("yy-MM-dd"),
@@ -539,13 +539,13 @@ public partial class MainForm : XtraForm
                         MaterialNo = product.material_number,
                         Model = product.xpzl_spec,
                         Specifications = _tPreheaterCodes.Last().PreheaterSpec,
-                        NetWeight = _tBoxes.Last().PackingWeight?.ToString("F2"),
+                        NetWeight = _tBoxes.Last().PackingWeight??0,
                         BatchNum = _tBoxes.Last().PackingQty,
                         No = _tBoxes.Last().PackagingSN,
                         Standard = _tPreheaterCodes.Last().ProductStandardName,
                         ProductNo = _tPreheaterCodes.Last().ProductCode,
                         DateTime = DateTime.Now.ToString("yy-MM-dd"),
-                        GrossWeight = _tBoxes.Last().PackingGrossWeight?.ToString("F2"),
+                        GrossWeight = _tBoxes.Last().PackingGrossWeight??0,
                         BoxCode = _tBoxes.Last().PackingBarCode
                     }
                 };
@@ -605,8 +605,8 @@ public partial class MainForm : XtraForm
                         MaterialNo = s.CustomerMaterialCode,
                         Model = s.ProductSpec,
                         Specifications = s.PreheaterSpec,
-                        GrossWeight = s.GrossWeight.ToString(),
-                        NetWeight = s.NetWeight.ToString(),
+                        GrossWeight = s.GrossWeight,
+                        NetWeight = s.NetWeight,
                         BatchNum = s.BatchNO,
                         No = s.PSN,
                         DateTime = DateTime.Now.ToString("yy-MM-dd"),
@@ -620,13 +620,13 @@ public partial class MainForm : XtraForm
                             MaterialNo = _tPreheaterCodes.Last().CustomerMaterialCode,
                             Model = _tPreheaterCodes.Last().ProductSpec,
                             Specifications = _tPreheaterCodes.Last().PreheaterSpec,
-                            NetWeight = _tBoxes.Last().PackingWeight?.ToString("F2"),
+                            NetWeight = _tBoxes.Last().PackingWeight??0,
                             BatchNum = _tBoxes.Last().PackingQty,
                             No = _tBoxes.Last().PackagingSN,
                             Standard = _tPreheaterCodes.Last().ProductStandardName,
                             ProductNo = _tPreheaterCodes.Last().ProductCode,
                             DateTime = DateTime.Now.ToString("yy-MM-dd"),
-                            GrossWeight = _tBoxes.Last().PackingGrossWeight?.ToString("F2"),
+                            GrossWeight = _tBoxes.Last().PackingGrossWeight??0,
                             BoxCode = _tBoxes.Last().PackingBarCode
                         }
                     };
@@ -686,7 +686,7 @@ public partial class MainForm : XtraForm
         try
         {
             var view = _freeSql.Select<U_VW_DBCP>().WithSql("SELECT * FROM U_VW_DBCP").ToList()
-                .First(s => s.FItemID.ToString().Equals( preheaterCode.ProductId.ToString()));
+                .First(s => s.FItemID.ToString().Equals(preheaterCode.ProductId.ToString()));
             if (view == null)
             {
                 ShowErrorMsg("视图查询为空！");
@@ -705,7 +705,7 @@ public partial class MainForm : XtraForm
                 FQMDJID = view.产成品漆膜等级ID,
                 FQMDJNO = view.产成品漆膜等级代号,
                 FQMDJ = view.产成品漆膜等级,
-                FCPGGID = view.产品规格ID ,
+                FCPGGID = view.产品规格ID,
                 FCPGGNO = view.产品规格代号,
                 FCZID = view.产品材质ID,
                 FCZNO = view.产品材质代号,
@@ -932,7 +932,8 @@ public partial class MainForm : XtraForm
         }
 
         var TPBarCode = "";
-        if (txtScanCode.Text.Contains("TP")){
+        if (txtScanCode.Text.Contains("TP"))
+        {
             TPBarCode = txtScanCode.Text;
         }
 

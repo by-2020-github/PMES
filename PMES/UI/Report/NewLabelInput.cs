@@ -80,7 +80,6 @@ namespace PMES.UI.Report
             GlobalVar.NewLabelTemplate = new T_label_template
             {
                 CreateTime = DateTime.Now,
-                DefaultType = cbxIsDefault.SelectedIndex == 1 ? 2 : 1,
                 IsDel = 0,
                 Remark = cbxRemark.Text,
                 UpdateTime = DateTime.Now,
@@ -89,7 +88,6 @@ namespace PMES.UI.Report
                 //PrintLabelType = cbxType.SelectedIndex < 0 ? 0 : cbxType.SelectedIndex,
                 //ProductCode = cbxProductCode.Text,
                 //UserStandardCode = cbxStandCode.Text,
-                LabelId = id
             };
             this.DialogResult = DialogResult.OK;
             this.Close();

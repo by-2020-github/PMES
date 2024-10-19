@@ -21,6 +21,7 @@ namespace PMES.TemplteEdit
     {
         private ILogger _logger;
         private IFreeSql _fsSql;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -73,12 +74,64 @@ namespace PMES.TemplteEdit
                 var fileName = openFileDialog.FileName;
                 if (File.Exists(fileName))
                 {
-                    var customEdit = new CustomEdit();
-                    var label1 = new T_label_template();
-                    customEdit.SetObj(label1);
-                    if (customEdit.ShowDialog() == DialogResult.OK)
+                    var customEdit = new CustomEdit(_fsSql);
+                    customEdit.LoadData();
+                    if (customEdit.ShowDialog() != DialogResult.OK)
                     {
-                        label1 = (T_label_template)customEdit.GetObj();
+                        MessageBox.Show("退出，不保存上传！");
+                        return;
+                    }
+
+                    var data = customEdit.GetData();
+                    if (data.Any(string.IsNullOrEmpty))
+                    {
+                        MessageBox.Show($"返回结果:{string.Join(" , ", data)}有空值，无法保存，退出，不保存上传！");
+                        return;
+                    }
+
+                    var report = new XtraReport();
+                    report.LoadLayout(fileName);
+                    var stream = new MemoryStream();
+                    var picName = fileName.Replace("repx", "png");
+                    report.ExportToImage(picName);
+
+                    var label1 = new T_label_template
+                    {
+                        LabelType = int.Parse(data[1]),
+                        PackageCode = data[0],
+                        PackageName = data[2],
+                        Remark = null,
+                        TemplateFile = File.ReadAllBytes(fileName),
+                        TemplateFileName = fileName,
+                        TemplatePicture = File.ReadAllBytes(picName),
+                        UpdateTime = DateTime.Now
+                    };
+
+                    var labelTemplates = _fsSql.Select<T_label_template>().ToList();
+                    if (labelTemplates.Any(s => s.PackageCode == label1.PackageCode && s.LabelType == label1.LabelType))
+                    {
+                        var dialogResult =
+                            MessageBox.Show(
+                                $"已经存在包装代码为:{label1.PackageCode},标签类型为：{label1.LabelType}的标签，是否上传覆盖，点击OK覆盖，点击Cancel取消",
+                                "QA", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                        switch (dialogResult)
+                        {
+                            case DialogResult.Cancel:
+                                return;
+                            case DialogResult.OK:
+                            {
+                                var executeAffrows = _fsSql.Update<T_label_template>()
+                                    .Where(s => s.PackageCode == label1.PackageCode && s.LabelType == label1.LabelType)
+                                    .SetSource(label1).ExecuteAffrows();
+                                MessageBox.Show(executeAffrows > 0 ? "更新成功！" : "更新失败！");
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var executeAffrows = _fsSql.Insert(label1).ExecuteAffrows();
+                        MessageBox.Show(executeAffrows > 0 ? "插入成功！" : "插入失败！");
                     }
                 }
             }

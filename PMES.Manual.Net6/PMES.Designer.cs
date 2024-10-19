@@ -82,5 +82,43 @@ namespace PMES.Manual.Net6 {
                 this["StopBits"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.;User Id=sa;Password=Aa123.321;Initial Catalog=PMES;Encrypt=True;Tru" +
+            "stServerCertificate=True;Pooling=true;Min Pool Size=1")]
+        public string ConnLocalSqlServer {
+            get {
+                return ((string)(this["ConnLocalSqlServer"]));
+            }
+            set {
+                this["ConnLocalSqlServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=127.0.0.1;Port=3306;User ID=root;Password=123456; Initial Catalog=pme" +
+            "s;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true")]
+        public string ConnLocalMysql {
+            get {
+                return ((string)(this["ConnLocalMysql"]));
+            }
+            set {
+                this["ConnLocalMysql"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("print1")]
+        public string PrinterName1 {
+            get {
+                return ((string)(this["PrinterName1"]));
+            }
+            set {
+                this["PrinterName1"] = value;
+            }
+        }
     }
 }

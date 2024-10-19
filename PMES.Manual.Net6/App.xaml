@@ -1,7 +1,7 @@
-﻿<Application x:Class="PMES.Manual.Net6.App"
+﻿<Application x:Class="PMES_Manual_Net6.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:PMES.Manual.Net6"
+             xmlns:local="clr-namespace:PMES_Manual_Net6"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              StartupUri="/Views/MainView.xaml">
     <Application.Resources>
@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--加载字体-->
                 <ResourceDictionary>
-                    <FontFamily x:Key="IconFont">../Resources/font/#iconfont</FontFamily>
+                    <FontFamily x:Key="IconFont">../Resources/font/#iconfont </FontFamily>
                 </ResourceDictionary>
                 <!-- 自定义资源字典 -->
                 <ResourceDictionary>

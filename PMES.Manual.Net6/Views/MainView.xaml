@@ -71,6 +71,7 @@
         </Style>
     </Window.Resources>
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
@@ -92,436 +93,601 @@
             </ListBox>
             <TextBox Grid.Column="2" BorderBrush="DarkGray" BorderThickness="1" Margin="15"
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="24"
-                     Text="{Binding CurrentScanValue}">
+                     Text="{Binding CurrentScanValue,Mode=TwoWay}">
             </TextBox>
             <Button Grid.Column="3" Margin="5" Height="60" FontSize="24" Content="退出系统"
                     VerticalContentAlignment="Center"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Command="{Binding ExitCommand}">
             </Button>
         </Grid>
 
-        <!--content-->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"></ColumnDefinition>
-                <ColumnDefinition Width="300"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <!--属性显示-->
-            <Border Grid.Column="0" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                <ScrollViewer>
-                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                        <Label Content="产品信息：" FontWeight="Bold" FontSize="18" Margin="3"></Label>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="生产工单："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductOrder}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="产品代码："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductCode}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="产品型号："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductModel}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="国际型号："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.InternationalModel}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="产品规格："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductSpecification}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="用户标准代码："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.UserStandardCode}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="用户标准名称："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.UserStandardName}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="线盘代码："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ReelCode}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="线盘名称："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ReelName}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="线盘重量："></Label>
-                            <TextBlock Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                       Text="{Binding ViewProductModel.ReelWeight , StringFormat=F3}">
-                            </TextBlock>
-                            <Label Style="{DynamicResource LabelPropValue}" Content="kg"></Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="包装代码："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.PackingCode}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="包装名称："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.PackingName}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="执行标准："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ExecutionStandard}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="生产日期："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductionDate}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="生产机台："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductionMachine}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="生产批号："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductionBatchNumber}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="生产工号："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductionNumber}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="包装组编号："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.PackingGroupCode}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="包装组名称："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.PackingGroupName}">
-                            </Label>
-                        </StackPanel>
-                        <StackPanel Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="产品码："></Label>
-                            <Label Style="{DynamicResource LabelPropValue}"
-                                   Content="{Binding ViewProductModel.ProductQrCode}">
-                            </Label>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
-            <!--标签预览-->
-            <Border Grid.Column="1" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                <ScrollViewer>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="2*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <Label Content="标签：" FontWeight="Bold" FontSize="18" Margin="5"></Label>
-                            <Label Content="{Binding ViewProductModel.LabelTemplate}" FontSize="18" Margin="5"
-                                   Foreground="Red">
-                            </Label>
-                        </StackPanel>
-                        <Label Grid.Row="1" Content="合格证预览：" FontSize="18" Margin="3"></Label>
-                        <Border Grid.Row="2" Background="LightGray">
-                            <Image Stretch="Uniform">
-
-                            </Image>
-                        </Border>
-                        <Label Grid.Row="3" Content="装箱单预览：" FontSize="18" Margin="3"></Label>
-                        <Border Grid.Row="4" Background="LightGray">
-                            <Image Stretch="Uniform">
-
-                            </Image>
-                        </Border>
-                    </Grid>
-                </ScrollViewer>
-            </Border>
-            <!--任务显示-->
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <!--托盘信息区-->
-                <Border Grid.Row="0" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="母托盘码：" FontSize="18" Margin="5"></Label>
-                            <TextBox IsEnabled="False" Text="{Binding CurrentMotherTrayQrCode}"
-                                     Style="{DynamicResource TextBoxLeftRed}">
-                            </TextBox>
-                            <Label Content="子托盘：" FontSize="18" Margin="5"></Label>
-                            <TextBox IsEnabled="False" Text="{Binding ViewProductModel.ChildTrayCode }"
-                                     Style="{DynamicResource TextBoxLeftRed}">
-                            </TextBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="纸箱：" FontSize="18" Margin="5"></Label>
-                            <TextBox IsEnabled="False" Text="{Binding ViewProductModel.PackagePaperBox}"
-                                     Style="{DynamicResource TextBoxLeftRed}">
-                            </TextBox>
-                            <Label Content="装箱件数：" FontSize="18" Margin="5"></Label>
-                            <TextBox Width="45" IsEnabled="False" Text="{Binding ViewProductModel.ReelNumPerBox}"
-                                     Style="{DynamicResource TextBoxLeftRed}">
-                            </TextBox>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-                <!--装箱列表-->
-                <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="3,5,5,10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="35"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <DataGrid Grid.Row="0" AutoGenerateColumns="False"
-                                  Background="WhiteSmoke"
-                                  CanUserAddRows="False" CanUserDeleteRows="False"
-                                  IsReadOnly="True"
-                                  AlternatingRowBackground="AliceBlue"
-
-                                  SelectionMode="Single"
-                                  SelectedItem="{Binding SelectedMyBoxInfo}"
-                                  ItemsSource="{Binding BoxListTemp }">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="序号" Width="80"
-                                                    Binding="{Binding Number }">
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="箱码" Width="2*" Binding="{Binding BoxQrCoed}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="毛重" Width="90"
-                                                    Binding="{Binding GrossWeight , StringFormat=F2}">
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="净重" Width="90"
-                                                    Binding="{Binding NetWeight, StringFormat=F2}">
-                                </DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
+        <materialDesign:Card Grid.Row="1">
+            <TabControl
+                HorizontalContentAlignment="Center"
+                materialDesign:ColorZoneAssist.Mode="PrimaryLight"
+                materialDesign:NavigationRailAssist.SelectionCornerRadius="50"
+                materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+                Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                TabStripPlacement="Bottom">
+                <!-- 人工线顶贴主窗口 -->
+                <TabItem>
+                    <TabItem.Header>
                         <StackPanel
-                            Margin="0,10,0,10"
-                            Grid.Row="1" Orientation="Horizontal"
-                            HorizontalAlignment="Right">
-                            <TextBlock Width="350" Text="小计" HorizontalAlignment="Center" TextAlignment="Center"
-                                       FontWeight="Bold">
-                            </TextBlock>
-                            <TextBlock Width="90" Text="{Binding StatisticsBoxGrossWeight,Mode=OneWay,StringFormat=F2}"
-                                       HorizontalAlignment="Center" TextAlignment="Left">
-                            </TextBlock>
-                            <TextBlock Width="90" Text="{Binding StatisticsBoxNetWeight,Mode=OneWay,StringFormat=F2}"
-                                       HorizontalAlignment="Center" TextAlignment="Left">
-                            </TextBlock>
+                            Width="auto"
+                            Height="auto">
+                            <Image Source="../Resources/icon/top.png" Height="20" Width="20" Stretch="Fill"></Image>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Top" />
                         </StackPanel>
-                    </Grid>
+                    </TabItem.Header>
 
-                </Border>
-
-                <!--线盘列表-->
-                <DataGrid Grid.Row="2" BorderBrush="Gray" BorderThickness="1" AutoGenerateColumns="False"
-                          CanUserAddRows="False" CanUserDeleteRows="False"
-                          IsReadOnly="True"
-                          AlternatingRowBackground="AliceBlue"
-                          Margin="3,5,5,10"
-                          SelectionMode="Single"
-                          SelectedItem="{Binding SelectedMyReelInfo}"
-                          ItemsSource="{Binding ReelListTemp }">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="序号" Width="80"
-                                            Binding="{Binding Number  }">
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="箱内盘编号（盘码）" Width="1.5*" Binding="{Binding ReelQrCode}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="生产码" Width="2*" Binding="{Binding ReelProductCode}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="毛重" Width="90" Binding="{Binding GrossWeight, StringFormat=F2}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="净重" Width="90" Binding="{Binding NetWeight, StringFormat=F2}"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!--线盘详细信息-->
-                <Border Grid.Row="3" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="120"></RowDefinition>
-                            <RowDefinition Height="60"></RowDefinition>
-                            <RowDefinition Height="60"></RowDefinition>
+                            <RowDefinition Height="0"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" Margin="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"></RowDefinition>
-                                <RowDefinition Height="1*"></RowDefinition>
-                            </Grid.RowDefinitions>
+                        <!--content-->
+                        <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="300"></ColumnDefinition>
+                                <ColumnDefinition Width="300"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="200"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <!--属性显示-->
+                            <Border Grid.Column="0" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                <ScrollViewer>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <Label Content="产品信息：" FontWeight="Bold" FontSize="18" Margin="3"></Label>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="生产工单："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductOrder}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="产品代码："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductCode}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="产品型号："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductModel}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="国际型号："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.InternationalModel}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="产品规格："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductSpecification}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="用户标准代码："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.UserStandardCode}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="用户标准名称："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.UserStandardName}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="线盘代码："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ReelCode}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="线盘名称："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ReelName}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="线盘重量："></Label>
+                                            <TextBlock Foreground="Red" VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Text="{Binding ViewProductModel.ReelWeight , StringFormat=F3}">
+                                            </TextBlock>
+                                            <Label Style="{DynamicResource LabelPropValue}" Content="kg"></Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="包装代码："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.PackingCode}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="包装名称："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.PackingName}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="执行标准："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ExecutionStandard}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="生产日期："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductionDate}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="生产机台："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductionMachine}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="生产批号："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductionBatchNumber}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="生产工号："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductionNumber}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="包装组编号："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.PackingGroupCode}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="包装组名称："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.PackingGroupName}">
+                                            </Label>
+                                        </StackPanel>
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="产品码："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.ProductQrCode}">
+                                            </Label>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+                            <!--标签预览-->
+                            <Border Grid.Column="1" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                <ScrollViewer>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                            <!--<RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>-->
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                            <Label Content="标签：" FontWeight="Bold" FontSize="18" Margin="5"></Label>
+                                            <Label Content="{Binding ViewProductModel.LabelTemplateName}" FontSize="18"
+                                                   Margin="5"
+                                                   Foreground="Red">
+                                            </Label>
+                                        </StackPanel>
+                                        <Label Grid.Row="1" Content="标签预览：" FontSize="18" Margin="3"></Label>
+                                        <Border Grid.Row="2" Background="LightGray">
+                                            <Image Stretch="Uniform">
 
-                            <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelPropName}" Content="称重"></Label>
-                            <TextBox Grid.Row="1" Grid.Column="0" Style="{DynamicResource TextBoxCenterRed}"
-                                     Text="{Binding ViewProductModel.GrossWeight , StringFormat=F2}">
-                            </TextBox>
-                            <TextBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="180"
-                                     Style="{DynamicResource TextBoxCenterRed}"
-                                     Text="{Binding ViewProductModel.PackagePaperWeight, StringFormat=F2}">
-                            </TextBox>
+                                            </Image>
+                                        </Border>
+                                        <!--<Label Grid.Row="3" Content="装箱单预览：" FontSize="18" Margin="3"></Label>
+                                        <Border Grid.Row="4" Background="LightGray">
+                                            <Image Stretch="Uniform">
 
-                            <UniformGrid
-                                Rows="2"
-                                Columns="3"
-                                Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
-                                <Button HorizontalAlignment="Right" Content="保存"
-                                        MinWidth="100">
-                                </Button>
-                                <Button HorizontalAlignment="Right" Content="打印盘码"
-                                        MinWidth="100">
-                                </Button>
-                                <Button HorizontalAlignment="Right" Content="打印箱码"
-                                        MinWidth="100">
-                                </Button>
-                                <Button HorizontalAlignment="Right" Content="删除"
-                                        MinWidth="100">
-                                </Button>
-                                <Button HorizontalAlignment="Right" Content="历史查询"
-                                        MinWidth="100">
-                                </Button>
+                                            </Image>
+                                        </Border>-->
+                                    </Grid>
+                                </ScrollViewer>
+                            </Border>
+                            <!--任务显示-->
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <!--托盘信息区-->
+                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="母托盘码：" FontSize="18" Margin="5"></Label>
+                                            <TextBox IsEnabled="False" Text="{Binding CurrentMotherTrayQrCode}"
+                                                     Style="{DynamicResource TextBoxLeftRed}">
+                                            </TextBox>
+                                            <Label Content="子托盘：" FontSize="18" Margin="5"></Label>
+                                            <TextBox IsEnabled="False" Text="{Binding ViewProductModel.ChildTrayCode }"
+                                                     Style="{DynamicResource TextBoxLeftRed}">
+                                            </TextBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="纸箱：" FontSize="18" Margin="5"></Label>
+                                            <TextBox IsEnabled="False"
+                                                     Text="{Binding ViewProductModel.PackagePaperBox}"
+                                                     Style="{DynamicResource TextBoxLeftRed}">
+                                            </TextBox>
+                                            <Label Content="装箱件数：" FontSize="18" Margin="5"></Label>
+                                            <TextBox Width="45" IsEnabled="False"
+                                                     Text="{Binding ViewProductModel.ReelNumPerBox}"
+                                                     Style="{DynamicResource TextBoxLeftRed}">
+                                            </TextBox>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                                <!--装箱列表-->
+                                <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="3,5,5,10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                            <RowDefinition Height="35"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <DataGrid Grid.Row="0" AutoGenerateColumns="False"
+                                                  Background="WhiteSmoke"
+                                                  CanUserAddRows="False" CanUserDeleteRows="False"
+                                                  IsReadOnly="True"
+                                                  AlternatingRowBackground="AliceBlue"
+
+                                                  SelectionMode="Single"
+                                                  SelectedItem="{Binding SelectedMyBoxInfo}"
+                                                  ItemsSource="{Binding BoxListTemp }">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="序号" Width="80"
+                                                                    Binding="{Binding Number }">
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="箱码" Width="2*"
+                                                                    Binding="{Binding BoxQrCoed}">
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="毛重" Width="90"
+                                                                    Binding="{Binding GrossWeight , StringFormat=F2}">
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="净重" Width="90"
+                                                                    Binding="{Binding NetWeight, StringFormat=F2}">
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <StackPanel
+                                            Margin="0,10,0,10"
+                                            Grid.Row="1" Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                            <TextBlock Width="350" Text="小计" HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       FontWeight="Bold">
+                                            </TextBlock>
+                                            <TextBlock Width="90"
+                                                       Text="{Binding StatisticsBoxGrossWeight,Mode=OneWay,StringFormat=F2}"
+                                                       HorizontalAlignment="Center" TextAlignment="Left">
+                                            </TextBlock>
+                                            <TextBlock Width="90"
+                                                       Text="{Binding StatisticsBoxNetWeight,Mode=OneWay,StringFormat=F2}"
+                                                       HorizontalAlignment="Center" TextAlignment="Left">
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                </Border>
+
+                                <!--线盘列表-->
+                                <DataGrid Grid.Row="2" BorderBrush="Gray" BorderThickness="1"
+                                          AutoGenerateColumns="False"
+                                          CanUserAddRows="False" CanUserDeleteRows="False"
+                                          IsReadOnly="True"
+                                          AlternatingRowBackground="AliceBlue"
+                                          Margin="3,5,5,10"
+                                          SelectionMode="Single"
+                                          SelectedItem="{Binding SelectedMyReelInfo}"
+                                          ItemsSource="{Binding ReelListTemp }">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="序号" Width="80"
+                                                            Binding="{Binding Number  }">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Header="箱内盘编号（盘码）" Width="1.5*"
+                                                            Binding="{Binding ReelQrCode}">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Header="生产码" Width="2*" Binding="{Binding ReelProductCode}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="毛重" Width="90"
+                                                            Binding="{Binding GrossWeight, StringFormat=F2}">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Header="净重" Width="90"
+                                                            Binding="{Binding NetWeight, StringFormat=F2}">
+                                        </DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <!--线盘详细信息-->
+                                <Border Grid.Row="3" BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="120"></RowDefinition>
+                                            <RowDefinition Height="60"></RowDefinition>
+                                            <RowDefinition Height="60"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Margin="5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelPropName}"
+                                                   Content="称重">
+                                            </Label>
+                                            <TextBox Grid.Row="1" Grid.Column="0"
+                                                     Style="{DynamicResource TextBoxCenterRed}"
+                                                     Text="{Binding ViewProductModel.GrossWeight , StringFormat=F2}">
+                                            </TextBox>
+                                            <TextBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="180"
+                                                     Style="{DynamicResource TextBoxCenterRed}"
+                                                     Text="{Binding ViewProductModel.PackagePaperWeight, StringFormat=F2}">
+                                            </TextBox>
+
+                                            <UniformGrid
+                                                Rows="2"
+                                                Columns="3"
+                                                Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                                                <Button HorizontalAlignment="Right" Content="保存"
+                                                        MinWidth="100">
+                                                </Button>
+                                                <Button HorizontalAlignment="Right" Content="打印盘码"
+                                                        MinWidth="100">
+                                                </Button>
+                                                <Button HorizontalAlignment="Right" Content="打印箱码"
+                                                        MinWidth="100">
+                                                </Button>
+                                                <Button HorizontalAlignment="Right" Content="删除"
+                                                        MinWidth="100">
+                                                </Button>
+                                                <Button HorizontalAlignment="Right" Content="历史查询"
+                                                        MinWidth="100">
+                                                </Button>
 
 
-                            </UniformGrid>
+                                            </UniformGrid>
+
+
+                                        </Grid>
+
+                                        <StackPanel Grid.Row="1" Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="毛重"></Label>
+                                            <TextBox Style="{DynamicResource TextBoxCenterRed}"
+                                                     Text="{Binding ViewProductModel.GrossWeight, StringFormat=F2}">
+                                            </TextBox>
+                                            <Label Style="{DynamicResource LabelPropName}" Content="Kg"></Label>
+
+                                            <Label Style="{DynamicResource LabelPropName}" Content="皮重"></Label>
+                                            <TextBox Style="{DynamicResource TextBoxCenterRed}"
+                                                     Text="{Binding ViewProductModel.ReelWeight, StringFormat=F2}">
+                                            </TextBox>
+                                            <Label Style="{DynamicResource LabelPropName}" Content="Kg"></Label>
+
+                                            <Label Style="{DynamicResource LabelPropName}" Content="净重"></Label>
+                                            <TextBox Style="{DynamicResource TextBoxCenterRed}"
+                                                     Text="{Binding ViewProductModel.NetWeight, StringFormat=F2 ,Mode=OneWay}">
+                                            </TextBox>
+                                            <Label Style="{DynamicResource LabelPropName}" Content="Kg"></Label>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="箱码"></Label>
+                                            <TextBox Style="{DynamicResource TextBoxCenterRed}" MinWidth="630"
+                                                     Text="{Binding ViewProductModel.BoxQrCode}">
+                                            </TextBox>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <!--侧边工具栏-->
+                            <StackPanel Grid.Column="3" Orientation="Vertical">
+                                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Width="110" Height="35" Margin="5,25,5,0" Content="标签设置"></Button>
+                                        <Button Width="110" Height="35" Margin="5,15,5,0" Content="通讯设置"></Button>
+                                        <Button Width="110" Height="35" Margin="5,15,5,25" Content="打印机设置"></Button>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                    <StackPanel Orientation="Vertical">
+                                        <Label FontWeight="Bold" Style="{DynamicResource LabelPropName}" Content="子托信息"
+                                               HorizontalContentAlignment="Left">
+                                        </Label>
+                                        <UniformGrid Columns="2" Rows="3">
+                                            <Label Style="{DynamicResource LabelPropValue}" Content="放置方式："
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding CurrentStackMode}"
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                            <Label Style="{DynamicResource LabelPropValue}" Content="码垛层数："
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding CurrentStackLayer}"
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                            <Label Style="{DynamicResource LabelPropValue}" Content="每层轴数："
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding CurrentStackNumPerLayer}"
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                        </UniformGrid>
+
+                                        <Label FontWeight="Bold" Style="{DynamicResource LabelPropName}" Content="当前信息"
+                                               HorizontalContentAlignment="Left">
+                                        </Label>
+                                        <UniformGrid Columns="1" Rows="3">
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding CurrentStackInfo}"
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding CurrentUnStackInfo}"
+                                                   HorizontalContentAlignment="Left">
+                                            </Label>
+                                        </UniformGrid>
+                                        <Button Width="110" Height="35" Margin="5,10,5,25" Content="人工合托"></Button>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton IsChecked="{Binding IsAuto}" Content="自动模式" Margin="10,25,0,0"></RadioButton>
+                                        <RadioButton IsChecked="{Binding IsManual}" Content="手动模式" Margin="10,10,0,0"></RadioButton>
+                                        <RadioButton Content="改线入库" Margin="10,10,0,0"></RadioButton>
+                                        <RadioButton Content="装箱打印" Margin="10,10,0,25"></RadioButton>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Width="110" Height="35" Margin="5,25,5,25" Content="清除全部"></Button>
+                                    </StackPanel>
+                                </Border>
+
+
+                            </StackPanel>
 
 
                         </Grid>
 
-                        <StackPanel Grid.Row="1" Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="毛重"></Label>
-                            <TextBox Style="{DynamicResource TextBoxCenterRed}"
-                                     Text="{Binding ViewProductModel.GrossWeight, StringFormat=F2}">
-                            </TextBox>
-                            <Label Style="{DynamicResource LabelPropName}" Content="Kg"></Label>
-
-                            <Label Style="{DynamicResource LabelPropName}" Content="皮重"></Label>
-                            <TextBox Style="{DynamicResource TextBoxCenterRed}"
-                                     Text="{Binding ViewProductModel.SkinWeight, StringFormat=F2}">
-                            </TextBox>
-                            <Label Style="{DynamicResource LabelPropName}" Content="Kg"></Label>
-
-                            <Label Style="{DynamicResource LabelPropName}" Content="净重"></Label>
-                            <TextBox Style="{DynamicResource TextBoxCenterRed}"
-                                     Text="{Binding ViewProductModel.NetWeight, StringFormat=F2 ,Mode=OneWay}">
-                            </TextBox>
-                            <Label Style="{DynamicResource LabelPropName}" Content="Kg"></Label>
-                        </StackPanel>
-                        <StackPanel Grid.Row="2" Style="{DynamicResource PropStackPanel}">
-                            <Label Style="{DynamicResource LabelPropName}" Content="箱码"></Label>
-                            <TextBox Style="{DynamicResource TextBoxCenterRed}" MinWidth="630"
-                                     Text="{Binding ViewProductModel.BoxQrCode}">
-                            </TextBox>
-                        </StackPanel>
                     </Grid>
-                </Border>
-            </Grid>
-            <!--侧边工具栏-->
-            <StackPanel Grid.Column="3" Orientation="Vertical">
-                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                    <StackPanel Orientation="Vertical">
-                        <Button Width="110" Height="35" Margin="5,25,5,0" Content="标签设置"></Button>
-                        <Button Width="110" Height="35" Margin="5,15,5,0" Content="通讯设置"></Button>
-                        <Button Width="110" Height="35" Margin="5,15,5,25" Content="打印机设置"></Button>
-                    </StackPanel>
-                </Border>
+                </TabItem>
 
-                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                    <StackPanel Orientation="Vertical">
-                        <Label FontWeight="Bold" Style="{DynamicResource LabelPropName}" Content="子托信息"
-                               HorizontalContentAlignment="Left">
-                        </Label>
-                        <UniformGrid Columns="2" Rows="3">
-                            <Label Style="{DynamicResource LabelPropValue}" Content="放置方式："
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                            <Label Style="{DynamicResource LabelPropValue}" Content="{Binding CurrentStackMode}"
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                            <Label Style="{DynamicResource LabelPropValue}" Content="码垛层数："
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                            <Label Style="{DynamicResource LabelPropValue}" Content="{Binding CurrentStackLayer}"
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                            <Label Style="{DynamicResource LabelPropValue}" Content="每层轴数："
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                            <Label Style="{DynamicResource LabelPropValue}" Content="{Binding CurrentStackNumPerLayer}"
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                        </UniformGrid>
+                <!-- 人工线日志信息 -->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel
+                            Width="auto"
+                            Height="auto">
+                            <Image Source="../Resources/icon/top.png" Height="20" Width="20"></Image>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Logs" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid></Grid>
+                </TabItem>
+                <!-- 工程页面 -->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel
+                            Width="auto"
+                            Height="auto">
+                            <Image Source="../Resources/icon/manual.png" Height="20" Width="20"></Image>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Debug" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <WrapPanel>
+                        <Button Width="110" Height="35" Margin="5,15,5,0" Content="测试Api"></Button>
+                    </WrapPanel>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel
+                            Width="auto"
+                            Height="auto">
+                            <Image Source="../Resources/icon/settings.png" Height="20" Width="20"></Image>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Settings" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <WrapPanel>
+                        <GroupBox Header="通讯设置" Margin="8" Width="260" Height="300">
+                            <UniformGrid Columns="2" Rows="6" Margin="8">
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="端口：">
+                                </Label>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center">
+                                </ComboBox>
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="波特率：">
+                                </Label>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center">
+                                </ComboBox>
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="数据位：">
+                                </Label>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center">
+                                </ComboBox>
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="奇偶校验：">
+                                </Label>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center">
+                                </ComboBox>
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="停止位：">
+                                </Label>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center">
+                                </ComboBox>
+                            </UniformGrid>
+                        </GroupBox>
+                        <GroupBox Header="打印机设置" Margin="8" Width="260" Height="300">
+                            <UniformGrid Columns="2" Rows="6" Margin="8">
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="打印机名称：">
+                                </Label>
+                                <TextBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                         VerticalAlignment="Center">
+                                </TextBox>
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="打印方向：">
+                                </Label>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          SelectedIndex="0">
+                                    <ComboBox.Items>
+                                        <ComboBoxItem>0</ComboBoxItem>
+                                        <ComboBoxItem>180</ComboBoxItem>
+                                    </ComboBox.Items>
+                                </ComboBox>
+                                <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                       VerticalAlignment="Center" Content="默认标签：">
+                                </Label>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center">
+                                </ComboBox>
+                            </UniformGrid>
+                        </GroupBox>
+                    </WrapPanel>
+                </TabItem>
 
-                        <Label FontWeight="Bold" Style="{DynamicResource LabelPropName}" Content="当前信息"
-                               HorizontalContentAlignment="Left">
-                        </Label>
-                        <UniformGrid Columns="1" Rows="3">
-                            <Label Style="{DynamicResource LabelPropValue}" Content="{Binding CurrentStackInfo}"
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                            <Label Style="{DynamicResource LabelPropValue}" Content="{Binding CurrentUnStackInfo}"
-                                   HorizontalContentAlignment="Left">
-                            </Label>
-                        </UniformGrid>
-                        <Button Width="110" Height="35" Margin="5,10,5,25" Content="人工合托"></Button>
-                    </StackPanel>
-                </Border>
-
-                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                    <StackPanel Orientation="Vertical">
-                        <RadioButton IsChecked="{Binding IsAuto}" Content="自动模式" Margin="10,25,0,0"></RadioButton>
-                        <RadioButton IsChecked="{Binding IsManual}" Content="手动模式" Margin="10,10,0,0"></RadioButton>
-                        <RadioButton Content="改线入库" Margin="10,10,0,0"></RadioButton>
-                        <RadioButton Content="装箱打印" Margin="10,10,0,25"></RadioButton>
-                    </StackPanel>
-                </Border>
-
-                <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                    <StackPanel Orientation="Vertical">
-                        <Button Width="110" Height="35" Margin="5,25,5,25" Content="清除全部"></Button>
-                    </StackPanel>
-                </Border>
-
-
-            </StackPanel>
-
-
-        </Grid>
-
+            </TabControl>
+        </materialDesign:Card>
     </Grid>
+
+
 </Window>

@@ -13,7 +13,6 @@ using S7.Net;
 using PMES_Automatic_Net6.Core.Managers;
 using PMES_Respository.DataStruct;
 using S7.Net.Types;
-using PMES.Model;
 using DateTime = System.DateTime;
 using PMES_Respository.reportModel;
 using PMES.UC.reports;
@@ -768,8 +767,8 @@ namespace PMES_Automatic_Net6.ViewModels
                     MaterialNo = product.material_number,
                     Model = product.material_name,
                     Specifications = product.material_spec,
-                    GrossWeight = tReelCode.GrossWeight.ToString("f2"),
-                    NetWeight = tReelCode.NetWeight.ToString("f2"),
+                    GrossWeight = tReelCode.GrossWeight,
+                    NetWeight = tReelCode.NetWeight,
                     BatchNum = tReelCode.BatchNO,
                     No = tReelCode.PSN,
                     BoxCode = boxCode,
@@ -782,8 +781,8 @@ namespace PMES_Automatic_Net6.ViewModels
                     MaterialNo = "",
                     Model = "",
                     Specifications = "",
-                    GrossWeight = "",
-                    NetWeight = "",
+                    GrossWeight = 0,
+                    NetWeight = 0,
                     BatchNum = "",
                     WaterMark = tReelCode.NoQualifiedReason,
                     No = "",
@@ -828,13 +827,13 @@ namespace PMES_Automatic_Net6.ViewModels
                     Model = product.material_name,
                     GBNo = product.material_ns_model,
                     Specifications = product.material_spec,
-                    NetWeight = netWeight.ToString("f2"),
+                    NetWeight = netWeight,
                     BatchNum = product.product_order_no,
                     No = tReelCode.PSN, //包装线真实的编码
                     Standard = tReelCode.ProductStandardName,
                     ProductNo = tReelCode.ProductCode,
                     DateTime = DateTime.Now.ToString("yy-MM-dd"),
-                    GrossWeight = Weight1,
+                    GrossWeight = double.Parse(Weight1),
                     BoxCode = boxCode,
                     WaterMark = tReelCode.NoQualifiedReason,
                     //BoxCode = (new Random().Next(100_000_000, 200_000_000)).ToString(),
@@ -1345,9 +1344,9 @@ namespace PMES_Automatic_Net6.ViewModels
                     }
 
                     _errorCount = 0;
-                    _pmesStackingError.ClearStack = _pmesStackingError.WorkPositionId;
-                    await Plc.WriteClassAsync(_pmesStackingError, 540);
-                    _pmesStackingError.ClearStack = 1;
+                    //_pmesStackingError.ClearStack = _pmesStackingError.WorkPositionId;
+                    //await Plc.WriteClassAsync(_pmesStackingError, 540);
+                    //_pmesStackingError.ClearStack = 1;
                 }
 
                 var plcCommandUnStacking = _plcCommandsRunning.FirstOrDefault(s => s is { PlcComandType: 1 });
@@ -1773,8 +1772,8 @@ namespace PMES_Automatic_Net6.ViewModels
                 MaterialNo = product.material_number,
                 Model = product.xpzl_spec,
                 Specifications = tPreheaterCode.PreheaterSpec,
-                GrossWeight = tPreheaterCode.GrossWeight.ToString(),
-                NetWeight = tPreheaterCode.NetWeight.ToString(),
+                GrossWeight = tPreheaterCode.GrossWeight,
+                NetWeight = tPreheaterCode.NetWeight,
                 BatchNum = tPreheaterCode.BatchNO,
                 No = tPreheaterCode.PSN,
                 BoxCode = boxCode,
@@ -1809,14 +1808,14 @@ namespace PMES_Automatic_Net6.ViewModels
                         MaterialNo = "22222222222",
                         Model = "22222222222",
                         Specifications = "22222222222",
-                        NetWeight = null,
+                        NetWeight = 1d,
                         BatchNum = "22222222222",
                         No = "22222222222",
                         Standard = "22222222222",
                         ProductNo = "22222222222",
                         BoxCode = Guid.NewGuid().ToString().Substring(1, 10),
                         DateTime = "22222222222",
-                        GrossWeight = "22222222222",
+                        GrossWeight = 1d,
                         WaterMark = "TEST"
                     }
                 };

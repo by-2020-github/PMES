@@ -119,9 +119,10 @@ public class WeighingMachine
     {
         var ls = new List<double>();
         var reset = new AutoResetEvent(false);
+        var start = DateTime.Now;
         _ = Task.Run(() =>
         {
-            while (true)
+            while ((DateTime.Now - start).TotalSeconds < 20)
             {
                 Thread.Sleep(100);
                 //查询稳态重量 如果超过三秒没有稳定则放弃

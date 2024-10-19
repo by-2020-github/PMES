@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace PMES.Manual.Net6
+namespace PMES_Manual_Net6
 {
     /// <summary>
     /// Interaction logic for App.xaml
