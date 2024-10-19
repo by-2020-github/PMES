@@ -86,6 +86,12 @@
     <Compile Include="reports\BoxReportTop.Designer.cs">
       <DependentUpon>BoxReportTop.cs</DependentUpon>
     </Compile>
+    <Compile Include="reports\MaunalDefaultReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="reports\MaunalDefaultReport.Designer.cs">
+      <DependentUpon>MaunalDefaultReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="reports\ReelReportAuto.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="reports\BoxReportTop.resx">
       <DependentUpon>BoxReportTop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reports\MaunalDefaultReport.resx">
+      <DependentUpon>MaunalDefaultReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reports\ReelReportAuto.resx">
       <DependentUpon>ReelReportAuto.cs</DependentUpon>

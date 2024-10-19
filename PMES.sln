@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMES-Automatic-Net6", "PMES
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES.Manual.Net6", "PMES.Manual.Net6\PMES.Manual.Net6.csproj", "{FB383F8A-8390-460A-9E9C-4FD4AFD1DB0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES.TemplteEdit", "PMES.TemplteEdit\PMES.TemplteEdit.csproj", "{AEB7A007-FDF4-4391-8BF9-60EF0F42A722}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMES.TemplateEdit", "PMES.TemplteEdit\PMES.TemplateEdit.csproj", "{AEB7A007-FDF4-4391-8BF9-60EF0F42A722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

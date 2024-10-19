@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PMES.TemplteEdit.Properties
+namespace PMES.TemplateEdit.Properties
 {
 
 

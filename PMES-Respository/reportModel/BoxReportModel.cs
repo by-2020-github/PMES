@@ -64,5 +64,7 @@ namespace PMES_Respository.reportModel
         /// 客户简称
         /// </summary>
         public string JsbzShortName { get; set; } = "东元";
+
+        public List<XianPanReportModel> ReelList { get; set; }
     }
 }
