@@ -8,9 +8,9 @@ namespace PMES_Respository.tbs_sqlserver {
         [Column(IsIdentity = true, IsPrimary = true)]
         public long Id { get; set; }
 
-		public DateTime? CreateTime { get; set; }
+		public DateTime? CreateTime { get; set; } = DateTime.Now;
 
-		public int? IsDel { get; set; }
+        public int? IsDel { get; set; } = 0;
 
 		public int? LabelId { get; set; }
 
@@ -36,7 +36,7 @@ namespace PMES_Respository.tbs_sqlserver {
 
 		public string TrayBarcode { get; set; }
 
-		public DateTime? UpdateTime { get; set; }
+		public DateTime? UpdateTime { get; set; } = DateTime.Now;
 
 	}
 

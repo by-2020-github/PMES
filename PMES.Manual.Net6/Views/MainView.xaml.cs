@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PMES.Manual.Net6.Core.Managers;
 using PMES.Manual.Net6.ViewModels;
+using PMES_Respository.reportModel;
 using PMES_Respository.tbs_sqlserver;
 using Serilog;
 using Serilog.Core;
@@ -24,17 +25,28 @@ namespace PMES.Manual.Net6.Views
     /// </summary>
     public partial class MainView : Window
     {
-        private readonly MainViewModel _viewModel = new MainViewModel();
         private static IFreeSql? _freeSqlServer;
         private static ILogger? _logger;
+
         public MainView()
         {
             InitializeComponent();
-            this.DataContext = _viewModel;
             _logger = SerilogManager.GetOrCreateLogger();
             InitDb();
+
+            InitDev();
+            var viewModel = new MainViewModel(_freeSqlServer!);
+            this.DataContext = viewModel;
         }
 
+        static void InitDev()
+        {
+            DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(BoxReportModel));
+            DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(XianPanReportModel));
+            DevExpress.Utils.DeserializationSettings.RegisterTrustedAssembly(typeof(BoxReportModel).Assembly);
+            DevExpress.XtraReports.Configuration.Settings.Default.StorageOptions.RootDirectory =
+                "C:\\ProgramData\\PMES_Templates";
+        }
 
         static void InitDb()
         {
@@ -46,7 +58,8 @@ namespace PMES.Manual.Net6.Views
             {
                 case > 22_0000 and < 22_6000:
                 {
-                    if (MessageBox.Show("软件未授权，请购买license！点击OK退出，点击Cancel忽略并继续运行，将不定时锁机！", "未授权", MessageBoxButton.OK, MessageBoxImage.Error) == MessageBoxResult.OK)
+                    if (MessageBox.Show("软件未授权，请购买license！点击OK退出，点击Cancel忽略并继续运行，将不定时锁机！", "未授权", MessageBoxButton.OK,
+                            MessageBoxImage.Error) == MessageBoxResult.OK)
                     {
                         Application.Current.Shutdown();
                     }

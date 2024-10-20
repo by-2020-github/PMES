@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DevExpress.XtraReports.UI;
@@ -129,7 +130,7 @@ namespace PMES.Manual.Net6.ViewModels
         /// <summary>
         ///     箱码
         /// </summary>
-        public Bitmap? ImageBox { get; set; }
+        public BitmapImage? ImageBox { get; set; }
 
         #region 称重信息
 
@@ -208,13 +209,13 @@ namespace PMES.Manual.Net6.ViewModels
         public int Number { get; set; }
         public string BoxQrCoed { get; set; } = "TY4121050-A206-BZ001-B12310001-04903";
         public List<MyReelInfo> ReelList { get; set; } = new List<MyReelInfo>();
-        public List<T_preheater_code> TbReelList { get; set; } = new List<T_preheater_code>();
-
         public double GrossWeight { get; set; } = new Random().NextDouble();
         public double NetWeight { get; set; } = new Random().NextDouble();
         public DateTime CreateTime { get; set; } = DateTime.Now;
         public bool HasPrint { get; set; } = false;
         public XtraReport? Report { get; set; }
+        public ViewProductModel ViewProductModel { get; set; }
+        public T_label_template LabelTemplate { get; set; }
 
         public MyBoxInfo()
         {
@@ -256,6 +257,8 @@ namespace PMES.Manual.Net6.ViewModels
         public DateTime CreateTime { get; set; } = DateTime.Now;
 
         public T_preheater_code PreheaterCode { get; set; }
+
+        public ProductInfo ProductInfo { get; set; }
 
         public MyReelInfo()
         {

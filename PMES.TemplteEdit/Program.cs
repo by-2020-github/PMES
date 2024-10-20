@@ -74,6 +74,8 @@ namespace PMES.TemplteEdit
                 var manual = new MaunalDefaultReport();
                 manual.SaveLayout($"C:\\ProgramData\\PMES_Templates\\auto-manual.repx");
             }
+
+
         }
     }
 }

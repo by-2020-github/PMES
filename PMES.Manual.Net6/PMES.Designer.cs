@@ -25,7 +25,7 @@ namespace PMES.Manual.Net6 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
         public string Port {
             get {
                 return ((string)(this["Port"]));

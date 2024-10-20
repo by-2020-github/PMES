@@ -88,10 +88,23 @@
 	<ItemGroup>
 		<ProjectReference Include="..\PMES-Common\PMES-Common.csproj" />
 		<ProjectReference Include="..\PMES-Respository\PMES-Respository.csproj" />
+		<ProjectReference Include="..\PMES.TemplteEdit\PMES.TemplateEdit.csproj" />
 		<ProjectReference Include="..\PMES.UC\PMES.UC.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<Reference Include="DevExpress.Data.v22.1">
+		  <HintPath>Libs\DevExpress.Data.v22.1.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Printing.v22.1.Core">
+		  <HintPath>..\..\..\..\..\..\Program Files\DevExpress 22.1\Components\Offline Packages\devexpress.printing.core\22.1.12\lib\netstandard2.0\DevExpress.Printing.v22.1.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Utils.v22.1">
+		  <HintPath>Libs\DevExpress.Utils.v22.1.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Utils.v22.1.UI">
+		  <HintPath>Libs\DevExpress.Utils.v22.1.UI.dll</HintPath>
+		</Reference>
 		<Reference Include="DevExpress.XtraReports.v22.1">
 			<HintPath>C:\Program Files\DevExpress 22.1\Components\Offline Packages\devexpress.reporting.core\22.1.12\lib\netstandard2.0\DevExpress.XtraReports.v22.1.dll</HintPath>
 		</Reference>
@@ -117,7 +130,7 @@
 
 	<ItemGroup>
 	  <None Update="config\count.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	  <None Update="PMES.settings">
 	    <Generator>SettingsSingleFileGenerator</Generator>

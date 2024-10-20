@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FreeSql.DataAnnotations;
 using K4os.Hash.xxHash;
+using Newtonsoft.Json;
 using PMES.Manual.Net6.Core;
 using PMES.Manual.Net6.Core.Managers;
 using PMES.Manual.Net6.Model;
@@ -31,10 +33,14 @@ namespace PMES.Manual.Net6.ViewModels
 
         #region 通用方法
 
+        [ObservableProperty] private int _currentLogIndex;
+
         void ShowError(string msg)
         {
             Logger?.Error(msg);
-            MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            LogList.Add($"[{DateTime.Now:O}]: {msg}");
+            CurrentLogIndex = LogList.Count - 1;
+            //MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         void ShowInfo(string msg)
@@ -97,6 +103,36 @@ namespace PMES.Manual.Net6.ViewModels
                 Jsbz_short_name = product.jsbz_short_name,
             };
             return tReelCode;
+        }
+
+        int GetTodayCount()
+        {
+            var path = "config\\count.json";
+            var count = 0;
+            var key = DateTime.Now.ToString("yyyy-MM-dd");
+            var dic = JsonConvert.DeserializeObject<Dictionary<string, int>>(File.ReadAllText(path));
+            if (dic == null)
+            {
+                dic = new Dictionary<string, int>()
+                {
+                    { key, 0 }
+                };
+            }
+            else
+            {
+                if (dic.ContainsKey(key))
+                {
+                    count = dic[key];
+                }
+                else
+                {
+                    dic.Add(key, 0);
+                }
+            }
+
+            dic[key] = count + 1;
+            File.WriteAllText(path, JsonConvert.SerializeObject(dic));
+            return dic[key];
         }
 
         #endregion

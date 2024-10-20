@@ -4,56 +4,56 @@ namespace PMES.Manual.Net6.Model;
 
 public class ProductInfo
 {
-    public string product_date { get; set; } = "2024-04-22";
-    public string product_org_number { get; set; } = "100";
+    public string product_date { get; set; } = "";
+    public string product_org_number { get; set; } = "";
 
     /// <summary>
     ///     生产工单 G24040656 如果是new 创建的是777 作为异常判断标识
     /// </summary>
-    public string product_order_no { get; set; } = "777";
+    public string product_order_no { get; set; } = "";
 
     public int customer_id { get; set; } = 102385;
 
-    public string customer_number { get; set; } = "KH001299";
-    public string customer_name { get; set; } = "青岛云路新能源科技有限公司";
+    public string customer_number { get; set; } = "";
+    public string customer_name { get; set; } = "";
     public int material_id { get; set; } = 113889;
 
     /// <summary>
     ///     产品代码
     /// </summary>
-    public string material_number { get; set; } = "21.T.Y.61.2.1100";
+    public string material_number { get; set; } = "";
 
     /// <summary>
     ///     产品型号
     /// </summary>
-    public string material_name { get; set; } = "1EI/AIW/200";
+    public string material_name { get; set; } = "";
 
-    public string material_mnemonic_code { get; set; } = "TY6121100";
+    public string material_mnemonic_code { get; set; } = "";
 
     /// <summary>
     ///     国标型号
     /// </summary>
-    public string material_execution_standard { get; set; } = "GB/T6109.20-2008";
+    public string material_execution_standard { get; set; } = "";
 
-    public string material_ns_model { get; set; } = "Q(ZY/XY)-2/200";
+    public string material_ns_model { get; set; } = "";
     public int jsbz_id { get; set; } = 2655086;
-    public string jsbz_number { get; set; } = "BZ155";
-    public string jsbz_name { get; set; } = "云路定制B";
-    public int xpzl_id { get; set; } = 128056;
-    public string xpzl_number { get; set; } = "15.001";
-    public string xpzl_name { get; set; } = "PT90ABS新料";
-    public string xpzl_spec { get; set; } = "PT90";
-    public string xpzl_weight { get; set; } = "3.9000000000";
-    public int machine_id { get; set; } = 3129677;
-    public string machine_number { get; set; } = "W19";
-    public string machine_name { get; set; } = "W19号漆包机";
+    public string jsbz_number { get; set; } = "";
+    public string jsbz_name { get; set; } = "";
+    public int xpzl_id { get; set; } = 0;
+    public string xpzl_number { get; set; } = "";
+    public string xpzl_name { get; set; } = "";
+    public string xpzl_spec { get; set; } = "";
+    public string xpzl_weight { get; set; } = "";
+    public int machine_id { get; set; } = 0;
+    public string machine_number { get; set; } = "";
+    public string machine_name { get; set; } = "";
     public int stock_id { get; set; } = 115304;
-    public string stock_number { get; set; } = "11";
-    public string stock_name { get; set; } = "成品库(吴兴)";
+    public string stock_number { get; set; } = "";
+    public string stock_name { get; set; } = "";
     public PackageInfo package_info { get; set; } = new();
 
-    public string operator_code { get; set; } = "G69";
-    public string operator_name { get; set; } = "周成忠";
+    public string operator_code { get; set; } = "";
+    public string operator_name { get; set; } = "";
     public string customer_material_number { get; set; } = null;
     public string customer_material_name { get; set; } = null;
     public string customer_material_spec { get; set; } = null;

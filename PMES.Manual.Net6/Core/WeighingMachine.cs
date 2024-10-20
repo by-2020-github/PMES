@@ -1,4 +1,5 @@
 ﻿using System.IO.Ports;
+using System.Threading;
 using System.Windows;
 using Serilog;
 
@@ -32,8 +33,8 @@ public class WeighingMachine
     {
         _serialPort = new SerialPort(portName, baudRate, parity, dataBits, stopBits);
         _serialPort.NewLine = "\r\n";
-        _serialPort.ReadTimeout = 3000;
-        _serialPort.WriteTimeout = 3000;
+        _serialPort.ReadTimeout = 1000;
+        _serialPort.WriteTimeout = 1000;
         try
         {
             if (!_serialPort.IsOpen)
@@ -115,14 +116,18 @@ public class WeighingMachine
     //    return -1;
     //}
 
-    public double ReadWeight()
+    public double ReadWeight(int timeOut = 20_000)
     {
+        if (_serialPort == null)
+            return -1;
+        if (!_serialPort.IsOpen)
+            return -1;
         var ls = new List<double>();
         var reset = new AutoResetEvent(false);
         var start = DateTime.Now;
         _ = Task.Run(() =>
         {
-            while ((DateTime.Now - start).TotalSeconds < 20)
+            while ((DateTime.Now - start).TotalMilliseconds < timeOut)
             {
                 Thread.Sleep(100);
                 //查询稳态重量 如果超过三秒没有稳定则放弃
@@ -182,7 +187,7 @@ public class WeighingMachine
                 }
             }
         });
-        if (!reset.WaitOne(20_000))
+        if (!reset.WaitOne(timeOut))
         {
             return -1;
         }
