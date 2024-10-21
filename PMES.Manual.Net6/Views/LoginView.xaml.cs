@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PMES.Manual.Net6.Core;
+using PMES.Manual.Net6.ViewModels;
 
 namespace PMES.Manual.Net6.Views
 {
@@ -22,6 +24,8 @@ namespace PMES.Manual.Net6.Views
         public LoginView()
         {
             InitializeComponent();
+            this.DataContext = new LoginViewMode();
+            GlobalVar.LoginView = this;
         }
     }
 }

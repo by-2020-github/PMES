@@ -1,5 +1,6 @@
 ﻿using PMES.Manual.Net6.Core.Managers;
 using PMES.Manual.Net6.Model.users;
+using PMES.Manual.Net6.Views;
 using PMES_Respository.DataStruct;
 using PMES_Respository.tbs_sqlserver;
 
@@ -119,6 +120,7 @@ public class GlobalVar
     public static PlcCmdCombinationMotherChildTray7 plcCmdCombinationMotherChildTray7 { get; set; } = new PlcCmdCombinationMotherChildTray7();
     public static PlcCmdCombinationMotherChildTray8 plcCmdCombinationMotherChildTray8 { get; set; } = new PlcCmdCombinationMotherChildTray8();
     public static System.Windows.Window MainView { get; set; }
+    public static LoginView LoginView { get; set; }
 
     #endregion
 }

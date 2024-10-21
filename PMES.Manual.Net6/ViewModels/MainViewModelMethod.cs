@@ -38,15 +38,16 @@ namespace PMES.Manual.Net6.ViewModels
         void ShowError(string msg)
         {
             Logger?.Error(msg);
-            LogList.Add($"[{DateTime.Now:O}]: {msg}");
+            LogList.Add($"[{DateTime.Now:O}]: \t{msg}");
             CurrentLogIndex = LogList.Count - 1;
             //MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         void ShowInfo(string msg)
         {
-            Logger?.Error(msg);
-            MessageBox.Show(msg, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            Logger?.Information(msg);
+            LogList.Add($"[{DateTime.Now:O}]: \t{msg}");
+            //MessageBox.Show(msg, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private T_preheater_code GetTReelCode(ProductInfo product, string productCode, double netWeight,

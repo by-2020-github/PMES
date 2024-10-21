@@ -28,6 +28,7 @@ using PMES_Respository.tbs_sqlserver;
 using Serilog;
 using System.Reflection.Emit;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
 using DevExpress.DirectX.Common.DirectWrite;
 using Org.BouncyCastle.Ocsp;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -70,7 +71,7 @@ namespace PMES.Manual.Net6.ViewModels
         /// </summary>
         [ObservableProperty] private string? _currentScanValue = "";
 
-        [ObservableProperty] private ViewProductModel _viewProductModel = new ViewProductModel(new ProductInfo(),"");
+        [ObservableProperty] private ViewProductModel _viewProductModel = new ViewProductModel(new ProductInfo(), "");
 
         #region 中间称重 条码信息
 
@@ -107,12 +108,12 @@ namespace PMES.Manual.Net6.ViewModels
         [ObservableProperty]
         private ObservableCollection<MyReelInfo> _reelListTemp = new ObservableCollection<MyReelInfo>();
 
-        [ObservableProperty] private MyReelInfo _selectedMyReelInfo;
+        [ObservableProperty] private MyReelInfo? _selectedMyReelInfo;
 
         [ObservableProperty]
         private ObservableCollection<MyBoxInfo> _boxListTemp = new ObservableCollection<MyBoxInfo>();
 
-        [ObservableProperty] private MyBoxInfo _selectedMyBoxInfo;
+        [ObservableProperty] private MyBoxInfo? _selectedMyBoxInfo;
 
         [ObservableProperty]
         private ObservableCollection<MyBoxInfo> _boxListHistory = new ObservableCollection<MyBoxInfo>();
@@ -194,7 +195,7 @@ namespace PMES.Manual.Net6.ViewModels
         ///     扫码枪 扫到新的条码
         /// </summary>
         /// <param name="value"></param>
-        private void CurrentScanValueChanged(string? value)
+        private async Task CurrentScanValueChanged(string? value)
         {
             if (string.IsNullOrEmpty(value))
                 return;
@@ -223,7 +224,23 @@ namespace PMES.Manual.Net6.ViewModels
             //扫到的是真实的条码
             CurrentProductQrCode = value;
 
-            if (LoadUiModelFail(out var product))
+
+            #region 1 ERP订单信息
+
+            _viewProductModel = new ViewProductModel(new ProductInfo(), "");
+            var url = ApiUrls.QueryOrder + CurrentProductQrCode + "&format=json";
+            var product = await WebService.Instance.Get<ProductInfo>(url);
+            if (product == null)
+            {
+                ShowError($"访问ERP失败,url：{url}");
+                return;
+            }
+
+            _viewProductModel = ViewProductModel.GetViewProductModel(product, CurrentProductQrCode);
+
+            #endregion
+
+            if (LoadUiModelFail(product))
                 return;
             _manualCurrentProductInfo = product;
             if (IsAuto)
@@ -317,23 +334,8 @@ namespace PMES.Manual.Net6.ViewModels
             UpdateAndPrint(product, weight, template, tReelCode);
         }
 
-        private bool LoadUiModelFail(out ProductInfo? product)
+        private bool LoadUiModelFail(ProductInfo product)
         {
-            #region 1 ERP订单信息
-
-            _viewProductModel = new ViewProductModel(new ProductInfo(), "");
-            var url = ApiUrls.QueryOrder + CurrentProductQrCode + "&format=json";
-            product = WebService.Instance.Get1<ProductInfo>(url);
-            if (product == null)
-            {
-                ShowError($"访问ERP失败,url：{url}");
-                return true;
-            }
-
-            _viewProductModel = ViewProductModel.GetViewProductModel(product, CurrentProductQrCode);
-
-            #endregion
-
             #region 2 更新码垛信息
 
             if (product.package_info.stacking_per_layer is 0 or null)
@@ -362,7 +364,8 @@ namespace PMES.Manual.Net6.ViewModels
 
             #region 4 获取界面model
 
-            _viewProductModel.ProductionBatchNumber = @$"{CurrentProductQrCode}-{DateTime.Now: MMdd}A";
+            var ap = DateTime.Now.Hour < 12 ? "A" : "P";
+            _viewProductModel.ProductionBatchNumber = @$"{CurrentProductQrCode}-{DateTime.Now: dd}{ap}";
             _viewProductModel.PackingGroupCode = GlobalVar.CurrentUserInfo.code;
             _viewProductModel.PackingGroupName = GlobalVar.CurrentUserInfo.packageGroupName;
             _viewProductModel.PackagePaperWeight = PaperWeight ?? 0d;
@@ -379,10 +382,15 @@ namespace PMES.Manual.Net6.ViewModels
         ///     1' [手动模式]扫到的是产品订单
         /// </summary>
         /// <param name="value"></param>
-        private void ManualCurrentProductQrCodeChanged(string? value, ProductInfo product)
+        private void ManualCurrentProductQrCodeChanged(string? value, ProductInfo? product)
         {
             if (string.IsNullOrEmpty(CurrentProductQrCode))
                 return; //这里不会执行到，只有扫描到才会触发changed 前面已经过滤掉了
+            if (product == null)
+            {
+                ShowError($"当前条码:{CurrentProductQrCode}访问ERP失败，无法加载数据！");
+                return;
+            }
 
             #region 1 ERP订单信息
 
@@ -855,7 +863,7 @@ namespace PMES.Manual.Net6.ViewModels
         [RelayCommand]
         private void ManualGrossChanged(string value)
         {
-            if (double.TryParse(value,out var w))
+            if (double.TryParse(value, out var w))
             {
                 _viewProductModel.GrossWeight = w;
                 OnPropertyChanged(nameof(ViewProductModel));
@@ -913,6 +921,41 @@ namespace PMES.Manual.Net6.ViewModels
             }
         }
 
+        [RelayCommand]
+        private void PrintLabel()
+        {
+            if (SelectedMyBoxInfo == null)
+            {
+                ShowError($"选中为空，无法打印！");
+                return;
+            }
+
+            //人工线只有一个打印机 设置为默认即可
+            SelectedMyBoxInfo.Report?.Print();
+            ShowInfo($"手动打印标签！");
+        }
+
+
+        [RelayCommand]
+        private void DeleteOne()
+        {
+            try
+            {
+                var tmp = SelectedMyBoxInfo;
+                BoxListTemp.Remove(tmp);
+                BoxListHistory.Remove(tmp);
+            }
+            catch (Exception e)
+            {
+                ShowError($"删除失败:{e.Message}");
+            }
+        }
+
+        [RelayCommand]
+        private void HistorySearch()
+        {
+        }
+
         #endregion
 
         #region UI交互
@@ -931,8 +974,6 @@ namespace PMES.Manual.Net6.ViewModels
             //ViewProductModel = value.ViewProductModel;
             //OnPropertyChanged(nameof(ViewProductModel));
         }
-
-     
 
         #endregion
     }

@@ -31,9 +31,9 @@ public class WebService
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("Cookie",
                 "csrftoken=4GjfFB1WhRHfI30HeenFN6CEyYSarg0R; sl-session=l/jXE8c+KGZOFwujhtgpVg==");
-            var response = await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request, new CancellationTokenSource(1500).Token);
             response.EnsureSuccessStatusCode();
-            var res = await response.Content.ReadAsStringAsync();
+            var res = await response.Content.ReadAsStringAsync(new CancellationTokenSource(1500).Token);
             var product = JsonConvert.DeserializeObject<T>(res);
             return product;
         }
@@ -144,13 +144,15 @@ public class WebService
     {
         try
         {
+            var cts1 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1500));
+            var cts2 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1500));
             var request = new HttpRequestMessage(HttpMethod.Post, url);
             var collection = param.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value)).ToList();
             var content = new FormUrlEncodedContent(collection);
             request.Content = content;
-            var response = await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request, cts1.Token);
             response.EnsureSuccessStatusCode();
-            var responseStr = await response.Content.ReadAsStringAsync();
+            var responseStr = await response.Content.ReadAsStringAsync(cts2.Token);
             var jObject = (JObject)JsonConvert.DeserializeObject(responseStr)!;
 
             if (!int.TryParse(jObject["status"]!["code"]!.ToString(), out int code))
@@ -313,7 +315,8 @@ public class WebService
             Logger?.Verbose($"调用接口[EmptyTrayUnStacking],params:{position}");
             string pos = position.ToString();
             //var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089//api/unstacking/emptyPalletRecycling");
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089//api/unstacking/emptyPalletRecycling");
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                "http://172.16.3.248:8089//api/unstacking/emptyPalletRecycling");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("IsContinuedFeed", "2"));
             collection.Add(new("unstackingWorkshopId", pos));
@@ -359,11 +362,13 @@ public class WebService
     /// <param name="workShopId"></param>
     /// <param name="borCode"></param>
     /// <returns></returns>
-    public async Task<bool> PostMotherTrayCode(int childWorkshopld, int combiateWorkshopld, string motherTrayBarcode, int motherWorkshopld)
+    public async Task<bool> PostMotherTrayCode(int childWorkshopld, int combiateWorkshopld, string motherTrayBarcode,
+        int motherWorkshopld)
     {
         try
         {
-            Logger?.Verbose($"调用接口[PostMotherTrayCode],params:{childWorkshopld}，{combiateWorkshopld}，{motherTrayBarcode}，{motherWorkshopld}");
+            Logger?.Verbose(
+                $"调用接口[PostMotherTrayCode],params:{childWorkshopld}，{combiateWorkshopld}，{motherTrayBarcode}，{motherWorkshopld}");
             var request = new HttpRequestMessage(HttpMethod.Post, ApiUrls.MotherTrayBarCode);
             var collection = new List<KeyValuePair<string, string>>();
 
@@ -409,7 +414,8 @@ public class WebService
         {
             Logger?.Verbose($"调用接口[ApplyTray2Storage],params:{position}");
             string pos = position.ToString();
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089/api/stacking/boxMaterialOfTrayMatIntoWMS");
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                "http://172.16.3.248:8089/api/stacking/boxMaterialOfTrayMatIntoWMS");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("stackingWorkshopId", $"{position}"));
             var content = new FormUrlEncodedContent(collection);
@@ -488,7 +494,8 @@ public class WebService
         {
             Logger?.Verbose($"调用接口[ClearErrorStack],params:{workId}");
             //var request = new HttpRequestMessage(HttpMethod.Post, ApiUrls.ApplyExcludePosition);
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089/api/stacking/excludePosition");
+            var request =
+                new HttpRequestMessage(HttpMethod.Post, "http://172.16.3.248:8089/api/stacking/excludePosition");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("emptyTrayWorkshopId", workId.ToString()));
             var content = new FormUrlEncodedContent(collection);
@@ -609,7 +616,6 @@ public static class ApiUrls
 
     //public static string QueryOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-info?semi_finished=";
     //public static string ValidateOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-validate?";
-
 
     #endregion
 

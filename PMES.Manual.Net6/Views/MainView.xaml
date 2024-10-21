@@ -247,7 +247,8 @@
                                         <StackPanel Style="{DynamicResource PropStackPanel}">
                                             <Label Style="{DynamicResource LabelPropName}" Content="生产批号："></Label>
                                             <Label Style="{DynamicResource LabelPropValue}"
-                                                   Content="{Binding ViewProductModel.ProductionBatchNumber}">
+                                                   Content="{Binding ViewProductModel.ProductionBatchNumber}"
+                                                   d:Content="G12345678912345601A" FontSize="12">
                                             </Label>
                                         </StackPanel>
                                         <StackPanel Style="{DynamicResource PropStackPanel}">
@@ -445,11 +446,14 @@
                                             <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelPropName}"
                                                    Content="称重">
                                             </Label>
-                                            <TextBox  Grid.Row="1" Grid.Column="0" IsEnabled="{Binding IsManual}"
+                                            <TextBox Grid.Row="1" Grid.Column="0" IsEnabled="False"
                                                      Style="{DynamicResource TextBoxCenterRed}"
                                                      Text="{Binding ViewProductModel.PackagePaperWeight , StringFormat=F2}">
                                             </TextBox>
-                                            <TextBox x:Name="GrossWeight" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="180"
+                                            <TextBox x:Name="GrossWeight" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                                                     Width="180"
+                                                     d:Text ="30.12"
+                                                     FontSize="32"
                                                      IsEnabled="{Binding IsManual}"
                                                      Style="{DynamicResource TextBoxCenterRed}"
                                                      Text="{Binding ViewProductModel.GrossWeight, StringFormat=F2}">
@@ -467,17 +471,17 @@
                                                 Rows="2"
                                                 Columns="2"
                                                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
-                                                <Button HorizontalAlignment="Right" Content="保存"
+                                                <Button HorizontalAlignment="Center" Content="保存"
                                                         MinWidth="100" Command="{Binding SaveCommand}">
                                                 </Button>
 
-                                                <Button HorizontalAlignment="Right" Content="打印标签"
+                                                <Button HorizontalAlignment="Center" Content="打印标签"
                                                         MinWidth="100">
                                                 </Button>
-                                                <Button HorizontalAlignment="Right" Content="删除"
+                                                <Button HorizontalAlignment="Center" Content="删除"
                                                         MinWidth="100">
                                                 </Button>
-                                                <Button HorizontalAlignment="Right" Content="历史查询"
+                                                <Button HorizontalAlignment="Center" Content="历史查询"
                                                         MinWidth="100">
                                                 </Button>
 
@@ -518,10 +522,10 @@
                             <!--侧边工具栏-->
                             <StackPanel Grid.Column="3" Orientation="Vertical">
                                 <Border BorderThickness="1" BorderBrush="DarkGray" Margin="3">
-                                    <StackPanel Orientation="Vertical">
-                                        <Button Width="110" Height="35" Margin="5,25,5,0" Content="标签设置"></Button>
+                                    <StackPanel Orientation="Vertical" Height="120">
+                                        <!--<Button Width="110" Height="35" Margin="5,25,5,0" Content="标签设置"></Button>
                                         <Button Width="110" Height="35" Margin="5,15,5,0" Content="通讯设置"></Button>
-                                        <Button Width="110" Height="35" Margin="5,15,5,25" Content="打印机设置"></Button>
+                                        <Button Width="110" Height="35" Margin="5,15,5,25" Content="打印机设置"></Button>-->
                                     </StackPanel>
                                 </Border>
 

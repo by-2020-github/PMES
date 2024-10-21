@@ -19,33 +19,56 @@
         Title="MainWindow"
         Height="300"
         Width="400"
-        WindowState="Maximized"
-        WindowStyle="None">
+        WindowStyle="None"
+        d:DataContext="{d:DesignInstance viewModels:LoginViewMode,IsDesignTimeCreatable=True}">
     <Grid x:Name="LoginGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"></ColumnDefinition>
             <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="用户名" VerticalAlignment="Center" />
-
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Text="{Binding UserName}" />
-
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="密码" VerticalAlignment="Center" />
-
-        <PasswordBox Grid.Row="1" Grid.Column="1" Margin="2" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="先登高科电气股份有限公司" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" TextAlignment="Center" FontSize="24" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="成品智能包装系统" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" TextAlignment="Center" FontSize="24" />
 
 
-        <CheckBox Grid.Row="2" Grid.ColumnSpan="2" Content="记住密码" VerticalAlignment="Center"
-                  IsChecked="{Binding IsRmembered}" />
-        <Button Grid.Row="3" Grid.ColumnSpan="2" Content="登录" Command="{Binding LoginCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
-                IsDefault="True" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="用户名：" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                   Margin="10,5,20,5" />
+
+        <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Left" VerticalAlignment="Bottom" Margin="2"
+                 Text="{Binding  Username}" />
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="密码：" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                   Margin="10,5,20,5" />
+
+        <TextBox x:Name="PasswordBox" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Bottom"
+                 HorizontalContentAlignment="Left" VerticalAlignment="Bottom" Margin="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding PassWordChangedCommand}"
+                                           CommandParameter="{Binding Text, ElementName=PasswordBox}">
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+
+
+        <!--<CheckBox Grid.Row="4" Grid.ColumnSpan="2" Content="记住密码" VerticalAlignment="Center" IsChecked="{Binding IsRmembered}" />-->
+        <UniformGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Columns="2" Rows="1">
+            <Button Margin="20,5,20,5" Content="退出" Command="{Binding CloseCommand}"
+                    IsDefault="True" />
+            <Button Margin="20,5,20,5" Content="登录" Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding Text,ElementName=PasswordBox}"
+                    IsDefault="True" />
+        </UniformGrid>
+
     </Grid>
 </Window>
