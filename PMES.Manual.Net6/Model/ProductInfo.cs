@@ -12,11 +12,11 @@ public class ProductInfo
     /// </summary>
     public string product_order_no { get; set; } = "";
 
-    public int customer_id { get; set; } = 102385;
+    public int customer_id { get; set; } 
 
     public string customer_number { get; set; } = "";
     public string customer_name { get; set; } = "";
-    public int material_id { get; set; } = 113889;
+    public int material_id { get; set; } 
 
     /// <summary>
     ///     产品代码
@@ -36,7 +36,7 @@ public class ProductInfo
     public string material_execution_standard { get; set; } = "";
 
     public string material_ns_model { get; set; } = "";
-    public int jsbz_id { get; set; } = 2655086;
+    public int jsbz_id { get; set; } 
     public string jsbz_number { get; set; } = "";
     public string jsbz_name { get; set; } = "";
     public int xpzl_id { get; set; } = 0;
@@ -47,7 +47,7 @@ public class ProductInfo
     public int machine_id { get; set; } = 0;
     public string machine_number { get; set; } = "";
     public string machine_name { get; set; } = "";
-    public int stock_id { get; set; } = 115304;
+    public int stock_id { get; set; } 
     public string stock_number { get; set; } = "";
     public string stock_name { get; set; } = "";
     public PackageInfo package_info { get; set; } = new();

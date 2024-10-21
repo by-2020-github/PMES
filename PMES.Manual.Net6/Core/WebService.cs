@@ -638,7 +638,8 @@ public static class ApiUrls
     /// <summary>
     ///     登录
     /// </summary>
-    public static string Login = "http://8.142.72.79:8089/api/operator/login";
+    //public static string Login = "http://8.142.72.79:8089/api/operator/login";
+    public static string Login = "http://172.16.3.248:8089/api/operator/login";
 
     #endregion
 

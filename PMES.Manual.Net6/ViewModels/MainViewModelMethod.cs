@@ -40,6 +40,7 @@ namespace PMES.Manual.Net6.ViewModels
             Logger?.Error(msg);
             LogList.Add($"[{DateTime.Now:O}]: \t{msg}");
             CurrentLogIndex = LogList.Count - 1;
+            CurrentScanValue = "";
             //MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
@@ -134,6 +135,23 @@ namespace PMES.Manual.Net6.ViewModels
             dic[key] = count + 1;
             File.WriteAllText(path, JsonConvert.SerializeObject(dic));
             return dic[key];
+        }
+
+        /// <summary>  
+        /// 获取当前时间戳  
+        /// </summary>  
+        /// <param name="bflag">为真时获取10位时间戳,为假时获取13位时间戳.bool bflag = true</param>  
+        /// <returns></returns>  
+        public static string GetTimeStamp(bool bflag = false)
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            string ret = string.Empty;
+            if (bflag)
+                ret = Convert.ToInt64(ts.TotalSeconds).ToString();
+            else
+                ret = Convert.ToInt64(ts.TotalMilliseconds).ToString();
+
+            return ret;
         }
 
         #endregion

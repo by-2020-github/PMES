@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:PMES.Manual.Net6.Views"
+        xmlns:behavior="clr-namespace:PMES.Manual.Net6.Behavior"
         Style="{DynamicResource MaterialDesignWindow}"
         TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
         Background="{DynamicResource MaterialDesign.Brush.Background}"
@@ -87,23 +88,27 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Margin="15" Content="PMES - 欢迎使用成品智能包装系统"
                    FontSize="24" FontFamily="Microsoft YaHei UI"
-                   Width="400">
+                   Width="400" MouseDoubleClick="Control_OnMouseDoubleClick">
             </Label>
-            <ListBox Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1" Margin="5"
+            <ListBox x:Name="LogView" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1" Margin="5"
+                     Foreground="Red"
                      ItemsSource="{Binding LogList}" SelectedIndex="{Binding CurrentLogIndex}">
+                <i:Interaction.Behaviors>
+                    <behavior:ListBoxScrollToBottomBehavior />
+                </i:Interaction.Behaviors>
             </ListBox>
             <TextBox x:Name="ScanBox" Grid.Column="2" BorderBrush="DarkGray" BorderThickness="1" Margin="15"
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="24"
                      TextWrapping="Wrap" AcceptsReturn="True"
-                     Text="{Binding CurrentScanValue,Mode=TwoWay}">
-                <i:Interaction.Triggers>
+                     Text="{Binding CurrentScanValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="TextChanged">
                         <i:InvokeCommandAction Command="{Binding TextChangedCommand }"
                                                CommandParameter="{Binding ElementName=ScanBox,Path=Text}">
 
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
-                </i:Interaction.Triggers>
+                </i:Interaction.Triggers>-->
             </TextBox>
             <Button Grid.Column="3" Margin="5" Height="60" FontSize="24" Content="退出系统"
                     VerticalContentAlignment="Center"
@@ -209,7 +214,7 @@
                                         <StackPanel Style="{DynamicResource PropStackPanel}">
                                             <Label Style="{DynamicResource LabelPropName}" Content="线盘重量："></Label>
                                             <TextBlock Foreground="Red" VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"
+                                                       HorizontalAlignment="Center" d:Text="0.78"
                                                        Text="{Binding ViewProductModel.ReelWeight , StringFormat=F3}">
                                             </TextBlock>
                                             <Label Style="{DynamicResource LabelPropValue}" Content="kg"></Label>
@@ -328,7 +333,7 @@
                                                      Style="{DynamicResource TextBoxLeftRed}">
                                             </TextBox>
                                             <Label Content="子托盘：" FontSize="18" Margin="5"></Label>
-                                            <TextBox IsEnabled="False" Text="{Binding ViewProductModel.ChildTrayCode }"
+                                            <TextBox IsEnabled="False" Text="{Binding ViewProductModel.ChildTrayName }"
                                                      Style="{DynamicResource TextBoxLeftRed}">
                                             </TextBox>
                                         </StackPanel>
@@ -369,10 +374,10 @@
                                                                     Binding="{Binding BoxQrCoed}">
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Header="毛重" Width="90"
-                                                                    Binding="{Binding GrossWeight , StringFormat=F2}">
+                                                                    Binding="{Binding GrossWeight , StringFormat=F2 , Mode=OneWay}">
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Header="净重" Width="90"
-                                                                    Binding="{Binding NetWeight, StringFormat=F2}">
+                                                                    Binding="{Binding NetWeight, StringFormat=F2, Mode=OneWay}">
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -414,7 +419,7 @@
                                         <DataGridTextColumn Header="箱内盘编号（盘码）" Width="1.5*"
                                                             Binding="{Binding ReelQrCode}">
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Header="生产码" Width="2*" Binding="{Binding ReelProductCode}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="生产码" Width="1.2*" Binding="{Binding ReelProductCode}"></DataGridTextColumn>
                                         <DataGridTextColumn Header="毛重" Width="90"
                                                             Binding="{Binding GrossWeight, StringFormat=F2}">
                                         </DataGridTextColumn>
@@ -452,7 +457,7 @@
                                             </TextBox>
                                             <TextBox x:Name="GrossWeight" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
                                                      Width="180"
-                                                     d:Text ="30.12"
+                                                     d:Text="30.12"
                                                      FontSize="32"
                                                      IsEnabled="{Binding IsManual}"
                                                      Style="{DynamicResource TextBoxCenterRed}"

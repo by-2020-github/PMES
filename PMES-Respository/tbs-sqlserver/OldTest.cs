@@ -366,5 +366,7 @@ namespace PMES_Respository.tbs_sqlserver
         /// 栈板号 src:
         /// </summary>
         public string FLinkStacklabel { get; set; }
+
+        public int BoxID { get; set;}
     }
 }

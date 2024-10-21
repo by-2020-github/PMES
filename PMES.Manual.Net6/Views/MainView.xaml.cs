@@ -37,6 +37,7 @@ namespace PMES.Manual.Net6.Views
             InitDev();
             var viewModel = new MainViewModel(_freeSqlServer!);
             this.DataContext = viewModel;
+
         }
 
         static void InitDev()
@@ -72,5 +73,19 @@ namespace PMES.Manual.Net6.Views
                     break;
             }
         }
+
+        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var list = new List<string>()
+            {
+                "G240804830995121\r\n",
+                "G240804830995120\r\n",
+                "G240804830995119\r\n"
+            };
+            var next = new Random().Next(0, 20);
+            ScanBox.Text = list[next % 3];
+        }
+
+
     }
 }

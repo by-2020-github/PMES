@@ -147,8 +147,9 @@ namespace PMES_Respository.tbs_sqlserver {
 		public decimal FZQty { get; set; }
 
 		public string FZXBZ { get; set; }
-
+		
 		public int FZXBZID { get; set; }
+		public int BoxID { get; set; }
 
 	}
 

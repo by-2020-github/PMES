@@ -33,6 +33,7 @@ using DevExpress.DirectX.Common.DirectWrite;
 using Org.BouncyCastle.Ocsp;
 using Xceed.Wpf.AvalonDock.Layout;
 using Google.Protobuf.WellKnownTypes;
+using PMES.Manual.Net6.Views;
 
 namespace PMES.Manual.Net6.ViewModels
 {
@@ -155,11 +156,15 @@ namespace PMES.Manual.Net6.ViewModels
 
             //Task.Run(() =>
             //{
+            //    var time = 1;
             //    while (true)
             //    {
+            //        time++;
             //        Debug.WriteLine(CurrentScanValue);
             //        Thread.Sleep(1000);
-            //        //ViewProductModel = new ViewProductModel(new ProductInfo(), "123") { ProductOrder = new Random().Next(100).ToString() };
+            //        ViewProductModel = new ViewProductModel(new ProductInfo(), $"{time}")
+            //            { ProductOrder = new Random().Next(100).ToString() };
+            //        Application.Current.Dispatcher.Invoke((Action)(() => { LogList.Add($"{time}"); }));
             //    }
             //});
         }
@@ -173,6 +178,23 @@ namespace PMES.Manual.Net6.ViewModels
             if (obj.ToString()!.EndsWith("\r\n"))
             {
                 _currentScanValue = obj.ToString().Replace("\r\n", "");
+
+                if (lastQr.Equals(_currentScanValue))
+                {
+                    return;
+                }
+
+                lastQr = _currentScanValue;
+                CurrentScanValueChanged(_currentScanValue);
+            }
+        }
+
+
+        partial void OnCurrentScanValueChanged(string? value)
+        {
+            if (value.ToString()!.EndsWith("\r\n"))
+            {
+                _currentScanValue = value.ToString().Replace("\r\n", "");
 
                 if (lastQr.Equals(_currentScanValue))
                 {
@@ -236,6 +258,7 @@ namespace PMES.Manual.Net6.ViewModels
                 return;
             }
 
+            product ??= new ProductInfo();
             _viewProductModel = ViewProductModel.GetViewProductModel(product, CurrentProductQrCode);
 
             #endregion
@@ -336,7 +359,7 @@ namespace PMES.Manual.Net6.ViewModels
 
         private bool LoadUiModelFail(ProductInfo product)
         {
-            #region 2 更新码垛信息
+            #region 1 更新码垛信息
 
             if (product.package_info.stacking_per_layer is 0 or null)
             {
@@ -362,10 +385,20 @@ namespace PMES.Manual.Net6.ViewModels
 
             #endregion
 
-            #region 4 获取界面model
+            #region 2 获取界面model
+
+            if (double.TryParse(product.xpzl_weight, out var w))
+            {
+                _viewProductModel.ReelWeight = w;
+            }
+            else
+            {
+                ShowError($"获取线盘重量信息失败:{product.xpzl_weight}");
+            }
+
 
             var ap = DateTime.Now.Hour < 12 ? "A" : "P";
-            _viewProductModel.ProductionBatchNumber = @$"{CurrentProductQrCode}-{DateTime.Now: dd}{ap}";
+            _viewProductModel.ProductionBatchNumber = @$"{product.product_order_no}-{DateTime.Now: dd}{ap}";
             _viewProductModel.PackingGroupCode = GlobalVar.CurrentUserInfo.code;
             _viewProductModel.PackingGroupName = GlobalVar.CurrentUserInfo.packageGroupName;
             _viewProductModel.PackagePaperWeight = PaperWeight ?? 0d;
@@ -695,7 +728,9 @@ namespace PMES.Manual.Net6.ViewModels
                     PackingWeight = boxInfo.ReelList.Sum(s => s.NetWeight),
                     PackingGrossWeight = boxInfo.ReelList.Sum(s => s.GrossWeight),
                     Status = 1,
-                    TrayBarcode = CurrentMotherTrayQrCode,
+                    TrayBarcode = string.IsNullOrEmpty(CurrentMotherTrayQrCode)
+                        ? GetTimeStamp()
+                        : CurrentMotherTrayQrCode,
                     UpdateTime = DateTime.Now
                 };
                 var id = _fsql.Insert(box).ExecuteIdentity();
@@ -795,7 +830,6 @@ namespace PMES.Manual.Net6.ViewModels
 
                     FDate = boxCode.CreateTime, //只写日期，
                     FSXH = 0, //一天的连续号..
-
                     FHGZQty = packageOrder.TareWeight,
                     FJYR = preheaterCode.OperatorName,
                     FZXBZID = 0,
@@ -805,15 +839,12 @@ namespace PMES.Manual.Net6.ViewModels
                     FJZQty = (decimal)preheaterCode.NetWeight,
                     FStrip = boxCode.PackingBarCode,
                     FComputerName = "2#自动包装线", //boxCode.PackagingCode,
-
                     FZQty = (decimal)boxCode.PackingWeight,
                     FBQID = boxCode.LabelTemplateId,
                     FBQJS = int.Parse(boxCode.PackingQty),
                     FTypeTemp = preheaterCode.ProductName,
                     FICMOID = preheaterCode.ICMOBillNO,
-
                     FICMOBillNO = preheaterCode.ICMOBillNO,
-
                     FStrip2 = preheaterCode.ProductionBarcode,
                     FDate2 = preheaterCode.CreateTime,
                     FJSBZID = preheaterCode.UserStandardId,
@@ -821,8 +852,9 @@ namespace PMES.Manual.Net6.ViewModels
                     FSCorgno = preheaterCode.ProductionOrgNO, //
                     FStockID = preheaterCode.StockId,
                     FCustomer = preheaterCode.CustomerId,
-                    FLinkStacklabel = boxCode.TrayBarcode, //时间戳+实托盘条码
-                    FSPTime = DateTime.Now
+                    FLinkStacklabel = $"{GetTimeStamp}-{boxCode.TrayBarcode}", //时间戳+实托盘条码
+                    FSPTime = DateTime.Now,
+                    BoxID = (int)boxCode.Id
                 };
                 _fsql.Insert(old).ExecuteAffrows();
             }

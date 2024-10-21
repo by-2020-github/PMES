@@ -36,7 +36,7 @@ namespace PMES.Manual.Net6.ViewModels
         #region 额外包装信息
 
         public string? MotherTrayCode { get; set; }
-        public string? ChildTrayCode { get; set; }
+        public string? ChildTrayName { get; set; }
         public string? PackagePaperBox { get; set; }
         public int? ReelNumPerBox { get; set; }
 
@@ -135,15 +135,15 @@ namespace PMES.Manual.Net6.ViewModels
         #region 称重信息
 
         public double ReelWeight { get; set; } = new Random().NextDouble();
-        public double GrossWeight { get; set; } = 30.12d;
+        public double GrossWeight { get; set; } 
         public double NetWeight => GrossWeight - PackagePaperWeight - ReelWeight;
-        public double PackagePaperWeight { get; set; } = 0.02d;
+        public double PackagePaperWeight { get; set; } 
 
         #endregion
 
         #region 条码信息
 
-        public string BoxQrCode { get; set; } = "TY4121050-A206-BZ001-B12310001-04903";
+        public string BoxQrCode { get; set; } = "";
 
         #endregion
 
@@ -151,9 +151,10 @@ namespace PMES.Manual.Net6.ViewModels
         {
             var viewProductModel = new ViewProductModel(product, productQrCode)
             {
+                MotherTrayCode = null,
                 ProductOrder = product.product_order_no,
-                ProductCode = product.customer_number,
-                ProductModel = product.customer_name,
+                ProductCode = product.material_number,
+                ProductModel = product.material_name,
                 InternationalModel = product.material_ns_model,
                 ProductSpecification = product.material_spec,
                 UserStandardCode = product.jsbz_number,
@@ -165,11 +166,21 @@ namespace PMES.Manual.Net6.ViewModels
                 ExecutionStandard = product.material_execution_standard,
                 ProductionDate = product.product_date,
                 ProductionMachine = product.machine_number,
+                ProductionBatchNumber = null,
                 ProductionNumber = product.operator_code,
-                ChildTrayCode = product.package_info.delivery_sub_tray_number,
+                PackingGroupCode = null,
+                PackingGroupName = null,
+                ImageBox = null,
+                ReelWeight = 0,
+                GrossWeight = 0,
+                PackagePaperWeight = 0,
+                BoxQrCode = null,
+                PackageWeightWeight = 0,
+                ChildTrayName = product.package_info.delivery_sub_tray_name,
                 //TODO: 纸箱不知道是哪个字段
                 PackagePaperBox = product.package_info.wire_reel_external_package_name,
-                ReelNumPerBox = (int)product.package_info.packing_quantity!
+                ReelNumPerBox = (int)product.package_info.packing_quantity!,
+                LabelTemplateName = null
             };
             if (double.TryParse(product.xpzl_weight, out var w))
             {
@@ -207,10 +218,10 @@ namespace PMES.Manual.Net6.ViewModels
         private static int _number = 0;
 
         public int Number { get; set; }
-        public string BoxQrCoed { get; set; } = "TY4121050-A206-BZ001-B12310001-04903";
+        public string BoxQrCoed { get; set; }
         public List<MyReelInfo> ReelList { get; set; } = new List<MyReelInfo>();
-        public double GrossWeight { get; set; } = new Random().NextDouble();
-        public double NetWeight { get; set; } = new Random().NextDouble();
+        public double GrossWeight => ReelList.Sum(s => s.GrossWeight);
+        public double NetWeight => ReelList.Sum(s => s.NetWeight);
         public DateTime CreateTime { get; set; } = DateTime.Now;
         public bool HasPrint { get; set; } = false;
         public XtraReport? Report { get; set; }
