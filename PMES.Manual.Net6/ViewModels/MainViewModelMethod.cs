@@ -102,6 +102,7 @@ namespace PMES.Manual.Net6.ViewModels
                 Material_themal_grade = product.material_thermal_grade,
                 Material_spec = product.material_spec,
                 Jsbz_short_name = product.jsbz_short_name,
+                MachineNose = product.machine_nose
             };
             return tReelCode;
         }

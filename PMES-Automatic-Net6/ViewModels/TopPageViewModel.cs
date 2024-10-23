@@ -963,6 +963,7 @@ namespace PMES_Automatic_Net6.ViewModels
                 Material_themal_grade = product.material_thermal_grade,
                 Material_spec = product.material_spec,
                 Jsbz_short_name = product.jsbz_short_name,
+                MachineNose = product.machine_nose
             };
             return tReelCode;
         }
@@ -2162,7 +2163,7 @@ namespace PMES_Automatic_Net6.ViewModels
                     FSCorgno = preheaterCode.ProductionOrgNO, //
                     FStockID = preheaterCode.StockId,
                     FCustomer = preheaterCode.CustomerId,
-                    FLinkStacklabel = boxCode.TrayBarcode, //时间戳+实托盘条码
+                    FLinkStacklabel = $"{GetTimeStamp}-{boxCode.TrayBarcode}", //时间戳+实托盘条码
                     FSPTime = DateTime.Now
                 };
                 _fSql.Insert(old).ExecuteAffrows();
@@ -2172,6 +2173,25 @@ namespace PMES_Automatic_Net6.ViewModels
                 ShowError($"插入老数据库失败！\n{e.Message}");
             }
         }
+
+
+        /// <summary>  
+        /// 获取当前时间戳  
+        /// </summary>  
+        /// <param name="bflag">为真时获取10位时间戳,为假时获取13位时间戳.bool bflag = true</param>  
+        /// <returns></returns>  
+        public static string GetTimeStamp(bool bflag = false)
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            string ret = string.Empty;
+            if (bflag)
+                ret = Convert.ToInt64(ts.TotalSeconds).ToString();
+            else
+                ret = Convert.ToInt64(ts.TotalMilliseconds).ToString();
+
+            return ret;
+        }
+
 
         private bool ExecProcedureAutoInput(string linkStackLabel)
         {

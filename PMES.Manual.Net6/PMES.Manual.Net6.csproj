@@ -88,6 +88,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\PMES-Common\PMES-Common.csproj" />
 		<ProjectReference Include="..\PMES-Respository\PMES-Respository.csproj" />
+		<ProjectReference Include="..\PMES.TemplteEdit\PMES.TemplateEdit.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

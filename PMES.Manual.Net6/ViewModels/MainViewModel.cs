@@ -121,6 +121,8 @@ namespace PMES.Manual.Net6.ViewModels
         [ObservableProperty] private MyReelInfo? _selectedMyReelInfo;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(StatisticsBoxGrossWeight))]
+        [NotifyPropertyChangedFor(nameof(StatisticsBoxNetWeight))]
         private ObservableCollection<MyBoxInfo> _boxListTemp = new ObservableCollection<MyBoxInfo>();
 
         [ObservableProperty] private MyBoxInfo? _selectedMyBoxInfo;
@@ -155,8 +157,8 @@ namespace PMES.Manual.Net6.ViewModels
             RefreshPrinters();
             LoadSettings();
             _fsql = freeSql;
-            CurrentStackInfo = "已码x层 ，共xx个";
-            CurrentUnStackInfo = "剩余个数：";
+            CurrentStackInfo = "已码0层 ，共0个";
+            CurrentUnStackInfo = "剩余个数：0";
             CurrentStackMode = "竖方式";
             CurrentStackNumPerLayer = 16;
             CurrentStackLayer = 1;
@@ -465,27 +467,27 @@ namespace PMES.Manual.Net6.ViewModels
 
             #region 3 更新码垛信息
 
-            //if (product.package_info.stacking_per_layer is 0 or null)
-            //{
-            //    ShowError($"包装信息错误：stacking_per_layer = 0 !");
-            //    return;
-            //}
+            if (product.package_info.stacking_per_layer is 0 or null)
+            {
+                ShowError($"包装信息错误：stacking_per_layer = 0 !");
+                return;
+            }
 
-            //if (product.package_info.stacking_layers is 0 or null)
-            //{
-            //    ShowError($"包装信息错误：stacking_layers = 0 !");
-            //    return;
-            //}
+            if (product.package_info.stacking_layers is 0 or null)
+            {
+                ShowError($"包装信息错误：stacking_layers = 0 !");
+                return;
+            }
 
-            //if (product.package_info.packing_quantity is 0 or null)
-            //{
-            //    ShowError($"包装信息错误：packing_quantity = 0 !");
-            //    return;
-            //}
+            if (product.package_info.packing_quantity is 0 or null)
+            {
+                ShowError($"包装信息错误：packing_quantity = 0 !");
+                return;
+            }
 
-            //CurrentStackLayer = (int)product.package_info.stacking_layers;
-            //CurrentStackNumPerLayer = (int)product.package_info.stacking_per_layer;
-            //CurrentReelNumPerBox = (int)product.package_info.packing_quantity;
+            CurrentStackLayer = (int)product.package_info.stacking_layers;
+            CurrentStackNumPerLayer = (int)product.package_info.stacking_per_layer;
+            CurrentReelNumPerBox = (int)product.package_info.packing_quantity;
 
             #endregion
 
@@ -657,11 +659,18 @@ namespace PMES.Manual.Net6.ViewModels
             };
 
             //TODO:加载正式的模板 --- 人工线采购的纸尺寸固定（1 箱码，4 合格证） 2024年10月17日 17:01:55
-            var report = new XtraReport();
             var template = latest.LabelTemplate;
-            report.LoadLayout(template.TemplateFileName);
-            report.DataSource = boxReportModel;
-            latest.Report = report;
+            try
+            {
+                var report = new XtraReport();
+                report.LoadLayout(template.TemplateFileName);
+                report.DataSource = boxReportModel;
+                latest.Report = report;
+            }
+            catch (Exception e)
+            {
+                ShowError($"打印标签失败！");
+            }
 
             var type = _fsql.Select<T_label_type>().Where(s => s.LabelType == template.LabelType).First();
             if (type == null)
@@ -705,6 +714,7 @@ namespace PMES.Manual.Net6.ViewModels
         {
             try
             {
+                boxInfo.Report = null;
                 Logger?.Verbose(LogInfo.Info($"准备插入数据库,数据：\n{JsonConvert.SerializeObject(boxInfo)}"));
                 var myReelInfo = boxInfo.ReelList.First();
                 var productInfo = myReelInfo.ProductInfo;
@@ -782,12 +792,6 @@ namespace PMES.Manual.Net6.ViewModels
             {
                 var view = _fsql.Select<U_VW_DBCP>().WithSql("SELECT * FROM U_VW_DBCP").ToList()
                     .First(s => s.FItemID.ToString().Equals(preheaterCode.ProductId.ToString()));
-                if (view == null)
-                {
-                    ShowError("视图查询为空！");
-                    return;
-                }
-
                 var old = new OldTest
                 {
                     FItemID = preheaterCode.ProductId,
@@ -811,6 +815,7 @@ namespace PMES.Manual.Net6.ViewModels
                     FCPGG = preheaterCode.Material_spec,
                     FXPItemID = preheaterCode.PreheaterId,
                     FXPNumber = preheaterCode.PreheaterCode,
+      
                     FXPName = preheaterCode.PreheaterName,
                     FXPGG = preheaterCode.PreheaterSpec,
                     FXPQty = (decimal)preheaterCode.NetWeight,
@@ -819,7 +824,6 @@ namespace PMES.Manual.Net6.ViewModels
                     FBH = boxCode.PackagingSN, //以天为单位进行联系，保留4位。
                     FBHMX = preheaterCode.PSN,
                     FPCH = preheaterCode.BatchNO, //修改为：FIcmibILLno-天A(上午A，下午M），day保留2位..
-
                     FDate = boxCode.CreateTime, //只写日期，
                     FSXH = 0, //一天的连续号..
                     FHGZQty = packageOrder.TareWeight,
@@ -830,10 +834,11 @@ namespace PMES.Manual.Net6.ViewModels
                     FPZQty = (decimal)preheaterCode.PreheaterWeight,
                     FJZQty = (decimal)preheaterCode.NetWeight,
                     FStrip = boxCode.PackingBarCode,
-                    FComputerName = "2#自动包装线", //boxCode.PackagingCode,
+                    FComputerName = "2#自动包装线",
                     FZQty = (decimal)boxCode.PackingWeight,
                     FBQID = boxCode.LabelTemplateId,
                     FBQJS = int.Parse(boxCode.PackingQty),
+                
                     FTypeTemp = preheaterCode.ProductName,
                     FICMOID = preheaterCode.ICMOBillNO,
                     FICMOBillNO = preheaterCode.ICMOBillNO,
@@ -841,13 +846,22 @@ namespace PMES.Manual.Net6.ViewModels
                     FDate2 = preheaterCode.CreateTime,
                     FJSBZID = preheaterCode.UserStandardId,
                     FJSBZNumber = preheaterCode.UserStandardCode,
-                    FSCorgno = preheaterCode.ProductionOrgNO, //
+                    FSCorgno = preheaterCode.ProductionOrgNO,
                     FStockID = preheaterCode.StockId,
                     FCustomer = preheaterCode.CustomerId,
+                    FEmp = 0,
                     FLinkStacklabel = $"{GetTimeStamp}-{boxCode.TrayBarcode}", //时间戳+实托盘条码
                     FSPTime = DateTime.Now,
+     
+                    FOLDBarcode = null,
                     BoxID = (int)boxCode.Id
                 };
+                if (view == null)
+                {
+                    ShowError("视图查询为空！");
+                    return;
+                }
+
                 var identity = _fsql.Insert(old).ExecuteIdentity();
                 ShowInfo($"插入成功OldId:{identity}");
             }

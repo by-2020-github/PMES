@@ -46,6 +46,7 @@ public class ProductInfo
     public string xpzl_weight { get; set; } = "";
     public int machine_id { get; set; } = 0;
     public string machine_number { get; set; } = "";
+    public string machine_nose { get; set; } = "";
     public string machine_name { get; set; } = "";
     public int stock_id { get; set; } 
     public string stock_number { get; set; } = "";

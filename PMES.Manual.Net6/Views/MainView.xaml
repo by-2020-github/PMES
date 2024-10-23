@@ -390,6 +390,10 @@
                                                                     Binding="{Binding NetWeight, StringFormat=F2, Mode=OneWay}">
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
+
+                                            <i:Interaction.Behaviors>
+                                                <behavior:DataGridScrollToBottomBehavior />
+                                            </i:Interaction.Behaviors>
                                         </DataGrid>
                                         <StackPanel
                                             Margin="0,10,0,10"

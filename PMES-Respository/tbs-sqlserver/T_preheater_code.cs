@@ -39,7 +39,7 @@ namespace PMES_Respository.tbs_sqlserver
         public int? LabelTemplateId { get; set; }
 
         public string MachineCode { get; set; }
-
+        public string MachineNose { get; set; }
         public int? MachineId { get; set; }
 
         public string MachineName { get; set; }

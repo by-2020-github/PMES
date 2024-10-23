@@ -611,7 +611,8 @@ public static class ApiUrls
 {
     #region erp 查询订单
 
-    public static string QueryOrder = "http://172.16.3.130:30358/api/product-info?semi_finished=";
+    //public static string QueryOrder = "http://172.16.3.130:30358/api/product-info?semi_finished=";
+    public static string QueryOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-info?semi_finished=";
     public static string ValidateOrder = "http://172.16.3.130:30358/api/product-validate?";
 
     //public static string QueryOrder = "https://test-chengzhong-api.xiandeng.com:3443/api/product-info?semi_finished=";

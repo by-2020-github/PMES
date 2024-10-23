@@ -65,6 +65,7 @@ public class ProductInfo
     public string jsbz_short_name { get; set; } = null;
 
     public string GetSpec => $"{customer_number},{material_number},{xpzl_spec},{jsbz_number}";
+    public string machine_nose { get; set; } = "";
 
     public bool NeedChange(ProductInfo other)
     {
