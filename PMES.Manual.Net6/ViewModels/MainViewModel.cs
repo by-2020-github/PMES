@@ -79,6 +79,15 @@ namespace PMES.Manual.Net6.ViewModels
         private WeighingMachine? _weighingMachine;
         [ObservableProperty] private double? _paperWeight = 0d;
         [ObservableProperty] private string? _trayQrCode;
+        [ObservableProperty] private string? _grossWeight;
+
+        partial void OnGrossWeightChanged(string? value)
+        {
+            if (double.TryParse(GrossWeight, out var w))
+            {
+                ViewProductModel.GrossWeight = w;
+            }
+        }
 
         #endregion
 
@@ -142,6 +151,9 @@ namespace PMES.Manual.Net6.ViewModels
 
         public MainViewModel(IFreeSql freeSql)
         {
+            RefreshPorts();
+            RefreshPrinters();
+            LoadSettings();
             _fsql = freeSql;
             CurrentStackInfo = "已码x层 ，共xx个";
             CurrentUnStackInfo = "剩余个数：";
@@ -172,30 +184,10 @@ namespace PMES.Manual.Net6.ViewModels
 
         private string lastQr = "";
 
-        [RelayCommand]
-        private void TextChanged(object obj)
-        {
-            if (obj.ToString()!.EndsWith("\r\n"))
-            {
-                _currentScanValue = obj.ToString().Replace("\r\n", "");
-
-                if (lastQr.Equals(_currentScanValue))
-                {
-                    return;
-                }
-
-                lastQr = _currentScanValue;
-                CurrentScanValueChanged(_currentScanValue);
-            }
-        }
-
-
         partial void OnCurrentScanValueChanged(string? value)
         {
-            if (value.ToString()!.EndsWith("\r\n"))
+            if (value != null && value.EndsWith("\r\n"))
             {
-                _currentScanValue = value.ToString().Replace("\r\n", "");
-
                 if (lastQr.Equals(_currentScanValue))
                 {
                     return;
@@ -258,6 +250,8 @@ namespace PMES.Manual.Net6.ViewModels
                 return;
             }
 
+            //如果校验通过就删除报警
+            LogList.Clear();
             product ??= new ProductInfo();
             _viewProductModel = ViewProductModel.GetViewProductModel(product, CurrentProductQrCode);
 
@@ -636,7 +630,7 @@ namespace PMES.Manual.Net6.ViewModels
             var wei = (int)(100 * latest.ReelList.Sum(s => s.NetWeight));
             var boxCode =
                 @$"{product.material_mnemonic_code}-{product.package_info.code}-{product.jsbz_number}-{GlobalVar.CurrentUserInfo.packageGroupCode}{DateTime.Now:yyMM}{_countBoxTotal:D4}-{wei:D5}";
-            latest.BoxQrCoed = boxCode;
+            latest.BoxQrCode = boxCode;
             viewProductModel.BoxQrCode = boxCode;
             var boxReportModel = new List<BoxReportModel>
             {
@@ -680,7 +674,7 @@ namespace PMES.Manual.Net6.ViewModels
                 {
                     Directory.CreateDirectory("d://print_view");
                     latest.Report?.ExportToImage($"d://print_view//{boxCode}.png");
-                    latest.Report?.Print();
+                    latest.Report?.Print(PrinterName);
                     latest.HasPrint = true; //更新为标签已打印状态
                     var bitmap = new BitmapImage(new Uri($"d://print_view//{boxCode}.png"));
                     _viewProductModel.ImageBox = bitmap;
@@ -723,7 +717,7 @@ namespace PMES.Manual.Net6.ViewModels
                     PackagingCode = GlobalVar.CurrentUserInfo.packageGroupCode,
                     PackagingSN = $"{GlobalVar.CurrentUserInfo.packageGroupCode}{_countReelTotal:D4}",
                     PackagingWorker = GlobalVar.CurrentUserInfo.username,
-                    PackingBarCode = boxInfo.BoxQrCoed,
+                    PackingBarCode = boxInfo.BoxQrCode,
                     PackingQty = productInfo.package_info.packing_quantity.ToString(),
                     PackingWeight = boxInfo.ReelList.Sum(s => s.NetWeight),
                     PackingGrossWeight = boxInfo.ReelList.Sum(s => s.GrossWeight),
@@ -735,15 +729,13 @@ namespace PMES.Manual.Net6.ViewModels
                 };
                 var id = _fsql.Insert(box).ExecuteIdentity();
                 box.Id = (uint)id;
-                Logger?.Verbose(LogInfo.Info($"插入BoxId:{id}"));
+                ShowInfo($"插入成功BoxId:{id}");
                 var tReels = boxInfo.ReelList.Select(s => s.PreheaterCode);
                 foreach (var preheaterCode in tReels)
                 {
                     preheaterCode.BoxId = (int)id;
                     var rId = _fsql.Insert(preheaterCode).ExecuteIdentity();
-                    Logger?.Verbose(LogInfo.Info($"插入ReelId:{rId}"));
-
-
+                    ShowInfo($"插入成功ReelId:{rId}");
                     var order = new T_order_package
                     {
                         CreateTime = DateTime.Now,
@@ -767,7 +759,7 @@ namespace PMES.Manual.Net6.ViewModels
                         UpdateTime = DateTime.Now
                     };
                     var orderId = _fsql.Insert(order).ExecuteIdentity();
-                    Logger?.Verbose(LogInfo.Info($"插入包装 T_order_package Id:{orderId}"));
+                    ShowInfo($"插入成功orderId:{orderId}");
                     //2024年10月17日 06:25:43 顺便插入老数据库
                     UpdateOldDbSqlServer(preheaterCode, box,
                         new T_order_package() { TareWeight = ViewProductModel.ReelWeight });
@@ -775,7 +767,7 @@ namespace PMES.Manual.Net6.ViewModels
             }
             catch (Exception e)
             {
-                Logger?.Error(LogInfo.Error($"插入盘码到数据库失败！\n{e}"));
+                ShowError($"插入箱码|盘码到数据库失败！\n{e}");
             }
         }
 
@@ -856,7 +848,8 @@ namespace PMES.Manual.Net6.ViewModels
                     FSPTime = DateTime.Now,
                     BoxID = (int)boxCode.Id
                 };
-                _fsql.Insert(old).ExecuteAffrows();
+                var identity = _fsql.Insert(old).ExecuteIdentity();
+                ShowInfo($"插入成功OldId:{identity}");
             }
             catch (Exception e)
             {
@@ -891,17 +884,6 @@ namespace PMES.Manual.Net6.ViewModels
         {
         }
 
-
-        [RelayCommand]
-        private void ManualGrossChanged(string value)
-        {
-            if (double.TryParse(value, out var w))
-            {
-                _viewProductModel.GrossWeight = w;
-                OnPropertyChanged(nameof(ViewProductModel));
-            }
-        }
-
         private ProductInfo _manualCurrentProductInfo;
 
         /// <summary>
@@ -910,7 +892,14 @@ namespace PMES.Manual.Net6.ViewModels
         [RelayCommand(CanExecute = nameof(SaveCanExec))]
         private void Save()
         {
-            ManualCurrentProductQrCodeChanged(CurrentProductQrCode, _manualCurrentProductInfo);
+            try
+            {
+                ManualCurrentProductQrCodeChanged(CurrentProductQrCode, _manualCurrentProductInfo);
+            }
+            catch (Exception e)
+            {
+                ShowError($"手动保存异常：\n{e.Message}");
+            }
             /*var latest = BoxListTemp.Last();
             var reel = latest.ReelList.First();
             if (!latest.IsFull())
@@ -963,8 +952,8 @@ namespace PMES.Manual.Net6.ViewModels
             }
 
             //人工线只有一个打印机 设置为默认即可
-            SelectedMyBoxInfo.Report?.Print();
-            ShowInfo($"手动打印标签！");
+            SelectedMyBoxInfo.Report?.Print(PrinterName);
+            ShowInfo($"手动打印标签！BoxCode:{SelectedMyBoxInfo.BoxQrCode}");
         }
 
 

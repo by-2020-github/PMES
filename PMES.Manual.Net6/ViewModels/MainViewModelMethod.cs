@@ -38,16 +38,15 @@ namespace PMES.Manual.Net6.ViewModels
         void ShowError(string msg)
         {
             Logger?.Error(msg);
-            LogList.Add($"[{DateTime.Now:O}]: \t{msg}");
+            LogList.Add($"[{DateTime.Now:T}]: {msg}");
             CurrentLogIndex = LogList.Count - 1;
-            CurrentScanValue = "";
             //MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         void ShowInfo(string msg)
         {
             Logger?.Information(msg);
-            LogList.Add($"[{DateTime.Now:O}]: \t{msg}");
+            LogList.Add($"[{DateTime.Now:T}]: {msg}");
             //MessageBox.Show(msg, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

@@ -134,7 +134,7 @@ namespace PMES.Manual.Net6.ViewModels
 
         #region 称重信息
 
-        public double ReelWeight { get; set; } = new Random().NextDouble();
+        public double ReelWeight { get; set; } 
         public double GrossWeight { get; set; } 
         public double NetWeight => GrossWeight - PackagePaperWeight - ReelWeight;
         public double PackagePaperWeight { get; set; } 
@@ -180,7 +180,8 @@ namespace PMES.Manual.Net6.ViewModels
                 //TODO: 纸箱不知道是哪个字段
                 PackagePaperBox = product.package_info.wire_reel_external_package_name,
                 ReelNumPerBox = (int)product.package_info.packing_quantity!,
-                LabelTemplateName = null
+                LabelTemplateName = null,
+                CustomerName = product.customer_name
             };
             if (double.TryParse(product.xpzl_weight, out var w))
             {
@@ -206,6 +207,7 @@ namespace PMES.Manual.Net6.ViewModels
         #region 辅助信息
 
         public double PackageWeightWeight { get; set; }
+        public string? CustomerName { get; set; }
 
         #endregion
     }
@@ -218,7 +220,7 @@ namespace PMES.Manual.Net6.ViewModels
         private static int _number = 0;
 
         public int Number { get; set; }
-        public string BoxQrCoed { get; set; }
+        public string BoxQrCode { get; set; }
         public List<MyReelInfo> ReelList { get; set; } = new List<MyReelInfo>();
         public double GrossWeight => ReelList.Sum(s => s.GrossWeight);
         public double NetWeight => ReelList.Sum(s => s.NetWeight);

@@ -12,7 +12,7 @@ namespace PMES.Manual.Net6 {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
     internal sealed partial class PMES : global::System.Configuration.ApplicationSettingsBase {
         
         private static PMES defaultInstance = ((PMES)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new PMES())));
@@ -111,13 +111,37 @@ namespace PMES.Manual.Net6 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("print1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
         public string PrinterName1 {
             get {
                 return ((string)(this["PrinterName1"]));
             }
             set {
                 this["PrinterName1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PrinterDirection {
+            get {
+                return ((int)(this["PrinterDirection"]));
+            }
+            set {
+                this["PrinterDirection"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"default\"")]
+        public string DefaultLabel {
+            get {
+                return ((string)(this["DefaultLabel"]));
+            }
+            set {
+                this["DefaultLabel"] = value;
             }
         }
     }

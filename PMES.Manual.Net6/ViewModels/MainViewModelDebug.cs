@@ -43,14 +43,58 @@ namespace PMES.Manual.Net6.ViewModels
 
         public List<StopBits> StopBitstSource => Enum.GetValues<StopBits>().ToList();
 
+        [ObservableProperty] private string _printerName = "";
+        [ObservableProperty] private ObservableCollection<string> _printerNames = new ObservableCollection<string>();
+        [ObservableProperty] private int _printerDirection;
+        [ObservableProperty] private string _printerLabel;
+
         [RelayCommand]
-        private void Refresh()
+        private void RefreshPorts()
         {
             PortSource = SerialPort.GetPortNames().ToList();
+        }
+
+        [RelayCommand]
+        private void RefreshPrinters()
+        {
+            PrinterNames.Clear();
+            foreach (string printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            {
+                PrinterNames.Add(printer);
+            }
+        }
+
+        private void LoadSettings()
+        {
+            PortSelect = PMES.Default.Port;
             BaudSelect = PMES.Default.BaudRate;
             ParitySelect = (Parity)PMES.Default.Parity;
             DataBitsSelect = PMES.Default.DataBits;
             StopBitsSelect = (StopBits)PMES.Default.StopBits;
+
+            PrinterName = PMES.Default.PrinterName1;
+            PrinterDirection = PMES.Default.PrinterDirection;
+            PrinterLabel = PMES.Default.DefaultLabel;
+        }
+
+        [RelayCommand]
+        private void SavePortSettings()
+        {
+            PMES.Default.Port = PortSelect;
+            PMES.Default.BaudRate = BaudSelect;
+            PMES.Default.Parity = (int)ParitySelect;
+            PMES.Default.DataBits = DataBitsSelect;
+            PMES.Default.StopBits = (int)StopBitsSelect;
+            PMES.Default.Save();
+        }
+
+        [RelayCommand]
+        private void SavePrinterSettings()
+        {
+            PMES.Default.PrinterName1 = PrinterName;
+            PMES.Default.PrinterDirection = PrinterDirection;
+            PMES.Default.DefaultLabel = PrinterLabel;
+            PMES.Default.Save();
         }
     }
 }

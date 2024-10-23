@@ -6,10 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMES.Manual.Net6"
         xmlns:viewModels="clr-namespace:PMES.Manual.Net6.ViewModels"
-        mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:PMES.Manual.Net6.Views"
         xmlns:behavior="clr-namespace:PMES.Manual.Net6.Behavior"
+        xmlns:validations="clr-namespace:PMES.Manual.Net6.Validations"
         Style="{DynamicResource MaterialDesignWindow}"
         TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
         Background="{DynamicResource MaterialDesign.Brush.Background}"
@@ -17,9 +17,12 @@
         TextElement.FontSize="14"
         TextElement.FontFamily="Microsoft YaHei UI"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="900" Width="1550"
+        Title="MainWindow" Height="768" Width="1366"
+        d:Height="768" 
+        d:Width="1366"
         WindowState="Maximized"
         WindowStyle="ToolWindow"
+        mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainViewModel,IsDesignTimeCreatable=True}">
     <Window.Resources>
 
@@ -81,14 +84,14 @@
         <!--header-->
         <Grid Grid.Row="0" Background="#81D3F8">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="450"></ColumnDefinition>
+                <ColumnDefinition Width="380"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1.2*"></ColumnDefinition>
                 <ColumnDefinition Width="200"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Margin="15" Content="PMES - 欢迎使用成品智能包装系统"
-                   FontSize="24" FontFamily="Microsoft YaHei UI"
-                   Width="400" MouseDoubleClick="Control_OnMouseDoubleClick">
+                   FontSize="20" FontFamily="Microsoft YaHei UI" VerticalContentAlignment="Center"
+                   Width="350" MouseDoubleClick="Control_OnMouseDoubleClick">
             </Label>
             <ListBox x:Name="LogView" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1" Margin="5"
                      Foreground="Red"
@@ -148,7 +151,7 @@
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="300"></ColumnDefinition>
-                                <ColumnDefinition Width="300"></ColumnDefinition>
+                                <ColumnDefinition Width="0"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                                 <ColumnDefinition Width="200"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
@@ -280,6 +283,13 @@
                                                    Content="{Binding ViewProductModel.ProductQrCode}">
                                             </Label>
                                         </StackPanel>
+
+                                        <StackPanel Style="{DynamicResource PropStackPanel}">
+                                            <Label Style="{DynamicResource LabelPropName}" Content="客户名称："></Label>
+                                            <Label Style="{DynamicResource LabelPropValue}"
+                                                   Content="{Binding ViewProductModel.CustomerName}">
+                                            </Label>
+                                        </StackPanel>
                                     </StackPanel>
                                 </ScrollViewer>
                             </Border>
@@ -371,7 +381,7 @@
                                                                     Binding="{Binding Number }">
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Header="箱码" Width="2*"
-                                                                    Binding="{Binding BoxQrCoed}">
+                                                                    Binding="{Binding BoxQrCode}">
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Header="毛重" Width="90"
                                                                     Binding="{Binding GrossWeight , StringFormat=F2 , Mode=OneWay}">
@@ -419,7 +429,9 @@
                                         <DataGridTextColumn Header="箱内盘编号（盘码）" Width="1.5*"
                                                             Binding="{Binding ReelQrCode}">
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Header="生产码" Width="1.2*" Binding="{Binding ReelProductCode}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="生产码" Width="1.2*"
+                                                            Binding="{Binding ReelProductCode}">
+                                        </DataGridTextColumn>
                                         <DataGridTextColumn Header="毛重" Width="90"
                                                             Binding="{Binding GrossWeight, StringFormat=F2}">
                                         </DataGridTextColumn>
@@ -458,18 +470,31 @@
                                             <TextBox x:Name="GrossWeight" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
                                                      Width="180"
                                                      d:Text="30.12"
-                                                     FontSize="32"
+                                                     FontSize="42"
                                                      IsEnabled="{Binding IsManual}"
-                                                     Style="{DynamicResource TextBoxCenterRed}"
-                                                     Text="{Binding ViewProductModel.GrossWeight, StringFormat=F2}">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="TextChanged">
-                                                        <i:InvokeCommandAction
-                                                            Command="{Binding ManualGrossChangedCommand}"
-                                                            CommandParameter="{Binding Text , ElementName=GrossWeight}">
-                                                        </i:InvokeCommandAction>
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
+                                                     Style="{DynamicResource TextBoxCenterRed}">
+                                                <TextBox.Text>
+                                                    <Binding Path="GrossWeight"
+                                                             UpdateSourceTrigger="PropertyChanged"
+                                                             Mode="TwoWay">
+                                                        <Binding.ValidationRules>
+                                                            <validations:WeightValidationRule></validations:WeightValidationRule>
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                                <Validation.ErrorTemplate>
+                                                    <ControlTemplate>
+                                                        <DockPanel>
+                                                            <Grid DockPanel.Dock="Right" Width="auto" Height="auto" VerticalAlignment="Center" Margin="3 0 0 0">
+                                                                <TextBlock Width="auto" Height="auto" Foreground="Red"
+                                                                           Text="{Binding ElementName=AdornedElementPlaceholder, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}"/>
+                                                            </Grid>
+                                                            <Border BorderBrush="Red" BorderThickness="0" CornerRadius="2">
+                                                                <AdornedElementPlaceholder x:Name="AdornedElementPlaceholder"/>
+                                                            </Border>
+                                                        </DockPanel>
+                                                    </ControlTemplate>
+                                                </Validation.ErrorTemplate>
                                             </TextBox>
 
                                             <UniformGrid
@@ -688,8 +713,8 @@
                                           VerticalAlignment="Center" SelectedItem="{Binding StopBitsSelect}"
                                           ItemsSource="{Binding StopBitstSource}">
                                 </ComboBox>
-                                <Button Margin="10,3,10,3" Content="刷新" Command="{Binding RefreshCommand}"></Button>
-                                <Button Margin="10,3,10,3" Content="保存" Command="{Binding RefreshCommand}"></Button>
+                                <Button Margin="10,3,10,3" Content="刷新" Command="{Binding RefreshPortsCommand}"></Button>
+                                <Button Margin="10,3,10,3" Content="保存" Command="{Binding SavePortSettingsCommand}"></Button>
                             </UniformGrid>
                         </GroupBox>
                         <GroupBox Header="打印机设置" Margin="8" Width="260" Height="300">
@@ -697,15 +722,16 @@
                                 <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
                                        VerticalAlignment="Center" Content="打印机名称：">
                                 </Label>
-                                <TextBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
-                                         VerticalAlignment="Center">
-                                </TextBox>
+                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center" SelectedItem="{Binding PrinterName}"
+                                          SelectedIndex="0" ItemsSource="{Binding PrinterNames }">
+                                </ComboBox>
                                 <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
                                        VerticalAlignment="Center" Content="打印方向：">
                                 </Label>
                                 <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
                                           VerticalAlignment="Center"
-                                          SelectedIndex="0">
+                                          SelectedIndex="0" SelectedItem="{Binding PrinterDirection }">
                                     <ComboBox.Items>
                                         <ComboBoxItem>0</ComboBoxItem>
                                         <ComboBoxItem>180</ComboBoxItem>
@@ -714,15 +740,15 @@
                                 <Label Width="120" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
                                        VerticalAlignment="Center" Content="默认标签：">
                                 </Label>
-                                <ComboBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
-                                          VerticalAlignment="Center">
-                                </ComboBox>
+                                <TextBox Width="120" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                                         VerticalAlignment="Center" Text="{Binding PrinterLabel}">
+                                </TextBox>
                                 <Label></Label>
                                 <Label></Label>
                                 <Label></Label>
                                 <Label></Label>
-                                <Button Margin="10,3,10,3" Content="刷新" Command="{Binding RefreshCommand}"></Button>
-                                <Button Margin="10,3,10,3" Content="保存" Command="{Binding RefreshCommand}"></Button>
+                                <Button Margin="10,3,10,3" Content="刷新" Command="{Binding RefreshPrintersCommand}"></Button>
+                                <Button Margin="10,3,10,3" Content="保存" Command="{Binding SavePrinterSettingsCommand}"></Button>
                             </UniformGrid>
                         </GroupBox>
                     </WrapPanel>

@@ -153,32 +153,32 @@ public class PackageInfo
     /// <summary>
     ///     包装代码
     /// </summary>
-    public string? code { get; set; } = "0002";
+    public string? code { get; set; } 
 
     /// <summary>
     ///     包装名称
     /// </summary>
-    public string? name { get; set; } = "PT200金宇";
+    public string? name { get; set; }
 
     /// <summary>
     ///     包装皮重
     /// </summary>
-    public string? tare_weight { get; set; } = "0.0000000000";
+    public string? tare_weight { get; set; } 
 
     /// <summary>
     ///     铜线满盘重量
     /// </summary>
-    public string? cu_full_coil_weight { get; set; } = "180.0000000000";
+    public string? cu_full_coil_weight { get; set; }
 
     /// <summary>
     ///     铜线最小重量
     /// </summary>
-    public string? cu_min_weight { get; set; } = "100.0000000000";
+    public string? cu_min_weight { get; set; }
 
     /// <summary>
     ///     铜线最大重量
     /// </summary>
-    public string? cu_max_weight { get; set; } = "205.0000000000";
+    public string? cu_max_weight { get; set; } 
 
     /// <summary>
     ///     线盘内包装名称

@@ -24,7 +24,13 @@
       <Value Profile="(Default)">Data Source=127.0.0.1;Port=3306;User ID=root;Password=123456; Initial Catalog=pmes;Charset=utf8; SslMode=none;Min pool size=1;AllowPublicKeyRetrieval=true</Value>
     </Setting>
     <Setting Name="PrinterName1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">print1</Value>
+      <Value Profile="(Default)">""</Value>
+    </Setting>
+    <Setting Name="PrinterDirection" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DefaultLabel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">"default"</Value>
     </Setting>
   </Settings>
 </SettingsFile>
